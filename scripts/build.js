@@ -45,16 +45,24 @@ const glossary = loadJSON('glossary.json');
 const alerts = loadJSON('alerts.json');
 const comparisons = loadJSONSafe('comparisons.json');
 const pillarPages = loadJSONSafe('pillar-pages.json');
+const brandReviews = loadJSONSafe('brand-reviews.json');
+const bestOf = loadJSONSafe('best-of.json');
+const authors = loadJSONSafe('authors.json');
+const stateBestCompanies = loadJSONSafe('state-best-companies.json');
 
 const data = { states, utilities, cities, financing, glossary, alerts };
 
 console.log(`  ${states.length} states`);
 console.log(`  ${utilities.length} utilities`);
 console.log(`  ${cities.length} cities`);
-console.log(`  ${financing.providers.length} financing providers`);
+console.log(`  ${financing.providers ? financing.providers.length : 0} financing providers`);
 console.log(`  ${glossary.length} glossary terms`);
 console.log(`  ${comparisons.length} comparisons`);
 console.log(`  ${pillarPages.length} pillar pages`);
+console.log(`  ${brandReviews.length} brand reviews`);
+console.log(`  ${bestOf.length} best-of pages`);
+console.log(`  ${authors.length} authors`);
+console.log(`  ${stateBestCompanies.length} state/city best companies`);
 
 // ---------------------------------------------------------------------------
 // Load templates
@@ -170,6 +178,96 @@ if (pillarPages.length > 0) {
 }
 
 // ---------------------------------------------------------------------------
+// NEW: About page
+// ---------------------------------------------------------------------------
+console.log('Generating about page...');
+writePage(
+  path.join(DIST_DIR, 'about', 'index.html'),
+  templates.generateAboutPage(authors)
+);
+pageCount++;
+
+// ---------------------------------------------------------------------------
+// NEW: Contact page
+// ---------------------------------------------------------------------------
+console.log('Generating contact page...');
+writePage(
+  path.join(DIST_DIR, 'contact', 'index.html'),
+  templates.generateContactPage()
+);
+pageCount++;
+
+// ---------------------------------------------------------------------------
+// NEW: Privacy Policy page
+// ---------------------------------------------------------------------------
+console.log('Generating privacy policy page...');
+writePage(
+  path.join(DIST_DIR, 'privacy-policy', 'index.html'),
+  templates.generatePrivacyPolicyPage()
+);
+pageCount++;
+
+// ---------------------------------------------------------------------------
+// NEW: Authors pages
+// ---------------------------------------------------------------------------
+if (authors.length > 0) {
+  console.log(`Generating authors index + ${authors.length} author pages...`);
+  writePage(
+    path.join(DIST_DIR, 'authors', 'index.html'),
+    templates.generateAuthorsIndexPage(authors)
+  );
+  pageCount++;
+
+  for (const author of authors) {
+    const filePath = path.join(DIST_DIR, 'authors', author.slug, 'index.html');
+    writePage(filePath, templates.generateAuthorPage(author, authors));
+    pageCount++;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// NEW: Brand Review pages
+// ---------------------------------------------------------------------------
+if (brandReviews.length > 0) {
+  console.log(`Generating brand reviews index + ${brandReviews.length} review pages...`);
+  writePage(
+    path.join(DIST_DIR, 'reviews', 'index.html'),
+    templates.generateBrandReviewsIndexPage(brandReviews)
+  );
+  pageCount++;
+
+  for (const brand of brandReviews) {
+    const filePath = path.join(DIST_DIR, 'reviews', brand.slug, 'index.html');
+    writePage(filePath, templates.generateBrandReviewPage(brand, brandReviews));
+    pageCount++;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// NEW: Best-Of Roundup pages
+// ---------------------------------------------------------------------------
+if (bestOf.length > 0) {
+  console.log(`Generating ${bestOf.length} best-of roundup pages...`);
+  for (const entry of bestOf) {
+    const filePath = path.join(DIST_DIR, 'best', entry.slug, 'index.html');
+    writePage(filePath, templates.generateBestOfPage(entry, bestOf));
+    pageCount++;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// NEW: State/City Best Companies pages
+// ---------------------------------------------------------------------------
+if (stateBestCompanies.length > 0) {
+  console.log(`Generating ${stateBestCompanies.length} best-companies pages...`);
+  for (const entry of stateBestCompanies) {
+    const filePath = path.join(DIST_DIR, 'best-solar-companies', entry.slug, 'index.html');
+    writePage(filePath, templates.generateStateBestCompaniesPage(entry, stateBestCompanies));
+    pageCount++;
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Generate sitemap.xml
 // ---------------------------------------------------------------------------
 console.log('\nGenerating sitemap.xml...');
@@ -198,6 +296,21 @@ for (const comparison of comparisons) {
   addEntry(`compare/${comparison.slug}/`, 0.8);
 }
 
+// Best-of pages (commercial intent)
+for (const entry of bestOf) {
+  addEntry(`best/${entry.slug}/`, 0.8);
+}
+
+// State/City best companies (commercial intent)
+for (const entry of stateBestCompanies) {
+  addEntry(`best-solar-companies/${entry.slug}/`, 0.8);
+}
+
+// Brand review pages
+for (const brand of brandReviews) {
+  addEntry(`reviews/${brand.slug}/`, 0.7);
+}
+
 for (const utility of utilities) {
   addEntry(`utility-rebates/${utility.slug}/`, 0.7);
 }
@@ -207,8 +320,20 @@ for (const city of cities) {
 }
 
 addEntry('solar-glossary/', 0.6);
+
+// Trust & authority pages
+addEntry('about/', 0.6);
+addEntry('authors/', 0.6);
+addEntry('reviews/', 0.6);
+addEntry('contact/', 0.5);
 addEntry('methodology/', 0.5);
 addEntry('editorial-standards/', 0.5);
+addEntry('privacy-policy/', 0.4);
+
+// Individual author pages
+for (const author of authors) {
+  addEntry(`authors/${author.slug}/`, 0.5);
+}
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -223,6 +348,7 @@ fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemap);
 console.log('Generating robots.txt...');
 const robotsTxt = `User-agent: *
 Allow: /
+Disallow: /.netlify/
 
 Sitemap: ${SITE_URL}/sitemap.xml`;
 

@@ -1,69 +1,294 @@
 [
   {
-    "title": "The Complete Guide to Home Solar Energy",
-    "slug": "complete-guide-home-solar",
-    "description": "Everything you need to know about going solar: costs, savings, installation, financing, and incentives.",
-    "category": "guide",
+    "slug": "how-solar-panels-work",
+    "title": "How Do Solar Panels Work? Complete Guide",
+    "meta_description": "Learn how solar panels convert sunlight into electricity. Understand photovoltaic cells, inverters, net metering, and how your home solar system generates power.",
+    "intro": "Solar panels convert sunlight into usable electricity through the photovoltaic effect. Understanding how this technology works helps homeowners make informed decisions about going solar and maximizing their energy savings.",
+    "hub": "getting-started",
     "sections": [
-      {"heading": "How Solar Energy Works", "content": "Solar panels convert sunlight into electricity through photovoltaic cells. When photons hit the silicon cells, they knock electrons loose, creating an electric current. This direct current (DC) is then converted to alternating current (AC) by an inverter, making it compatible with your home's electrical system and the grid."},
-      {"heading": "Average Cost of Solar Panels in 2026", "content": "The average cost of a residential solar system in 2026 ranges from $10,000 to $25,000 before incentives. After the 30% federal tax credit, most homeowners pay $7,000 to $17,500. Costs vary by state, system size, equipment quality, and installer. The national average is approximately $2.75 per watt installed."},
-      {"heading": "Federal Solar Tax Credit (ITC)", "content": "The Investment Tax Credit (ITC) allows homeowners to deduct 30% of their solar installation cost from federal taxes. This credit is available through 2032 and steps down to 26% in 2033 and 22% in 2034. The ITC applies to the full cost of the system, including equipment, labor, and permitting. Source: IRS Form 5695, energy.gov."},
-      {"heading": "State Solar Incentives and Rebates", "content": "Beyond the federal tax credit, many states offer additional incentives. These include state tax credits (up to 25-35% in states like South Carolina and Hawaii), rebates ($500-$5,000), Solar Renewable Energy Credits (SRECs worth $25-$250 each), property tax exemptions, and sales tax exemptions on solar equipment."},
-      {"heading": "Net Metering Explained", "content": "Net metering allows solar homeowners to send excess electricity back to the grid in exchange for credits on their utility bill. When your panels produce more than you use during the day, the surplus flows to the grid and your meter runs backward. At night, you draw from the grid using your credits. Net metering policies vary by state and utility."},
-      {"heading": "Solar Panel Types Compared", "content": "The three main types of solar panels are monocrystalline (20-22% efficiency, premium), polycrystalline (15-17% efficiency, budget-friendly), and thin-film (10-12% efficiency, flexible). Most residential installations use monocrystalline panels for their superior performance and compact size."},
-      {"heading": "Solar Installation Process", "content": "A typical solar installation follows these steps: site assessment and design (1-2 weeks), permitting (2-4 weeks), installation (1-3 days), inspection (1-2 weeks), and utility interconnection (1-4 weeks). The total timeline from signing a contract to powering on is usually 6-12 weeks."},
-      {"heading": "Solar Financing Options", "content": "Homeowners can finance solar through cash purchase (highest ROI), solar loans (own the system, 3-9% APR), solar leases ($0 down, lower savings), PPAs (pay per kWh produced), PACE financing (paid through property taxes), or home equity loans (tax-deductible interest)."},
-      {"heading": "Solar Return on Investment", "content": "Most solar installations pay for themselves within 5-10 years and generate $20,000-$60,000 in net savings over 20 years. ROI depends on local electricity rates, sun exposure, system size, incentives, and financing method. States with high electricity rates and strong incentives see the fastest payback."},
-      {"heading": "Choosing a Solar Installer", "content": "When selecting a solar installer, verify their licensing and insurance, check reviews and references, compare at least 3 quotes, ask about warranties (workmanship, equipment, production), confirm they handle permitting and interconnection, and ensure they offer the panel brands and financing you want."}
+      {"heading": "The Photovoltaic Effect Explained", "content": "Solar cells are made of semiconductor materials, typically silicon, arranged in layers with positive and negative charges. When photons from sunlight strike these cells, they knock electrons loose from their atoms, creating an electrical current. This direct current (DC) flows through wiring to an inverter."},
+      {"heading": "From DC to AC: The Role of Inverters", "content": "Your home runs on alternating current (AC), but solar panels produce direct current (DC). Inverters convert DC to AC power, making it compatible with your appliances and the electrical grid. String inverters handle an entire array, while microinverters optimize each panel individually."},
+      {"heading": "Grid-Tied vs Off-Grid Systems", "content": "Most residential solar installations are grid-tied, meaning they remain connected to the utility grid. Excess power flows to the grid for credits, and you draw from the grid at night. Off-grid systems use battery storage to operate independently but cost significantly more."},
+      {"heading": "How Much Electricity Can Solar Panels Produce?", "content": "A typical residential panel produces 300-400 watts under ideal conditions. A 6kW system with 15-20 panels generates approximately 7,000-9,000 kWh annually, enough to offset most household electricity consumption. Production varies based on location, roof orientation, and shading."},
+      {"heading": "Solar Panel Efficiency and Degradation", "content": "Modern panels convert 18-22% of sunlight into electricity. Premium models from SunPower and REC achieve up to 22.8% efficiency. Panels degrade approximately 0.5% per year, meaning after 25 years they still produce about 87% of their original output."}
     ],
     "faqs": [
-      {"question": "How much do solar panels cost in 2026?", "answer": "The average residential solar system costs $10,000-$25,000 before the 30% federal tax credit. After incentives, most homeowners pay $7,000-$17,500. The national average is approximately $2.75 per watt installed."},
-      {"question": "Are solar panels worth it in 2026?", "answer": "Yes, for most homeowners. With the 30% federal tax credit, falling panel costs, and rising electricity rates, solar panels typically pay for themselves in 5-10 years and save $20,000-$60,000 over their 25+ year lifespan."},
-      {"question": "How long do solar panels last?", "answer": "Modern solar panels are warrantied for 25-30 years but can produce electricity for 35-40+ years. Most panels degrade at about 0.5% per year, meaning they still produce 87.5% of their original output after 25 years."},
-      {"question": "Do solar panels work in cloudy weather?", "answer": "Yes, solar panels produce electricity on cloudy days, though at reduced output (10-25% of full capacity). Germany, one of the cloudiest countries in Europe, is a world leader in solar energy."},
-      {"question": "What happens to solar panels at night?", "answer": "Solar panels do not produce electricity at night. Grid-tied systems draw power from the grid, while systems with battery storage use stored energy. Net metering credits from daytime overproduction offset nighttime usage."}
-    ]
+      {"question": "Do solar panels work on cloudy days?", "answer": "Yes, solar panels still generate electricity on cloudy days, typically at 10-25% of their full capacity. Diffused sunlight still contains enough energy for photovoltaic conversion."},
+      {"question": "How long do solar panels last?", "answer": "Modern solar panels are warrantied for 25-30 years and can continue producing electricity for 35-40+ years. The degradation rate is approximately 0.5% per year."},
+      {"question": "Do solar panels work at night?", "answer": "No, solar panels require sunlight to generate electricity. At night, grid-tied systems draw power from the utility grid, while battery-equipped systems use stored energy from daytime production."},
+      {"question": "What size solar system do I need for my home?", "answer": "Most homes need a 5-10kW system, depending on electricity usage, location, and roof space. A system should be sized to offset 80-100% of your annual electricity consumption."}
+    ],
+    "related_slugs": ["solar-panel-cost-guide", "solar-panel-installation-process", "best-solar-panels"]
   },
   {
-    "title": "Solar Tax Credits and Incentives Guide 2026",
-    "slug": "solar-tax-credits-incentives-guide",
-    "description": "Comprehensive guide to federal, state, and local solar tax credits, rebates, and incentive programs for 2026.",
-    "category": "incentives",
+    "slug": "solar-panel-cost-guide",
+    "title": "Solar Panel Cost Guide 2026: Prices, Savings & ROI",
+    "meta_description": "How much do solar panels cost in 2026? Average prices range from $10,000-$25,000 before incentives. See costs by state, system size, and calculate your savings.",
+    "intro": "The average cost of residential solar panels in 2026 ranges from $10,000 to $25,000 before the federal tax credit. After the 30% ITC and state incentives, most homeowners pay $7,000-$17,500 for a complete system installation.",
+    "hub": "getting-started",
     "sections": [
-      {"heading": "Federal Solar Investment Tax Credit (ITC)", "content": "The federal ITC allows homeowners to claim 30% of their total solar installation cost as a dollar-for-dollar tax credit. For a $20,000 system, that is a $6,000 tax credit. The credit applies to equipment, labor, permitting, and sales tax on the system. It is claimed on IRS Form 5695 and can be carried forward to future tax years if your tax liability is insufficient. Source: energy.gov, IRS Publication 5695."},
-      {"heading": "ITC Timeline and Step-Down Schedule", "content": "The 30% ITC is available through December 31, 2032. It steps down to 26% in 2033 and 22% in 2034. After 2034, the residential credit expires unless Congress extends it. This creates urgency for homeowners to act while the full 30% credit is available."},
-      {"heading": "State Solar Tax Credits", "content": "Several states offer their own solar tax credits on top of the federal ITC: New York (25% up to $5,000), South Carolina (25% with no cap), Arizona (25% up to $1,000), Massachusetts (15% up to $1,000), Hawaii (35% of system cost), Idaho (40% deduction over 4 years), Iowa (15% of installation cost), and New Mexico (10% up to $6,000)."},
-      {"heading": "State Rebate Programs", "content": "State rebate programs provide direct cash back for solar installations. Colorado offers up to $2,000, Hawaii up to $5,000, Maryland $1,000 through the Clean Energy Grant, Montana $1,000 through the Alternative Energy program, and New Hampshire $1,000 ($0.20/watt). Utility-specific rebates are also available from providers like Duke Energy, Xcel Energy, and Austin Energy."},
-      {"heading": "Solar Renewable Energy Credits (SRECs)", "content": "SRECs are tradeable certificates representing the environmental benefit of solar electricity generation. States with SREC markets include Massachusetts ($250/SREC), New Jersey ($200/TREC), Illinois ($75/SREC), Maryland ($65/SREC), Ohio ($40/SREC), Pennsylvania ($35/SREC), and Delaware ($25/SREC). One SREC equals 1 megawatt-hour (MWh) of solar generation."},
-      {"heading": "Property and Sales Tax Exemptions", "content": "Many states exempt solar installations from property tax increases and/or sales tax. Property tax exemptions mean your home value increase from solar does not raise your taxes. Sales tax exemptions reduce the upfront cost of your system. Check your state page for specific exemption availability."},
-      {"heading": "How to Claim the Federal Solar Tax Credit", "content": "To claim the ITC: 1) Keep all receipts from your solar installation, 2) Obtain IRS Form 5695 (Residential Energy Credits), 3) Calculate 30% of your total eligible costs, 4) Enter the credit on your Form 1040, 5) If the credit exceeds your tax liability, carry the remainder to the next tax year. Consult a tax professional for personalized guidance."}
+      {"heading": "Average Solar Panel Costs by System Size", "content": "Solar costs are typically measured per watt installed. The national average is $2.75/watt. A 6kW system averages $16,500 before incentives, while a 10kW system averages $27,500. Smaller systems cost more per watt due to fixed installation overhead."},
+      {"heading": "What Affects Solar Installation Cost?", "content": "Key cost factors include system size, panel brand and efficiency, inverter type, roof complexity, local labor rates, and permitting fees. Premium panels from SunPower or REC cost 15-25% more than budget options but offer higher efficiency and longer warranties."},
+      {"heading": "Solar Costs by State", "content": "Solar costs vary significantly by state. California averages $2.85/watt, Texas $2.60/watt, Florida $2.70/watt, and New York $3.10/watt. States with established solar markets and competition tend to have lower prices due to installer density."},
+      {"heading": "Federal and State Incentives That Reduce Cost", "content": "The 30% federal Investment Tax Credit reduces a $20,000 system to $14,000. Many states offer additional credits, rebates, and SREC income. Combined incentives can reduce total cost by 40-60% depending on your location."},
+      {"heading": "Is Solar Worth the Investment?", "content": "Most solar systems pay for themselves in 5-10 years through electricity savings. Over 25 years, homeowners save $20,000-$60,000 on average. The ROI exceeds most traditional investments, especially in states with high electricity rates."}
     ],
     "faqs": [
-      {"question": "How does the 30% solar tax credit work?", "answer": "The federal solar tax credit allows you to deduct 30% of your total solar installation cost from your federal taxes. For example, a $20,000 system would give you a $6,000 tax credit, directly reducing your tax bill."},
-      {"question": "Can I claim the solar tax credit if I finance?", "answer": "Yes, you can claim the full 30% ITC whether you pay cash or finance with a loan. However, you cannot claim it with a solar lease or PPA since the leasing company owns the system."},
-      {"question": "What happens if I dont owe enough taxes?", "answer": "If your tax credit exceeds your tax liability for the year, you can carry the remaining credit forward to future tax years until it is fully used."},
-      {"question": "Do state tax credits stack with the federal credit?", "answer": "Yes, state solar tax credits are separate from and additional to the federal ITC. You can claim both, though some states require you to reduce the cost basis by the federal credit amount."}
-    ]
+      {"question": "How much do solar panels cost for a 2,000 sq ft house?", "answer": "A typical 2,000 sq ft home needs a 6-8kW system, costing $16,500-$22,000 before incentives. After the 30% federal tax credit, expect to pay $11,550-$15,400."},
+      {"question": "Are solar panels getting cheaper?", "answer": "Yes, solar panel costs have dropped over 70% in the past decade. While the rate of decline has slowed, incremental improvements in manufacturing continue to reduce prices by 2-5% annually."},
+      {"question": "Can I get solar panels for free?", "answer": "While no solar panels are truly free, $0-down solar loans and leases allow homeowners to go solar with no upfront cost. With a loan, you own the system and benefit from the tax credit."},
+      {"question": "How much do solar panels save per month?", "answer": "Most homeowners save $100-$200 per month on electricity with solar panels. Savings depend on system size, local electricity rates, and sun exposure. Higher utility rates mean greater savings."}
+    ],
+    "related_slugs": ["how-solar-panels-work", "solar-financing-options", "solar-roi-payback-period"]
   },
   {
-    "title": "Solar Panel Installation Guide",
-    "slug": "solar-panel-installation-guide",
-    "description": "Step-by-step guide to the solar panel installation process, from initial consultation to system activation.",
-    "category": "guide",
+    "slug": "solar-panel-installation-process",
+    "title": "Solar Panel Installation Process: Step-by-Step Guide",
+    "meta_description": "Complete guide to solar panel installation. From site assessment to system activation, learn what to expect during each step of your residential solar installation.",
+    "intro": "The solar panel installation process typically takes 6-12 weeks from contract signing to system activation. Understanding each step helps homeowners prepare for a smooth installation experience and avoid common delays.",
+    "hub": "getting-started",
     "sections": [
-      {"heading": "Step 1: Initial Consultation and Site Assessment", "content": "The process begins with a site assessment where a solar consultant evaluates your roof condition, orientation, shading, and electrical panel. They use satellite imagery and sometimes drone surveys to design an optimal system. This step typically takes 1-2 weeks and includes a review of your electricity bills to properly size the system."},
-      {"heading": "Step 2: System Design and Proposal", "content": "Based on the assessment, the installer creates a custom system design showing panel placement, expected production, and financial projections. You will receive a detailed proposal with equipment specifications (panel brand, inverter type, racking system), total cost, financing options, and estimated savings over 25 years."},
-      {"heading": "Step 3: Financing and Contract", "content": "After reviewing proposals from multiple installers (recommended: at least 3 quotes), choose your preferred option and sign a contract. Select your financing method: cash, solar loan, lease, PPA, or PACE. The installer will walk you through warranty terms, production guarantees, and the installation timeline."},
-      {"heading": "Step 4: Permitting", "content": "Your installer handles the permitting process with your local building department and utility company. This includes submitting structural and electrical plans, applying for building permits, filing utility interconnection applications, and coordinating HOA approval if needed. Permitting typically takes 2-4 weeks."},
-      {"heading": "Step 5: Installation Day", "content": "Physical installation usually takes 1-3 days for a residential system. The crew installs racking on your roof, mounts the solar panels, installs the inverter and monitoring equipment, connects the system to your electrical panel, and ensures everything meets code requirements. Most installations cause minimal disruption to your daily routine."},
-      {"heading": "Step 6: Inspection and Interconnection", "content": "After installation, a local building inspector verifies the work meets electrical and structural codes. Once approved, your utility company installs a bi-directional meter and grants permission to operate (PTO). This process takes 1-4 weeks depending on your utility."},
-      {"heading": "Step 7: System Activation and Monitoring", "content": "Once PTO is granted, your system goes live. Your installer will walk you through the monitoring app that tracks real-time production, consumption, and savings. Most modern systems include 24/7 monitoring to detect any issues automatically."}
+      {"heading": "Site Assessment and System Design", "content": "Your installer begins with a thorough roof assessment using satellite imagery and sometimes drone surveys. They evaluate roof condition, orientation, pitch, shading, and structural integrity. The design phase typically takes 1-2 weeks and determines optimal panel placement."},
+      {"heading": "Permitting and Approvals", "content": "Your installer files building permits, utility interconnection applications, and HOA approvals if required. This is often the longest phase, taking 2-6 weeks depending on your municipality. Some states have streamlined permitting to reduce delays."},
+      {"heading": "Installation Day", "content": "Physical installation takes 1-3 days for a typical residential system. Crews install racking, mount panels, wire the system, install the inverter, and connect to your electrical panel. Most installations require minimal disruption to your daily routine."},
+      {"heading": "Inspection and Utility Approval", "content": "After installation, a local building inspector verifies code compliance. Your utility then installs a bi-directional meter and issues Permission to Operate (PTO). This final step takes 1-4 weeks depending on your utility's backlog."}
     ],
     "faqs": [
-      {"question": "How long does solar panel installation take?", "answer": "The physical installation takes 1-3 days, but the full process from contract signing to system activation is typically 6-12 weeks including permitting and utility approval."},
-      {"question": "Will solar installation damage my roof?", "answer": "Professional installations use engineered mounting systems with flashing that actually improve roof waterproofing at penetration points. Reputable installers warranty their roof work for 10-25 years."},
-      {"question": "Do I need to be home during solar installation?", "answer": "You should be available for the initial and final walkthrough, but you do not need to be present during the entire installation. The crew will need access to your electrical panel."},
-      {"question": "What maintenance do solar panels require?", "answer": "Solar panels require minimal maintenance. Occasional cleaning (1-2 times per year) and annual inspection are recommended. Rain handles most cleaning naturally. Inverters may need replacement after 10-15 years."}
-    ]
+      {"question": "How long does solar installation take?", "answer": "The physical installation takes 1-3 days, but the entire process from contract to activation typically takes 6-12 weeks including permitting, installation, inspection, and utility approval."},
+      {"question": "Will solar panels damage my roof?", "answer": "Professional installations use engineered mounting systems with proper flashing that protect against leaks. Reputable installers warranty their roof penetrations for 10-25 years."},
+      {"question": "Do I need a new roof before installing solar?", "answer": "If your roof is more than 15 years old or has existing damage, consider replacing it before solar installation. Removing panels for a future roof replacement adds $1,500-$3,000 in labor costs."}
+    ],
+    "related_slugs": ["how-solar-panels-work", "solar-panel-cost-guide", "solar-panel-maintenance-guide"]
+  },
+  {
+    "slug": "solar-financing-options",
+    "title": "Solar Financing Options: Loans, Leases, PPAs & More",
+    "meta_description": "Compare solar financing options including loans, leases, PPAs, and PACE. Find the best way to pay for solar panels with $0 down or maximize your ROI.",
+    "intro": "There are multiple ways to finance a solar installation, each with different benefits and tradeoffs. Understanding your options helps you choose the financing method that best fits your financial situation and savings goals.",
+    "hub": "financing",
+    "sections": [
+      {"heading": "Cash Purchase: Best ROI", "content": "Paying cash offers the highest return on investment since you avoid interest charges and keep all incentives. A $20,000 system with the 30% tax credit costs $14,000 out of pocket and typically pays for itself in 5-7 years."},
+      {"heading": "Solar Loans: Own With $0 Down", "content": "Solar loans let you own your system with little or no money down. Interest rates typically range from 3-9% APR with terms of 10-25 years. You qualify for the full 30% tax credit since you own the system. Monthly loan payments are often less than your previous electric bill."},
+      {"heading": "Solar Leases and PPAs", "content": "With a lease, you pay a fixed monthly fee to use solar panels owned by a third party. With a PPA, you pay per kilowatt-hour produced. Both offer $0 down and maintenance-free operation, but savings are lower since the company keeps the tax credit."},
+      {"heading": "PACE Financing", "content": "Property Assessed Clean Energy (PACE) loans are repaid through your property tax bill. They require no credit check and transfer with the property if you sell. PACE is available in select states and can cover 100% of installation costs."},
+      {"heading": "Home Equity Loans and HELOCs", "content": "Using home equity to finance solar offers potentially tax-deductible interest and competitive rates. HELOCs provide flexible access to funds while home equity loans offer fixed payments. Both options require sufficient home equity and good credit."}
+    ],
+    "faqs": [
+      {"question": "What is the best way to finance solar panels?", "answer": "Cash purchase provides the highest ROI, but solar loans offer the best balance of $0 down and system ownership. The right choice depends on your available cash, credit score, and preference for ownership vs. simplicity."},
+      {"question": "Can I get solar with bad credit?", "answer": "Yes, PACE financing requires no credit check, and some solar leases accept lower credit scores. FHA Title I loans also have more flexible credit requirements for energy improvements."},
+      {"question": "Is a solar lease or loan better?", "answer": "A solar loan is generally better because you own the system, claim the tax credit, and build equity. Leases are simpler but deliver 30-50% less savings over the system lifetime."}
+    ],
+    "related_slugs": ["solar-loans-vs-leases", "solar-tax-credits-incentives", "solar-panel-cost-guide"]
+  },
+  {
+    "slug": "solar-loans-vs-leases",
+    "title": "Solar Loans vs Leases: Which Is Right for You?",
+    "meta_description": "Compare solar loans vs leases side by side. Learn the pros, cons, and long-term financial impact of each solar financing option to make the best choice.",
+    "intro": "Choosing between a solar loan and lease is one of the biggest financial decisions in going solar. Each option offers $0 down, but the long-term financial outcomes differ significantly in terms of savings, ownership, and home value impact.",
+    "hub": "financing",
+    "sections": [
+      {"heading": "Solar Loans: Full Ownership Benefits", "content": "Solar loans let you own your system and claim the 30% federal tax credit. Monthly payments are often lower than your previous electric bill. After the loan is paid off, you enjoy decades of free electricity. Ownership also increases your home's resale value by an average of $15,000-$25,000."},
+      {"heading": "Solar Leases: Simplicity First", "content": "Solar leases require $0 down and no maintenance responsibility. You pay a fixed monthly fee that's typically 20-30% less than your current electric bill. However, the leasing company owns the system and keeps the tax credit. Lease terms typically run 20-25 years with annual escalators of 1-3%."},
+      {"heading": "Financial Comparison Over 25 Years", "content": "Over 25 years, a solar loan typically saves $30,000-$50,000 while a lease saves $15,000-$25,000. The difference comes from tax credit ownership, no ongoing payments after loan payoff, and home value increase. Loans have higher upfront financial commitment but significantly better long-term returns."},
+      {"heading": "Impact on Home Sale", "content": "Owned solar systems increase home value and make properties more attractive to buyers. Leased systems can complicate sales because the new buyer must qualify to assume the lease or you must buy out the remaining term. Approximately 80% of real estate agents report that owned solar is easier to sell."}
+    ],
+    "faqs": [
+      {"question": "Should I lease or buy solar panels?", "answer": "Buying (with cash or loan) is better for most homeowners who plan to stay in their home 5+ years. The tax credit, equity building, and higher long-term savings make ownership the financially superior choice."},
+      {"question": "Can I buy out my solar lease early?", "answer": "Most solar leases include a buyout option, typically available after year 5-7. The buyout price is usually the remaining lease payments minus a small discount. Some leases also offer a fair market value buyout option."},
+      {"question": "Do solar leases transfer when you sell your home?", "answer": "Yes, most solar leases can transfer to the new homeowner, but the buyer must qualify with the leasing company. If they don't qualify or decline, you may need to buy out the lease before selling."}
+    ],
+    "related_slugs": ["solar-financing-options", "solar-tax-credits-incentives", "solar-roi-payback-period"]
+  },
+  {
+    "slug": "solar-tax-credits-incentives",
+    "title": "Solar Tax Credits & Incentives Guide 2026",
+    "meta_description": "Complete guide to federal and state solar tax credits, rebates, SRECs, and incentive programs for 2026. Learn how to maximize your solar savings.",
+    "intro": "The federal solar Investment Tax Credit (ITC) lets homeowners deduct 30% of their installation cost from federal taxes through 2032. Combined with state incentives, homeowners can reduce solar costs by 40-60% depending on location.",
+    "hub": "financing",
+    "sections": [
+      {"heading": "Federal Solar Investment Tax Credit (ITC)", "content": "The ITC provides a 30% dollar-for-dollar tax credit on your total solar installation cost. For a $20,000 system, that's a $6,000 credit. It applies to equipment, labor, permitting, and sales tax. The credit can be carried forward to future tax years if your liability is insufficient."},
+      {"heading": "ITC Step-Down Schedule", "content": "The 30% ITC remains through December 31, 2032. It steps down to 26% in 2033 and 22% in 2034. After 2034, the residential credit expires unless Congress extends it. This timeline creates urgency for homeowners considering solar."},
+      {"heading": "State Tax Credits and Rebates", "content": "Many states offer additional incentives stacked on top of the federal ITC. New York offers 25% up to $5,000. South Carolina provides 25% with no cap. Hawaii offers 35% of system cost. State rebates from Colorado, Maryland, and others provide $500-$5,000 in direct cash back."},
+      {"heading": "Solar Renewable Energy Credits (SRECs)", "content": "SRECs are tradeable certificates worth $25-$250 each in qualifying states. Massachusetts SRECs trade around $250, New Jersey TRECs at $200, and Maryland SRECs at $65. A typical system generates 6-10 SRECs per year, providing significant ongoing income."},
+      {"heading": "Property and Sales Tax Exemptions", "content": "Most states with strong solar markets offer property tax exemptions, meaning your home value increase from solar doesn't raise property taxes. Many also exempt solar equipment from sales tax, saving 5-10% on installation costs."}
+    ],
+    "faqs": [
+      {"question": "How does the 30% solar tax credit work?", "answer": "The ITC lets you deduct 30% of your total solar installation cost from your federal income taxes. For example, a $20,000 system gives you a $6,000 tax credit, directly reducing your tax bill dollar-for-dollar."},
+      {"question": "Can I claim the solar tax credit if I finance?", "answer": "Yes, you can claim the full 30% ITC with cash purchase or solar loans. However, you cannot claim it with a solar lease or PPA since the leasing company owns the system."},
+      {"question": "What happens if I don't owe enough in taxes?", "answer": "If your tax credit exceeds your tax liability for the year, you can carry the remaining credit forward to future tax years until fully utilized. There is no deadline for using carried-forward credits."},
+      {"question": "Do state credits stack with federal?", "answer": "Yes, state solar tax credits are separate from and additional to the federal ITC. You can claim both, potentially reducing your total solar cost by 40-60%."}
+    ],
+    "related_slugs": ["solar-financing-options", "solar-loans-vs-leases", "solar-roi-payback-period"]
+  },
+  {
+    "slug": "best-solar-panels",
+    "title": "Best Solar Panels 2026: Top Brands Compared",
+    "meta_description": "Compare the best solar panels for 2026. Expert rankings of SunPower, REC, Panasonic, Q CELLS, and more based on efficiency, warranty, and value.",
+    "intro": "Choosing the right solar panels affects your system's performance, longevity, and return on investment. We've analyzed dozens of brands based on efficiency, durability, warranty terms, and real-world performance data to identify the top options for 2026.",
+    "hub": "equipment",
+    "sections": [
+      {"heading": "Top-Rated Solar Panels for 2026", "content": "SunPower Maxeon leads with 22.8% efficiency and a 40-year warranty. REC Alpha Pure-R offers 22.3% efficiency at a better price point. Q CELLS Q.PEAK DUO delivers strong performance at mid-range pricing. Canadian Solar and JinKo provide excellent budget options without sacrificing reliability."},
+      {"heading": "Solar Panel Efficiency Rankings", "content": "Panel efficiency determines how much power you generate per square foot of roof space. Premium panels achieve 21-23% efficiency, mid-range panels 19-21%, and budget panels 17-19%. Higher efficiency matters most when roof space is limited or you want maximum production."},
+      {"heading": "Warranty Comparison", "content": "The best solar panels offer 25-40 year product warranties and 25-30 year performance guarantees. SunPower leads with a 40-year combined warranty. REC offers 25 years with a robust 92% performance guarantee. Budget brands typically offer 12-15 year product warranties."},
+      {"heading": "Price vs Performance Analysis", "content": "Premium panels cost 15-25% more but deliver 10-15% more energy over their lifetime. For most homeowners, mid-tier panels from Q CELLS or REC offer the best value. Premium panels make sense when roof space is limited or you prioritize maximum long-term savings."}
+    ],
+    "faqs": [
+      {"question": "What are the best solar panel brands?", "answer": "The top solar panel brands for 2026 are SunPower (best overall), REC Group (best value premium), Q CELLS (best mid-range), and Canadian Solar (best budget). Each excels in different categories based on efficiency, warranty, and price."},
+      {"question": "Are expensive solar panels worth it?", "answer": "Premium panels produce 10-15% more energy and last longer, but cost 15-25% more. They're worth it when roof space is limited. For large roofs, mid-range panels often provide better overall value."},
+      {"question": "How do I choose the right solar panels?", "answer": "Consider efficiency (higher is better for small roofs), warranty length, temperature coefficient (important in hot climates), and price per watt. Get quotes from 3+ installers to compare brand options and pricing."}
+    ],
+    "related_slugs": ["solar-battery-storage-guide", "solar-inverters-guide", "how-solar-panels-work"]
+  },
+  {
+    "slug": "solar-battery-storage-guide",
+    "title": "Solar Battery Storage Guide: Costs, Brands & Benefits",
+    "meta_description": "Complete guide to solar battery storage systems. Compare Tesla Powerwall, Enphase, and more. Learn costs, benefits, and whether battery storage is worth it.",
+    "intro": "Solar battery storage allows homeowners to store excess solar energy for use at night, during outages, or when electricity rates are highest. Battery prices have dropped significantly, making storage increasingly attractive for solar homeowners.",
+    "hub": "equipment",
+    "sections": [
+      {"heading": "How Solar Batteries Work", "content": "Solar batteries store excess electricity generated by your panels during the day. When your panels produce more than you use, the surplus charges the battery instead of going to the grid. At night or during peak rate hours, you draw from the battery instead of the grid."},
+      {"heading": "Top Solar Battery Brands Compared", "content": "The Tesla Powerwall 3 leads with 13.5 kWh capacity and seamless integration. Enphase IQ Battery offers modular scalability starting at 5 kWh. Franklin Whole Home provides robust backup capability. LG RESU and Generac PWRcell round out the top options with competitive pricing."},
+      {"heading": "Solar Battery Costs in 2026", "content": "Battery storage adds $8,000-$16,000 to a solar installation, depending on capacity. The Tesla Powerwall installed costs approximately $11,500. The 30% federal tax credit applies to batteries installed with solar, reducing costs to $5,600-$11,200."},
+      {"heading": "Is Battery Storage Worth It?", "content": "Battery storage is most valuable in areas without net metering, with time-of-use rates, or with frequent power outages. In states with strong net metering, the grid effectively acts as a free battery, making storage less financially necessary but still useful for backup power."}
+    ],
+    "faqs": [
+      {"question": "How much does a solar battery cost?", "answer": "Solar batteries cost $8,000-$16,000 installed, depending on brand and capacity. The 30% federal tax credit applies when installed with solar, reducing the effective cost to $5,600-$11,200."},
+      {"question": "How long do solar batteries last?", "answer": "Most solar batteries are warrantied for 10-15 years or a specific number of charge cycles (typically 4,000-6,000). Lithium-ion batteries retain 70-80% capacity at end of warranty."},
+      {"question": "Can solar batteries power a whole house?", "answer": "A single battery like the Tesla Powerwall can power essential circuits for 12-24 hours. Whole-home backup typically requires 2-3 batteries or a larger system like the Generac PWRcell with multiple battery modules."}
+    ],
+    "related_slugs": ["best-solar-panels", "solar-inverters-guide", "net-metering-explained"]
+  },
+  {
+    "slug": "solar-inverters-guide",
+    "title": "Solar Inverters Guide: Types, Brands & How to Choose",
+    "meta_description": "Learn about solar inverter types including string inverters, microinverters, and power optimizers. Compare Enphase, SolarEdge, and other top brands.",
+    "intro": "The inverter is the brain of your solar system, converting DC power from panels to AC power for your home. Choosing the right inverter type and brand significantly impacts system performance, monitoring capability, and long-term reliability.",
+    "hub": "equipment",
+    "sections": [
+      {"heading": "String Inverters vs Microinverters", "content": "String inverters connect all panels in a series and convert power centrally. They cost less but underperform when panels have different conditions. Microinverters attach to each panel individually, optimizing each one separately. Microinverters cost 10-20% more but deliver 5-15% more energy in shaded conditions."},
+      {"heading": "Power Optimizers: The Middle Ground", "content": "Power optimizers like SolarEdge attach to each panel but feed into a central inverter. They offer panel-level optimization at a lower cost than microinverters. SolarEdge dominates this category with robust monitoring and a proven track record in millions of installations."},
+      {"heading": "Top Inverter Brands Compared", "content": "Enphase leads microinverters with the IQ8 series offering grid-independent operation. SolarEdge dominates power optimizers with excellent monitoring software. SMA is the leading string inverter brand for larger systems. Each brand offers 12-25 year warranties."},
+      {"heading": "Choosing the Right Inverter", "content": "Choose microinverters (Enphase) for roofs with shading or multiple orientations. Choose power optimizers (SolarEdge) for good-condition roofs wanting panel-level monitoring. Choose string inverters for large, unshaded roofs where cost is the priority."}
+    ],
+    "faqs": [
+      {"question": "What is the best solar inverter?", "answer": "Enphase IQ8 microinverters are the top choice for most residential installations due to panel-level optimization and monitoring. SolarEdge is the best power optimizer option, and SMA leads string inverters."},
+      {"question": "How long do solar inverters last?", "answer": "String inverters last 10-15 years, while microinverters and power optimizers are warrantied for 25 years. Most homeowners will need to replace a string inverter once during their solar system's lifetime."},
+      {"question": "Do I need a special inverter for battery storage?", "answer": "Yes, battery storage requires a hybrid inverter or a dedicated battery inverter. Enphase and SolarEdge both offer integrated solutions that manage solar production, battery storage, and grid interaction."}
+    ],
+    "related_slugs": ["best-solar-panels", "solar-battery-storage-guide", "how-solar-panels-work"]
+  },
+  {
+    "slug": "net-metering-explained",
+    "title": "Net Metering Explained: How It Works & State Policies",
+    "meta_description": "Understand how net metering works for solar homeowners. Learn about full retail, reduced rate, and feed-in tariff policies across all 50 states.",
+    "intro": "Net metering allows solar homeowners to send excess electricity back to the grid in exchange for bill credits. This policy is one of the most important factors in determining solar savings, and policies vary significantly by state and utility.",
+    "hub": "savings",
+    "sections": [
+      {"heading": "How Net Metering Works", "content": "When your solar panels produce more electricity than you use during the day, the excess flows to the grid. Your meter tracks this export, and you receive credits on your utility bill. At night, you draw from the grid and use those credits, effectively using the grid as a free battery."},
+      {"heading": "Full Retail vs Reduced Rate Net Metering", "content": "Full retail net metering credits you at the same rate you pay for electricity. This provides the best economics for solar. Some states have moved to reduced rate programs that credit at wholesale or avoided cost rates, reducing the value of exported solar by 30-60%."},
+      {"heading": "Net Metering Policies by State", "content": "States with strong net metering include New Jersey, Massachusetts, New York, and Colorado. California shifted to NEM 3.0 with reduced export rates in 2023. States without mandatory net metering include Texas, Georgia, and Tennessee. Policies continue to evolve as solar adoption grows."},
+      {"heading": "Maximizing Value Without Net Metering", "content": "If your state has weak net metering, maximize self-consumption by running appliances during solar production hours. Battery storage captures excess production for evening use. Smart home systems can automate energy shifting to minimize grid exports."}
+    ],
+    "faqs": [
+      {"question": "What is net metering for solar?", "answer": "Net metering is a billing policy that credits solar homeowners for excess electricity sent to the grid. Credits offset your electricity consumption from the grid, reducing or eliminating your electric bill."},
+      {"question": "Do all states have net metering?", "answer": "No, net metering policies vary by state. About 38 states plus DC have some form of net metering. The value of credits and program details differ significantly between states."},
+      {"question": "Is net metering going away?", "answer": "Some states are modifying net metering programs to reduce export credit values. California's NEM 3.0 significantly reduced credits. However, most states maintain some form of compensation for solar exports."}
+    ],
+    "related_slugs": ["solar-roi-payback-period", "solar-energy-savings-calculator", "solar-tax-credits-incentives"]
+  },
+  {
+    "slug": "solar-roi-payback-period",
+    "title": "Solar ROI & Payback Period: Calculate Your Returns",
+    "meta_description": "Calculate your solar panel payback period and ROI. Most systems pay for themselves in 5-10 years with 200-400% returns over 25 years.",
+    "intro": "Solar panels are one of the best home investments available, with typical payback periods of 5-10 years and lifetime savings of $20,000-$60,000. Understanding ROI calculations helps you evaluate whether solar makes financial sense for your situation.",
+    "hub": "savings",
+    "sections": [
+      {"heading": "How to Calculate Solar Payback Period", "content": "Payback period equals your net system cost divided by annual electricity savings. For example, a $14,000 system (after tax credit) saving $2,000/year in electricity has a 7-year payback. After payback, all electricity savings are pure profit for the remaining 18+ years."},
+      {"heading": "Average Payback by State", "content": "States with the fastest payback include Massachusetts (4-6 years), New York (5-7 years), California (5-8 years), and New Jersey (5-7 years). States with lower electricity rates like Louisiana and Oklahoma see longer payback periods of 10-14 years."},
+      {"heading": "Factors That Affect Solar ROI", "content": "Key ROI drivers include local electricity rates, available incentives, system cost, financing terms, electricity rate inflation, and net metering policy. Higher electricity rates and stronger incentives dramatically improve returns. Electricity rates have historically increased 2-3% annually."},
+      {"heading": "Solar vs Other Investments", "content": "A solar system with a 7-year payback delivers roughly 14% annual returns. Over 25 years, total ROI typically exceeds 200-400%. This outperforms average stock market returns and provides the added benefit of protection against rising electricity costs."}
+    ],
+    "faqs": [
+      {"question": "What is the average solar payback period?", "answer": "The national average solar payback period is 6-9 years. With strong state incentives and high electricity rates, payback can be as short as 4-5 years."},
+      {"question": "How much money do solar panels save over 25 years?", "answer": "Most solar systems save $20,000-$60,000 over 25 years depending on electricity rates, system size, and incentives. In high-rate states, lifetime savings can exceed $80,000."},
+      {"question": "Do solar panels increase home value?", "answer": "Yes, studies show solar panels increase home value by $15,000-$25,000 on average. Homes with owned solar systems sell faster and for more than comparable homes without solar."}
+    ],
+    "related_slugs": ["solar-panel-cost-guide", "net-metering-explained", "solar-energy-savings-calculator"]
+  },
+  {
+    "slug": "solar-energy-savings-calculator",
+    "title": "Solar Energy Savings Calculator: Estimate Your Savings",
+    "meta_description": "Use our solar savings calculator to estimate your potential savings. Enter your location, electric bill, and roof details for a personalized solar analysis.",
+    "intro": "Our solar energy savings calculator helps you estimate how much you could save by going solar. By factoring in your location, electricity usage, available incentives, and local solar conditions, we provide a personalized savings projection.",
+    "hub": "savings",
+    "sections": [
+      {"heading": "How the Solar Savings Calculator Works", "content": "Our calculator uses your monthly electric bill, state location, and roof orientation to estimate system size, cost, and savings. We factor in the 30% federal tax credit, state incentives, local electricity rates, and solar irradiance data to provide accurate projections."},
+      {"heading": "Key Inputs for Accurate Estimates", "content": "Enter your average monthly electric bill, state, and whether you own your home. For more precise results, provide your roof orientation (south-facing is ideal) and any significant shading. These factors can impact savings estimates by 15-30%."},
+      {"heading": "Understanding Your Results", "content": "Your results include estimated system size, installation cost before and after incentives, monthly savings, payback period, and 25-year total savings. We also show which financing options are available and how they affect your monthly cash flow."},
+      {"heading": "From Estimate to Real Quote", "content": "Our calculator provides a starting estimate based on averages. For an exact quote, we connect you with pre-vetted local installers who perform detailed site assessments. Most homeowners find that actual quotes are within 10-15% of our calculator estimates."}
+    ],
+    "faqs": [
+      {"question": "How accurate is a solar savings calculator?", "answer": "Online calculators are typically accurate within 10-20% of actual quotes. They use average costs and solar data for your area. A detailed site assessment provides exact numbers based on your specific roof and shading conditions."},
+      {"question": "What information do I need for a solar estimate?", "answer": "At minimum, you need your monthly electric bill amount and state. For better accuracy, provide your roof orientation, home square footage, and current electricity rate per kWh."},
+      {"question": "Why do different calculators give different results?", "answer": "Calculators vary in their assumptions about electricity rate increases, system degradation, equipment costs, and incentive calculations. Our calculator uses conservative, data-backed assumptions for reliable estimates."}
+    ],
+    "related_slugs": ["solar-roi-payback-period", "solar-panel-cost-guide", "net-metering-explained"]
+  },
+  {
+    "slug": "residential-vs-commercial-solar",
+    "title": "Residential vs Commercial Solar: Key Differences",
+    "meta_description": "Compare residential and commercial solar systems. Learn the differences in cost, financing, incentives, system size, and ROI for homes vs businesses.",
+    "intro": "While residential and commercial solar use the same core technology, they differ significantly in scale, cost, financing, and incentives. Understanding these differences helps homeowners and business owners make informed decisions about solar investment.",
+    "hub": "advanced",
+    "sections": [
+      {"heading": "System Size and Scale", "content": "Residential systems typically range from 5-15kW, while commercial systems range from 25kW to several megawatts. Commercial installations use ground mounts or flat-roof ballasted systems more often than residential. Larger scale means lower per-watt costs for commercial projects."},
+      {"heading": "Cost and Financing Differences", "content": "Residential solar costs $2.50-$3.50/watt while commercial systems average $1.50-$2.50/watt due to economies of scale. Commercial projects access additional financing options including MACRS depreciation, commercial PPAs, and C-PACE financing not available to homeowners."},
+      {"heading": "Incentive Structures", "content": "Both sectors benefit from the 30% ITC, but commercial projects can also claim MACRS accelerated depreciation, recovering 85% of system cost through tax deductions over 5 years. This makes the effective commercial tax benefit 56% vs 30% for residential."},
+      {"heading": "ROI Comparison", "content": "Commercial solar typically delivers faster payback (3-7 years) due to lower per-watt costs and enhanced tax benefits. Residential systems see 5-10 year payback. Both offer strong long-term returns, with commercial projects often exceeding 20% annual ROI."}
+    ],
+    "faqs": [
+      {"question": "Is commercial solar cheaper than residential?", "answer": "Yes, commercial solar costs 30-40% less per watt due to economies of scale and simpler installation on flat commercial roofs. However, commercial projects require larger upfront investment."},
+      {"question": "Can a business use the solar tax credit?", "answer": "Yes, businesses can claim the 30% ITC plus MACRS accelerated depreciation. Combined, these incentives offset approximately 56% of the total system cost, making commercial solar highly attractive."},
+      {"question": "What size solar system does a business need?", "answer": "Commercial system size depends on electricity consumption and available roof or ground space. A typical small business needs 25-100kW, while larger facilities may need 500kW to several megawatts."}
+    ],
+    "related_slugs": ["community-solar-explained", "solar-panel-cost-guide", "solar-roi-payback-period"]
+  },
+  {
+    "slug": "community-solar-explained",
+    "title": "Community Solar Explained: How It Works & Benefits",
+    "meta_description": "Learn about community solar programs. Discover how to benefit from solar energy without installing panels on your roof through shared solar farms.",
+    "intro": "Community solar allows renters, condo owners, and homeowners with unsuitable roofs to benefit from solar energy. By subscribing to a share of a local solar farm, you receive credits on your electric bill without any rooftop installation.",
+    "hub": "advanced",
+    "sections": [
+      {"heading": "How Community Solar Works", "content": "Community solar farms are large solar installations shared by multiple subscribers. You purchase or subscribe to a portion of the farm's output and receive bill credits proportional to your share. No installation, maintenance, or upfront investment is required in most programs."},
+      {"heading": "Who Benefits from Community Solar", "content": "Community solar is ideal for renters, homeowners with shaded or old roofs, condo and apartment dwellers, and anyone who cannot install rooftop panels. It provides 5-15% electricity savings without any property modifications or long-term commitments."},
+      {"heading": "Community Solar vs Rooftop Solar", "content": "Rooftop solar offers higher savings (30-100% bill reduction) and increases home value, but requires roof ownership and suitability. Community solar offers modest savings (5-15%) with no upfront cost and no installation. Rooftop solar provides better long-term economics for eligible homeowners."},
+      {"heading": "Finding Community Solar Programs", "content": "Community solar is available in about 40 states, with the largest programs in New York, Massachusetts, Minnesota, Colorado, and Illinois. Search your state and utility provider for available programs, or use platforms like EnergySage to compare community solar options."}
+    ],
+    "faqs": [
+      {"question": "How much does community solar save?", "answer": "Community solar subscribers typically save 5-15% on their electricity bills. Savings depend on your subscription size, local program structure, and utility rate. Some programs guarantee a specific discount percentage."},
+      {"question": "Can renters use community solar?", "answer": "Yes, community solar is an excellent option for renters. You subscribe to a share of a solar farm and receive bill credits without any installation on your rental property. Subscriptions are transferable if you move."},
+      {"question": "Is there a commitment for community solar?", "answer": "Program terms vary. Some offer month-to-month subscriptions while others require 1-3 year commitments. Most programs allow cancellation with 30-90 days notice and have no early termination fees."}
+    ],
+    "related_slugs": ["residential-vs-commercial-solar", "net-metering-explained", "solar-financing-options"]
+  },
+  {
+    "slug": "solar-panel-maintenance-guide",
+    "title": "Solar Panel Maintenance Guide: Keep Your System Running",
+    "meta_description": "Complete guide to solar panel maintenance. Learn about cleaning, inspection, monitoring, and troubleshooting to maximize your system's performance and lifespan.",
+    "intro": "Solar panels require minimal maintenance but benefit from regular attention to maximize performance and longevity. Proper care ensures your system produces at its rated capacity throughout its 25-30+ year lifespan.",
+    "hub": "advanced",
+    "sections": [
+      {"heading": "Regular Cleaning and Inspection", "content": "Clean panels 1-2 times per year, or more in dusty or pollen-heavy areas. Rain handles most cleaning naturally. For stubborn dirt, use water and a soft brush. Annual visual inspections should check for cracked glass, loose wiring, or corrosion. Never use abrasive cleaners or pressure washers."},
+      {"heading": "Monitoring System Performance", "content": "Modern solar systems include monitoring apps that track real-time production. Check your monitoring weekly to spot underperforming panels or system issues. A sudden drop in production may indicate a failed panel, inverter issue, or new shading. Most monitoring systems send automatic alerts for anomalies."},
+      {"heading": "Common Issues and Troubleshooting", "content": "The most common issues include bird nesting under panels, squirrel damage to wiring, inverter faults, and production drops from new tree growth. Critter guards prevent animal damage. Inverter replacement costs $1,000-$2,500. Most issues are covered under warranty."},
+      {"heading": "When to Call a Professional", "content": "Contact your installer for electrical issues, significant production drops, physical damage, or warranty claims. Professional inspections every 3-5 years help catch developing issues. Never attempt electrical work on your solar system yourself as panels produce live electricity whenever exposed to light."}
+    ],
+    "faqs": [
+      {"question": "How often should solar panels be cleaned?", "answer": "Clean solar panels 1-2 times per year. In areas with heavy dust, pollen, or bird activity, quarterly cleaning may be needed. Rain provides natural cleaning in many climates."},
+      {"question": "Do solar panels need regular maintenance?", "answer": "Solar panels need minimal maintenance. Annual visual inspections, occasional cleaning, and monitoring system performance are the main tasks. Most systems operate reliably for decades with minimal attention."},
+      {"question": "What is the cost of solar panel maintenance?", "answer": "Annual maintenance costs average $150-$400 for professional cleaning and inspection. Most ongoing maintenance is free if you clean panels yourself and monitor through your inverter's app."}
+    ],
+    "related_slugs": ["how-solar-panels-work", "solar-panel-installation-process", "best-solar-panels"]
   }
 ]

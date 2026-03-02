@@ -6,7 +6,9 @@ const {
   ctaBlock, urgencyBlock, affiliateCtaBlock, emailCaptureBlock,
   aboveFoldQuoteCta, midContentFinancingCta, sidebarAffiliateWidget,
   calculatorResultMonetization, authorBioBlock, comparisonAffiliateTable,
-  articleSchema, SITE
+  articleSchema, organizationSchema, howToSchema, reviewSchema,
+  lastUpdatedBlock, displayAdSlot, contextualLinksBlock, hubLinksSection,
+  enhancedAuthorBioBlock, SITE
 } = require('./components');
 
 // ---------------------------------------------------------------------------
@@ -221,6 +223,27 @@ ${emailCaptureBlock('Your Home')}
 
 ${authorBioBlock()}
 
+${hubLinksSection('Solar Financing Hub', [
+  { title: 'Complete Solar Financing Guide', url: '/guide/solar-financing-complete-guide/', meta: 'Loans, leases, PPAs & more' },
+  { title: 'Solar Loans vs Leases vs PPA', url: '/guide/solar-loans-vs-leases-vs-ppa/', meta: 'Which saves you the most?' },
+  { title: 'Solar Tax Credit Filing Guide', url: '/guide/solar-tax-credits-guide/', meta: 'Step-by-step ITC guide' },
+  { title: 'Financing Options Compared', url: '/solar-financing/', meta: '12 providers compared' }
+])}
+
+${hubLinksSection('Solar Equipment Hub', [
+  { title: 'Best Solar Panels 2026', url: '/guide/best-solar-panels-2026/', meta: 'Expert rankings & reviews' },
+  { title: 'Best Solar Companies 2026', url: '/guide/best-solar-companies-2026/', meta: 'Top installers compared' },
+  { title: 'Solar Battery Buying Guide', url: '/guide/solar-battery-buying-guide/', meta: 'Home storage options' },
+  { title: 'Solar Warranties Explained', url: '/guide/solar-warranties-explained/', meta: 'Coverage & protection' }
+])}
+
+${hubLinksSection('Getting Started Hub', [
+  { title: 'Complete Guide to Home Solar', url: '/guide/complete-guide-home-solar/', meta: 'Everything you need to know' },
+  { title: 'How to Choose a Solar Installer', url: '/guide/how-to-choose-solar-installer/', meta: '10 critical questions' },
+  { title: 'Solar Panel Cost Guide', url: '/guide/solar-panel-cost-guide/', meta: 'Real costs in 2026' },
+  { title: 'Solar Installation Guide', url: '/guide/solar-installation-guide/', meta: 'Complete walkthrough' }
+])}
+
 ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above to see available rebates and projected savings for your home.', '#widget-hero')}
 `;
 
@@ -310,6 +333,7 @@ function generateStatePage(state, stateData) {
 <div class="container">
 <h1>${state.state_name} Solar Rebates, Tax Credits &amp; Incentives (${SITE.year})</h1>
 <p class="lead">Complete guide to solar incentives in ${state.state_name}. See how much you can save with the federal tax credit, state programs, utility rebates, and local incentives.</p>
+${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${aboveFoldQuoteCta(state.state_name)}
 
@@ -396,7 +420,7 @@ ${ctaBlock('primary', 'Get Your ' + state.state_name + ' Solar Estimate', 'See e
     {
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, state.state_abbrev),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs),
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(state.state_name + ' Solar Rebates & Incentives', 'Find solar rebates, tax credits, and incentives in ' + state.state_name, '/solar-rebates-incentives-' + state.slug + '/'),
       states: states
     }
   );
@@ -412,6 +436,7 @@ function generateUtilityPage(utility, utilityData) {
 
   var parentState = states.find(function (s) { return s.state_abbrev === utility.state_abbrev; });
   var sameStateUtils = utilities.filter(function (u) { return u.state_abbrev === utility.state_abbrev && u.slug !== utility.slug; }).slice(0, 6);
+  var servedCities = (utilityData.cities || []).filter(function(c) { return c.state_abbrev === utility.state_abbrev; }).slice(0, 8);
 
   var faqs = [
     { question: 'Does ' + utility.utility_name + ' offer net metering?', answer: utility.utility_name + ' offers net metering with a "' + utility.net_metering_rate + '" rate structure. Export compensation is approximately $' + utility.export_compensation + '/kWh.' + (utility.cap_reached ? ' Note: the net metering cap has been reached, which may affect new applicants.' : '') },
@@ -432,6 +457,7 @@ function generateUtilityPage(utility, utilityData) {
 <div class="container">
 <h1>${utility.utility_name} Solar Policy &amp; Net Metering Guide (${SITE.year})</h1>
 <p class="lead">Complete solar policy guide for ${utility.utility_name} customers in ${utility.state}. Review net metering rates, export compensation, interconnection fees, and available solar programs.</p>
+${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${statsGrid([
   { value: utility.net_metering_rate, label: 'Net Metering Type' },
@@ -493,6 +519,8 @@ ${faqSection(faqs)}
 
 ${authorBioBlock()}
 
+${servedCities.length > 0 ? relatedPagesSection('Cities Served by ' + utility.utility_name, servedCities.map(function(c) { return { title: c.city_name + ', ' + c.state_abbrev, url: '/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/', meta: c.avg_sun_hours + ' sun hrs/day' }; })) : ''}
+
 ${relatedPagesSection('Other Utilities in ' + utility.state, sameStateUtils.map(function (u) {
   return { title: u.utility_name, url: '/utility-rebates/' + u.slug + '/', meta: 'Net metering: ' + u.net_metering_rate };
 }))}
@@ -508,7 +536,7 @@ ${ctaBlock('primary', 'Check Your Solar Savings', 'See how much you can save as 
     {
       breadcrumbs: crumbs,
       alertHtml: utilityAlerts(alerts, utility.slug),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs),
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(utility.utility_name + ' Solar Policy & Net Metering Guide', 'Complete solar policy guide for ' + utility.utility_name + ' customers in ' + utility.state, '/utility-rebates/' + utility.slug + '/'),
       states: states
     }
   );
@@ -532,6 +560,7 @@ function generateCityPage(city, cityData) {
   );
 
   var nearbyCities = cities.filter(function (c) { return c.state_abbrev === city.state_abbrev && c.slug !== city.slug; }).slice(0, 6);
+  var cityUtilities = (cityData.utilities || []).filter(function(u) { return u.state_abbrev === city.state_abbrev; }).slice(0, 5);
 
   var yearSavingsRows = [];
   for (var yr = 1; yr <= 20; yr += (yr < 5 ? 1 : (yr < 10 ? 2 : 5))) {
@@ -565,6 +594,7 @@ function generateCityPage(city, cityData) {
 <div class="container">
 <h1>Is Solar Worth It in ${city.city_name}, ${city.state_abbrev}? (${SITE.year} Analysis)</h1>
 <p class="lead">Detailed solar ROI analysis for ${city.city_name}, ${city.state_name}. With ${city.avg_sun_hours} peak sun hours and electricity at $${city.avg_electricity_rate}/kWh, here is what you can expect from going solar.</p>
+${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${aboveFoldQuoteCta(city.city_name + ', ' + city.state_abbrev)}
 
@@ -646,6 +676,8 @@ ${faqSection(faqs)}
 
 ${authorBioBlock()}
 
+${cityUtilities.length > 0 ? '<section class="content-section"><div class="container"><h2>Your Local Utilities in ' + city.state_name + '</h2><p>Review net metering policies and solar programs from utilities serving ' + city.city_name + '.</p><div class="related-grid">' + cityUtilities.map(function(u) { return '<a href="/utility-rebates/' + u.slug + '/" class="related-card"><span class="related-title">' + u.utility_name + '</span><span class="related-meta">Net metering: ' + u.net_metering_rate + '</span></a>'; }).join('') + '</div></div></section>' : ''}
+
 ${relatedPagesSection('More Cities in ' + city.state_name, nearbyCities.map(function (c) {
   return { title: c.city_name + ', ' + c.state_abbrev, url: '/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/', meta: c.avg_sun_hours + ' sun hrs · $' + c.avg_electricity_rate + '/kWh' };
 }))}
@@ -661,7 +693,7 @@ ${ctaBlock('primary', 'Get Your ' + city.city_name + ' Solar Estimate', 'See exa
     {
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, city.state_abbrev),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs),
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema('Is Solar Worth It in ' + city.city_name + ', ' + city.state_abbrev + '?', 'Solar ROI analysis for ' + city.city_name + ', ' + city.state_abbrev, '/' + slug + '/'),
       states: states
     }
   );
@@ -1222,6 +1254,579 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Use our calculator to see
 }
 
 // ---------------------------------------------------------------------------
+// 11. About Page
+// ---------------------------------------------------------------------------
+function generateAboutPage(authors) {
+  var authorsList = Array.isArray(authors) ? authors : [];
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'About Us' }];
+
+  var teamHtml = authorsList.map(function(a) {
+    return '<div class="stat-card"><span class="stat-value">' + a.name + '</span><span class="stat-label">' + a.title + '</span><a href="/authors/' + a.slug + '/" class="btn btn-outline btn-sm mt-2">View Profile</a></div>';
+  }).join('');
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>About ${SITE.name}</h1>
+<p class="lead">${SITE.name} is a solar energy research and analysis platform dedicated to helping American homeowners make informed decisions about going solar. We provide free, unbiased tools and data to evaluate solar incentives, estimate savings, and compare options.</p>
+${lastUpdatedBlock('Dr. Michael Torres', 'michael-torres')}
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<div class="content-prose">
+<h2>Our Mission</h2>
+<p>We believe every homeowner deserves access to clear, accurate information about solar energy — without sales pressure or hidden agendas. The solar industry is complex, with federal tax credits, state incentives, utility policies, financing options, and equipment choices that vary dramatically by location. Our mission is to simplify this complexity.</p>
+<p>${SITE.name} was founded on the principle that data-driven analysis leads to better decisions. We aggregate information from the U.S. Department of Energy, IRS, DSIRE, NREL, EIA, and individual utility companies to provide comprehensive solar intelligence across all 50 states.</p>
+
+<h2>What We Do</h2>
+<ul>
+<li><strong>Solar Savings Analysis:</strong> We calculate personalized ROI estimates using state-specific data including sun hours, electricity rates, installation costs, and all available incentives.</li>
+<li><strong>Incentive Tracking:</strong> We monitor federal, state, and utility-level solar incentives across 50 states and 270+ utilities, updating data quarterly.</li>
+<li><strong>Equipment Reviews:</strong> Our team evaluates solar panels, batteries, inverters, and monitoring systems with objective, data-driven analysis.</li>
+<li><strong>Installer Comparisons:</strong> We research and compare solar installation companies to help homeowners find reputable, qualified providers.</li>
+<li><strong>Educational Content:</strong> Our guides, glossary, and comparison tools explain solar concepts in plain language.</li>
+</ul>
+
+<h2>Our Editorial Standards</h2>
+<p>All content on ${SITE.name} is independently researched and fact-checked. Our affiliate relationships never influence our analysis, ratings, or recommendations. We clearly disclose all commercial relationships and maintain strict editorial independence. See our <a href="/editorial-standards/">Editorial Standards</a> and <a href="/methodology/">Methodology</a> pages for details.</p>
+
+<h2>Data Sources</h2>
+<p>Our analysis relies on authoritative government and industry sources:</p>
+<ul>
+<li>U.S. Department of Energy (DOE)</li>
+<li>Internal Revenue Service (IRS) — Tax credit guidance</li>
+<li>Database of State Incentives for Renewables & Efficiency (DSIRE)</li>
+<li>National Renewable Energy Laboratory (NREL)</li>
+<li>U.S. Energy Information Administration (EIA)</li>
+<li>Individual state energy offices and utility tariff filings</li>
+</ul>
+</div>
+</div>
+</section>
+
+${teamHtml ? '<section class="content-section"><div class="container"><h2>Our Team</h2><p>Our analysts bring decades of combined experience in solar energy, renewable finance, and energy policy.</p><div class="stats-grid">' + teamHtml + '</div><div class="text-center mt-3"><a href="/authors/" class="btn btn-primary">Meet the Full Team</a></div></div></section>' : ''}
+
+<section class="content-section bg-light">
+<div class="container">
+<div class="content-prose">
+<h2>Contact Us</h2>
+<p>Have questions about our data, methodology, or editorial standards? Want to report an error or suggest an improvement?</p>
+<p><a href="/contact/" class="btn btn-primary">Contact Us</a></p>
+</div>
+</div>
+</section>
+`;
+
+  return baseTemplate('About Us', SITE.name + ' is a solar energy research and analysis platform helping homeowners make informed decisions about going solar.', '/about/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema('About ' + SITE.name, 'Learn about our mission, team, and methodology.', '/about/') });
+}
+
+// ---------------------------------------------------------------------------
+// 12. Contact Page
+// ---------------------------------------------------------------------------
+function generateContactPage() {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Contact' }];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Contact ${SITE.name}</h1>
+<p class="lead">Have a question, correction, or partnership inquiry? We would love to hear from you. Fill out the form below and our team will respond within 2 business days.</p>
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+<input type="hidden" name="form-name" value="contact">
+<p style="display:none"><label>Do not fill: <input name="bot-field"></label></p>
+<div class="widget-field">
+<label class="widget-label" for="contact-name">Full Name</label>
+<input class="widget-input" type="text" id="contact-name" name="name" required aria-required="true">
+</div>
+<div class="widget-field">
+<label class="widget-label" for="contact-email">Email Address</label>
+<input class="widget-input" type="email" id="contact-email" name="email" required aria-required="true">
+</div>
+<div class="widget-field">
+<label class="widget-label" for="contact-subject">Subject</label>
+<select class="widget-select" id="contact-subject" name="subject" required>
+<option value="">Select a topic...</option>
+<option value="data-correction">Data Correction</option>
+<option value="general-question">General Question</option>
+<option value="partnership">Business / Partnership Inquiry</option>
+<option value="advertising">Advertising Inquiry</option>
+<option value="press">Press / Media</option>
+<option value="other">Other</option>
+</select>
+</div>
+<div class="widget-field">
+<label class="widget-label" for="contact-message">Message</label>
+<textarea class="widget-input" id="contact-message" name="message" rows="5" required aria-required="true" style="resize:vertical;min-height:120px;"></textarea>
+</div>
+<button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+</form>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+<div class="content-prose">
+<h2>Other Ways to Reach Us</h2>
+<ul>
+<li><strong>Email:</strong> contact@solarsavingsai.com</li>
+<li><strong>Data Corrections:</strong> If you find an error in our solar incentive data, <a href="/methodology/">see our methodology</a> for how data is sourced, then use the form above to report the issue.</li>
+<li><strong>Business Inquiries:</strong> For partnership, advertising, or media inquiries, select the appropriate subject above.</li>
+</ul>
+<h2>Response Time</h2>
+<p>We aim to respond to all inquiries within 2 business days. For urgent data corrections affecting published incentive amounts, we prioritize same-day review.</p>
+</div>
+</div>
+</section>
+`;
+
+  return baseTemplate('Contact Us', 'Contact the ' + SITE.name + ' team for questions, data corrections, partnership inquiries, or feedback.', '/contact/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) });
+}
+
+// ---------------------------------------------------------------------------
+// 13. Privacy Policy Page
+// ---------------------------------------------------------------------------
+function generatePrivacyPolicyPage() {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Privacy Policy' }];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Privacy Policy</h1>
+<p class="lead">Last updated: March 1, ${SITE.year}. This Privacy Policy describes how ${SITE.name} collects, uses, and protects your personal information.</p>
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<div class="content-prose">
+<h2>Information We Collect</h2>
+<h3>Information You Provide</h3>
+<p>When you use our solar savings calculator or contact forms, you may voluntarily provide:</p>
+<ul>
+<li><strong>ZIP code</strong> — to determine your location for state-specific incentive data</li>
+<li><strong>Monthly electric bill amount</strong> — to estimate potential solar savings</li>
+<li><strong>Homeownership status</strong> — to assess solar eligibility</li>
+<li><strong>Email address</strong> — to provide personalized savings reports and connect you with solar providers</li>
+<li><strong>Name and phone number</strong> — if you choose to provide them for provider follow-up</li>
+</ul>
+
+<h3>Information Collected Automatically</h3>
+<p>When you visit our site, we may automatically collect:</p>
+<ul>
+<li>Browser type and version</li>
+<li>Pages visited and time spent on each page</li>
+<li>Referring website or search terms</li>
+<li>Device type (mobile, desktop, tablet)</li>
+<li>Approximate geographic location based on IP address (city/state level only)</li>
+</ul>
+
+<h2>How We Use Your Information</h2>
+<ul>
+<li><strong>Savings Estimates:</strong> Your ZIP code and bill amount are used to calculate personalized solar savings projections.</li>
+<li><strong>Provider Matching:</strong> When you request quotes, your information may be shared with our vetted solar provider partners to connect you with relevant offers.</li>
+<li><strong>Site Improvement:</strong> Aggregated, anonymized usage data helps us improve our tools, content, and user experience.</li>
+<li><strong>Communication:</strong> If you provide your email, we may send you your requested savings report. We do not send unsolicited marketing emails.</li>
+</ul>
+
+<h2>Information Sharing</h2>
+<p>We may share your information in these limited circumstances:</p>
+<ul>
+<li><strong>Solar Provider Partners:</strong> When you click an affiliate link or request a quote, your information may be shared with the solar provider you selected. This is necessary to fulfill your request. Our partners include EnergySage, Sunrun, SunPower, Palmetto, Sunnova, Mosaic, GoodLeap, and others.</li>
+<li><strong>Service Providers:</strong> We use Netlify for hosting, which may process data as part of standard web hosting operations.</li>
+<li><strong>Legal Requirements:</strong> We may disclose information if required by law, regulation, or legal process.</li>
+</ul>
+<p>We do NOT sell your personal information to third parties for their independent marketing purposes.</p>
+
+<h2>Your Rights</h2>
+<h3>California Residents (CCPA/CPRA)</h3>
+<p>If you are a California resident, you have the right to:</p>
+<ul>
+<li>Know what personal information we collect, use, and disclose</li>
+<li>Request deletion of your personal information</li>
+<li>Opt out of the sale or sharing of your personal information</li>
+<li>Non-discrimination for exercising your privacy rights</li>
+</ul>
+<p>To exercise these rights, contact us at <a href="/contact/">our contact page</a> or email privacy@solarsavingsai.com.</p>
+
+<h3>Other State Privacy Laws</h3>
+<p>Residents of Virginia (VCDPA), Colorado (CPA), Connecticut (CTDPA), and other states with comprehensive privacy laws have similar rights. Contact us to exercise your rights under applicable state law.</p>
+
+<h2>Cookies and Tracking</h2>
+<p>We use session storage (not persistent cookies) to improve your experience by remembering your calculator inputs during a browsing session. We use basic analytics to understand site usage patterns. We do not use third-party tracking cookies for advertising purposes.</p>
+
+<h2>Data Security</h2>
+<p>We implement industry-standard security measures including HTTPS encryption, security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy), and input validation to protect your information. However, no method of transmission over the internet is 100% secure.</p>
+
+<h2>Data Retention</h2>
+<p>Calculator submissions and contact form data are retained for a maximum of 12 months, after which they are automatically deleted. You may request earlier deletion by contacting us.</p>
+
+<h2>Children's Privacy</h2>
+<p>Our services are not directed to children under 13. We do not knowingly collect personal information from children under 13.</p>
+
+<h2>Changes to This Policy</h2>
+<p>We may update this Privacy Policy periodically. The "Last updated" date at the top of this page indicates when the policy was last revised. Continued use of the site after changes constitutes acceptance of the updated policy.</p>
+
+<h2>Contact Us</h2>
+<p>For privacy-related inquiries, contact us at:</p>
+<ul>
+<li>Email: privacy@solarsavingsai.com</li>
+<li>Web: <a href="/contact/">Contact Form</a></li>
+</ul>
+</div>
+</div>
+</section>
+`;
+
+  return baseTemplate('Privacy Policy', SITE.name + ' privacy policy. Learn how we collect, use, and protect your personal information. CCPA/state privacy law compliant.', '/privacy-policy/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) });
+}
+
+// ---------------------------------------------------------------------------
+// 14. Authors Index Page
+// ---------------------------------------------------------------------------
+function generateAuthorsIndexPage(authors) {
+  var authorsList = Array.isArray(authors) ? authors : [];
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Our Team' }];
+
+  var cardsHtml = authorsList.map(function(a) {
+    var creds = (a.credentials || []).slice(0, 2).join(' | ');
+    return '<a href="/authors/' + a.slug + '/" class="related-card" itemscope itemtype="https://schema.org/Person">' +
+      '<span class="related-title" itemprop="name">' + a.name + '</span>' +
+      '<span class="related-meta" itemprop="jobTitle">' + a.title + '</span>' +
+      '<span class="related-meta" style="font-size:0.75rem;opacity:0.8;">' + creds + '</span>' +
+      '</a>';
+  }).join('');
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Meet the ${SITE.name} Team</h1>
+<p class="lead">Our team of solar energy analysts, finance specialists, and industry researchers brings decades of combined experience to provide accurate, unbiased solar information.</p>
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<div class="related-grid">
+${cardsHtml}
+</div>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+<div class="content-prose">
+<h2>Our Expertise</h2>
+<p>Every analysis, guide, and data point on ${SITE.name} is reviewed by qualified team members with relevant expertise. Our editorial process ensures accuracy through multi-source verification, peer review, and quarterly data audits.</p>
+<p>Learn more about our process: <a href="/methodology/">Methodology</a> | <a href="/editorial-standards/">Editorial Standards</a></p>
+</div>
+</div>
+</section>
+`;
+
+  return baseTemplate('Our Team — Solar Energy Experts', 'Meet the ' + SITE.name + ' team of solar energy analysts, finance specialists, and researchers. Decades of combined expertise in solar energy.', '/authors/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) });
+}
+
+// ---------------------------------------------------------------------------
+// 15. Individual Author Page
+// ---------------------------------------------------------------------------
+function generateAuthorPage(author, allAuthors) {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Our Team', url: '/authors/' }, { label: author.name }];
+  var otherAuthors = (allAuthors || []).filter(function(a) { return a.slug !== author.slug; });
+
+  var credsHtml = (author.credentials || []).map(function(c) {
+    return '<li>' + c + '</li>';
+  }).join('');
+
+  var expertiseHtml = (author.expertise || []).map(function(e) {
+    return '<span class="badge badge-sm">' + e + '</span>';
+  }).join(' ');
+
+  var body = `
+<section class="content-section">
+<div class="container" itemscope itemtype="https://schema.org/Person">
+<h1 itemprop="name">${author.name}</h1>
+<p class="lead" itemprop="jobTitle">${author.title} at ${SITE.name}</p>
+<div class="author-expertise">${expertiseHtml}</div>
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<div class="content-prose">
+<h2>About ${author.name}</h2>
+<p itemprop="description">${author.bio}</p>
+
+<h2>Credentials</h2>
+<ul>${credsHtml}</ul>
+
+<h2>Areas of Expertise</h2>
+<p>${author.name} specializes in ${(author.expertise || []).join(', ')}. With ${author.experience_years || 5}+ years of experience in the solar energy industry, ${author.name.split(' ')[0]} contributes to ${SITE.name}'s data analysis, content creation, and editorial review processes.</p>
+</div>
+</div>
+</section>
+
+${relatedPagesSection('Other Team Members', otherAuthors.map(function(a) {
+  return { title: a.name, url: '/authors/' + a.slug + '/', meta: a.title };
+}))}
+`;
+
+  var personSchema = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: author.name,
+    jobTitle: author.title,
+    description: (author.bio || '').substring(0, 200),
+    worksFor: { '@type': 'Organization', name: SITE.name, url: SITE.url }
+  });
+
+  return baseTemplate(author.name + ' — ' + author.title, author.name + ', ' + author.title + ' at ' + SITE.name + '. ' + (author.credentials || []).slice(0, 2).join('. ') + '.', '/authors/' + author.slug + '/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + personSchema });
+}
+
+// ---------------------------------------------------------------------------
+// 16. Brand Review Page
+// ---------------------------------------------------------------------------
+function generateBrandReviewPage(brand, allBrands) {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Reviews', url: '/reviews/' }, { label: brand.name }];
+  var otherBrands = (allBrands || []).filter(function(b) { return b.slug !== brand.slug; }).slice(0, 6);
+
+  var ratingsHtml = '';
+  if (brand.ratings) {
+    var ratingKeys = Object.keys(brand.ratings);
+    ratingsHtml = '<div class="stats-grid">' + ratingKeys.map(function(key) {
+      return '<div class="stat-card"><span class="stat-value">' + brand.ratings[key] + '/5</span><span class="stat-label">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span></div>';
+    }).join('') + '</div>';
+  }
+
+  var prosHtml = (brand.pros || []).map(function(p) { return '<li>' + p + '</li>'; }).join('');
+  var consHtml = (brand.cons || []).map(function(c) { return '<li>' + c + '</li>'; }).join('');
+
+  var sectionsHtml = (brand.sections || []).map(function(s, i) {
+    var monetization = i === 2 ? affiliateCtaBlock(brand.name, 'review-mid-' + brand.slug) : '';
+    return '<h2>' + s.heading + '</h2><div class="content-prose"><p>' + s.content + '</p></div>' + monetization;
+  }).join('\n');
+
+  var faqs = brand.faqs || [];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>${brand.name} Solar Review (${SITE.year})</h1>
+<p class="lead">${brand.description || 'Comprehensive review of ' + brand.name + ' solar products, pricing, warranty, and customer experience.'}</p>
+${lastUpdatedBlock('Emily Watson', 'emily-watson')}
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>Overall Rating: ${brand.overall_rating}/5</h2>
+${ratingsHtml}
+<div class="content-prose">
+<div class="pros-cons" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+<div><h3>Pros</h3><ul>${prosHtml}</ul></div>
+<div><h3>Cons</h3><ul>${consHtml}</ul></div>
+</div>
+<p><strong>Best For:</strong> ${brand.best_for || 'General solar needs'}</p>
+<p><strong>Price Range:</strong> ${brand.price_range || '$$'}</p>
+<p><strong>Warranty:</strong> ${brand.warranty_years || 25} years — ${brand.warranty_details || 'Comprehensive coverage'}</p>
+</div>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+${sectionsHtml}
+</div>
+</section>
+
+${faqSection(faqs)}
+
+${comparisonAffiliateTable('Compare ' + brand.name + ' with Alternatives', [
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare ' + brand.name + ' quotes', rating: '4.8/5', slug: 'energysage-' + brand.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Compare Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar options', rating: '4.5/5', slug: 'sunrun-' + brand.slug, affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
+  { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-' + brand.slug, affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+])}
+
+${authorBioBlock()}
+
+${relatedPagesSection('More Solar Brand Reviews', otherBrands.map(function(b) {
+  return { title: b.name + ' Review', url: '/reviews/' + b.slug + '/', meta: b.overall_rating + '/5 — ' + (b.type || 'Solar') };
+}))}
+`;
+
+  return baseTemplate(brand.name + ' Solar Review ' + SITE.year, brand.name + ' solar review: ' + brand.overall_rating + '/5 rating. ' + (brand.best_for || '') + '. Pros, cons, pricing, warranty analysis.', '/reviews/' + brand.slug + '/', body, {
+    breadcrumbs: crumbs,
+    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + reviewSchema(brand.name, 'Product', brand.overall_rating, 150) + '</script><script type="application/ld+json">' + articleSchema(brand.name + ' Solar Review', brand.description || '', '/reviews/' + brand.slug + '/')
+  });
+}
+
+// ---------------------------------------------------------------------------
+// 17. Brand Reviews Index Page
+// ---------------------------------------------------------------------------
+function generateBrandReviewsIndexPage(brands) {
+  var brandsList = Array.isArray(brands) ? brands : [];
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Solar Brand Reviews' }];
+
+  var cardsHtml = brandsList.map(function(b) {
+    return '<a href="/reviews/' + b.slug + '/" class="related-card"><span class="related-title">' + b.name + '</span><span class="related-meta">' + b.overall_rating + '/5 — ' + (b.type || 'Solar') + ' — ' + (b.best_for || '') + '</span></a>';
+  }).join('');
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Solar Brand Reviews (${SITE.year})</h1>
+<p class="lead">Independent, data-driven reviews of the top solar panel manufacturers, installers, and service companies. Our team evaluates efficiency, value, warranty, customer service, and installation quality.</p>
+${lastUpdatedBlock('Emily Watson', 'emily-watson')}
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>All Solar Brand Reviews</h2>
+<div class="related-grid">
+${cardsHtml}
+</div>
+</div>
+</section>
+
+${affiliateCtaBlock('Your Area', 'reviews-index')}
+
+${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Compare quotes from top-rated solar companies in your area.', '/#widget-hero')}
+`;
+
+  return baseTemplate('Solar Brand Reviews ' + SITE.year, 'Independent reviews of top solar brands: Tesla, SunPower, Sunrun, LG, Enphase, and more. Ratings, pros, cons, and pricing analysis.', '/reviews/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema('Solar Brand Reviews', 'Independent reviews of top solar brands.', '/reviews/') });
+}
+
+// ---------------------------------------------------------------------------
+// 18. Best-Of Roundup Page
+// ---------------------------------------------------------------------------
+function generateBestOfPage(bestOf, allBestOf) {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Of', url: '/best/' }, { label: bestOf.title }];
+  var otherBestOf = (allBestOf || []).filter(function(b) { return b.slug !== bestOf.slug; }).slice(0, 6);
+
+  var picksHtml = (bestOf.picks || []).map(function(pick, i) {
+    return '<div class="stat-card" style="text-align:left;"><span class="stat-value" style="font-size:1rem;">#' + pick.rank + ' ' + pick.name + '</span><span class="stat-label">' + pick.highlight + '</span><p style="font-size:0.85rem;margin-top:0.5rem;"><strong>Rating:</strong> ' + pick.rating + '/5 | <strong>Price:</strong> ' + pick.price_range + ' | <strong>Best for:</strong> ' + pick.best_for + '</p>' +
+      '<div style="font-size:0.85rem;"><strong>Pros:</strong> ' + (pick.pros || []).join(', ') + '</div>' +
+      '<div style="font-size:0.85rem;"><strong>Cons:</strong> ' + (pick.cons || []).join(', ') + '</div></div>';
+  }).join('');
+
+  var faqs = bestOf.faqs || [];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>${bestOf.title}</h1>
+<p class="lead">${bestOf.description}</p>
+${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
+</div>
+</section>
+
+${aboveFoldQuoteCta('Your Area')}
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>Our Top Picks</h2>
+<div class="stats-grid" style="grid-template-columns:1fr;">
+${picksHtml}
+</div>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+<div class="content-prose">
+<h2>How We Chose</h2>
+<p>Our selections are based on the following criteria: ${(bestOf.criteria || []).join(', ')}. Each product was evaluated by our research team using manufacturer specifications, independent testing data, and verified customer feedback.</p>
+<h2>Buying Guide</h2>
+<p>${bestOf.buying_guide || 'When choosing solar equipment, consider your specific needs, budget, roof characteristics, and local climate conditions.'}</p>
+</div>
+</div>
+</section>
+
+${affiliateCtaBlock('Your Area', 'bestof-' + bestOf.slug)}
+
+${faqSection(faqs)}
+
+${authorBioBlock()}
+
+${relatedPagesSection('More Best-Of Guides', otherBestOf.map(function(b) {
+  return { title: b.title, url: '/best/' + b.slug + '/', meta: b.category };
+}))}
+`;
+
+  return baseTemplate(bestOf.title, bestOf.description, '/best/' + bestOf.slug + '/', body, {
+    breadcrumbs: crumbs,
+    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(bestOf.title, bestOf.description, '/best/' + bestOf.slug + '/')
+  });
+}
+
+// ---------------------------------------------------------------------------
+// 19. State/City Best Companies Page
+// ---------------------------------------------------------------------------
+function generateStateBestCompaniesPage(entry, allEntries) {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Solar Companies' }, { label: entry.name }];
+  var otherEntries = (allEntries || []).filter(function(e) { return e.slug !== entry.slug; }).slice(0, 8);
+
+  var companiesHtml = (entry.companies || []).map(function(c) {
+    return '<div class="stat-card" style="text-align:left;"><span class="stat-value" style="font-size:1rem;">#' + c.rank + ' ' + c.name + ' (' + c.rating + '/5)</span><span class="stat-label">' + c.type + ' — ' + c.highlight + '</span><p style="font-size:0.85rem;margin-top:0.25rem;"><strong>Services:</strong> ' + (c.services || []).join(', ') + ' | <strong>Best for:</strong> ' + c.best_for + '</p></div>';
+  }).join('');
+
+  var faqs = entry.faqs || [];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>${entry.title}</h1>
+<p class="lead">${entry.description}</p>
+${lastUpdatedBlock('Emily Watson', 'emily-watson')}
+</div>
+</section>
+
+${aboveFoldQuoteCta(entry.name)}
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>Top-Rated Solar Companies in ${entry.name}</h2>
+<div class="stats-grid" style="grid-template-columns:1fr;">
+${companiesHtml}
+</div>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+<div class="content-prose">
+<h2>${entry.name} Solar Market Overview</h2>
+<p>${entry.local_market_info || 'The solar market in ' + entry.name + ' continues to grow as homeowners take advantage of federal and state incentives.'}</p>
+<p>${entry.intro || ''}</p>
+</div>
+</div>
+</section>
+
+${affiliateCtaBlock(entry.name, 'best-companies-' + entry.slug)}
+
+${faqSection(faqs)}
+
+${authorBioBlock()}
+
+${relatedPagesSection('Best Solar Companies in Other Locations', otherEntries.map(function(e) {
+  return { title: e.title, url: '/best-solar-companies/' + e.slug + '/', meta: e.type === 'city' ? 'City' : 'State' };
+}))}
+`;
+
+  return baseTemplate(entry.title, entry.description, '/best-solar-companies/' + entry.slug + '/', body, {
+    breadcrumbs: crumbs,
+    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(entry.title, entry.description, '/best-solar-companies/' + entry.slug + '/')
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Module Exports
 // ---------------------------------------------------------------------------
 module.exports = {
@@ -1234,5 +1839,14 @@ module.exports = {
   generateMethodologyPage,
   generateEditorialPage,
   generateComparisonPage,
-  generatePillarPage
+  generatePillarPage,
+  generateAboutPage,
+  generateContactPage,
+  generatePrivacyPolicyPage,
+  generateAuthorsIndexPage,
+  generateAuthorPage,
+  generateBrandReviewPage,
+  generateBrandReviewsIndexPage,
+  generateBestOfPage,
+  generateStateBestCompaniesPage
 };

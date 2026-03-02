@@ -262,6 +262,8 @@ function handleWidgetSubmit(form) {
   var email = emailInput ? emailInput.value.trim() : '';
   if (emailInput && !email) {
     errors.push({ field: emailInput, message: 'Please enter your email address.' });
+  } else if (emailInput && email && email.indexOf('@') === -1) {
+    errors.push({ field: emailInput, message: 'Please enter a valid email address.' });
   }
 
   // Validate required phone
@@ -282,10 +284,23 @@ function handleWidgetSubmit(form) {
     return;
   }
 
-  // Calculations
-  var annualSavings = bill * 12 * 0.65;
-  var twentyYearSavings = annualSavings * 20 * Math.pow(1.03, 10);
+  // State-specific solar savings factors (vs flat 65%)
+  var stateFactors = {
+    CA: 0.75, AZ: 0.78, NV: 0.76, NM: 0.74, TX: 0.72, FL: 0.70,
+    HI: 0.82, CO: 0.68, UT: 0.70, NC: 0.65, GA: 0.64, SC: 0.65,
+    NY: 0.58, NJ: 0.62, MA: 0.60, CT: 0.60, PA: 0.56, MD: 0.62,
+    VA: 0.63, OH: 0.52, MI: 0.50, IL: 0.55, MN: 0.48, WI: 0.50,
+    OR: 0.60, WA: 0.55, IN: 0.54, MO: 0.55, TN: 0.58, AL: 0.60,
+    ID: 0.62, MT: 0.55, WY: 0.58, ND: 0.48, SD: 0.52, NE: 0.52,
+    KS: 0.56, OK: 0.62, AR: 0.58, LA: 0.60, MS: 0.58, KY: 0.50,
+    WV: 0.48, NH: 0.55, VT: 0.52, ME: 0.50, RI: 0.58, DE: 0.60, DC: 0.60, AK: 0.40
+  };
+
+  // Calculations — use state-specific factor if available
   var state = getStateFromZip(zip);
+  var factor = (state && stateFactors[state]) ? stateFactors[state] : 0.65;
+  var annualSavings = bill * 12 * factor;
+  var twentyYearSavings = annualSavings * 20 * Math.pow(1.03, 10);
 
   // Store in sessionStorage
   try {
@@ -343,6 +358,7 @@ function handleWidgetSubmit(form) {
       '&ownership=' + encodeURIComponent(ownership) +
       '&bill=' + encodeURIComponent(String(bill)) +
       '&state=' + encodeURIComponent(state || '') +
+      '&email=' + encodeURIComponent(email || '') +
       '&page_url=' + encodeURIComponent(window.location.pathname) +
       '&annual_savings=' + encodeURIComponent(String(Math.round(annualSavings))) +
       '&twenty_year_savings=' + encodeURIComponent(String(Math.round(twentyYearSavings)));
@@ -357,15 +373,26 @@ function handleWidgetSubmit(form) {
 
   // Route lead to affiliate partner via lead router
   try {
+    var deviceType = window.innerWidth >= 1024 ? 'desktop' : (window.innerWidth >= 768 ? 'tablet' : 'mobile');
+    var pageViews = 1;
+    try { pageViews = parseInt(sessionStorage.getItem('pv') || '1', 10); } catch (pvErr) {}
+    var referralSource = document.referrer || 'direct';
+    if (referralSource.indexOf('google') > -1 || referralSource.indexOf('bing') > -1) referralSource = 'google';
+    else if (referralSource.indexOf('facebook') > -1 || referralSource.indexOf('twitter') > -1 || referralSource.indexOf('instagram') > -1) referralSource = 'social';
+    else if (referralSource.indexOf(window.location.hostname) > -1) referralSource = 'internal';
+
     var routerData = JSON.stringify({
       zip: zip,
       bill: bill,
-      ownership: ownership === 'I own my home' ? 'own' : 'rent',
+      ownership: ownership === 'I own my home' || ownership === 'own' ? 'own' : 'rent',
       state: state || '',
       name: name || '',
       email: email || '',
       phone: phone || '',
-      page_url: window.location.pathname
+      page_url: window.location.pathname,
+      device_type: deviceType,
+      page_views: pageViews,
+      referral_source: referralSource
     });
 
     var routerXhr = new XMLHttpRequest();
