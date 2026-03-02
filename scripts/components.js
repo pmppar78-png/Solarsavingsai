@@ -3,7 +3,7 @@
 const SITE = {
   name: 'SolarSavingsAI',
   title: 'AI Solar & Energy Rebate Finder',
-  url: 'https://solarsavingsai.netlify.app',
+  url: 'https://solarsavingsai.com',
   year: new Date().getFullYear()
 };
 
@@ -85,6 +85,7 @@ function headerComponent() {
 <li><a href="/guide/best-solar-panels-2026/" class="nav-link">Best Panels</a></li>
 <li><a href="/solar-financing/" class="nav-link">Financing</a></li>
 <li><a href="/reviews/" class="nav-link">Reviews</a></li>
+<li><a href="/articles/" class="nav-link">Articles</a></li>
 <li><a href="/about/" class="nav-link">About</a></li>
 </ul>
 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
@@ -133,6 +134,7 @@ ${stateLinks}
 <li><a href="/guide/best-solar-panels-2026/">Best Solar Panels</a></li>
 <li><a href="/guide/best-solar-companies-2026/">Best Solar Companies</a></li>
 <li><a href="/reviews/">Brand Reviews</a></li>
+<li><a href="/articles/">Solar Articles</a></li>
 </ul>
 </div>
 <div class="footer-col">
@@ -154,6 +156,7 @@ ${stateLinks}
 <p>&copy; ${SITE.year} ${escapeHtml(SITE.name)}. All rights reserved. This site is for informational purposes only. Rebate amounts and incentive details are subject to change without notice. Always verify current incentive availability with your state energy office or utility provider.</p>
 </div>
 <script type="application/ld+json">${organizationSchema()}</script>
+<script type="application/ld+json">${websiteSchema()}</script>
 </footer>`;
 }
 
@@ -420,6 +423,16 @@ function affiliateCtaBlock(location, placement) {
 <span class="affiliate-desc">Premium panels, 25-year warranty</span>
 <span class="btn btn-outline btn-sm">Get Quote</span>
 </a>
+<a href="https://modernize.com/solar?aff=solarsavingsai" class="affiliate-card" rel="sponsored noopener" target="_blank" data-affiliate="modernize-${p}">
+<strong class="affiliate-name">Modernize</strong>
+<span class="affiliate-desc">Get matched with top local installers</span>
+<span class="btn btn-outline btn-sm">Compare Now</span>
+</a>
+<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="affiliate-card" rel="sponsored noopener" target="_blank" data-affiliate="solarreviews-${p}">
+<strong class="affiliate-name">SolarReviews</strong>
+<span class="affiliate-desc">Read installer reviews &amp; get quotes</span>
+<span class="btn btn-outline btn-sm">Find Installers</span>
+</a>
 </div>
 <p class="affiliate-disclosure">Affiliate disclosure: We may earn a commission when you request quotes through our partners. This does not affect our analysis or your cost. <a href="/editorial-standards/">Learn more</a>.</p>
 </div>`;
@@ -536,6 +549,11 @@ function sidebarAffiliateWidget(location) {
 <span class="sidebar-widget-detail">Premium panels, 25yr warranty</span>
 <span class="sidebar-widget-action">Get Quote &rarr;</span>
 </a>
+<a href="https://modernize.com/solar?aff=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener" target="_blank" data-affiliate="sidebar-modernize">
+<span class="sidebar-widget-name">Modernize</span>
+<span class="sidebar-widget-detail">Top local installer matching</span>
+<span class="sidebar-widget-action">Compare &rarr;</span>
+</a>
 </div>
 <p class="affiliate-disclosure" style="font-size:0.7rem;margin-top:0.5rem;opacity:0.7;">Sponsored. <a href="/editorial-standards/">Disclosure</a>.</p>
 </div>`;
@@ -566,6 +584,11 @@ function calculatorResultMonetization(location) {
 <strong>SunPower</strong>
 <span>Highest efficiency panels</span>
 <span class="btn btn-outline btn-sm">Get Quote</span>
+</a>
+<a href="https://modernize.com/solar?aff=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener" target="_blank" data-affiliate="calc-result-modernize">
+<strong>Modernize</strong>
+<span>Match with local pros</span>
+<span class="btn btn-outline btn-sm">Get Matched</span>
 </a>
 </div>
 <p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;text-align:center;opacity:0.8;">We may earn a commission. This does not affect your cost. <a href="/editorial-standards/">Disclosure</a>.</p>
@@ -707,6 +730,53 @@ function reviewSchema(itemName, itemType, rating, reviewCount, bestRating) {
 }
 
 /* --------------------------------------------------------------------------
+   WebSite schema with SearchAction – enables sitelinks searchbox
+   -------------------------------------------------------------------------- */
+function websiteSchema() {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: SITE.url,
+    description: 'Solar rebate data and ROI analysis powered by AI. Find incentives, estimate savings, and compare solar options.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: SITE.url + '/#state-map?q={search_term_string}'
+      },
+      'query-input': 'required name=search_term_string'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE.name,
+      url: SITE.url
+    }
+  });
+}
+
+/* --------------------------------------------------------------------------
+   ItemList schema for best-of and ranking pages
+   -------------------------------------------------------------------------- */
+function itemListSchema(name, description, items) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: name,
+    description: description,
+    numberOfItems: items.length,
+    itemListElement: items.map(function (item, i) {
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        name: item.name,
+        url: item.url ? SITE.url + item.url : undefined
+      };
+    })
+  });
+}
+
+/* --------------------------------------------------------------------------
    29. lastUpdatedBlock – "Last updated" + "Reviewed by" metadata for E-E-A-T
    -------------------------------------------------------------------------- */
 function lastUpdatedBlock(authorName, authorSlug) {
@@ -831,6 +901,8 @@ module.exports = {
   organizationSchema,
   howToSchema,
   reviewSchema,
+  websiteSchema,
+  itemListSchema,
   lastUpdatedBlock,
   analyticsScript,
   displayAdSlot,

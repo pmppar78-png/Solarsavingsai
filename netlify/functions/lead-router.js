@@ -124,6 +124,87 @@ const affiliatePartners = {
     avg_cpa: 55,
     states: 'all',
     strengths: ['zero-down', 'fast-install']
+  },
+  // HIGH-CPA LEAD AGGREGATORS (Added for maximum revenue)
+  modernize: {
+    name: 'Modernize',
+    baseUrl: 'https://modernize.com/solar',
+    params: 'aff=solarsavingsai',
+    priority: 13,
+    category: 'lead-aggregator',
+    avg_cpa: 150,
+    states: 'all',
+    strengths: ['high-cpa', 'qualified-leads', 'homeowner-verified']
+  },
+  energybillcruncher: {
+    name: 'EnergyBillCruncher',
+    baseUrl: 'https://www.energybillcruncher.com/solar',
+    params: 'aff=solarsavingsai',
+    priority: 14,
+    category: 'lead-aggregator',
+    avg_cpa: 140,
+    states: 'all',
+    strengths: ['high-cpa', 'bill-reduction', 'solar-leads']
+  },
+  solar_reviews: {
+    name: 'SolarReviews',
+    baseUrl: 'https://www.solarreviews.com/installers',
+    params: 'ref=solarsavingsai',
+    priority: 15,
+    category: 'lead-aggregator',
+    avg_cpa: 120,
+    states: 'all',
+    strengths: ['installer-matching', 'reviews', 'high-intent']
+  },
+  clean_energy: {
+    name: 'CleanEnergy.org',
+    baseUrl: 'https://www.cleanenergy.org/solar-quote',
+    params: 'partner=solarsavingsai',
+    priority: 16,
+    category: 'lead-aggregator',
+    avg_cpa: 130,
+    states: 'all',
+    strengths: ['nonprofit-trust', 'high-cpa', 'verified-leads']
+  },
+  solar_estimate: {
+    name: 'SolarEstimate',
+    baseUrl: 'https://www.solar-estimate.org/',
+    params: 'ref=solarsavingsai',
+    priority: 17,
+    category: 'lead-aggregator',
+    avg_cpa: 110,
+    states: 'all',
+    strengths: ['calculator', 'cost-estimates', 'installer-matching']
+  },
+  momentum_solar: {
+    name: 'Momentum Solar',
+    baseUrl: 'https://momentumsolar.com/',
+    params: 'partner=solarsavingsai',
+    priority: 18,
+    category: 'installer',
+    avg_cpa: 70,
+    states: 'NJ,NY,FL,TX,CA,PA,CT',
+    strengths: ['regional-installer', 'fast-install', 'financing']
+  },
+  adt_solar: {
+    name: 'ADT Solar',
+    baseUrl: 'https://www.adtsolar.com/',
+    params: 'ref=solarsavingsai',
+    priority: 19,
+    category: 'installer',
+    avg_cpa: 75,
+    states: 'all',
+    strengths: ['nationwide', 'brand-trust', 'monitoring']
+  },
+  project_solar: {
+    name: 'Project Solar',
+    baseUrl: 'https://www.projectsolar.io/',
+    params: 'ref=solarsavingsai',
+    priority: 20,
+    category: 'installer',
+    avg_cpa: 65,
+    states: 'all',
+    strengths: ['diy-option', 'lowest-price', 'transparent-pricing']
   }
 };
 
@@ -251,50 +332,66 @@ function routeLead(tier, intent, state) {
     return partner.states.split(',').includes(stateStr);
   }
 
-  // Tier 1 (>=85): Premium routing to highest-CPA partner
+  // Tier 1 (>=85): Route to HIGHEST CPA partners first — lead aggregators pay $110-$150+
   if (tier === 1) {
     if (intent === 'storage') return affiliatePartners.tesla_energy;
-    if (intent === 'financing') return affiliatePartners.energysage; // highest CPA
-    // Route to EnergySage for premium leads
-    return affiliatePartners.energysage;
+    // Rotate premium leads across highest-CPA aggregators
+    const premiumRotation = Date.now() % 5;
+    if (premiumRotation === 0) return affiliatePartners.modernize;        // $150 CPA
+    if (premiumRotation === 1) return affiliatePartners.energybillcruncher; // $140 CPA
+    if (premiumRotation === 2) return affiliatePartners.clean_energy;      // $130 CPA
+    if (premiumRotation === 3) return affiliatePartners.solar_reviews;     // $120 CPA
+    return affiliatePartners.energysage;                                    // $85 CPA (trusted fallback)
   }
 
-  // Tier 2 (65-84): Standard affiliate routing
+  // Tier 2 (65-84): Mix of aggregators and direct installers for strong leads
   if (tier === 2) {
-    if (intent === 'financing') return affiliatePartners.sunrun;
     if (intent === 'storage') return affiliatePartners.generac;
-    if (intent === 'comparison') return affiliatePartners.energysage;
-    // Check regional partners
-    if (isAvailableInState(affiliatePartners.freedom_solar) && affiliatePartners.freedom_solar.states !== 'all' && affiliatePartners.freedom_solar.states.split(',').includes(stateStr)) {
-      return affiliatePartners.freedom_solar;
+    if (intent === 'comparison') return affiliatePartners.solar_reviews;
+    if (intent === 'financing') return affiliatePartners.sunrun;
+    // Check regional high-CPA partners
+    if (isAvailableInState(affiliatePartners.momentum_solar) && affiliatePartners.momentum_solar.states !== 'all' && affiliatePartners.momentum_solar.states.split(',').includes(stateStr)) {
+      return affiliatePartners.momentum_solar;
     }
-    // Rotate between top installers
-    const rotation = Date.now() % 3;
-    if (rotation === 0) return affiliatePartners.sunpower;
-    if (rotation === 1) return affiliatePartners.sunrun;
-    return affiliatePartners.palmetto;
+    // Rotate between aggregators and top installers
+    const rotation = Date.now() % 6;
+    if (rotation === 0) return affiliatePartners.modernize;           // $150
+    if (rotation === 1) return affiliatePartners.energybillcruncher;  // $140
+    if (rotation === 2) return affiliatePartners.solar_estimate;      // $110
+    if (rotation === 3) return affiliatePartners.sunpower;            // $80
+    if (rotation === 4) return affiliatePartners.energysage;          // $85
+    return affiliatePartners.adt_solar;                                // $75
   }
 
-  // Tier 3 (45-64): Financing-focused routing
+  // Tier 3 (45-64): Financing-focused with aggregator mix
   if (tier === 3) {
     if (intent === 'financing' || intent === 'high-commercial') {
-      const rotation = Date.now() % 2;
-      return rotation === 0 ? affiliatePartners.mosaic : affiliatePartners.goodleap;
+      const rotation = Date.now() % 4;
+      if (rotation === 0) return affiliatePartners.solar_estimate;  // $110
+      if (rotation === 1) return affiliatePartners.mosaic;          // $50
+      if (rotation === 2) return affiliatePartners.goodleap;        // $45
+      return affiliatePartners.clean_energy;                         // $130
     }
     if (intent === 'storage') return affiliatePartners.generac;
-    // Rotate between value-focused partners
-    const rotation = Date.now() % 3;
-    if (rotation === 0) return affiliatePartners.sunnova;
-    if (rotation === 1) return affiliatePartners.blue_raven;
-    return affiliatePartners.palmetto;
+    // Check regional partners
+    if (isAvailableInState(affiliatePartners.freedom_solar) && affiliatePartners.freedom_solar.states !== 'all') {
+      return affiliatePartners.freedom_solar;
+    }
+    const rotation = Date.now() % 4;
+    if (rotation === 0) return affiliatePartners.energybillcruncher; // $140
+    if (rotation === 1) return affiliatePartners.palmetto;           // $65
+    if (rotation === 2) return affiliatePartners.sunnova;            // $60
+    return affiliatePartners.project_solar;                           // $65
   }
 
-  // Tier 4 (<45): Informational/alternate routing
+  // Tier 4 (<45): Cast wide net, still include aggregators
   if (intent === 'storage') return affiliatePartners.generac;
-  const rotation = Date.now() % 3;
-  if (rotation === 0) return affiliatePartners.sealed; // energy audit
-  if (rotation === 1) return affiliatePartners.blue_raven;
-  return affiliatePartners.sunnova;
+  const rotation = Date.now() % 5;
+  if (rotation === 0) return affiliatePartners.solar_estimate;   // $110
+  if (rotation === 1) return affiliatePartners.blue_raven;       // $55
+  if (rotation === 2) return affiliatePartners.sunnova;          // $60
+  if (rotation === 3) return affiliatePartners.project_solar;    // $65
+  return affiliatePartners.sealed;                                // $35
 }
 
 // Calculate state-aware savings estimate
