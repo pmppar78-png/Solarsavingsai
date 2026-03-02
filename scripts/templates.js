@@ -88,6 +88,11 @@ function federalAlert(alerts) {
   return alertBanner(alerts.federal_credit.message, 'urgent');
 }
 
+function escapeHtml(str) {
+  if (str == null) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 // ---------------------------------------------------------------------------
 // 1. Homepage
 // ---------------------------------------------------------------------------
@@ -205,8 +210,10 @@ ${cityLinksHtml}
 
 ${comparisonAffiliateTable('Compare Top Solar Providers', [
   { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare 3-7 quotes free', rating: '4.8/5', slug: 'energysage-hp', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
+  { name: 'Modernize', type: 'Lead Matching', highlight: 'Top local installer matching', rating: '4.7/5', slug: 'modernize-hp', affiliate_url: 'https://modernize.com/solar?aff=solarsavingsai', cta_text: 'Get Matched' },
   { name: 'Sunrun', type: 'Installer', highlight: '$0 down lease & loan', rating: '4.5/5', slug: 'sunrun-hp', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
-  { name: 'SunPower', type: 'Installer', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-hp', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+  { name: 'SunPower', type: 'Installer', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-hp', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' },
+  { name: 'SolarReviews', type: 'Marketplace', highlight: 'Read reviews & get quotes', rating: '4.6/5', slug: 'solarreviews-hp', affiliate_url: 'https://www.solarreviews.com/installers?ref=solarsavingsai', cta_text: 'Find Installers' }
 ])}
 
 ${faqSection([
@@ -242,6 +249,15 @@ ${hubLinksSection('Getting Started Hub', [
   { title: 'How to Choose a Solar Installer', url: '/guide/how-to-choose-solar-installer/', meta: '10 critical questions' },
   { title: 'Solar Panel Cost Guide', url: '/guide/solar-panel-cost-guide/', meta: 'Real costs in 2026' },
   { title: 'Solar Installation Guide', url: '/guide/solar-installation-guide/', meta: 'Complete walkthrough' }
+])}
+
+${hubLinksSection('Latest Articles', [
+  { title: 'Federal Solar Tax Credit 2026: Complete Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/', meta: 'How to claim the 30% ITC' },
+  { title: 'Solar Panel ROI: Real Numbers Analyzed', url: '/article/solar-panel-roi-real-numbers-analysis/', meta: 'Data from 10,000+ installations' },
+  { title: 'Solar Panels vs. Grid Power: 20-Year Comparison', url: '/article/solar-panels-vs-grid-power-20-year-cost-comparison/', meta: 'Complete cost analysis' },
+  { title: 'Solar Financing: Cash vs. Loan vs. Lease vs. PPA', url: '/article/solar-financing-cash-loan-lease-ppa-compared/', meta: 'Side-by-side comparison' },
+  { title: 'Solar Panel Myths Debunked', url: '/article/solar-panel-myths-debunked-common-misconceptions/', meta: '12 common misconceptions' },
+  { title: 'View All Articles', url: '/articles/', meta: 'Expert guides and analysis' }
 ])}
 
 ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above to see available rebates and projected savings for your home.', '#widget-hero')}
@@ -1827,6 +1843,125 @@ ${relatedPagesSection('Best Solar Companies in Other Locations', otherEntries.ma
 }
 
 // ---------------------------------------------------------------------------
+// Editorial Article Page
+// ---------------------------------------------------------------------------
+function generateArticlePage(article, allArticles) {
+  var crumbs = [
+    { label: 'Home', url: '/' },
+    { label: 'Articles', url: '/articles/' },
+    { label: article.title }
+  ];
+
+  var relatedArticles = (allArticles || []).filter(function (a) {
+    return a.slug !== article.slug;
+  }).slice(0, 4).map(function (a) {
+    return { url: '/article/' + a.slug + '/', title: a.title, meta: a.category };
+  });
+
+  var tagHtml = (article.tags || []).map(function (t) {
+    return '<span class="article-tag">' + escapeHtml(t) + '</span>';
+  }).join(' ');
+
+  var body = `
+<article class="content-section" itemscope itemtype="https://schema.org/Article">
+<div class="container">
+${lastUpdatedBlock(article.author)}
+<h1 itemprop="headline">${escapeHtml(article.title)}</h1>
+<div class="article-meta">
+<span class="article-date">Published: <time datetime="${escapeHtml(article.date_published)}" itemprop="datePublished">${escapeHtml(article.date_published)}</time></span>
+<span class="article-date">Updated: <time datetime="${escapeHtml(article.date_modified)}" itemprop="dateModified">${escapeHtml(article.date_modified)}</time></span>
+<span class="article-author" itemprop="author">${escapeHtml(article.author)}</span>
+</div>
+<div class="article-tags">${tagHtml}</div>
+<div class="article-content" itemprop="articleBody">
+${article.content_html}
+</div>
+${affiliateCtaBlock('Your Area', 'article-bottom')}
+${calculatorResultMonetization('Your Area')}
+${authorBioBlock()}
+</div>
+</article>
+${relatedPagesSection('More Solar Guides', relatedArticles)}
+`;
+
+  var schema = articleSchema(article.title, article.description, '/article/' + article.slug + '/', article.date_published, article.author);
+
+  return baseTemplate(
+    article.title,
+    article.description,
+    '/article/' + article.slug + '/',
+    body,
+    {
+      breadcrumbs: crumbs,
+      schema: schema,
+      states: []
+    }
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Articles Index Page
+// ---------------------------------------------------------------------------
+function generateArticlesIndexPage(articles) {
+  var crumbs = [
+    { label: 'Home', url: '/' },
+    { label: 'Articles' }
+  ];
+
+  var categories = {};
+  (articles || []).forEach(function (a) {
+    var cat = a.category || 'general';
+    if (!categories[cat]) categories[cat] = [];
+    categories[cat].push(a);
+  });
+
+  var articleCards = (articles || []).map(function (a) {
+    return '<div class="article-card">' +
+      '<a href="/article/' + escapeHtml(a.slug) + '/" class="article-card-link">' +
+      '<h3 class="article-card-title">' + escapeHtml(a.title) + '</h3>' +
+      '<p class="article-card-desc">' + escapeHtml(a.description) + '</p>' +
+      '<div class="article-card-meta">' +
+      '<span class="article-card-category">' + escapeHtml(a.category) + '</span>' +
+      '<span class="article-card-date">' + escapeHtml(a.date_modified) + '</span>' +
+      '</div></a></div>';
+  }).join('\n');
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Solar Energy Articles &amp; Guides</h1>
+<p class="hero-subtitle">Expert analysis, buying guides, and educational content to help you make the best solar investment decision. Updated regularly with the latest data and policy changes.</p>
+<div class="articles-grid">
+${articleCards}
+</div>
+</div>
+</section>
+${affiliateCtaBlock('Your Area', 'articles-index')}
+`;
+
+  var schema = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Solar Energy Articles & Guides',
+    description: 'Expert solar energy articles covering tax credits, ROI analysis, financing, installation guides, and more.',
+    url: SITE.url + '/articles/',
+    publisher: { '@type': 'Organization', name: SITE.name }
+  });
+
+  return baseTemplate(
+    'Solar Energy Articles & Guides',
+    'Expert solar energy articles covering tax credits, ROI analysis, financing, installation guides, and more.',
+    '/articles/',
+    body,
+    {
+      breadcrumbs: crumbs,
+      schema: schema,
+      states: []
+    }
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Module Exports
 // ---------------------------------------------------------------------------
 module.exports = {
@@ -1848,5 +1983,7 @@ module.exports = {
   generateBrandReviewPage,
   generateBrandReviewsIndexPage,
   generateBestOfPage,
-  generateStateBestCompaniesPage
+  generateStateBestCompaniesPage,
+  generateArticlePage,
+  generateArticlesIndexPage
 };

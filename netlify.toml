@@ -47,3 +47,13 @@
   from = "/guides"
   to = "/guide/complete-guide-home-solar/"
   status = 301
+
+[[redirects]]
+  from = "/blog"
+  to = "/articles/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/articles/"
+  status = 301

@@ -7,7 +7,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
 const DIST_DIR = path.join(ROOT, 'dist');
-const SITE_URL = 'https://solarsavingsai.netlify.app';
+const SITE_URL = 'https://solarsavingsai.com';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -268,14 +268,36 @@ if (stateBestCompanies.length > 0) {
 }
 
 // ---------------------------------------------------------------------------
+// NEW: Editorial Articles
+// ---------------------------------------------------------------------------
+const articles = loadJSONSafe('articles.json');
+if (articles.length > 0) {
+  console.log(`Generating ${articles.length} editorial articles...`);
+  for (const article of articles) {
+    const filePath = path.join(DIST_DIR, 'article', article.slug, 'index.html');
+    writePage(filePath, templates.generateArticlePage(article, articles));
+    pageCount++;
+  }
+
+  // Articles index
+  console.log('Generating articles index page...');
+  writePage(
+    path.join(DIST_DIR, 'articles', 'index.html'),
+    templates.generateArticlesIndexPage(articles)
+  );
+  pageCount++;
+}
+
+// ---------------------------------------------------------------------------
 // Generate sitemap.xml
 // ---------------------------------------------------------------------------
 console.log('\nGenerating sitemap.xml...');
 const sitemapEntries = [];
 
-function addEntry(urlPath, priority) {
+function addEntry(urlPath, priority, lastmod) {
   const loc = urlPath === '/' ? SITE_URL + '/' : `${SITE_URL}/${urlPath}`;
-  sitemapEntries.push(`  <url>\n    <loc>${loc}</loc>\n    <priority>${priority.toFixed(1)}</priority>\n  </url>`);
+  const lastmodDate = lastmod || '2026-03-01';
+  sitemapEntries.push(`  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmodDate}</lastmod>\n    <changefreq>${priority >= 0.8 ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${priority.toFixed(1)}</priority>\n  </url>`);
 }
 
 addEntry('/', 1.0);
@@ -334,6 +356,14 @@ addEntry('privacy-policy/', 0.4);
 for (const author of authors) {
   addEntry(`authors/${author.slug}/`, 0.5);
 }
+
+// Editorial articles
+for (const article of articles) {
+  addEntry(`article/${article.slug}/`, 0.8, article.date_modified || '2026-03-01');
+}
+
+// Articles index page
+addEntry('articles/', 0.7);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

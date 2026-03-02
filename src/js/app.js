@@ -372,6 +372,22 @@ function handleWidgetSubmit(form) {
   }
 
   // Route lead to affiliate partner via lead router
+  var stateAbbrev = state || '';
+  var fallbackUrls = [
+    'https://modernize.com/solar?aff=solarsavingsai',
+    'https://www.energysage.com/solar/?rc=solarsavingsai',
+    'https://www.energybillcruncher.com/solar?aff=solarsavingsai',
+    'https://www.solarreviews.com/installers?ref=solarsavingsai',
+    'https://www.cleanenergy.org/solar-quote?partner=solarsavingsai'
+  ];
+
+  function doFallbackRedirect() {
+    var fallbackUrl = fallbackUrls[Math.floor(Math.random() * fallbackUrls.length)];
+    if (zip) fallbackUrl += '&zip=' + encodeURIComponent(zip);
+    if (stateAbbrev) fallbackUrl += '&state=' + encodeURIComponent(stateAbbrev);
+    window.open(fallbackUrl, '_blank');
+  }
+
   try {
     var deviceType = window.innerWidth >= 1024 ? 'desktop' : (window.innerWidth >= 768 ? 'tablet' : 'mobile');
     var pageViews = 1;
@@ -399,21 +415,40 @@ function handleWidgetSubmit(form) {
     routerXhr.open('POST', '/.netlify/functions/lead-router');
     routerXhr.setRequestHeader('Content-Type', 'application/json');
     routerXhr.onreadystatechange = function () {
-      if (routerXhr.readyState === 4 && routerXhr.status === 200) {
-        try {
-          var routerResponse = JSON.parse(routerXhr.responseText);
-          if (routerResponse.redirect_url) {
-            sessionStorage.setItem('lead_redirect_url', routerResponse.redirect_url);
-            sessionStorage.setItem('lead_partner', routerResponse.partner || '');
+      if (routerXhr.readyState === 4) {
+        if (routerXhr.status === 200) {
+          try {
+            var routerResponse = JSON.parse(routerXhr.responseText);
+            if (routerResponse.redirect_url) {
+              sessionStorage.setItem('lead_redirect_url', routerResponse.redirect_url);
+              sessionStorage.setItem('lead_partner', routerResponse.partner || '');
+            } else {
+              // No redirect_url in response — use fallback
+              doFallbackRedirect();
+            }
+          } catch (parseErr) {
+            // JSON parse failed — use fallback
+            doFallbackRedirect();
           }
-        } catch (parseErr) {
-          // Silently fail
+        } else {
+          // Non-200 status — lead router returned an error
+          doFallbackRedirect();
         }
       }
     };
+    routerXhr.onerror = function () {
+      // Network error — lead router unreachable
+      doFallbackRedirect();
+    };
+    routerXhr.ontimeout = function () {
+      // Request timed out — use fallback
+      doFallbackRedirect();
+    };
+    routerXhr.timeout = 10000; // 10-second timeout
     routerXhr.send(routerData);
   } catch (routerErr) {
-    // Silently fail — do not block UX
+    // Fallback affiliate redirect if lead router fails
+    doFallbackRedirect();
   }
 
   // Find or create a results container
