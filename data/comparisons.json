@@ -1,0 +1,186 @@
+[
+  {
+    "title": "Solar Panels vs. Grid Power",
+    "slug": "solar-panels-vs-grid-power",
+    "category": "energy-source",
+    "description": "Compare the long-term costs, environmental impact, and reliability of solar panels versus traditional grid electricity.",
+    "option_a": "Solar Panels",
+    "option_b": "Grid Electricity",
+    "factors": [
+      {"name": "Upfront Cost", "a": "High ($10K-$25K)", "b": "None", "winner": "b"},
+      {"name": "Monthly Cost (20yr avg)", "a": "$50-$100", "b": "$150-$300", "winner": "a"},
+      {"name": "20-Year Total Cost", "a": "$10K-$20K", "b": "$36K-$72K", "winner": "a"},
+      {"name": "Environmental Impact", "a": "Minimal", "b": "Significant", "winner": "a"},
+      {"name": "Energy Independence", "a": "High", "b": "None", "winner": "a"},
+      {"name": "Maintenance", "a": "Minimal", "b": "None", "winner": "b"},
+      {"name": "Property Value", "a": "+4-6%", "b": "No change", "winner": "a"}
+    ],
+    "verdict": "Solar panels win for long-term savings and energy independence, despite higher upfront costs.",
+    "faqs": [
+      {"question": "How much do solar panels save compared to grid power?", "answer": "Most homeowners save $20,000-$50,000 over 20 years by switching to solar, depending on local electricity rates and sun exposure."},
+      {"question": "Is grid power more reliable than solar?", "answer": "Grid power has historically been more reliable, but with battery storage, solar systems can provide backup power during outages."},
+      {"question": "Can solar panels fully replace grid electricity?", "answer": "With sufficient panel capacity and battery storage, many homes can offset 80-100% of their grid electricity usage."}
+    ]
+  },
+  {
+    "title": "Solar Loan vs. Solar Lease",
+    "slug": "solar-loan-vs-solar-lease",
+    "category": "financing",
+    "description": "Compare solar loans and solar leases to find the best financing option for your home solar installation.",
+    "option_a": "Solar Loan",
+    "option_b": "Solar Lease",
+    "factors": [
+      {"name": "System Ownership", "a": "You own", "b": "Company owns", "winner": "a"},
+      {"name": "Tax Credit Eligibility", "a": "Yes (30% ITC)", "b": "No", "winner": "a"},
+      {"name": "Upfront Cost", "a": "$0 down available", "b": "$0 down", "winner": "tie"},
+      {"name": "Monthly Payment", "a": "$100-$200", "b": "$50-$150", "winner": "b"},
+      {"name": "Total 20-Year Savings", "a": "$20K-$40K", "b": "$10K-$20K", "winner": "a"},
+      {"name": "Maintenance", "a": "Owner responsibility", "b": "Company handles", "winner": "b"},
+      {"name": "Home Sale Impact", "a": "Adds value", "b": "Transfer required", "winner": "a"}
+    ],
+    "verdict": "Solar loans offer greater savings and ownership benefits, while leases provide simplicity with lower risk.",
+    "faqs": [
+      {"question": "Which is better: solar loan or solar lease?", "answer": "Solar loans are better for maximizing savings since you own the system and claim the federal tax credit. Leases are better if you want zero maintenance responsibility."},
+      {"question": "Can I sell my house with a solar lease?", "answer": "Yes, but the lease must be transferred to the new buyer, which can complicate the sale process."},
+      {"question": "Do solar loans require good credit?", "answer": "Most solar loans require a credit score of 600-680+, though some lenders offer options for lower scores at higher interest rates."}
+    ]
+  },
+  {
+    "title": "Monocrystalline vs. Polycrystalline Solar Panels",
+    "slug": "monocrystalline-vs-polycrystalline-panels",
+    "category": "equipment",
+    "description": "Compare monocrystalline and polycrystalline solar panels to determine which type is best for your home.",
+    "option_a": "Monocrystalline",
+    "option_b": "Polycrystalline",
+    "factors": [
+      {"name": "Efficiency", "a": "20-22%", "b": "15-17%", "winner": "a"},
+      {"name": "Cost per Watt", "a": "$0.80-$1.20", "b": "$0.50-$0.80", "winner": "b"},
+      {"name": "Lifespan", "a": "25-30 years", "b": "25 years", "winner": "a"},
+      {"name": "Space Needed", "a": "Less", "b": "More", "winner": "a"},
+      {"name": "Heat Performance", "a": "Better", "b": "Good", "winner": "a"},
+      {"name": "Appearance", "a": "Sleek black", "b": "Blue speckled", "winner": "a"},
+      {"name": "Warranty", "a": "25 years", "b": "25 years", "winner": "tie"}
+    ],
+    "verdict": "Monocrystalline panels are the better choice for most homeowners due to higher efficiency and better aesthetics.",
+    "faqs": [
+      {"question": "Are monocrystalline panels worth the extra cost?", "answer": "Yes, for most installations. Higher efficiency means fewer panels needed, which can offset the higher per-panel cost."},
+      {"question": "Which solar panel type lasts longer?", "answer": "Both types last 25+ years, but monocrystalline panels tend to maintain higher output over time."},
+      {"question": "What panel type do most installers recommend?", "answer": "Most installers recommend monocrystalline panels for residential use due to their superior efficiency and compact size."}
+    ]
+  },
+  {
+    "title": "Solar Battery Storage vs. Grid-Tied Only",
+    "slug": "solar-battery-vs-grid-tied",
+    "category": "equipment",
+    "description": "Compare solar systems with battery storage versus grid-tied only systems to decide if a battery is worth the investment.",
+    "option_a": "Solar + Battery",
+    "option_b": "Grid-Tied Only",
+    "factors": [
+      {"name": "Upfront Cost", "a": "$20K-$35K", "b": "$10K-$25K", "winner": "b"},
+      {"name": "Backup Power", "a": "Yes", "b": "No", "winner": "a"},
+      {"name": "Energy Independence", "a": "High", "b": "Partial", "winner": "a"},
+      {"name": "TOU Optimization", "a": "Excellent", "b": "Limited", "winner": "a"},
+      {"name": "Payback Period", "a": "8-12 years", "b": "5-8 years", "winner": "b"},
+      {"name": "System Complexity", "a": "Higher", "b": "Simpler", "winner": "b"},
+      {"name": "Future-Proofing", "a": "Excellent", "b": "Good", "winner": "a"}
+    ],
+    "verdict": "Battery storage adds resilience and energy independence but at a higher cost. Best for areas with frequent outages or TOU rates.",
+    "faqs": [
+      {"question": "Is a solar battery worth the extra cost?", "answer": "If you experience frequent power outages or have time-of-use electricity rates, a battery can provide significant value and peace of mind."},
+      {"question": "How long does a solar battery last?", "answer": "Most solar batteries last 10-15 years with warranties typically covering 10 years or a certain number of charge cycles."},
+      {"question": "Can I add a battery to my existing solar system?", "answer": "Yes, most solar systems can be retrofitted with a battery, though costs may be higher than installing both simultaneously."}
+    ]
+  },
+  {
+    "title": "SunPower vs. Tesla Solar Panels",
+    "slug": "sunpower-vs-tesla-solar",
+    "category": "brand",
+    "description": "Compare SunPower and Tesla solar panels on efficiency, cost, warranties, and overall value for homeowners.",
+    "option_a": "SunPower",
+    "option_b": "Tesla Solar",
+    "factors": [
+      {"name": "Panel Efficiency", "a": "22.8%", "b": "19.5%", "winner": "a"},
+      {"name": "Cost per Watt", "a": "$3.00-$3.50", "b": "$2.50-$3.00", "winner": "b"},
+      {"name": "Warranty", "a": "25 years complete", "b": "25 years", "winner": "a"},
+      {"name": "Battery Option", "a": "Third-party", "b": "Powerwall", "winner": "b"},
+      {"name": "Installation", "a": "Dealer network", "b": "Direct + certified", "winner": "tie"},
+      {"name": "Customization", "a": "High", "b": "Limited", "winner": "a"},
+      {"name": "Brand Recognition", "a": "High", "b": "Very High", "winner": "b"}
+    ],
+    "verdict": "SunPower offers premium efficiency and warranties, while Tesla provides competitive pricing with seamless battery integration.",
+    "faqs": [
+      {"question": "Are SunPower panels better than Tesla?", "answer": "SunPower panels are more efficient and have a stronger warranty, but Tesla panels cost less and integrate seamlessly with the Powerwall battery."},
+      {"question": "Which solar company has better customer service?", "answer": "SunPower generally receives higher customer satisfaction ratings, though Tesla has been improving its service network."},
+      {"question": "Can I mix SunPower panels with Tesla Powerwall?", "answer": "Yes, Tesla Powerwall is compatible with most solar panel brands, including SunPower."}
+    ]
+  },
+  {
+    "title": "Net Metering vs. Time-of-Use Rates",
+    "slug": "net-metering-vs-time-of-use",
+    "category": "billing",
+    "description": "Compare net metering and time-of-use rate structures to understand how they affect your solar savings.",
+    "option_a": "Net Metering",
+    "option_b": "Time-of-Use Rates",
+    "factors": [
+      {"name": "Bill Credits", "a": "Full retail rate", "b": "Varies by time", "winner": "a"},
+      {"name": "Complexity", "a": "Simple", "b": "Complex", "winner": "a"},
+      {"name": "Battery Benefit", "a": "Low", "b": "High", "winner": "b"},
+      {"name": "Peak Savings", "a": "Standard", "b": "Higher potential", "winner": "b"},
+      {"name": "Availability", "a": "Declining", "b": "Growing", "winner": "b"},
+      {"name": "Predictability", "a": "High", "b": "Moderate", "winner": "a"},
+      {"name": "Best With Battery", "a": "Not needed", "b": "Recommended", "winner": "a"}
+    ],
+    "verdict": "Net metering offers simpler savings, but TOU rates combined with battery storage can maximize returns in many markets.",
+    "faqs": [
+      {"question": "Is net metering going away?", "answer": "Several states are transitioning away from full retail net metering to alternative compensation structures, but the timeline varies significantly."},
+      {"question": "How do TOU rates affect solar savings?", "answer": "TOU rates mean your solar generation is worth more during peak hours and less during off-peak, making battery storage more valuable."},
+      {"question": "Which is better for solar: net metering or TOU?", "answer": "Full retail net metering typically provides better solar savings, but TOU with battery storage can outperform in markets where net metering credits are reduced."}
+    ]
+  },
+  {
+    "title": "Cash Purchase vs. Solar Financing",
+    "slug": "solar-cash-vs-financing",
+    "category": "financing",
+    "description": "Compare paying cash for solar panels versus using financing options to determine the best approach for your budget.",
+    "option_a": "Cash Purchase",
+    "option_b": "Solar Financing",
+    "factors": [
+      {"name": "Total Cost", "a": "Lowest", "b": "Higher (interest)", "winner": "a"},
+      {"name": "Upfront Investment", "a": "$10K-$25K", "b": "$0-$1,000", "winner": "b"},
+      {"name": "Monthly Savings Start", "a": "Immediately", "b": "After breakeven", "winner": "a"},
+      {"name": "Tax Credit", "a": "Full 30%", "b": "Full 30%", "winner": "tie"},
+      {"name": "20-Year ROI", "a": "300-500%", "b": "150-300%", "winner": "a"},
+      {"name": "Accessibility", "a": "Limited", "b": "Widely available", "winner": "b"},
+      {"name": "Risk", "a": "Higher upfront", "b": "Lower upfront", "winner": "b"}
+    ],
+    "verdict": "Cash purchases maximize total savings, but financing makes solar accessible to more homeowners with strong returns.",
+    "faqs": [
+      {"question": "Is it better to pay cash for solar panels?", "answer": "Paying cash maximizes your total savings by eliminating interest costs, but financing lets you go solar with little to no money down."},
+      {"question": "What is the average ROI for a cash solar purchase?", "answer": "Cash buyers typically see a 300-500% return on investment over 20 years, depending on local electricity rates."},
+      {"question": "Do I still get the tax credit if I finance?", "answer": "Yes, the 30% federal solar tax credit applies whether you pay cash, use a loan, or use PACE financing. Leases and PPAs do not qualify."}
+    ]
+  },
+  {
+    "title": "Roof-Mounted vs. Ground-Mounted Solar",
+    "slug": "roof-mounted-vs-ground-mounted-solar",
+    "category": "installation",
+    "description": "Compare roof-mounted and ground-mounted solar installations to find the best option for your property.",
+    "option_a": "Roof-Mounted",
+    "option_b": "Ground-Mounted",
+    "factors": [
+      {"name": "Installation Cost", "a": "Lower", "b": "Higher (+20-30%)", "winner": "a"},
+      {"name": "Space Required", "a": "Uses roof", "b": "Uses yard", "winner": "a"},
+      {"name": "Optimal Angle", "a": "Fixed by roof", "b": "Adjustable", "winner": "b"},
+      {"name": "Maintenance Access", "a": "Harder", "b": "Easier", "winner": "b"},
+      {"name": "Production Efficiency", "a": "Good", "b": "Excellent", "winner": "b"},
+      {"name": "Aesthetics", "a": "Integrated", "b": "Visible", "winner": "a"},
+      {"name": "Permits", "a": "Standard", "b": "May need more", "winner": "a"}
+    ],
+    "verdict": "Roof-mounted is more cost-effective for most homeowners, while ground-mounted offers better performance for larger properties.",
+    "faqs": [
+      {"question": "Are ground-mounted solar panels more efficient?", "answer": "Ground-mounted panels can be angled and oriented optimally, potentially producing 10-20% more energy than roof-mounted systems."},
+      {"question": "How much more do ground-mounted solar panels cost?", "answer": "Ground-mounted systems typically cost 20-30% more than roof-mounted due to additional racking and foundation requirements."},
+      {"question": "Do I need a lot of land for ground-mounted solar?", "answer": "A typical residential system needs about 400-600 square feet of ground space, roughly the size of a two-car garage."}
+    ]
+  }
+]

@@ -3,7 +3,10 @@
 const {
   baseTemplate, eligibilityWidget, alertBanner, statsGrid,
   faqSection, relatedPagesSection, comparisonTable, barChartComponent,
-  ctaBlock, urgencyBlock, affiliateCtaBlock, emailCaptureBlock, SITE
+  ctaBlock, urgencyBlock, affiliateCtaBlock, emailCaptureBlock,
+  aboveFoldQuoteCta, midContentFinancingCta, sidebarAffiliateWidget,
+  calculatorResultMonetization, authorBioBlock, comparisonAffiliateTable,
+  articleSchema, SITE
 } = require('./components');
 
 // ---------------------------------------------------------------------------
@@ -127,6 +130,8 @@ ${eligibilityWidget('hero')}
 </div>
 </section>
 
+${aboveFoldQuoteCta('Your Area')}
+
 <section class="content-section">
 <div class="container">
 ${statsGrid([
@@ -161,6 +166,8 @@ ${statsGrid([
 </div>
 </section>
 
+${affiliateCtaBlock('Your Area', 'homepage-top')}
+
 <section class="content-section" id="state-map">
 <div class="container">
 <h2 class="section-title text-center">Solar Rebates &amp; Incentives by State</h2>
@@ -168,6 +175,8 @@ ${statsGrid([
 ${stateLinksHtml}
 </div>
 </section>
+
+${midContentFinancingCta('Your Home')}
 
 <section class="content-section bg-light">
 <div class="container">
@@ -192,6 +201,12 @@ ${cityLinksHtml}
 </div>
 </section>
 
+${comparisonAffiliateTable('Compare Top Solar Providers', [
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare 3-7 quotes free', rating: '4.8/5', slug: 'energysage-hp', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down lease & loan', rating: '4.5/5', slug: 'sunrun-hp', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
+  { name: 'SunPower', type: 'Installer', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-hp', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+])}
+
 ${faqSection([
   { question: 'What is the federal solar tax credit?', answer: 'The federal Investment Tax Credit (ITC) allows you to deduct <strong>30%</strong> of the cost of installing a solar energy system from your federal taxes. This credit is available through 2032 and applies to both residential and commercial installations.' },
   { question: 'How much can I save with solar panels?', answer: 'Savings depend on your location, electricity rates, system size, and available incentives. On average, homeowners save between <strong>$20,000 and $60,000</strong> over 20 years. Use our calculator above for a personalized estimate.' },
@@ -200,9 +215,11 @@ ${faqSection([
   { question: 'Are there state-specific solar incentives?', answer: 'Yes. Many states offer additional tax credits, rebates, SRECs, property and sales tax exemptions, and performance-based incentives on top of the federal ITC. <a href="#state-map">Select your state</a> to see what is available.' }
 ])}
 
-${affiliateCtaBlock('Your Area', 'homepage')}
+${affiliateCtaBlock('Your Area', 'homepage-bottom')}
 
 ${emailCaptureBlock('Your Home')}
+
+${authorBioBlock()}
 
 ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above to see available rebates and projected savings for your home.', '#widget-hero')}
 `;
@@ -294,6 +311,8 @@ function generateStatePage(state, stateData) {
 <h1>${state.state_name} Solar Rebates, Tax Credits &amp; Incentives (${SITE.year})</h1>
 <p class="lead">Complete guide to solar incentives in ${state.state_name}. See how much you can save with the federal tax credit, state programs, utility rebates, and local incentives.</p>
 
+${aboveFoldQuoteCta(state.state_name)}
+
 ${statsGrid([
   { value: dollar(state.avg_install_cost), label: 'Avg. System Cost (' + state.avg_system_size + ' kW)' },
   { value: dollar(roi.netCost), label: 'Net Cost After Incentives' },
@@ -305,7 +324,7 @@ ${statsGrid([
 
 ${eligibilityWidget('state')}
 
-${affiliateCtaBlock(state.state_name, 'state')}
+${affiliateCtaBlock(state.state_name, 'state-top')}
 </div>
 </section>
 
@@ -317,6 +336,8 @@ ${comparisonTable(['Incentive', 'Value', 'Details'], incentiveRows)}
 ${state.additional_incentives ? '<div class="info-box"><strong>Additional Programs:</strong> ' + state.additional_incentives + '</div>' : ''}
 </div>
 </section>
+
+${midContentFinancingCta(state.state_name, dollar(roi.annualSavings))}
 
 <section class="content-section">
 <div class="container">
@@ -336,18 +357,29 @@ ${barChartComponent([
 <p><strong>Net System Cost:</strong> ${dollar(roi.netCost)}</p>
 <p><strong>Break-Even:</strong> ~${roi.breakEvenYears} years</p>
 </div>
+${calculatorResultMonetization(state.state_name)}
 </div>
 </section>
 
 ${urgencyBlock('The 30% federal solar tax credit is available through 2032. It drops to 26% in 2033. Lock in maximum savings in ' + state.state_name + ' now.')}
 
+${sidebarAffiliateWidget(state.state_name)}
+
 ${stateUtilities.length > 0 ? '<section class="content-section bg-light"><div class="container"><h2>Utility Companies in ' + state.state_name + '</h2><p>Review net metering policies, export compensation rates, and solar programs for each utility serving ' + state.state_name + '.</p><div class="related-grid">' + utilityLinksHtml + '</div></div></section>' : ''}
 
 ${stateCities.length > 0 ? '<section class="content-section"><div class="container"><h2>City Solar Reports in ' + state.state_name + '</h2><p>Get city-specific solar ROI projections, local incentives, and break-even analysis.</p><div class="related-grid">' + cityLinksHtml + '</div></div></section>' : ''}
 
+${comparisonAffiliateTable('Best Solar Options in ' + state.state_name, [
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare local ' + state.state_name + ' installers', rating: '4.8/5', slug: 'energysage-' + state.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar in ' + state.state_name, rating: '4.5/5', slug: 'sunrun-' + state.slug, affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
+  { name: 'SunPower', type: 'Premium', highlight: 'Top efficiency panels', rating: '4.6/5', slug: 'sunpower-' + state.slug, affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+])}
+
 ${emailCaptureBlock(state.state_name)}
 
 ${faqSection(faqs)}
+
+${authorBioBlock()}
 
 ${relatedPagesSection('Explore Nearby States', nearbyStates.map(function (s) {
   return { title: s.state_name + ' Solar Rebates', url: '/solar-rebates-incentives-' + s.slug + '/', meta: s.sunlight_hours + ' sun hrs · $' + s.avg_kwh_rate + '/kWh' };
@@ -412,9 +444,11 @@ ${statsGrid([
 
 ${utility.cap_reached ? urgencyBlock(utility.utility_name + ' has reached its net metering cap. New applicants may receive reduced export compensation. Act quickly to lock in the best available rates.') : ''}
 
+${aboveFoldQuoteCta(utility.utility_name + ' Area')}
+
 ${eligibilityWidget('utility')}
 
-${affiliateCtaBlock(utility.utility_name + ' Area', 'utility')}
+${affiliateCtaBlock(utility.utility_name + ' Area', 'utility-top')}
 </div>
 </section>
 
@@ -453,7 +487,11 @@ ${parentState ? '<section class="content-section bg-light"><div class="container
 
 ${emailCaptureBlock(utility.state)}
 
+${sidebarAffiliateWidget(utility.utility_name + ' Area')}
+
 ${faqSection(faqs)}
+
+${authorBioBlock()}
 
 ${relatedPagesSection('Other Utilities in ' + utility.state, sameStateUtils.map(function (u) {
   return { title: u.utility_name, url: '/utility-rebates/' + u.slug + '/', meta: 'Net metering: ' + u.net_metering_rate };
@@ -528,6 +566,8 @@ function generateCityPage(city, cityData) {
 <h1>Is Solar Worth It in ${city.city_name}, ${city.state_abbrev}? (${SITE.year} Analysis)</h1>
 <p class="lead">Detailed solar ROI analysis for ${city.city_name}, ${city.state_name}. With ${city.avg_sun_hours} peak sun hours and electricity at $${city.avg_electricity_rate}/kWh, here is what you can expect from going solar.</p>
 
+${aboveFoldQuoteCta(city.city_name + ', ' + city.state_abbrev)}
+
 ${statsGrid([
   { value: dollar(roi.twentyYearSavings), label: '20-Year Savings' },
   { value: roi.breakEvenYears + ' yrs', label: 'Break-Even Timeline' },
@@ -539,7 +579,7 @@ ${statsGrid([
 
 ${eligibilityWidget('city')}
 
-${affiliateCtaBlock(city.city_name + ', ' + city.state_abbrev, 'city')}
+${affiliateCtaBlock(city.city_name + ', ' + city.state_abbrev, 'city-top')}
 </div>
 </section>
 
@@ -552,6 +592,8 @@ ${comparisonTable(['Period', 'Cumulative Savings', 'Net Position', 'Status'], ye
 </div>
 </section>
 
+${midContentFinancingCta(city.city_name, dollar(roi.annualSavings))}
+
 <section class="content-section">
 <div class="container">
 <h2>Solar Investment Breakdown for ${city.city_name}</h2>
@@ -562,6 +604,7 @@ ${barChartComponent([
   { label: 'Net Cost', value: roi.netCost, max: parentState.avg_install_cost },
   { label: 'Annual Savings', value: roi.annualSavings, max: parentState.avg_install_cost }
 ])}
+${calculatorResultMonetization(city.city_name)}
 </div>
 </section>
 
@@ -576,6 +619,8 @@ ${parentState ? '<p><strong>State Incentives:</strong> ' + city.state_name + ' o
 </div>
 </section>
 
+${sidebarAffiliateWidget(city.city_name)}
+
 <section class="content-section">
 <div class="container">
 <h2>Financing Options for ${city.city_name} Homeowners</h2>
@@ -589,9 +634,17 @@ ${parentState ? '<p><strong>State Incentives:</strong> ' + city.state_name + ' o
 </div>
 </section>
 
+${comparisonAffiliateTable('Best Solar Providers in ' + city.city_name, [
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare ' + city.city_name + ' installers', rating: '4.8/5', slug: 'energysage-' + city.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar in ' + city.state_abbrev, rating: '4.5/5', slug: 'sunrun-' + city.slug, affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
+  { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-' + city.slug, affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+])}
+
 ${emailCaptureBlock(city.city_name + ', ' + city.state_abbrev)}
 
 ${faqSection(faqs)}
+
+${authorBioBlock()}
 
 ${relatedPagesSection('More Cities in ' + city.state_name, nearbyCities.map(function (c) {
   return { title: c.city_name + ', ' + c.state_abbrev, url: '/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/', meta: c.avg_sun_hours + ' sun hrs · $' + c.avg_electricity_rate + '/kWh' };
@@ -839,6 +892,7 @@ function generateMethodologyPage() {
 <div class="container">
 <h1>Our Methodology</h1>
 <p class="lead">How ${SITE.name} calculates solar savings estimates, ROI projections, and incentive data. We believe in transparency and want you to understand exactly how our numbers are derived.</p>
+${authorBioBlock()}
 </div>
 </section>
 
@@ -848,29 +902,38 @@ function generateMethodologyPage() {
 <h2>Data Sources</h2>
 <p>Our data comes from publicly available government and industry sources:</p>
 <ul>
-<li><strong>Federal Incentives:</strong> U.S. Department of Energy, IRS guidance on the Investment Tax Credit (ITC) under the Inflation Reduction Act.</li>
-<li><strong>State Incentives:</strong> Database of State Incentives for Renewables &amp; Efficiency (DSIRE), state energy office publications.</li>
+<li><strong>Federal Incentives:</strong> U.S. Department of Energy (<a href="https://www.energy.gov/eere/solar/homeowners-guide-federal-tax-credit-solar-photovoltaics" rel="nofollow">energy.gov</a>), IRS guidance on the Investment Tax Credit (ITC) under the Inflation Reduction Act (<a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow">IRS.gov</a>).</li>
+<li><strong>State Incentives:</strong> Database of State Incentives for Renewables &amp; Efficiency (<a href="https://www.dsireusa.org/" rel="nofollow">DSIRE</a>), state energy office publications.</li>
 <li><strong>Utility Policies:</strong> Individual utility company tariff filings, public rate schedules, and interconnection guidelines.</li>
-<li><strong>Solar Irradiance:</strong> National Renewable Energy Laboratory (NREL) solar resource data and PVWatts calculator methodology.</li>
-<li><strong>Installation Costs:</strong> EnergySage marketplace data, NREL annual solar cost benchmarks, and Lawrence Berkeley National Laboratory reports.</li>
-<li><strong>Electricity Rates:</strong> U.S. Energy Information Administration (EIA) state and utility rate data.</li>
+<li><strong>Solar Irradiance:</strong> National Renewable Energy Laboratory (<a href="https://www.nrel.gov/gis/solar-resource-maps.html" rel="nofollow">NREL</a>) solar resource data and PVWatts calculator methodology.</li>
+<li><strong>Installation Costs:</strong> EnergySage marketplace data, <a href="https://www.nrel.gov/solar/market-research-analysis.html" rel="nofollow">NREL annual solar cost benchmarks</a>, and Lawrence Berkeley National Laboratory reports.</li>
+<li><strong>Electricity Rates:</strong> U.S. Energy Information Administration (<a href="https://www.eia.gov/electricity/monthly/" rel="nofollow">EIA</a>) state and utility rate data.</li>
 </ul>
 
 <h2>How We Calculate Savings</h2>
 <h3>System Production</h3>
-<p>We estimate annual solar production using: <code>Annual kWh = System Size (kW) &times; Peak Sun Hours &times; 365</code>. Peak sun hours vary by location and represent the number of hours per day when solar irradiance averages 1,000 W/m&sup2;.</p>
+<p>We estimate annual solar production using: <code>Annual kWh = System Size (kW) &times; Peak Sun Hours &times; 365</code>. Peak sun hours vary by location and represent the number of hours per day when solar irradiance averages 1,000 W/m&sup2;. Data sourced from NREL solar resource maps.</p>
 
 <h3>Annual Savings</h3>
-<p>Annual electric bill savings are calculated as: <code>Annual Savings = Annual kWh &times; Local Electricity Rate</code>. We use current average residential rates from the EIA for each state.</p>
+<p>Annual electric bill savings are calculated as: <code>Annual Savings = Annual kWh &times; Local Electricity Rate</code>. We use current average residential rates from the <a href="https://www.eia.gov/electricity/data/state/" rel="nofollow">EIA State Electricity Profiles</a>.</p>
 
 <h3>Incentive Stacking</h3>
-<p>We calculate total incentives by combining: the 30% federal ITC, applicable state tax credits, state rebates, SREC income, and property/sales tax exemptions. Each incentive is applied to the appropriate cost basis.</p>
+<p>We calculate total incentives by combining: the 30% federal ITC (per <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow">IRS guidelines</a>), applicable state tax credits, state rebates, SREC income, and property/sales tax exemptions. Each incentive is applied to the appropriate cost basis per DOE guidance.</p>
 
 <h3>Net Cost &amp; Break-Even</h3>
 <p>Net cost equals gross system cost minus all incentives. Break-even year is when cumulative electricity savings exceed the net system cost.</p>
 
 <h3>20-Year Projection</h3>
-<p>Our 20-year savings estimate uses current electricity rates held constant. Actual savings may be higher if rates increase, which they historically have at 2-3% annually.</p>
+<p>Our 20-year savings estimate uses current electricity rates held constant. Actual savings may be higher if rates increase, which they historically have at 2-3% annually per EIA data.</p>
+
+<h2>Editorial Review Process</h2>
+<p>All content on ${SITE.name} undergoes a structured review process:</p>
+<ul>
+<li><strong>Data Verification:</strong> Cross-referenced against at least two authoritative sources (DOE, IRS, DSIRE, NREL, EIA).</li>
+<li><strong>Calculation Audit:</strong> ROI projections validated against NREL PVWatts benchmarks.</li>
+<li><strong>Regular Updates:</strong> Content reviewed quarterly for accuracy against current incentive programs.</li>
+<li><strong>Corrections Policy:</strong> Errors are corrected within 48 hours of identification.</li>
+</ul>
 
 <h2>Limitations &amp; Disclaimers</h2>
 <ul>
@@ -881,17 +944,18 @@ function generateMethodologyPage() {
 </ul>
 
 <h2>Update Frequency</h2>
-<p>We review and update our data regularly:</p>
 <ul>
-<li><strong>Federal incentives:</strong> Updated when legislation changes</li>
-<li><strong>State programs:</strong> Reviewed quarterly</li>
+<li><strong>Federal incentives:</strong> Updated when legislation changes (source: <a href="https://www.energy.gov/" rel="nofollow">energy.gov</a>)</li>
+<li><strong>State programs:</strong> Reviewed quarterly (source: <a href="https://www.dsireusa.org/" rel="nofollow">DSIRE</a>)</li>
 <li><strong>Utility policies:</strong> Reviewed quarterly</li>
-<li><strong>Installation costs:</strong> Updated semi-annually</li>
-<li><strong>Electricity rates:</strong> Updated annually from EIA data</li>
+<li><strong>Installation costs:</strong> Updated semi-annually (source: <a href="https://www.nrel.gov/" rel="nofollow">NREL</a>)</li>
+<li><strong>Electricity rates:</strong> Updated annually (source: <a href="https://www.eia.gov/" rel="nofollow">EIA</a>)</li>
 </ul>
 </div>
 </div>
 </section>
+
+${affiliateCtaBlock('Your Area', 'methodology')}
 
 ${ctaBlock('secondary', 'See Your Personalized Estimate', 'Now that you understand our methodology, get a savings estimate based on your specific location and usage.', '/#widget-hero')}
 `;
@@ -979,6 +1043,185 @@ function generateEditorialPage() {
 }
 
 // ---------------------------------------------------------------------------
+// 9. Comparison Page
+// ---------------------------------------------------------------------------
+function generateComparisonPage(comparison, allComparisons) {
+  var comparisons = allComparisons || [];
+
+  var factorRows = comparison.factors.map(function (f) {
+    var winnerIcon = f.winner === 'a' ? ' *' : (f.winner === 'b' ? '' : '');
+    var winnerIconB = f.winner === 'b' ? ' *' : (f.winner === 'a' ? '' : '');
+    return [f.name, f.a + winnerIcon, f.b + winnerIconB, f.winner === 'tie' ? 'Tie' : (f.winner === 'a' ? comparison.option_a : comparison.option_b)];
+  });
+
+  var relatedComparisons = comparisons.filter(function (c) {
+    return c.slug !== comparison.slug;
+  }).slice(0, 6);
+
+  var faqs = comparison.faqs || [];
+
+  var crumbs = [
+    { label: 'Home', url: '/' },
+    { label: 'Comparisons', url: '/#comparisons' },
+    { label: comparison.title }
+  ];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>${comparison.title} (${SITE.year} Comparison)</h1>
+<p class="lead">${comparison.description}</p>
+
+${aboveFoldQuoteCta('Your Area')}
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>${comparison.option_a} vs. ${comparison.option_b}: Side-by-Side Comparison</h2>
+${comparisonTable(['Factor', comparison.option_a, comparison.option_b, 'Winner'], factorRows)}
+<p class="small-text">* indicates the winning option for that factor.</p>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+<h2>Our Verdict</h2>
+<div class="content-prose">
+<p><strong>${comparison.verdict}</strong></p>
+</div>
+
+${affiliateCtaBlock('Your Area', 'comparison-' + comparison.slug)}
+</div>
+</section>
+
+${midContentFinancingCta('Your Home')}
+
+${eligibilityWidget('comparison')}
+
+${calculatorResultMonetization('Your Area')}
+
+${faqSection(faqs)}
+
+${comparisonAffiliateTable('Get Started with Solar', [
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare installer quotes free', rating: '4.8/5', slug: 'energysage-comp', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar lease/loan', rating: '4.5/5', slug: 'sunrun-comp', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
+  { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-comp', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+])}
+
+${authorBioBlock()}
+
+${relatedPagesSection('More Solar Comparisons', relatedComparisons.map(function (c) {
+  return { title: c.title, url: '/compare/' + c.slug + '/', meta: c.category };
+}))}
+
+${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Ready to go solar? Enter your ZIP code to see your personalized savings estimate.', '#widget-comparison')}
+`;
+
+  return baseTemplate(
+    comparison.title,
+    comparison.description + ' Compare ' + comparison.option_a + ' vs. ' + comparison.option_b + ' for your home.',
+    '/compare/' + comparison.slug + '/',
+    body,
+    {
+      breadcrumbs: crumbs,
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(comparison.title, comparison.description, '/compare/' + comparison.slug + '/'),
+      states: []
+    }
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 10. Pillar/Authority Page
+// ---------------------------------------------------------------------------
+function generatePillarPage(pillar, allPillars) {
+  var pillars = allPillars || [];
+
+  var tocHtml = pillar.sections.map(function (s, i) {
+    var anchor = s.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return '<li><a href="#' + anchor + '">' + s.heading + '</a></li>';
+  }).join('\n');
+
+  var sectionsHtml = pillar.sections.map(function (s, i) {
+    var anchor = s.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    var monetization = '';
+    if (i === 2) {
+      monetization = affiliateCtaBlock('Your Area', 'pillar-mid-' + pillar.slug);
+    } else if (i === 5) {
+      monetization = midContentFinancingCta('Your Home');
+    }
+    return '<div id="' + anchor + '" class="pillar-section"><h2>' + s.heading + '</h2><div class="content-prose"><p>' + s.content + '</p></div>' + monetization + '</div>';
+  }).join('\n');
+
+  var relatedPillars = pillars.filter(function (p) { return p.slug !== pillar.slug; });
+  var faqs = pillar.faqs || [];
+
+  var crumbs = [
+    { label: 'Home', url: '/' },
+    { label: 'Guides', url: '/' },
+    { label: pillar.title }
+  ];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>${pillar.title} (${SITE.year})</h1>
+<p class="lead">${pillar.description}</p>
+
+${aboveFoldQuoteCta('Your Area')}
+
+<nav class="toc-nav">
+<h3>Table of Contents</h3>
+<ol>
+${tocHtml}
+</ol>
+</nav>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+${sectionsHtml}
+</div>
+</section>
+
+${eligibilityWidget('pillar')}
+
+${calculatorResultMonetization('Your Area')}
+
+${comparisonAffiliateTable('Top Solar Providers', [
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare installer quotes free', rating: '4.8/5', slug: 'energysage-pillar', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar lease/loan', rating: '4.5/5', slug: 'sunrun-pillar', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
+  { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-pillar', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+])}
+
+${faqSection(faqs)}
+
+${authorBioBlock()}
+
+${emailCaptureBlock('Your Home')}
+
+${relatedPagesSection('More Solar Guides', relatedPillars.map(function (p) {
+  return { title: p.title, url: '/guide/' + p.slug + '/', meta: p.category };
+}))}
+
+${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Use our calculator to see how much you can save with solar energy.', '#widget-pillar')}
+`;
+
+  return baseTemplate(
+    pillar.title,
+    pillar.description,
+    '/guide/' + pillar.slug + '/',
+    body,
+    {
+      breadcrumbs: crumbs,
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(pillar.title, pillar.description, '/guide/' + pillar.slug + '/'),
+      states: []
+    }
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Module Exports
 // ---------------------------------------------------------------------------
 module.exports = {
@@ -989,5 +1232,7 @@ module.exports = {
   generateFinancingPage,
   generateGlossaryPage,
   generateMethodologyPage,
-  generateEditorialPage
+  generateEditorialPage,
+  generateComparisonPage,
+  generatePillarPage
 };

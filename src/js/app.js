@@ -355,6 +355,40 @@ function handleWidgetSubmit(form) {
     // Silently fail — do not block UX
   }
 
+  // Route lead to affiliate partner via lead router
+  try {
+    var routerData = JSON.stringify({
+      zip: zip,
+      bill: bill,
+      ownership: ownership === 'I own my home' ? 'own' : 'rent',
+      state: state || '',
+      name: name || '',
+      email: email || '',
+      phone: phone || '',
+      page_url: window.location.pathname
+    });
+
+    var routerXhr = new XMLHttpRequest();
+    routerXhr.open('POST', '/.netlify/functions/lead-router');
+    routerXhr.setRequestHeader('Content-Type', 'application/json');
+    routerXhr.onreadystatechange = function () {
+      if (routerXhr.readyState === 4 && routerXhr.status === 200) {
+        try {
+          var routerResponse = JSON.parse(routerXhr.responseText);
+          if (routerResponse.redirect_url) {
+            sessionStorage.setItem('lead_redirect_url', routerResponse.redirect_url);
+            sessionStorage.setItem('lead_partner', routerResponse.partner || '');
+          }
+        } catch (parseErr) {
+          // Silently fail
+        }
+      }
+    };
+    routerXhr.send(routerData);
+  } catch (routerErr) {
+    // Silently fail — do not block UX
+  }
+
   // Find or create a results container
   var parent = form.closest('.eligibility-widget') || form.parentNode;
   var existingResults = parent.querySelector('.widget-results');

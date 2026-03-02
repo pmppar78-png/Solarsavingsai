@@ -452,6 +452,184 @@ function leadCaptureForm() {
 }
 
 /* --------------------------------------------------------------------------
+   19. aboveFoldQuoteCta – High-priority above-fold CTA for lead generation
+   -------------------------------------------------------------------------- */
+function aboveFoldQuoteCta(location) {
+  var loc = escapeHtml(location || 'your area');
+
+  return `<div class="above-fold-cta">
+<div class="above-fold-cta-inner">
+<div class="above-fold-cta-text">
+<strong>Get Your Free Solar Quote for ${loc}</strong>
+<span>Compare quotes from top-rated installers. No obligation.</span>
+</div>
+<div class="above-fold-cta-actions">
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary btn-lg" rel="sponsored noopener" target="_blank" data-affiliate="above-fold-energysage">Get Free Quotes</a>
+<a href="#widget-hero" class="btn btn-outline btn-lg">Calculate Savings</a>
+</div>
+</div>
+<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Affiliate link. We may earn a commission at no cost to you. <a href="/editorial-standards/">Learn more</a>.</p>
+</div>`;
+}
+
+/* --------------------------------------------------------------------------
+   20. midContentFinancingCta – Contextual financing CTA for mid-page placement
+   -------------------------------------------------------------------------- */
+function midContentFinancingCta(location, annualSavings) {
+  var loc = escapeHtml(location || 'your home');
+  var savingsText = annualSavings ? ' Save up to ' + escapeHtml(String(annualSavings)) + '/year.' : '';
+
+  return `<div class="mid-content-cta">
+<div class="mid-content-cta-inner">
+<h3>Explore Solar Financing for ${loc}</h3>
+<p>$0 down options available. Own your system and claim the 30% federal tax credit.${savingsText}</p>
+<div class="mid-content-cta-actions">
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-primary" rel="sponsored noopener" target="_blank" data-affiliate="mid-sunrun">$0 Down Plans</a>
+<a href="/solar-financing/" class="btn btn-outline">Compare All Options</a>
+</div>
+<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Affiliate link. <a href="/editorial-standards/">Disclosure</a>.</p>
+</div>
+</div>`;
+}
+
+/* --------------------------------------------------------------------------
+   21. sidebarAffiliateWidget – Compact affiliate widget for sidebar/inline
+   -------------------------------------------------------------------------- */
+function sidebarAffiliateWidget(location) {
+  var loc = escapeHtml(location || 'Your Area');
+
+  return `<div class="sidebar-affiliate-widget">
+<div class="sidebar-widget-header"><strong>Top Solar Providers for ${loc}</strong></div>
+<div class="sidebar-widget-list">
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener" target="_blank" data-affiliate="sidebar-energysage">
+<span class="sidebar-widget-name">EnergySage</span>
+<span class="sidebar-widget-detail">Compare local quotes free</span>
+<span class="sidebar-widget-action">Get Quotes &rarr;</span>
+</a>
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener" target="_blank" data-affiliate="sidebar-sunrun">
+<span class="sidebar-widget-name">Sunrun</span>
+<span class="sidebar-widget-detail">$0 down solar lease/loan</span>
+<span class="sidebar-widget-action">View Plans &rarr;</span>
+</a>
+<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener" target="_blank" data-affiliate="sidebar-sunpower">
+<span class="sidebar-widget-name">SunPower</span>
+<span class="sidebar-widget-detail">Premium panels, 25yr warranty</span>
+<span class="sidebar-widget-action">Get Quote &rarr;</span>
+</a>
+</div>
+<p class="affiliate-disclosure" style="font-size:0.7rem;margin-top:0.5rem;opacity:0.7;">Sponsored. <a href="/editorial-standards/">Disclosure</a>.</p>
+</div>`;
+}
+
+/* --------------------------------------------------------------------------
+   22. calculatorResultMonetization – Post-calculator affiliate push
+   -------------------------------------------------------------------------- */
+function calculatorResultMonetization(location) {
+  var loc = escapeHtml(location || 'your area');
+
+  return `<div class="calculator-monetization">
+<h3>Ready to Get Real Quotes for ${loc}?</h3>
+<p>Your estimate shows strong savings potential. Get exact pricing from vetted installers.</p>
+<div class="calculator-monetization-grid">
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="calc-monetize-card calc-monetize-featured" rel="sponsored noopener" target="_blank" data-affiliate="calc-result-energysage">
+<span class="calc-monetize-badge">Recommended</span>
+<strong>EnergySage Marketplace</strong>
+<span>Compare 3-7 installer quotes</span>
+<span class="btn btn-primary btn-sm">Get Free Quotes</span>
+</a>
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener" target="_blank" data-affiliate="calc-result-sunrun">
+<strong>Sunrun</strong>
+<span>$0 down lease &amp; loan</span>
+<span class="btn btn-outline btn-sm">See Plans</span>
+</a>
+<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener" target="_blank" data-affiliate="calc-result-sunpower">
+<strong>SunPower</strong>
+<span>Highest efficiency panels</span>
+<span class="btn btn-outline btn-sm">Get Quote</span>
+</a>
+</div>
+<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;text-align:center;opacity:0.8;">We may earn a commission. This does not affect your cost. <a href="/editorial-standards/">Disclosure</a>.</p>
+</div>`;
+}
+
+/* --------------------------------------------------------------------------
+   23. authorBioBlock – E-E-A-T structured author bio
+   -------------------------------------------------------------------------- */
+function authorBioBlock() {
+  return `<div class="author-bio-block" itemscope itemtype="https://schema.org/Person">
+<div class="author-bio-inner">
+<div class="author-bio-info">
+<h4 class="author-bio-name" itemprop="name">SolarSavingsAI Research Team</h4>
+<p class="author-bio-title" itemprop="jobTitle">Solar Energy Analysts</p>
+<p class="author-bio-desc" itemprop="description">Our team analyzes solar incentive data from federal (DOE, IRS), state (DSIRE), and utility sources to provide accurate savings estimates. Data is reviewed quarterly and cross-referenced with NREL benchmarks.</p>
+<div class="author-bio-credentials">
+<span class="author-credential">Sources: DOE, IRS, DSIRE, NREL, EIA</span>
+<span class="author-credential">Updated: ${SITE.year}</span>
+<span class="author-credential"><a href="/methodology/">Full Methodology</a></span>
+<span class="author-credential"><a href="/editorial-standards/">Editorial Standards</a></span>
+</div>
+</div>
+</div>
+</div>`;
+}
+
+/* --------------------------------------------------------------------------
+   24. comparisonAffiliateTable – Comparison table with affiliate CTAs
+   -------------------------------------------------------------------------- */
+function comparisonAffiliateTable(title, items) {
+  if (!Array.isArray(items) || items.length === 0) return '';
+
+  var rows = items.map(function (item) {
+    var ctaHtml = item.affiliate_url
+      ? '<a href="' + escapeHtml(item.affiliate_url) + '" class="btn btn-primary btn-sm" rel="sponsored noopener" target="_blank" data-affiliate="table-' + escapeHtml(item.slug || '') + '">' + escapeHtml(item.cta_text || 'Get Quote') + '</a>'
+      : '<span class="text-muted">N/A</span>';
+    return '<tr><td><strong>' + escapeHtml(item.name) + '</strong></td><td>' + escapeHtml(item.type || '') + '</td><td>' + escapeHtml(item.highlight || '') + '</td><td>' + escapeHtml(item.rating || '') + '</td><td>' + ctaHtml + '</td></tr>';
+  }).join('\n');
+
+  return `<div class="comparison-affiliate-table">
+<h3>${escapeHtml(title)}</h3>
+<div class="comparison-table">
+<table class="data-table">
+<thead><tr><th>Provider</th><th>Type</th><th>Highlight</th><th>Rating</th><th>Action</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table>
+</div>
+<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Some links are affiliate links. <a href="/editorial-standards/">Disclosure</a>.</p>
+</div>`;
+}
+
+/* --------------------------------------------------------------------------
+   25. articleSchema – Article structured data for pillar/authority pages
+   -------------------------------------------------------------------------- */
+function articleSchema(title, description, url, datePublished) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description: description,
+    url: SITE.url + url,
+    datePublished: datePublished || SITE.year + '-01-15',
+    dateModified: SITE.year + '-03-01',
+    author: {
+      '@type': 'Organization',
+      name: SITE.name,
+      url: SITE.url
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE.name,
+      url: SITE.url
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': SITE.url + url
+    }
+  });
+}
+
+/* --------------------------------------------------------------------------
    Module Exports
    -------------------------------------------------------------------------- */
 module.exports = {
@@ -473,5 +651,12 @@ module.exports = {
   affiliateCtaBlock,
   emailCaptureBlock,
   leadCaptureForm,
+  aboveFoldQuoteCta,
+  midContentFinancingCta,
+  sidebarAffiliateWidget,
+  calculatorResultMonetization,
+  authorBioBlock,
+  comparisonAffiliateTable,
+  articleSchema,
   SITE
 };
