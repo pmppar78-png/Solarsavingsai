@@ -325,12 +325,35 @@ function handleWidgetSubmit(form) {
         formatCurrency(twentyYearSavings) + ' over 20 years.' +
       '</p>' +
       '<div class="widget-results-cta">' +
-        '<a href="#affiliate" class="btn btn-primary btn-lg btn-block">Get Your Free Custom Quote</a>' +
+        '<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary btn-lg btn-block" rel="sponsored noopener" target="_blank" data-affiliate="quote-cta-result">Get Your Free Custom Quote</a>' +
+        '<div class="widget-results-providers">' +
+          '<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-outline btn-sm" rel="sponsored noopener" target="_blank" data-affiliate="sunrun-result">Sunrun Plans</a>' +
+          '<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="btn btn-outline btn-sm" rel="sponsored noopener" target="_blank" data-affiliate="sunpower-result">SunPower Quote</a>' +
+        '</div>' +
       '</div>' +
       '<p class="widget-results-disclaimer text-muted" style="font-size:0.8rem;margin-top:0.75rem;text-align:center;">' +
         'Estimates based on 65% bill reduction. Actual savings vary by location, system size, and installer.' +
       '</p>' +
     '</div>';
+
+  // Submit lead data to Netlify Forms
+  try {
+    var leadData = 'form-name=solar-calculator-lead' +
+      '&zip=' + encodeURIComponent(zip) +
+      '&ownership=' + encodeURIComponent(ownership) +
+      '&bill=' + encodeURIComponent(String(bill)) +
+      '&state=' + encodeURIComponent(state || '') +
+      '&page_url=' + encodeURIComponent(window.location.pathname) +
+      '&annual_savings=' + encodeURIComponent(String(Math.round(annualSavings))) +
+      '&twenty_year_savings=' + encodeURIComponent(String(Math.round(twentyYearSavings)));
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(leadData);
+  } catch (leadErr) {
+    // Silently fail — do not block UX
+  }
 
   // Find or create a results container
   var parent = form.closest('.eligibility-widget') || form.parentNode;

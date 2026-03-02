@@ -24,7 +24,7 @@ function escapeHtml(str) {
    1. baseTemplate
    -------------------------------------------------------------------------- */
 function baseTemplate(title, description, canonicalPath, bodyContent, options) {
-  const opts = Object.assign({ breadcrumbs: null, schema: '', alertHtml: '' }, options || {});
+  const opts = Object.assign({ breadcrumbs: null, schema: '', alertHtml: '', states: [] }, options || {});
   const fullTitle = escapeHtml(title) + ' | ' + escapeHtml(SITE.name);
   const safeDesc = escapeHtml(description);
   const canonicalUrl = SITE.url + (canonicalPath || '/');
@@ -61,7 +61,8 @@ ${breadcrumbsHtml}
 <main class="main-content">
 ${bodyContent}
 </main>
-${footerComponent([])}
+${footerComponent(opts.states)}
+${leadCaptureForm()}
 ${stickyCtaComponent()}
 ${exitIntentModal()}
 </div>
@@ -100,8 +101,9 @@ function footerComponent(states) {
   const topStates = safeStates.slice(0, 10);
 
   const stateLinks = topStates.map(function (s) {
-    const slug = s.slug || s.name.toLowerCase().replace(/\s+/g, '-');
-    return '<li><a href="/states/' + escapeHtml(slug) + '/">' + escapeHtml(s.name) + '</a></li>';
+    const slug = s.slug || (s.state_name || s.name || '').toLowerCase().replace(/\s+/g, '-');
+    const name = s.state_name || s.name || '';
+    return '<li><a href="/solar-rebates-incentives-' + escapeHtml(slug) + '/">' + escapeHtml(name) + '</a></li>';
   }).join('\n');
 
   return `<footer class="site-footer">
@@ -371,6 +373,85 @@ ${barItems}
 }
 
 /* --------------------------------------------------------------------------
+   16. affiliateCtaBlock – Revenue-generating affiliate links for content pages
+   -------------------------------------------------------------------------- */
+function affiliateCtaBlock(location, placement) {
+  const p = escapeHtml(placement || 'content');
+  const loc = escapeHtml(location || 'your area');
+
+  return `<div class="affiliate-cta-block" id="affiliate-${p}">
+<div class="affiliate-cta-header">
+<h3>Compare Free Solar Quotes for ${loc}</h3>
+<p>Get personalized quotes from vetted solar installers. Compare prices, financing, and equipment side-by-side.</p>
+</div>
+<div class="affiliate-providers">
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="affiliate-card affiliate-card-featured" rel="sponsored noopener" target="_blank" data-affiliate="energysage-${p}">
+<span class="affiliate-badge">Most Popular</span>
+<strong class="affiliate-name">EnergySage</strong>
+<span class="affiliate-desc">Compare quotes from local installers</span>
+<span class="btn btn-primary btn-sm">Get Free Quotes</span>
+</a>
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="affiliate-card" rel="sponsored noopener" target="_blank" data-affiliate="sunrun-${p}">
+<strong class="affiliate-name">Sunrun</strong>
+<span class="affiliate-desc">$0 down solar lease &amp; loan options</span>
+<span class="btn btn-outline btn-sm">View Plans</span>
+</a>
+<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="affiliate-card" rel="sponsored noopener" target="_blank" data-affiliate="sunpower-${p}">
+<strong class="affiliate-name">SunPower</strong>
+<span class="affiliate-desc">Premium panels, 25-year warranty</span>
+<span class="btn btn-outline btn-sm">Get Quote</span>
+</a>
+</div>
+<p class="affiliate-disclosure">Affiliate disclosure: We may earn a commission when you request quotes through our partners. This does not affect our analysis or your cost. <a href="/editorial-standards/">Learn more</a>.</p>
+</div>`;
+}
+
+/* --------------------------------------------------------------------------
+   17. emailCaptureBlock – Lead magnet for email list building
+   -------------------------------------------------------------------------- */
+function emailCaptureBlock(location) {
+  const loc = escapeHtml(location || 'Your Home');
+
+  return `<div class="email-capture-block">
+<div class="email-capture-content">
+<h3>Get Your Free Solar Savings Report</h3>
+<p>Enter your email to receive a personalized solar savings report for ${loc}, including incentive deadlines, financing comparisons, and installer recommendations.</p>
+<form name="solar-savings-report" method="POST" data-netlify="true" class="email-capture-form" netlify-honeypot="bot-field">
+<input type="hidden" name="form-name" value="solar-savings-report">
+<p class="hidden" style="display:none"><label>Do not fill this out: <input name="bot-field"></label></p>
+<div class="email-form-row">
+<input type="email" name="email" placeholder="your@email.com" required class="widget-input" aria-label="Email address">
+<input type="text" name="zip" placeholder="ZIP Code" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" class="widget-input widget-input-sm" aria-label="ZIP code">
+<button type="submit" class="btn btn-primary">Send My Free Report</button>
+</div>
+</form>
+<div class="widget-trust">
+<span class="trust-badge">&#128274; No spam, ever</span>
+<span class="trust-badge">&#9889; Instant delivery</span>
+<span class="trust-badge">&#9989; Unsubscribe anytime</span>
+</div>
+</div>
+</div>`;
+}
+
+/* --------------------------------------------------------------------------
+   18. leadCaptureForm – Hidden Netlify Form for calculator lead capture
+   -------------------------------------------------------------------------- */
+function leadCaptureForm() {
+  return `<form name="solar-calculator-lead" method="POST" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
+<input type="hidden" name="form-name" value="solar-calculator-lead">
+<input name="bot-field">
+<input type="text" name="zip">
+<input type="text" name="ownership">
+<input type="text" name="bill">
+<input type="text" name="state">
+<input type="text" name="page_url">
+<input type="text" name="annual_savings">
+<input type="text" name="twenty_year_savings">
+</form>`;
+}
+
+/* --------------------------------------------------------------------------
    Module Exports
    -------------------------------------------------------------------------- */
 module.exports = {
@@ -389,5 +470,8 @@ module.exports = {
   relatedPagesSection,
   comparisonTable,
   barChartComponent,
+  affiliateCtaBlock,
+  emailCaptureBlock,
+  leadCaptureForm,
   SITE
 };

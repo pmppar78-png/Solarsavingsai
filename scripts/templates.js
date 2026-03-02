@@ -3,7 +3,7 @@
 const {
   baseTemplate, eligibilityWidget, alertBanner, statsGrid,
   faqSection, relatedPagesSection, comparisonTable, barChartComponent,
-  ctaBlock, urgencyBlock, SITE
+  ctaBlock, urgencyBlock, affiliateCtaBlock, emailCaptureBlock, SITE
 } = require('./components');
 
 // ---------------------------------------------------------------------------
@@ -200,6 +200,10 @@ ${faqSection([
   { question: 'Are there state-specific solar incentives?', answer: 'Yes. Many states offer additional tax credits, rebates, SRECs, property and sales tax exemptions, and performance-based incentives on top of the federal ITC. <a href="#state-map">Select your state</a> to see what is available.' }
 ])}
 
+${affiliateCtaBlock('Your Area', 'homepage')}
+
+${emailCaptureBlock('Your Home')}
+
 ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above to see available rebates and projected savings for your home.', '#widget-hero')}
 `;
 
@@ -218,7 +222,8 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above
     body,
     {
       alertHtml: federalAlert(alerts),
-      schema: faqSchema(faqs)
+      schema: faqSchema(faqs),
+      states: states
     }
   );
 }
@@ -299,6 +304,8 @@ ${statsGrid([
 ])}
 
 ${eligibilityWidget('state')}
+
+${affiliateCtaBlock(state.state_name, 'state')}
 </div>
 </section>
 
@@ -338,6 +345,8 @@ ${stateUtilities.length > 0 ? '<section class="content-section bg-light"><div cl
 
 ${stateCities.length > 0 ? '<section class="content-section"><div class="container"><h2>City Solar Reports in ' + state.state_name + '</h2><p>Get city-specific solar ROI projections, local incentives, and break-even analysis.</p><div class="related-grid">' + cityLinksHtml + '</div></div></section>' : ''}
 
+${emailCaptureBlock(state.state_name)}
+
 ${faqSection(faqs)}
 
 ${relatedPagesSection('Explore Nearby States', nearbyStates.map(function (s) {
@@ -355,7 +364,8 @@ ${ctaBlock('primary', 'Get Your ' + state.state_name + ' Solar Estimate', 'See e
     {
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, state.state_abbrev),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs)
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs),
+      states: states
     }
   );
 }
@@ -403,6 +413,8 @@ ${statsGrid([
 ${utility.cap_reached ? urgencyBlock(utility.utility_name + ' has reached its net metering cap. New applicants may receive reduced export compensation. Act quickly to lock in the best available rates.') : ''}
 
 ${eligibilityWidget('utility')}
+
+${affiliateCtaBlock(utility.utility_name + ' Area', 'utility')}
 </div>
 </section>
 
@@ -439,6 +451,8 @@ ${utility.battery_incentive ? '<h3>Battery Storage Benefits</h3><p>' + utility.u
 
 ${parentState ? '<section class="content-section bg-light"><div class="container"><h2>State Incentives in ' + utility.state + '</h2><p>In addition to ' + utility.utility_name + '\'s policies, ' + utility.state + ' homeowners can access:</p><ul class="benefit-list"><li><strong>Federal ITC:</strong> 30% tax credit on solar installation</li>' + (parentState.state_tax_credit_percent > 0 ? '<li><strong>State Tax Credit:</strong> ' + parentState.state_tax_credit_percent + '% additional state credit</li>' : '') + (parentState.state_rebate_amount > 0 ? '<li><strong>State Rebate:</strong> ' + dollar(parentState.state_rebate_amount) + ' direct rebate</li>' : '') + (parentState.srec_available ? '<li><strong>SRECs:</strong> $' + parentState.srec_value + '/MWh tradeable credits</li>' : '') + (parentState.property_tax_exemption ? '<li><strong>Property Tax Exemption:</strong> Solar increases home value without raising property taxes</li>' : '') + (parentState.sales_tax_exemption ? '<li><strong>Sales Tax Exemption:</strong> No sales tax on solar equipment</li>' : '') + '</ul><a href="/solar-rebates-incentives-' + parentState.slug + '/" class="btn btn-primary mt-3">See All ' + utility.state + ' Incentives</a></div></section>' : ''}
 
+${emailCaptureBlock(utility.state)}
+
 ${faqSection(faqs)}
 
 ${relatedPagesSection('Other Utilities in ' + utility.state, sameStateUtils.map(function (u) {
@@ -456,7 +470,8 @@ ${ctaBlock('primary', 'Check Your Solar Savings', 'See how much you can save as 
     {
       breadcrumbs: crumbs,
       alertHtml: utilityAlerts(alerts, utility.slug),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs)
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs),
+      states: states
     }
   );
 }
@@ -523,6 +538,8 @@ ${statsGrid([
 ])}
 
 ${eligibilityWidget('city')}
+
+${affiliateCtaBlock(city.city_name + ', ' + city.state_abbrev, 'city')}
 </div>
 </section>
 
@@ -572,6 +589,8 @@ ${parentState ? '<p><strong>State Incentives:</strong> ' + city.state_name + ' o
 </div>
 </section>
 
+${emailCaptureBlock(city.city_name + ', ' + city.state_abbrev)}
+
 ${faqSection(faqs)}
 
 ${relatedPagesSection('More Cities in ' + city.state_name, nearbyCities.map(function (c) {
@@ -589,7 +608,8 @@ ${ctaBlock('primary', 'Get Your ' + city.city_name + ' Solar Estimate', 'See exa
     {
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, city.state_abbrev),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs)
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs),
+      states: states
     }
   );
 }
@@ -709,7 +729,8 @@ ${ctaBlock('primary', 'Find Your Solar Financing Match', 'Enter your ZIP code to
     {
       breadcrumbs: crumbs,
       alertHtml: federalAlert(alerts),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs)
+      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs),
+      states: data.states || []
     }
   );
 }
