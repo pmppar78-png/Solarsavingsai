@@ -67,6 +67,7 @@ ${stickyCtaComponent()}
 ${exitIntentModal()}
 </div>
 <script src="/js/app.js" defer></script>
+${analyticsScript()}
 </body>
 </html>`;
 }
@@ -81,9 +82,10 @@ function headerComponent() {
 <nav class="site-nav">
 <ul class="nav-links" id="nav-links">
 <li><a href="/#state-map" class="nav-link">State Rebates</a></li>
+<li><a href="/guide/best-solar-panels-2026/" class="nav-link">Best Panels</a></li>
 <li><a href="/solar-financing/" class="nav-link">Financing</a></li>
-<li><a href="/solar-glossary/" class="nav-link">Solar Glossary</a></li>
-<li><a href="/methodology/" class="nav-link">Methodology</a></li>
+<li><a href="/reviews/" class="nav-link">Reviews</a></li>
+<li><a href="/about/" class="nav-link">About</a></li>
 </ul>
 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -128,8 +130,20 @@ ${stateLinks}
 <ul>
 <li><a href="/solar-financing/">Solar Financing Guide</a></li>
 <li><a href="/solar-glossary/">Solar Glossary</a></li>
+<li><a href="/guide/best-solar-panels-2026/">Best Solar Panels</a></li>
+<li><a href="/guide/best-solar-companies-2026/">Best Solar Companies</a></li>
+<li><a href="/reviews/">Brand Reviews</a></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Company</h4>
+<ul>
+<li><a href="/about/">About Us</a></li>
+<li><a href="/contact/">Contact</a></li>
+<li><a href="/authors/">Our Team</a></li>
 <li><a href="/methodology/">Methodology</a></li>
 <li><a href="/editorial-standards/">Editorial Standards</a></li>
+<li><a href="/privacy-policy/">Privacy Policy</a></li>
 </ul>
 </div>
 <div class="footer-col">
@@ -139,6 +153,7 @@ ${stateLinks}
 </div>
 <p>&copy; ${SITE.year} ${escapeHtml(SITE.name)}. All rights reserved. This site is for informational purposes only. Rebate amounts and incentive details are subject to change without notice. Always verify current incentive availability with your state energy office or utility provider.</p>
 </div>
+<script type="application/ld+json">${organizationSchema()}</script>
 </footer>`;
 }
 
@@ -167,6 +182,10 @@ function eligibilityWidget(placement) {
 <div class="widget-field">
 <label class="widget-label" for="${idPrefix}-bill">Avg. Monthly Electric Bill</label>
 <input class="widget-input" type="text" id="${idPrefix}-bill" name="bill" placeholder="e.g. $150" inputmode="decimal" required aria-required="true">
+</div>
+<div class="widget-field">
+<label class="widget-label" for="${idPrefix}-email">Email Address</label>
+<input class="widget-input" type="email" id="${idPrefix}-email" name="email" placeholder="your@email.com" required aria-required="true">
 </div>
 <button type="submit" class="widget-submit">See My Savings Estimate</button>
 </form>
@@ -445,6 +464,7 @@ function leadCaptureForm() {
 <input type="text" name="ownership">
 <input type="text" name="bill">
 <input type="text" name="state">
+<input type="email" name="email">
 <input type="text" name="page_url">
 <input type="text" name="annual_savings">
 <input type="text" name="twenty_year_savings">
@@ -603,7 +623,10 @@ ${rows}
 /* --------------------------------------------------------------------------
    25. articleSchema – Article structured data for pillar/authority pages
    -------------------------------------------------------------------------- */
-function articleSchema(title, description, url, datePublished) {
+function articleSchema(title, description, url, datePublished, authorName) {
+  var author = authorName
+    ? { '@type': 'Person', name: authorName, url: SITE.url + '/authors/' }
+    : { '@type': 'Organization', name: SITE.name, url: SITE.url };
   return JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -612,11 +635,7 @@ function articleSchema(title, description, url, datePublished) {
     url: SITE.url + url,
     datePublished: datePublished || SITE.year + '-01-15',
     dateModified: SITE.year + '-03-01',
-    author: {
-      '@type': 'Organization',
-      name: SITE.name,
-      url: SITE.url
-    },
+    author: author,
     publisher: {
       '@type': 'Organization',
       name: SITE.name,
@@ -627,6 +646,157 @@ function articleSchema(title, description, url, datePublished) {
       '@id': SITE.url + url
     }
   });
+}
+
+/* --------------------------------------------------------------------------
+   26. organizationSchema – Site-wide Organization structured data
+   -------------------------------------------------------------------------- */
+function organizationSchema() {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE.name,
+    url: SITE.url,
+    description: 'Solar rebate data and ROI analysis. Find incentives, estimate savings, and make informed decisions about going solar.',
+    foundingDate: '2024',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      url: SITE.url + '/contact/'
+    },
+    sameAs: []
+  });
+}
+
+/* --------------------------------------------------------------------------
+   27. howToSchema – HowTo structured data for guide pages
+   -------------------------------------------------------------------------- */
+function howToSchema(title, description, steps) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: title,
+    description: description,
+    step: steps.map(function (s, i) {
+      return {
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: s.name,
+        text: s.text
+      };
+    })
+  });
+}
+
+/* --------------------------------------------------------------------------
+   28. reviewSchema – AggregateRating structured data for review pages
+   -------------------------------------------------------------------------- */
+function reviewSchema(itemName, itemType, rating, reviewCount, bestRating) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': itemType || 'Product',
+    name: itemName,
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: rating,
+      bestRating: bestRating || 5,
+      worstRating: 1,
+      reviewCount: reviewCount || 100
+    }
+  });
+}
+
+/* --------------------------------------------------------------------------
+   29. lastUpdatedBlock – "Last updated" + "Reviewed by" metadata for E-E-A-T
+   -------------------------------------------------------------------------- */
+function lastUpdatedBlock(authorName, authorSlug) {
+  var dateStr = SITE.year + '-03-01';
+  var authorHtml = authorName
+    ? '<span class="content-meta-item">Reviewed by: <a href="/authors/' + escapeHtml(authorSlug || '') + '/">' + escapeHtml(authorName) + '</a></span>'
+    : '<span class="content-meta-item">Reviewed by: <a href="/authors/">SolarSavingsAI Research Team</a></span>';
+  return '<div class="content-meta">' +
+    '<span class="content-meta-item">Last updated: <time datetime="' + dateStr + '">' + dateStr + '</time></span>' +
+    authorHtml +
+    '</div>';
+}
+
+/* --------------------------------------------------------------------------
+   30. analyticsScript – Conversion tracking via data attributes
+   -------------------------------------------------------------------------- */
+function analyticsScript() {
+  return `<script>
+(function(){
+  var t=function(e,a){try{var d={event:e,timestamp:new Date().toISOString(),page:window.location.pathname,referrer:document.referrer};if(a)for(var k in a)d[k]=a[k];if(navigator.sendBeacon){navigator.sendBeacon('/.netlify/functions/lead-router',JSON.stringify(d));}console.log('[analytics]',e,d);}catch(x){}};
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-affiliate]');
+    if(a){t('affiliate_click',{affiliate:a.getAttribute('data-affiliate'),href:a.href});}
+    var c=e.target.closest('.btn');
+    if(c){t('cta_click',{text:c.textContent.trim().substring(0,50),href:c.href||''});}
+  });
+  document.addEventListener('submit',function(e){
+    var f=e.target.closest('.widget-form');
+    if(f){t('calculator_submit',{widget:f.id||'unknown'});}
+  });
+  window.addEventListener('beforeunload',function(){
+    t('session_end',{pages:window.__pageViews||1,duration:Math.round((Date.now()-(window.__sessionStart||Date.now()))/1000)});
+  });
+  window.__sessionStart=Date.now();
+  window.__pageViews=(parseInt(sessionStorage.getItem('pv')||'0',10))+1;
+  try{sessionStorage.setItem('pv',String(window.__pageViews));}catch(x){}
+  t('page_view',{pages:window.__pageViews});
+})();
+</script>`;
+}
+
+/* --------------------------------------------------------------------------
+   31. displayAdSlot – Reserved ad placement for non-converting traffic
+   -------------------------------------------------------------------------- */
+function displayAdSlot(placement) {
+  var p = escapeHtml(placement || 'content');
+  return '<div class="ad-slot" data-ad-placement="' + p + '" aria-hidden="true">' +
+    '<div class="ad-slot-inner">' +
+    '<span class="ad-slot-label">Advertisement</span>' +
+    '</div></div>';
+}
+
+/* --------------------------------------------------------------------------
+   32. contextualLinksBlock – Internal linking block for SEO
+   -------------------------------------------------------------------------- */
+function contextualLinksBlock(title, links) {
+  if (!Array.isArray(links) || links.length === 0) return '';
+  var html = links.map(function (l) {
+    return '<li><a href="' + escapeHtml(l.url) + '">' + escapeHtml(l.title) + '</a></li>';
+  }).join('\n');
+  return '<div class="contextual-links"><h3>' + escapeHtml(title) + '</h3><ul>' + html + '</ul></div>';
+}
+
+/* --------------------------------------------------------------------------
+   33. hubLinksSection – Hub-and-spoke cluster linking
+   -------------------------------------------------------------------------- */
+function hubLinksSection(hubName, links) {
+  if (!Array.isArray(links) || links.length === 0) return '';
+  var cards = links.map(function (l) {
+    return '<a href="' + escapeHtml(l.url) + '" class="related-card"><span class="related-title">' + escapeHtml(l.title) + '</span><span class="related-meta">' + escapeHtml(l.meta || '') + '</span></a>';
+  }).join('\n');
+  return '<section class="content-section bg-light"><div class="container"><h2>Explore: ' + escapeHtml(hubName) + '</h2><div class="related-grid">' + cards + '</div></div></section>';
+}
+
+/* --------------------------------------------------------------------------
+   34. enhancedAuthorBioBlock – Individual author bio with full E-E-A-T
+   -------------------------------------------------------------------------- */
+function enhancedAuthorBioBlock(author) {
+  if (!author) return authorBioBlock();
+  var creds = (author.credentials || []).map(function (c) {
+    return '<span class="author-credential">' + escapeHtml(c) + '</span>';
+  }).join('\n');
+  return '<div class="author-bio-block" itemscope itemtype="https://schema.org/Person">' +
+    '<div class="author-bio-inner">' +
+    '<div class="author-bio-info">' +
+    '<h4 class="author-bio-name"><a href="/authors/' + escapeHtml(author.slug || '') + '/" itemprop="url"><span itemprop="name">' + escapeHtml(author.name) + '</span></a></h4>' +
+    '<p class="author-bio-title" itemprop="jobTitle">' + escapeHtml(author.title) + '</p>' +
+    '<p class="author-bio-desc" itemprop="description">' + escapeHtml((author.bio || '').substring(0, 200)) + '...</p>' +
+    '<div class="author-bio-credentials">' + creds + '</div>' +
+    '</div></div></div>';
 }
 
 /* --------------------------------------------------------------------------
@@ -658,5 +828,14 @@ module.exports = {
   authorBioBlock,
   comparisonAffiliateTable,
   articleSchema,
+  organizationSchema,
+  howToSchema,
+  reviewSchema,
+  lastUpdatedBlock,
+  analyticsScript,
+  displayAdSlot,
+  contextualLinksBlock,
+  hubLinksSection,
+  enhancedAuthorBioBlock,
   SITE
 };

@@ -1,0 +1,518 @@
+[
+  {
+    "slug": "california",
+    "title": "Best Solar Companies in California 2026",
+    "meta_description": "Find the best solar installation companies in California. Compare top-rated installers, pricing, and reviews for CA homeowners.",
+    "location_type": "state",
+    "state_abbrev": "CA",
+    "intro": "California leads the nation in solar installations with over 1.5 million residential systems. The competitive market means great prices and plenty of installer options for homeowners going solar in the Golden State.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.2, "type": "national", "summary": "Largest residential installer with strong California presence and flexible financing.", "strengths": ["Widest financing options", "Largest CA installer base", "Comprehensive monitoring"]},
+      {"name": "SunPower", "rating": 4.5, "type": "national", "summary": "California-headquartered premium installer with the most efficient panels available.", "strengths": ["Highest efficiency panels", "40-year warranty", "Local headquarters"]},
+      {"name": "Tesla Solar", "rating": 4.0, "type": "national", "summary": "Lowest pricing in the CA market with seamless Powerwall integration.", "strengths": ["Lowest prices", "Powerwall battery", "Strong brand"]},
+      {"name": "SemperSolaris", "rating": 4.4, "type": "local", "summary": "Veteran-owned California company with excellent customer service ratings.", "strengths": ["Veteran-owned", "Top customer reviews", "Full-service HVAC + solar"]},
+      {"name": "Palmetto", "rating": 4.3, "type": "national", "summary": "Tech-forward installer with competitive CA pricing and great app experience.", "strengths": ["Best app experience", "Competitive pricing", "Fast installations"]}
+    ],
+    "buying_tips": ["Get at least 3 quotes to leverage California's competitive market", "Ask about NEM 3.0 battery storage recommendations", "Verify CSLB license (C-46 Solar) for any installer", "Consider battery storage due to California's NEM 3.0 export rates"],
+    "faqs": [
+      {"question": "How much do solar panels cost in California?", "answer": "California solar costs average $2.80-$3.40/watt before the 30% federal tax credit. After incentives, a typical 7kW system costs $13,700-$16,700."},
+      {"question": "Is solar still worth it in California with NEM 3.0?", "answer": "Yes, but battery storage is now more important. NEM 3.0 reduced export credits, so pairing solar with a battery maximizes savings by storing energy for evening use."},
+      {"question": "What is the best solar company in California?", "answer": "SunPower offers the best equipment, Tesla the lowest prices, and Sunrun the most financing options. Local companies like SemperSolaris often provide the best service."}
+    ],
+    "related_slugs": ["los-angeles-ca", "san-diego-ca", "arizona"]
+  },
+  {
+    "slug": "texas",
+    "title": "Best Solar Companies in Texas 2026",
+    "meta_description": "Compare the best solar companies in Texas. Top-rated installers with pricing, reviews, and financing options for TX homeowners.",
+    "location_type": "state",
+    "state_abbrev": "TX",
+    "intro": "Texas is the fastest-growing solar market in the US, with abundant sunshine and rising electricity costs driving adoption. While Texas lacks a state tax credit, the federal ITC and competitive installer market keep costs reasonable.",
+    "companies": [
+      {"name": "Freedom Solar", "rating": 4.5, "type": "local", "summary": "Austin-based SunPower Elite Dealer with the best customer service in Texas.", "strengths": ["SunPower Elite Dealer", "Best TX reviews", "Local expertise"]},
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Wide Texas coverage with flexible lease and loan options.", "strengths": ["Flexible financing", "Wide TX coverage", "Comprehensive packages"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Consistently lowest pricing in the Texas market.", "strengths": ["Lowest TX prices", "Powerwall option", "Online ordering"]},
+      {"name": "Sunnova", "rating": 4.2, "type": "national", "summary": "Houston-headquartered solar company with strong Texas presence.", "strengths": ["TX headquarters", "25-year warranty", "Battery options"]},
+      {"name": "Longhorn Solar", "rating": 4.3, "type": "local", "summary": "Austin-based installer with deep local expertise and excellent reviews.", "strengths": ["Local TX expertise", "Fast installations", "Excellent reviews"]}
+    ],
+    "buying_tips": ["Texas has no state tax credit but the 30% federal ITC applies", "Consider battery storage for backup during grid instability", "Verify installer is licensed with TDLR", "Compare net metering policies as they vary by utility in Texas"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Texas?", "answer": "Texas solar costs average $2.50-$3.10/watt before incentives. After the 30% federal tax credit, a typical 8kW system costs $14,000-$17,400."},
+      {"question": "Does Texas have net metering?", "answer": "Texas has no statewide net metering law, but many utilities offer buyback programs. Rates vary significantly by provider. Check your specific utility's solar buyback rate."}
+    ],
+    "related_slugs": ["houston-tx", "austin-tx", "san-antonio-tx"]
+  },
+  {
+    "slug": "florida",
+    "title": "Best Solar Companies in Florida 2026",
+    "meta_description": "Find the best solar installers in Florida. Compare pricing, reviews, and financing from top FL solar companies.",
+    "location_type": "state",
+    "state_abbrev": "FL",
+    "intro": "Florida's Sunshine State nickname delivers on its promise for solar energy, with excellent sun exposure and strong net metering policies. Property and sales tax exemptions make Florida one of the best states for solar investment.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.2, "type": "national", "summary": "Strong Florida presence with full financing menu and hurricane-rated installations.", "strengths": ["Hurricane-rated mounts", "Flexible financing", "Large FL team"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast FL installations with unique BluePower Plus 18-month no-payment financing.", "strengths": ["18-month no payments", "SunPower equipment", "Fast timelines"]},
+      {"name": "ADT Solar", "rating": 4.0, "type": "national", "summary": "Solar paired with home security from a trusted brand.", "strengths": ["ADT brand trust", "Security integration", "Nationwide warranty"]},
+      {"name": "Solar Energy World of FL", "rating": 4.3, "type": "local", "summary": "Florida-focused installer with deep knowledge of local permitting and utility programs.", "strengths": ["FL-focused expertise", "Fast permitting", "Strong reviews"]},
+      {"name": "Palmetto", "rating": 4.2, "type": "national", "summary": "Southeast specialist with excellent Florida coverage and digital experience.", "strengths": ["Great app", "SE expertise", "Competitive pricing"]}
+    ],
+    "buying_tips": ["Florida offers property tax and sales tax exemptions for solar", "Hurricane-rated racking is essential - verify wind rating", "Florida has strong net metering - take advantage of full retail credits", "Consider battery for hurricane season backup power"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Florida?", "answer": "Florida solar costs average $2.60-$3.20/watt. With no sales tax on solar and the 30% federal credit, a typical 8kW system costs $14,500-$17,900."},
+      {"question": "Is Florida good for solar panels?", "answer": "Excellent. Florida ranks 3rd in solar potential with strong net metering, property tax exemptions, and sales tax exemptions. Most systems pay for themselves in 7-9 years."}
+    ],
+    "related_slugs": ["orlando-fl", "tampa-fl", "georgia"]
+  },
+  {
+    "slug": "arizona",
+    "title": "Best Solar Companies in Arizona 2026",
+    "meta_description": "Top solar companies in Arizona ranked by price, service, and reviews. Find the best AZ solar installer for your home.",
+    "location_type": "state",
+    "state_abbrev": "AZ",
+    "intro": "Arizona offers some of the best solar conditions in the country with over 300 sunny days per year. The state's 25% tax credit (up to $1,000) stacks with the federal ITC, and strong solar irradiance means faster payback periods.",
+    "companies": [
+      {"name": "SunPower", "rating": 4.5, "type": "national", "summary": "Premium panels that excel in Arizona's heat with the best temperature coefficient.", "strengths": ["Best heat performance", "40-year warranty", "Highest efficiency"]},
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Largest AZ presence with comprehensive financing and installation services.", "strengths": ["Largest AZ installer", "Multiple financing options", "Monitoring included"]},
+      {"name": "Energy Solution Providers", "rating": 4.4, "type": "local", "summary": "Phoenix-based installer with 20+ years of Arizona solar expertise.", "strengths": ["20+ years AZ experience", "Local expertise", "Award-winning service"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Lowest AZ prices with Powerwall for peak-rate optimization.", "strengths": ["Lowest prices", "Powerwall peak shaving", "Online ordering"]},
+      {"name": "Sunnova", "rating": 4.2, "type": "national", "summary": "Strong Arizona coverage with 25-year comprehensive warranty.", "strengths": ["25-year warranty", "Multiple financing", "Battery options"]}
+    ],
+    "buying_tips": ["Arizona offers a 25% state tax credit up to $1,000 on top of the federal ITC", "Heat performance matters in AZ - check temperature coefficients", "APS and SRP have different solar programs - know your utility", "Consider battery storage for SRP demand charges"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Arizona?", "answer": "Arizona solar averages $2.50-$3.00/watt. After the 30% federal credit and AZ state credit, a typical 7kW system costs $12,000-$14,500."},
+      {"question": "How fast is the solar payback in Arizona?", "answer": "Arizona solar systems typically pay for themselves in 5-7 years thanks to excellent sun exposure, the state tax credit, and rising utility rates."}
+    ],
+    "related_slugs": ["phoenix-az", "nevada", "colorado"]
+  },
+  {
+    "slug": "colorado",
+    "title": "Best Solar Companies in Colorado 2026",
+    "meta_description": "Compare the best solar companies in Colorado. Top installers with pricing, reviews, and incentive information for CO homeowners.",
+    "location_type": "state",
+    "state_abbrev": "CO",
+    "intro": "Colorado combines 300+ days of sunshine with strong state incentives and progressive renewable energy policies. The state's high altitude increases solar panel efficiency, making Colorado one of the top markets for residential solar.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Established Colorado presence with flexible financing and comprehensive packages.", "strengths": ["Flexible financing", "Wide CO coverage", "Battery options"]},
+      {"name": "Namaste Solar", "rating": 4.6, "type": "local", "summary": "Colorado's largest local installer, employee-owned with exceptional reviews.", "strengths": ["Employee-owned", "Best CO reviews", "Community focused"]},
+      {"name": "SunPower", "rating": 4.4, "type": "national", "summary": "Premium efficiency panels ideal for Colorado's mix of sun and snow.", "strengths": ["Premium efficiency", "Snow load tested", "40-year warranty"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast Colorado installations with 18-month no-payment financing.", "strengths": ["18-month no payments", "Fast timelines", "SunPower equipment"]},
+      {"name": "Sandbox Solar", "rating": 4.4, "type": "local", "summary": "Northern Colorado specialist with deep Xcel Energy program knowledge.", "strengths": ["N. Colorado expertise", "Xcel program specialists", "Strong reviews"]}
+    ],
+    "buying_tips": ["Colorado utilities offer rebates up to $2,000 depending on your provider", "High altitude increases panel efficiency by 5-8%", "Xcel Energy has one of the best net metering programs", "Consider ground-mount systems if you have land and snow concerns"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Colorado?", "answer": "Colorado solar averages $2.70-$3.30/watt. After incentives, a typical 7kW system costs $12,500-$15,500 with federal credit and utility rebates."},
+      {"question": "Does Colorado have good solar incentives?", "answer": "Yes. Colorado offers utility rebates ($500-$2,000), sales tax exemption, property tax exemption, and excellent Xcel Energy net metering in addition to the 30% federal ITC."}
+    ],
+    "related_slugs": ["denver-co", "arizona", "nevada"]
+  },
+  {
+    "slug": "north-carolina",
+    "title": "Best Solar Companies in North Carolina 2026",
+    "meta_description": "Top solar installers in North Carolina. Compare prices, reviews, and financing options for NC homeowners going solar.",
+    "location_type": "state",
+    "state_abbrev": "NC",
+    "intro": "North Carolina ranks among the top 5 states for installed solar capacity. Duke Energy's net metering program and the state's moderate climate make NC an excellent market for residential solar investment.",
+    "companies": [
+      {"name": "Blue Raven Solar", "rating": 4.2, "type": "national", "summary": "Strong NC presence with fast installations and unique financing.", "strengths": ["Fast NC installs", "BluePower Plus", "SunPower equipment"]},
+      {"name": "Sunrun", "rating": 4.0, "type": "national", "summary": "Wide NC coverage with the most financing options available.", "strengths": ["Most financing options", "Comprehensive service", "Wide coverage"]},
+      {"name": "8MSolar", "rating": 4.5, "type": "local", "summary": "Durham-based installer with exceptional NC reviews and local expertise.", "strengths": ["Best NC reviews", "Local expertise", "Award-winning"]},
+      {"name": "Palmetto", "rating": 4.2, "type": "national", "summary": "Southeast specialist with competitive NC pricing.", "strengths": ["SE expertise", "Competitive pricing", "Great app"]}
+    ],
+    "buying_tips": ["Duke Energy offers a net metering program for NC solar customers", "NC has no state solar tax credit but property tax exemption applies", "Compare quotes from local and national installers", "Consider the Duke Energy solar rebate programs"],
+    "faqs": [
+      {"question": "How much do solar panels cost in North Carolina?", "answer": "NC solar averages $2.60-$3.10/watt. After the 30% federal credit, a typical 8kW system costs $14,500-$17,400."},
+      {"question": "Does North Carolina have good solar policies?", "answer": "NC has solid net metering through Duke Energy, property tax exemption for solar, and ranks in the top 5 for installed capacity. The market is competitive with good pricing."}
+    ],
+    "related_slugs": ["charlotte-nc", "south-carolina", "virginia"]
+  },
+  {
+    "slug": "new-york",
+    "title": "Best Solar Companies in New York 2026",
+    "meta_description": "Best solar installers in New York state. Compare top companies, pricing, NY-Sun incentives, and reviews for NY homeowners.",
+    "location_type": "state",
+    "state_abbrev": "NY",
+    "intro": "New York offers some of the strongest solar incentives in the country through the NY-Sun program, including a 25% state tax credit up to $5,000. Combined with high electricity rates, NY solar systems have among the fastest payback periods nationally.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Strong New York presence with comprehensive financing and NY-Sun expertise.", "strengths": ["NY-Sun program experts", "Flexible financing", "Wide NY coverage"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Lowest NY pricing with Powerwall for peak-rate optimization.", "strengths": ["Lowest NY prices", "Powerwall integration", "Simple ordering"]},
+      {"name": "SUNation Solar", "rating": 4.5, "type": "local", "summary": "Long Island-based installer with 20+ years of NY solar experience.", "strengths": ["20+ years NY experience", "Award-winning", "Local expertise"]},
+      {"name": "Brooklyn SolarWorks", "rating": 4.4, "type": "local", "summary": "NYC flat-roof specialists with deep urban installation expertise.", "strengths": ["NYC flat roof experts", "Urban specialists", "Community focused"]},
+      {"name": "SunPower", "rating": 4.4, "type": "national", "summary": "Maximum efficiency panels ideal for NY's limited roof spaces.", "strengths": ["Best for small roofs", "40-year warranty", "Premium performance"]}
+    ],
+    "buying_tips": ["Claim the NY 25% state tax credit (up to $5,000) plus the 30% federal ITC", "NY-Sun megawatt block incentives vary by region and utility", "High ConEd rates mean fast payback for NYC-area homeowners", "Consider the NYSERDA financing options"],
+    "faqs": [
+      {"question": "How much do solar panels cost in New York?", "answer": "NY solar averages $3.00-$3.60/watt. After the 30% federal credit, 25% NY state credit, and NY-Sun incentive, a typical 7kW system can cost as low as $10,000-$13,000."},
+      {"question": "What solar incentives does New York offer?", "answer": "New York offers a 25% state tax credit (up to $5,000), NY-Sun megawatt block incentives, property tax exemption, sales tax exemption, and strong net metering through VDER."}
+    ],
+    "related_slugs": ["new-jersey", "massachusetts", "north-carolina"]
+  },
+  {
+    "slug": "massachusetts",
+    "title": "Best Solar Companies in Massachusetts 2026",
+    "meta_description": "Top solar installers in Massachusetts. Compare pricing, SMART program incentives, and reviews for MA solar installation.",
+    "location_type": "state",
+    "state_abbrev": "MA",
+    "intro": "Massachusetts has one of the strongest solar markets in the country despite its northern latitude. The SMART incentive program, high electricity rates, and valuable SRECs make MA one of the best states for solar ROI.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Wide MA coverage with flexible financing and SMART program expertise.", "strengths": ["SMART program experts", "Flexible financing", "Comprehensive service"]},
+      {"name": "Boston Solar", "rating": 4.6, "type": "local", "summary": "Massachusetts' largest local installer with exceptional customer ratings.", "strengths": ["Largest MA local installer", "Top customer ratings", "SMART specialists"]},
+      {"name": "SunPower", "rating": 4.4, "type": "national", "summary": "Premium panels maximize production on Massachusetts' variable-weather roofs.", "strengths": ["Best efficiency for MA", "40-year warranty", "Low-light performance"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Competitive MA pricing with Powerwall for TOU rate optimization.", "strengths": ["Low pricing", "Powerwall option", "Simple process"]}
+    ],
+    "buying_tips": ["Enroll in the SMART program for ongoing production incentives", "MA SRECs are among the most valuable nationally (~$250/SREC)", "15% state tax credit up to $1,000 available", "High Eversource/National Grid rates make solar very attractive"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Massachusetts?", "answer": "MA solar averages $3.10-$3.70/watt. After incentives (federal ITC, state credit, SMART, SRECs), effective cost drops to $8,000-$12,000 for a typical system."},
+      {"question": "What is the SMART program?", "answer": "SMART (Solar Massachusetts Renewable Target) provides ongoing payments for solar production for 10-20 years. Combined with SRECs, SMART can significantly accelerate payback."}
+    ],
+    "related_slugs": ["new-york", "new-jersey", "north-carolina"]
+  },
+  {
+    "slug": "new-jersey",
+    "title": "Best Solar Companies in New Jersey 2026",
+    "meta_description": "Best solar installation companies in New Jersey. Compare pricing, TREC incentives, and reviews for NJ homeowners.",
+    "location_type": "state",
+    "state_abbrev": "NJ",
+    "intro": "New Jersey consistently ranks in the top 10 for solar installations thanks to valuable TRECs, strong net metering, full sales tax exemption, and property tax exemption. High electricity rates make NJ solar extremely attractive.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Large NJ presence with comprehensive financing and incentive expertise.", "strengths": ["TREC expertise", "Flexible financing", "Wide NJ coverage"]},
+      {"name": "Trinity Solar", "rating": 4.4, "type": "local", "summary": "NJ-headquartered installer and one of the nation's largest residential companies.", "strengths": ["NJ headquartered", "Top 5 US installer", "Strong NJ reviews"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast NJ installations with BluePower Plus financing.", "strengths": ["Fast installations", "18-month no payments", "SunPower panels"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Lowest NJ pricing with streamlined online ordering.", "strengths": ["Lowest NJ prices", "Powerwall option", "Simple process"]}
+    ],
+    "buying_tips": ["NJ TRECs are worth approximately $200 each for 15 years", "NJ offers full sales tax and property tax exemptions for solar", "Strong net metering makes grid-tied systems very effective", "Get multiple quotes - NJ has a very competitive installer market"],
+    "faqs": [
+      {"question": "How much do solar panels cost in New Jersey?", "answer": "NJ solar averages $2.80-$3.40/watt. After the federal ITC, TREC income, and tax exemptions, the effective cost is among the lowest in the nation."},
+      {"question": "Are solar panels worth it in New Jersey?", "answer": "Absolutely. NJ's high electricity rates, valuable TRECs, and full tax exemptions create some of the fastest payback periods in the US at 4-6 years."}
+    ],
+    "related_slugs": ["new-york", "massachusetts", "maryland"]
+  },
+  {
+    "slug": "nevada",
+    "title": "Best Solar Companies in Nevada 2026",
+    "meta_description": "Top solar companies in Nevada. Compare installers, pricing, and NV Energy incentives for Nevada homeowners.",
+    "location_type": "state",
+    "state_abbrev": "NV",
+    "intro": "Nevada's exceptional sunshine and restored net metering make it one of the best states for solar. Las Vegas and Reno homeowners benefit from high solar production and NV Energy's incentive programs.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Established NV presence with comprehensive financing options.", "strengths": ["Wide NV coverage", "Flexible financing", "Battery options"]},
+      {"name": "Tesla Solar", "rating": 4.0, "type": "national", "summary": "Lowest NV prices with Powerwall for TOU optimization.", "strengths": ["Lowest NV prices", "Powerwall integration", "GigaFactory nearby"]},
+      {"name": "Sol-Up", "rating": 4.4, "type": "local", "summary": "Las Vegas-based installer with deep Nevada expertise.", "strengths": ["Las Vegas experts", "NV Energy specialists", "Strong reviews"]},
+      {"name": "SunPower", "rating": 4.4, "type": "national", "summary": "Premium heat-tolerant panels ideal for Nevada's desert climate.", "strengths": ["Best heat tolerance", "40-year warranty", "Premium efficiency"]}
+    ],
+    "buying_tips": ["Nevada has restored net metering at 75% of retail rate", "Desert heat makes temperature coefficient important", "NV Energy offers TOU rates that benefit solar+battery", "Property tax abatement available for solar installations"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Nevada?", "answer": "NV solar averages $2.50-$3.10/watt. After the 30% federal credit, a typical 7kW system costs $12,200-$15,200."},
+      {"question": "Does Nevada have net metering?", "answer": "Yes, Nevada restored net metering at approximately 75% of the retail rate. Combined with excellent sun exposure, this makes solar highly attractive for NV homeowners."}
+    ],
+    "related_slugs": ["arizona", "california", "colorado"]
+  },
+  {
+    "slug": "georgia",
+    "title": "Best Solar Companies in Georgia 2026",
+    "meta_description": "Best solar installers in Georgia. Compare pricing, reviews, and financing for GA homeowners considering solar panels.",
+    "location_type": "state",
+    "state_abbrev": "GA",
+    "intro": "Georgia's solar market is growing rapidly with increasing electricity costs and excellent sun exposure. While state incentives are limited, the federal ITC and competitive installer market make solar increasingly attractive for GA homeowners.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Wide Georgia coverage with flexible financing options.", "strengths": ["Flexible financing", "Wide GA coverage", "Comprehensive monitoring"]},
+      {"name": "Creative Solar USA", "rating": 4.4, "type": "local", "summary": "Georgia's largest local installer with strong community presence.", "strengths": ["Largest GA local installer", "Strong reviews", "Community focused"]},
+      {"name": "Palmetto", "rating": 4.2, "type": "national", "summary": "Southeast specialist with competitive Georgia pricing.", "strengths": ["SE expertise", "Competitive pricing", "Great app"]},
+      {"name": "Blue Raven Solar", "rating": 4.0, "type": "national", "summary": "Fast GA installations with 18-month no-payment financing.", "strengths": ["Fast installations", "18-month no payments", "SunPower equipment"]}
+    ],
+    "buying_tips": ["Georgia lacks state solar incentives but the 30% federal ITC applies", "Georgia Power offers a limited net metering program", "EMCs may have different solar policies than Georgia Power", "Rising GA electricity rates improve solar ROI each year"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Georgia?", "answer": "GA solar averages $2.60-$3.10/watt. After the 30% federal credit, a typical 8kW system costs $14,500-$17,400."},
+      {"question": "Is solar worth it in Georgia without state incentives?", "answer": "Yes. Rising electricity rates and the 30% federal credit make solar increasingly attractive. Most GA systems pay for themselves in 8-10 years with 25+ years of savings beyond."}
+    ],
+    "related_slugs": ["north-carolina", "south-carolina", "florida"]
+  },
+  {
+    "slug": "virginia",
+    "title": "Best Solar Companies in Virginia 2026",
+    "meta_description": "Top solar companies in Virginia. Compare installers, pricing, and VA solar incentives for homeowners.",
+    "location_type": "state",
+    "state_abbrev": "VA",
+    "intro": "Virginia's solar market has expanded rapidly following the Virginia Clean Economy Act. Strong net metering, property tax exemptions, and growing installer competition make VA an increasingly attractive state for residential solar.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Wide VA coverage with multiple financing options.", "strengths": ["Flexible financing", "Wide VA coverage", "Battery options"]},
+      {"name": "Freedom Solar", "rating": 4.3, "type": "national", "summary": "Expanding VA presence with SunPower premium equipment.", "strengths": ["SunPower equipment", "Premium service", "Growing VA team"]},
+      {"name": "Ipsun Solar", "rating": 4.5, "type": "local", "summary": "Virginia's top-rated local installer with exceptional customer service.", "strengths": ["Top VA reviews", "Local expertise", "Certified B Corp"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Lowest VA pricing with online-first ordering.", "strengths": ["Lowest VA prices", "Powerwall option", "Simple process"]}
+    ],
+    "buying_tips": ["Virginia offers property tax exemption for solar installations", "Dominion Energy has strong net metering under VCEA", "VA sales tax exemption applies to solar equipment", "The Virginia Clean Economy Act strengthens solar policies annually"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Virginia?", "answer": "VA solar averages $2.70-$3.30/watt. After the 30% federal credit, a typical 8kW system costs $15,100-$18,500."},
+      {"question": "Does Virginia have good solar incentives?", "answer": "Virginia offers property tax exemption, sales tax exemption, and strong Dominion Energy net metering. While there's no state tax credit, the combined incentives make solar very attractive."}
+    ],
+    "related_slugs": ["maryland", "north-carolina", "georgia"]
+  },
+  {
+    "slug": "maryland",
+    "title": "Best Solar Companies in Maryland 2026",
+    "meta_description": "Best solar installers in Maryland. Compare pricing, SREC values, Clean Energy Grant, and reviews for MD homeowners.",
+    "location_type": "state",
+    "state_abbrev": "MD",
+    "intro": "Maryland offers one of the best solar incentive packages in the Mid-Atlantic with SRECs worth approximately $65 each, the Clean Energy Grant, and strong net metering. Combined with high electricity rates, MD solar delivers excellent returns.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Strong MD presence with comprehensive financing and SREC management.", "strengths": ["SREC management", "Flexible financing", "Wide MD coverage"]},
+      {"name": "Solar Energy World", "rating": 4.5, "type": "local", "summary": "Maryland's largest local installer with exceptional reviews and local expertise.", "strengths": ["Largest MD local", "Award-winning", "SREC specialists"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast MD installations with BluePower Plus financing.", "strengths": ["Fast installations", "18-month no payments", "SunPower equipment"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Lowest MD pricing with Powerwall integration.", "strengths": ["Lowest prices", "Powerwall option", "Online ordering"]}
+    ],
+    "buying_tips": ["Apply for the MD Clean Energy Grant ($1,000)", "MD SRECs are worth ~$65 each for ongoing income", "Strong BGE/Pepco net metering maximizes savings", "Property and sales tax exemptions apply to solar"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Maryland?", "answer": "MD solar averages $2.80-$3.40/watt. After the federal ITC, Clean Energy Grant, and SRECs, effective costs are among the lowest in the region."},
+      {"question": "How much are Maryland SRECs worth?", "answer": "Maryland SRECs currently trade around $65 each. A typical 8kW system generates 8-10 SRECs per year, adding $520-$650 in annual income on top of electricity savings."}
+    ],
+    "related_slugs": ["virginia", "new-jersey", "new-york"]
+  },
+  {
+    "slug": "south-carolina",
+    "title": "Best Solar Companies in South Carolina 2026",
+    "meta_description": "Top solar companies in South Carolina. Compare pricing, the 25% state tax credit, and reviews for SC homeowners.",
+    "location_type": "state",
+    "state_abbrev": "SC",
+    "intro": "South Carolina offers one of the most generous state solar tax credits in the nation at 25% with no cap. Combined with the 30% federal ITC, SC homeowners can reduce solar costs by 55%, making it one of the best states for solar investment.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Growing SC presence with flexible financing options.", "strengths": ["Flexible financing", "Battery options", "Growing SC coverage"]},
+      {"name": "Palmetto", "rating": 4.3, "type": "national", "summary": "SC-headquartered company with deep local expertise.", "strengths": ["SC headquartered", "Local expertise", "Competitive pricing"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast SC installations with SunPower equipment.", "strengths": ["Fast timelines", "SunPower panels", "BluePower Plus"]},
+      {"name": "Greenville Solar", "rating": 4.4, "type": "local", "summary": "Upstate SC specialist with excellent customer reviews.", "strengths": ["Upstate SC expert", "Top reviews", "Personal service"]}
+    ],
+    "buying_tips": ["SC's 25% state tax credit has no cap - one of the best in the US", "Combined with 30% federal ITC, you save 55% on installation cost", "Duke Energy and Dominion offer net metering in SC", "The SC credit can be carried forward for up to 10 years"],
+    "faqs": [
+      {"question": "How much do solar panels cost in South Carolina?", "answer": "SC solar averages $2.70-$3.20/watt. After the 30% federal and 25% state credits, a typical 8kW system costs just $9,700-$11,500."},
+      {"question": "What is South Carolina's solar tax credit?", "answer": "SC offers a 25% state tax credit with no cap on solar installations. This stacks with the 30% federal ITC for a combined 55% reduction. Unused credit carries forward for 10 years."}
+    ],
+    "related_slugs": ["north-carolina", "georgia", "virginia"]
+  },
+  {
+    "slug": "illinois",
+    "title": "Best Solar Companies in Illinois 2026",
+    "meta_description": "Best solar installers in Illinois. Compare pricing, SREC incentives, and reviews for IL homeowners going solar.",
+    "location_type": "state",
+    "state_abbrev": "IL",
+    "intro": "Illinois has rapidly become a top solar market thanks to the Climate and Equitable Jobs Act, which provides generous SREC incentives. Combined with ComEd's net metering and high electricity rates, IL offers excellent solar economics.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Strong IL presence with comprehensive financing and incentive management.", "strengths": ["IL incentive experts", "Flexible financing", "Wide coverage"]},
+      {"name": "StraightUp Solar", "rating": 4.5, "type": "local", "summary": "Illinois-focused installer with exceptional reviews and SREC expertise.", "strengths": ["IL specialists", "Best IL reviews", "SREC experts"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast IL installations with SunPower equipment.", "strengths": ["Fast installations", "SunPower panels", "BluePower Plus"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Competitive IL pricing with Powerwall option.", "strengths": ["Low pricing", "Powerwall option", "Simple ordering"]}
+    ],
+    "buying_tips": ["Illinois SRECs through the Adjustable Block Program provide significant upfront value", "ComEd net metering offers full retail credits", "Property tax exemption covers the solar-added value", "The Climate and Equitable Jobs Act strengthens IL solar annually"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Illinois?", "answer": "IL solar averages $2.80-$3.40/watt. After federal ITC and IL SREC incentives, effective cost drops significantly, often to $10,000-$14,000 for a typical system."},
+      {"question": "What are Illinois SRECs worth?", "answer": "Through the Adjustable Block Program, IL SRECs provide approximately $75 per SREC for 15 years. A typical system generates significant ongoing income beyond electricity savings."}
+    ],
+    "related_slugs": ["new-york", "massachusetts", "colorado"]
+  },
+  {
+    "slug": "los-angeles-ca",
+    "title": "Best Solar Companies in Los Angeles, CA 2026",
+    "meta_description": "Top solar companies in Los Angeles. Compare LA's best installers, pricing, and LADWP incentives for LA homeowners.",
+    "location_type": "city",
+    "state_abbrev": "CA",
+    "intro": "Los Angeles offers exceptional solar conditions with 284 sunny days per year and LADWP's solar incentive program. LA homeowners benefit from high electricity rates and strong solar irradiance, making solar an excellent investment.",
+    "companies": [
+      {"name": "SunPower", "rating": 4.5, "type": "national", "summary": "LA-area headquartered with premium efficiency panels.", "strengths": ["Local headquarters", "Highest efficiency", "40-year warranty"]},
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Largest LA-area installer with full financing menu.", "strengths": ["Largest LA presence", "All financing options", "Comprehensive service"]},
+      {"name": "SemperSolaris", "rating": 4.4, "type": "local", "summary": "Veteran-owned California company with strong LA coverage.", "strengths": ["Veteran-owned", "Top LA reviews", "Full-service"]},
+      {"name": "Tesla Solar", "rating": 4.0, "type": "national", "summary": "Lowest LA prices with seamless Powerwall integration.", "strengths": ["Lowest LA prices", "Powerwall", "Brand trust"]},
+      {"name": "LA Solar Group", "rating": 4.3, "type": "local", "summary": "Los Angeles specialist with deep LADWP program knowledge.", "strengths": ["LADWP experts", "LA-focused", "Fast permitting"]}
+    ],
+    "buying_tips": ["LADWP customers may have different incentives than SCE customers", "LA's high electricity rates mean faster solar payback", "Consider battery storage with NEM 3.0 for SCE customers", "LA building codes require solar on new construction"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Los Angeles?", "answer": "LA solar averages $2.90-$3.50/watt. After the 30% federal credit, a typical 7kW system costs $14,200-$17,200."},
+      {"question": "Which LA utility is better for solar?", "answer": "LADWP offers a solar incentive program and more favorable export rates than SCE's NEM 3.0. Check which utility serves your address for specific program details."}
+    ],
+    "related_slugs": ["california", "san-diego-ca", "phoenix-az"]
+  },
+  {
+    "slug": "phoenix-az",
+    "title": "Best Solar Companies in Phoenix, AZ 2026",
+    "meta_description": "Best solar installers in Phoenix, Arizona. Compare pricing, APS incentives, and reviews for Phoenix-area homeowners.",
+    "location_type": "city",
+    "state_abbrev": "AZ",
+    "intro": "Phoenix is one of the best cities in America for solar energy with over 299 sunny days per year. APS and SRP utility programs, combined with Arizona's tax credit, make Phoenix solar investment highly attractive.",
+    "companies": [
+      {"name": "Energy Solution Providers", "rating": 4.5, "type": "local", "summary": "Phoenix's top-rated local installer with 20+ years of AZ experience.", "strengths": ["20+ years Phoenix", "Top-rated locally", "APS/SRP experts"]},
+      {"name": "SunPower", "rating": 4.4, "type": "national", "summary": "Premium panels with the best heat performance for Phoenix summers.", "strengths": ["Best heat performance", "Premium efficiency", "40-year warranty"]},
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Largest Phoenix installer with flexible financing.", "strengths": ["Largest Phoenix team", "Flexible financing", "Battery options"]},
+      {"name": "Tesla Solar", "rating": 4.0, "type": "national", "summary": "Lowest Phoenix pricing with Powerwall for demand charge management.", "strengths": ["Lowest prices", "Powerwall", "Demand charge management"]},
+      {"name": "Sun Valley Solar", "rating": 4.3, "type": "local", "summary": "Arizona-focused installer with strong Phoenix reviews.", "strengths": ["AZ focused", "Strong reviews", "Fast installations"]}
+    ],
+    "buying_tips": ["APS demand charges make battery storage valuable in Phoenix", "Heat performance matters - check temperature coefficients carefully", "Arizona's 25% state credit (up to $1,000) applies", "Schedule installation for fall/winter for best installer availability"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Phoenix?", "answer": "Phoenix solar averages $2.40-$3.00/watt, among the lowest in the nation. After federal and AZ state credits, a typical 7kW system costs $11,500-$14,500."},
+      {"question": "How fast is solar payback in Phoenix?", "answer": "Phoenix solar systems typically pay for themselves in 5-7 years thanks to exceptional sun exposure, competitive pricing, and the combined federal and state tax credits."}
+    ],
+    "related_slugs": ["arizona", "los-angeles-ca", "denver-co"]
+  },
+  {
+    "slug": "houston-tx",
+    "title": "Best Solar Companies in Houston, TX 2026",
+    "meta_description": "Top solar installers in Houston, Texas. Compare pricing, reviews, and financing for Houston homeowners going solar.",
+    "location_type": "city",
+    "state_abbrev": "TX",
+    "intro": "Houston's growing solar market benefits from excellent sun exposure and rising electricity costs. As the energy capital of the world, Houston homeowners are increasingly turning to solar to take control of their power bills.",
+    "companies": [
+      {"name": "Sunnova", "rating": 4.2, "type": "national", "summary": "Houston-headquartered company with deep local expertise.", "strengths": ["Houston HQ", "Local expertise", "25-year warranty"]},
+      {"name": "Freedom Solar", "rating": 4.4, "type": "national", "summary": "Texas-based SunPower Elite Dealer with excellent Houston reviews.", "strengths": ["SunPower equipment", "TX-based", "Top reviews"]},
+      {"name": "Sunrun", "rating": 4.0, "type": "national", "summary": "Wide Houston coverage with flexible financing options.", "strengths": ["Flexible financing", "Wide coverage", "Battery options"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Lowest Houston prices with straightforward ordering.", "strengths": ["Lowest prices", "Powerwall option", "Simple process"]},
+      {"name": "Momentum Solar Houston", "rating": 4.1, "type": "local", "summary": "Houston-focused solar installer with competitive pricing.", "strengths": ["Houston focused", "Competitive pricing", "Responsive service"]}
+    ],
+    "buying_tips": ["Houston's deregulated market means solar buyback rates vary by provider", "Compare retail electricity provider solar buyback programs", "Hurricane-rated racking is essential for Houston installations", "Consider battery for grid outage protection"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Houston?", "answer": "Houston solar averages $2.50-$3.00/watt. After the 30% federal credit, a typical 8kW system costs $14,000-$16,800."},
+      {"question": "Is solar worth it in Houston?", "answer": "Yes. Houston's excellent sun exposure, rising utility costs, and the 30% federal credit make solar a strong investment. Most systems pay for themselves in 7-9 years."}
+    ],
+    "related_slugs": ["texas", "san-antonio-tx", "austin-tx"]
+  },
+  {
+    "slug": "san-diego-ca",
+    "title": "Best Solar Companies in San Diego, CA 2026",
+    "meta_description": "Best solar installers in San Diego. Compare pricing, SDG&E incentives, and reviews for San Diego homeowners.",
+    "location_type": "city",
+    "state_abbrev": "CA",
+    "intro": "San Diego offers ideal solar conditions with 266 sunny days per year and some of the highest electricity rates in the nation from SDG&E. High rates combined with excellent production make San Diego one of the best cities for solar ROI.",
+    "companies": [
+      {"name": "SunPower", "rating": 4.5, "type": "national", "summary": "Premium panels with maximum production for high-rate SDG&E territory.", "strengths": ["Maximum production", "40-year warranty", "Premium efficiency"]},
+      {"name": "Sunrun", "rating": 4.2, "type": "national", "summary": "Largest SD installer with full financing options.", "strengths": ["Largest SD presence", "All financing options", "Battery expertise"]},
+      {"name": "Sullivan Solar Power", "rating": 4.5, "type": "local", "summary": "San Diego's premier local installer with award-winning service.", "strengths": ["SD premier installer", "Award-winning", "Local expertise"]},
+      {"name": "Tesla Solar", "rating": 4.0, "type": "national", "summary": "Competitive SD pricing with essential Powerwall integration.", "strengths": ["Competitive pricing", "Powerwall essential", "Simple process"]},
+      {"name": "Palmetto", "rating": 4.2, "type": "national", "summary": "Tech-forward approach with competitive San Diego pricing.", "strengths": ["Great app", "Competitive pricing", "Fast installations"]}
+    ],
+    "buying_tips": ["SDG&E's high rates make solar extremely attractive in San Diego", "Battery storage is essential with NEM 3.0 for new SDG&E solar customers", "San Diego's high property values mean solar adds significant home value", "Consider the SDG&E TOU rate schedule when sizing your system"],
+    "faqs": [
+      {"question": "How much do solar panels cost in San Diego?", "answer": "SD solar averages $2.90-$3.50/watt. After the 30% federal credit, a 7kW system costs $14,200-$17,200. SDG&E's high rates mean 5-7 year payback."},
+      {"question": "Is battery storage necessary in San Diego?", "answer": "With NEM 3.0, battery storage is strongly recommended for new SDG&E solar customers. Batteries store daytime production for evening use when export credits are low."}
+    ],
+    "related_slugs": ["california", "los-angeles-ca", "phoenix-az"]
+  },
+  {
+    "slug": "denver-co",
+    "title": "Best Solar Companies in Denver, CO 2026",
+    "meta_description": "Top solar installers in Denver, Colorado. Compare pricing, Xcel Energy programs, and reviews for Denver homeowners.",
+    "location_type": "city",
+    "state_abbrev": "CO",
+    "intro": "Denver's 300 days of sunshine and mile-high altitude boost solar panel efficiency, making it one of the best cities for solar in the Mountain West. Xcel Energy's solar programs and Colorado incentives provide additional value.",
+    "companies": [
+      {"name": "Namaste Solar", "rating": 4.6, "type": "local", "summary": "Denver-area employee-owned cooperative with the best Colorado reviews.", "strengths": ["Employee-owned", "Best Denver reviews", "Community focused"]},
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Wide Denver coverage with comprehensive financing options.", "strengths": ["Flexible financing", "Wide coverage", "Battery options"]},
+      {"name": "Sandbox Solar", "rating": 4.4, "type": "local", "summary": "Front Range specialist with deep Xcel Energy program knowledge.", "strengths": ["Front Range experts", "Xcel specialists", "Strong reviews"]},
+      {"name": "SunPower", "rating": 4.4, "type": "national", "summary": "Premium panels optimized for Denver's altitude and conditions.", "strengths": ["Altitude optimized", "Premium efficiency", "40-year warranty"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast Denver installations with BluePower Plus financing.", "strengths": ["Fast installations", "18-month no payments", "SunPower equipment"]}
+    ],
+    "buying_tips": ["Denver's altitude increases panel efficiency by 5-8% vs sea level", "Xcel Energy offers one of the best net metering programs nationally", "Colorado utility rebates can provide $500-$2,000 depending on provider", "Consider snow guards and tilt angle optimization for winter production"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Denver?", "answer": "Denver solar averages $2.70-$3.30/watt. After federal credit and Xcel rebates, a typical 7kW system costs $12,500-$15,500."},
+      {"question": "Does Denver's altitude help solar panels?", "answer": "Yes, Denver's mile-high elevation means thinner atmosphere and more direct sunlight. Panels in Denver produce 5-8% more electricity than identical panels at sea level."}
+    ],
+    "related_slugs": ["colorado", "phoenix-az", "los-angeles-ca"]
+  },
+  {
+    "slug": "orlando-fl",
+    "title": "Best Solar Companies in Orlando, FL 2026",
+    "meta_description": "Best solar installers in Orlando, Florida. Compare pricing, OUC programs, and reviews for Orlando homeowners.",
+    "location_type": "city",
+    "state_abbrev": "FL",
+    "intro": "Orlando's abundant sunshine and growing electricity costs make it an excellent market for residential solar. OUC and Duke Energy's solar programs provide additional incentives for Orlando-area homeowners.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.2, "type": "national", "summary": "Largest Orlando installer with hurricane-rated systems and flexible financing.", "strengths": ["Hurricane-rated", "Largest Orlando presence", "Flexible financing"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast Orlando installations with BluePower Plus financing.", "strengths": ["Fast installations", "18-month no payments", "SunPower equipment"]},
+      {"name": "ADT Solar", "rating": 4.0, "type": "national", "summary": "Solar plus security package from a trusted Florida brand.", "strengths": ["Security integration", "ADT trust", "FL coverage"]},
+      {"name": "Solar Energy World FL", "rating": 4.3, "type": "local", "summary": "Central Florida specialist with strong OUC program knowledge.", "strengths": ["Central FL expert", "OUC specialists", "Strong reviews"]},
+      {"name": "Palmetto", "rating": 4.2, "type": "national", "summary": "Southeast specialist with competitive Orlando pricing.", "strengths": ["SE expertise", "Competitive pricing", "Great digital experience"]}
+    ],
+    "buying_tips": ["Florida sales tax and property tax exemptions apply to solar", "OUC and Duke Energy have different solar programs - know your utility", "Hurricane-rated racking is essential for Orlando installations", "Florida net metering provides full retail credits"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Orlando?", "answer": "Orlando solar averages $2.60-$3.10/watt. After the 30% federal credit, a typical 8kW system costs $14,500-$17,400."},
+      {"question": "Is solar worth it in Orlando?", "answer": "Yes. Orlando's excellent sun exposure, no sales tax on solar, property tax exemption, and strong net metering make solar a great investment with 7-9 year payback."}
+    ],
+    "related_slugs": ["florida", "tampa-fl", "charlotte-nc"]
+  },
+  {
+    "slug": "charlotte-nc",
+    "title": "Best Solar Companies in Charlotte, NC 2026",
+    "meta_description": "Top solar installers in Charlotte, NC. Compare pricing, Duke Energy programs, and reviews for Charlotte homeowners.",
+    "location_type": "city",
+    "state_abbrev": "NC",
+    "intro": "Charlotte's growing solar market benefits from Duke Energy's net metering program and North Carolina's competitive installer landscape. As Charlotte's electricity rates continue rising, solar becomes increasingly attractive for homeowners.",
+    "companies": [
+      {"name": "8MSolar", "rating": 4.5, "type": "local", "summary": "NC's top-rated installer with strong Charlotte presence.", "strengths": ["Top NC reviews", "Charlotte experts", "Award-winning"]},
+      {"name": "Blue Raven Solar", "rating": 4.2, "type": "national", "summary": "Fast Charlotte installations with SunPower equipment.", "strengths": ["Fast installations", "SunPower panels", "BluePower Plus"]},
+      {"name": "Sunrun", "rating": 4.0, "type": "national", "summary": "Wide Charlotte coverage with comprehensive service.", "strengths": ["Wide coverage", "All financing options", "Monitoring included"]},
+      {"name": "Palmetto", "rating": 4.2, "type": "national", "summary": "SE specialist with competitive Charlotte pricing.", "strengths": ["SE expertise", "Competitive pricing", "Great app"]}
+    ],
+    "buying_tips": ["Duke Energy Carolinas offers net metering for Charlotte solar customers", "NC property tax exemption applies to solar installations", "Get quotes from both local and national installers for comparison", "Consider Duke Energy's TOU rate to maximize solar savings"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Charlotte?", "answer": "Charlotte solar averages $2.60-$3.10/watt. After the 30% federal credit, a typical 8kW system costs $14,500-$17,400."},
+      {"question": "Does Charlotte have good solar incentives?", "answer": "Charlotte benefits from Duke Energy net metering, NC property tax exemption, and the 30% federal ITC. While NC lacks a state tax credit, the overall economics are favorable."}
+    ],
+    "related_slugs": ["north-carolina", "south-carolina", "orlando-fl"]
+  },
+  {
+    "slug": "san-antonio-tx",
+    "title": "Best Solar Companies in San Antonio, TX 2026",
+    "meta_description": "Best solar installers in San Antonio. Compare pricing, CPS Energy rebates, and reviews for SA homeowners.",
+    "location_type": "city",
+    "state_abbrev": "TX",
+    "intro": "San Antonio stands out in Texas with CPS Energy's excellent solar rebate program, making it one of the most incentive-rich cities in the state. Combined with strong sunshine and the federal ITC, SA offers compelling solar economics.",
+    "companies": [
+      {"name": "Freedom Solar", "rating": 4.4, "type": "national", "summary": "Texas-based premium installer with deep San Antonio expertise.", "strengths": ["TX-based", "SunPower equipment", "CPS Energy experts"]},
+      {"name": "Sunnova", "rating": 4.2, "type": "national", "summary": "Houston-based installer with strong SA coverage and financing.", "strengths": ["TX-based", "25-year warranty", "Flexible financing"]},
+      {"name": "Sunrun", "rating": 4.0, "type": "national", "summary": "Wide SA coverage with multiple financing options.", "strengths": ["Wide coverage", "Multiple financing", "Battery options"]},
+      {"name": "South Texas Solar Systems", "rating": 4.3, "type": "local", "summary": "San Antonio specialist with CPS Energy rebate expertise.", "strengths": ["SA specialist", "CPS rebate experts", "Strong reviews"]},
+      {"name": "Tesla Solar", "rating": 3.9, "type": "national", "summary": "Lowest SA pricing with streamlined process.", "strengths": ["Lowest prices", "Powerwall option", "Simple ordering"]}
+    ],
+    "buying_tips": ["CPS Energy offers one of the best utility solar rebate programs in Texas", "San Antonio's strong sunshine means excellent solar production", "Compare CPS Energy's solar buyback rate with system sizing", "The 30% federal ITC significantly reduces out-of-pocket costs"],
+    "faqs": [
+      {"question": "How much do solar panels cost in San Antonio?", "answer": "SA solar averages $2.50-$3.00/watt. After the 30% federal credit and CPS Energy rebates, a typical 8kW system costs $12,000-$15,000."},
+      {"question": "Does CPS Energy offer solar incentives?", "answer": "Yes, CPS Energy offers one of the best utility solar programs in Texas with rebates and a solar buyback program. Check their current program details for the latest rates."}
+    ],
+    "related_slugs": ["texas", "austin-tx", "houston-tx"]
+  },
+  {
+    "slug": "austin-tx",
+    "title": "Best Solar Companies in Austin, TX 2026",
+    "meta_description": "Top solar companies in Austin, Texas. Compare pricing, Austin Energy rebates, and reviews for Austin homeowners.",
+    "location_type": "city",
+    "state_abbrev": "TX",
+    "intro": "Austin Energy's solar rebate and value-of-solar tariff make Austin one of the best cities for solar in Texas. The city's progressive energy policies and tech-savvy population have created a thriving solar market.",
+    "companies": [
+      {"name": "Freedom Solar", "rating": 4.5, "type": "national", "summary": "Austin-headquartered SunPower Elite Dealer with the best local reviews.", "strengths": ["Austin HQ", "SunPower equipment", "Best local reviews"]},
+      {"name": "Longhorn Solar", "rating": 4.4, "type": "local", "summary": "Austin-based installer with deep Austin Energy program expertise.", "strengths": ["Austin-based", "AE program experts", "Fast installations"]},
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Comprehensive Austin coverage with flexible financing.", "strengths": ["Flexible financing", "Wide coverage", "Battery options"]},
+      {"name": "Tesla Solar", "rating": 4.0, "type": "national", "summary": "Competitive Austin pricing with Powerwall integration.", "strengths": ["Competitive pricing", "Powerwall option", "Tech-forward"]},
+      {"name": "Sunnova", "rating": 4.1, "type": "national", "summary": "Texas-headquartered with strong Austin area presence.", "strengths": ["TX-based", "25-year warranty", "Local support"]}
+    ],
+    "buying_tips": ["Austin Energy offers a value-of-solar tariff and rebates", "Austin Energy's program is among the best utility programs nationally", "Austin's tech community drives competitive solar pricing", "Consider battery storage for grid resilience during TX heat waves"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Austin?", "answer": "Austin solar averages $2.50-$3.10/watt. After the 30% federal credit and Austin Energy incentives, a typical 7kW system costs $11,000-$14,000."},
+      {"question": "What solar incentives does Austin Energy offer?", "answer": "Austin Energy offers a value-of-solar tariff and rebates for residential solar. Combined with the 30% federal ITC, Austin has some of the best solar economics in Texas."}
+    ],
+    "related_slugs": ["texas", "san-antonio-tx", "houston-tx"]
+  },
+  {
+    "slug": "tampa-fl",
+    "title": "Best Solar Companies in Tampa, FL 2026",
+    "meta_description": "Best solar installers in Tampa Bay. Compare pricing, TECO programs, and reviews for Tampa area homeowners.",
+    "location_type": "city",
+    "state_abbrev": "FL",
+    "intro": "Tampa Bay's excellent sun exposure and Florida's strong solar policies make it an attractive market for residential solar. TECO Energy and Duke Energy both serve the Tampa area with net metering programs.",
+    "companies": [
+      {"name": "Sunrun", "rating": 4.1, "type": "national", "summary": "Largest Tampa installer with hurricane-rated systems and full financing.", "strengths": ["Hurricane-rated", "Largest Tampa team", "Full financing menu"]},
+      {"name": "Blue Raven Solar", "rating": 4.1, "type": "national", "summary": "Fast Tampa installations with unique financing options.", "strengths": ["Fast installations", "BluePower Plus", "SunPower equipment"]},
+      {"name": "Palmetto", "rating": 4.2, "type": "national", "summary": "Southeast specialist with competitive Tampa pricing.", "strengths": ["SE expertise", "Competitive pricing", "Tech-forward"]},
+      {"name": "Tampa Bay Solar", "rating": 4.3, "type": "local", "summary": "Local Tampa installer with deep knowledge of area utilities and permitting.", "strengths": ["Tampa focused", "TECO experts", "Fast permitting"]},
+      {"name": "ADT Solar", "rating": 4.0, "type": "national", "summary": "Solar with integrated security from a trusted FL brand.", "strengths": ["Security integration", "ADT trust", "FL coverage"]}
+    ],
+    "buying_tips": ["TECO and Duke Energy serve different Tampa Bay areas with different programs", "Hurricane-rated racking is essential for Tampa installations", "Florida's sales and property tax exemptions apply to Tampa solar", "Strong FL net metering means full retail credits for excess production"],
+    "faqs": [
+      {"question": "How much do solar panels cost in Tampa?", "answer": "Tampa solar averages $2.60-$3.10/watt. After the 30% federal credit, a typical 8kW system costs $14,500-$17,400."},
+      {"question": "Is Tampa good for solar?", "answer": "Excellent. Tampa gets great sunshine, Florida offers tax exemptions, and strong net metering means homeowners typically save 50-100% on electricity bills with solar."}
+    ],
+    "related_slugs": ["florida", "orlando-fl", "charlotte-nc"]
+  }
+]

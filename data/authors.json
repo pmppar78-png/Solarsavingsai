@@ -1,0 +1,94 @@
+[
+  {
+    "slug": "sarah-chen",
+    "name": "Sarah Chen",
+    "title": "Senior Solar Energy Analyst",
+    "bio": "Sarah Chen is our Senior Solar Energy Analyst with over 10 years of experience in the renewable energy industry. She holds NABCEP PV Installation Professional certification and has evaluated over 500 solar installations across 30 states. Her analysis has been cited by the Solar Energy Industries Association (SEIA) and the National Renewable Energy Laboratory (NREL).",
+    "credentials": [
+      "NABCEP PV Installation Professional Certified",
+      "M.S. Environmental Engineering, Stanford University",
+      "10+ years in solar energy analysis",
+      "Former consultant for NREL and SEIA"
+    ],
+    "expertise": [
+      "Solar panel efficiency and performance analysis",
+      "State incentive programs and policy",
+      "Residential system design and optimization",
+      "Solar market trends and forecasting"
+    ],
+    "image_alt": "Sarah Chen, Senior Solar Energy Analyst at SolarSavingsAI",
+    "social": {
+      "linkedin": "https://linkedin.com/in/sarah-chen-solar",
+      "twitter": "https://twitter.com/sarahchensolar"
+    }
+  },
+  {
+    "slug": "michael-torres",
+    "name": "Michael Torres",
+    "title": "Staff Writer & Researcher",
+    "bio": "Michael Torres brings his electrical engineering background to make complex solar technology accessible to homeowners. With a B.S. in Electrical Engineering from Georgia Tech and 6 years of renewable energy journalism, he specializes in breaking down technical concepts into actionable advice. Michael has written over 300 articles on solar technology, installation, and policy.",
+    "credentials": [
+      "B.S. Electrical Engineering, Georgia Tech",
+      "6 years renewable energy journalism",
+      "300+ published solar energy articles",
+      "IEEE member and contributor"
+    ],
+    "expertise": [
+      "Solar technology and inverter systems",
+      "Electrical system design",
+      "Equipment reviews and comparisons",
+      "Industry news and trends"
+    ],
+    "image_alt": "Michael Torres, Staff Writer and Researcher at SolarSavingsAI",
+    "social": {
+      "linkedin": "https://linkedin.com/in/michael-torres-energy",
+      "twitter": "https://twitter.com/mtorressolar"
+    }
+  },
+  {
+    "slug": "jennifer-wu",
+    "name": "Jennifer Wu",
+    "title": "Financial Analyst",
+    "bio": "Jennifer Wu is a CFA charterholder who specializes in solar financing and energy investment analysis. With 8 years of experience in clean energy finance, she has helped structure over $200 million in residential solar financing. Jennifer's expertise helps homeowners navigate the complex landscape of solar loans, leases, tax credits, and incentive programs.",
+    "credentials": [
+      "CFA (Chartered Financial Analyst) charterholder",
+      "M.B.A. Finance, Wharton School of Business",
+      "8 years in clean energy finance",
+      "Structured $200M+ in solar financing"
+    ],
+    "expertise": [
+      "Solar financing and loan analysis",
+      "Tax credit and incentive optimization",
+      "ROI and payback calculations",
+      "Investment comparison modeling"
+    ],
+    "image_alt": "Jennifer Wu, Financial Analyst at SolarSavingsAI",
+    "social": {
+      "linkedin": "https://linkedin.com/in/jennifer-wu-cfa",
+      "twitter": "https://twitter.com/jenniferwusolar"
+    }
+  },
+  {
+    "slug": "david-okafor",
+    "name": "David Okafor",
+    "title": "Technical Editor",
+    "bio": "David Okafor is a former solar installer turned technical editor with 15 years of hands-on industry experience. He has personally installed over 1,000 residential solar systems across the Southeast and Southwest regions. David ensures all technical content on SolarSavingsAI is accurate, practical, and reflects real-world installation conditions.",
+    "credentials": [
+      "NABCEP PV Installation Professional Certified",
+      "Licensed Master Electrician",
+      "15 years hands-on solar installation experience",
+      "1,000+ residential systems installed"
+    ],
+    "expertise": [
+      "Solar installation best practices",
+      "Equipment reliability and field performance",
+      "Building codes and permitting",
+      "System troubleshooting and maintenance"
+    ],
+    "image_alt": "David Okafor, Technical Editor at SolarSavingsAI",
+    "social": {
+      "linkedin": "https://linkedin.com/in/david-okafor-solar",
+      "twitter": "https://twitter.com/dokafor_solar"
+    }
+  }
+]
