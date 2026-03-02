@@ -1,0 +1,175 @@
+{
+  "federal_credit": {
+    "current_percent": 30,
+    "step_down_year": 2033,
+    "step_down_percent": 26,
+    "expiration_note": "The 30% federal solar tax credit (ITC) is available through 2032. It drops to 26% in 2033 and 22% in 2034.",
+    "message": "The 30% Federal Solar Tax Credit is available NOW through 2032. Lock in maximum savings before the step-down begins."
+  },
+  "state_alerts": [
+    {
+      "state": "California",
+      "state_abbrev": "CA",
+      "type": "policy_change",
+      "severity": "high",
+      "message": "California's NEM 3.0 significantly reduced export compensation rates by approximately 75%. Existing systems are grandfathered under previous rates. Battery storage is now essential for maximum savings.",
+      "date": "2024-04-15",
+      "active": true
+    },
+    {
+      "state": "New York",
+      "state_abbrev": "NY",
+      "type": "policy_change",
+      "severity": "medium",
+      "message": "New York's Value of Distributed Energy Resources (VDER) tariff is replacing traditional net metering. Existing installations are grandfathered. NY-Sun incentives are still available but declining.",
+      "date": "2025-01-15",
+      "active": true
+    },
+    {
+      "state": "Arizona",
+      "state_abbrev": "AZ",
+      "type": "incentive_expiring",
+      "severity": "medium",
+      "message": "Arizona state solar tax credit of 25% (up to $1,000) is available through 2028. APS and SRP export compensation rates continue to decline. Act now for best rates.",
+      "date": "2025-03-01",
+      "active": true
+    },
+    {
+      "state": "Indiana",
+      "state_abbrev": "IN",
+      "type": "policy_change",
+      "severity": "high",
+      "message": "Indiana net metering is being phased down to an avoided-cost rate structure. New solar customers will receive reduced export compensation. Lock in current rates before further reductions take effect.",
+      "date": "2025-06-01",
+      "active": true
+    },
+    {
+      "state": "Michigan",
+      "state_abbrev": "MI",
+      "type": "cap_warning",
+      "severity": "high",
+      "message": "DTE Energy and Consumers Energy have reached net metering capacity caps. New solar customers are placed on distributed generation tariffs with lower export compensation rates.",
+      "date": "2025-04-01",
+      "active": true
+    },
+    {
+      "state": "Hawaii",
+      "state_abbrev": "HI",
+      "type": "incentive_available",
+      "severity": "low",
+      "message": "Hawaii offers the highest state tax credit in the nation at 35% of system cost, combined with the highest electricity rates. Solar plus battery storage delivers the fastest payback period in the US.",
+      "date": "2025-01-01",
+      "active": true
+    },
+    {
+      "state": "South Carolina",
+      "state_abbrev": "SC",
+      "type": "incentive_available",
+      "severity": "low",
+      "message": "South Carolina 25% state solar tax credit has no cap, making it one of the most generous state credits in the nation. Combined with the 30% federal ITC, homeowners can offset 55% of system costs.",
+      "date": "2025-01-01",
+      "active": true
+    },
+    {
+      "state": "Massachusetts",
+      "state_abbrev": "MA",
+      "type": "incentive_declining",
+      "severity": "medium",
+      "message": "Massachusetts SMART program incentive rates are declining as capacity blocks fill up. Earlier adopters receive higher rates locked in for 10 years. SREC-II market remains strong but competitive.",
+      "date": "2025-06-01",
+      "active": true
+    },
+    {
+      "state": "New Jersey",
+      "state_abbrev": "NJ",
+      "type": "incentive_available",
+      "severity": "low",
+      "message": "New Jersey Successor Solar Incentive (SuSI) TREC values remain among the strongest in the nation. Combined with full retail net metering and sales/property tax exemptions, NJ is one of the best states for solar.",
+      "date": "2025-03-01",
+      "active": true
+    },
+    {
+      "state": "Utah",
+      "state_abbrev": "UT",
+      "type": "policy_change",
+      "severity": "medium",
+      "message": "Utah is transitioning from net metering to net billing under Rocky Mountain Power. Export credit rates are declining annually. Earlier adopters benefit from higher grandfather rates.",
+      "date": "2025-07-01",
+      "active": true
+    }
+  ],
+  "utility_alerts": [
+    {
+      "utility_slug": "pacific-gas-electric",
+      "utility_name": "PG&E",
+      "type": "policy_change",
+      "severity": "high",
+      "message": "PG&E NEM 3.0 significantly reduces export compensation to approximately $0.05-0.08/kWh. Pair solar with battery storage for best results. Existing NEM 2.0 customers are grandfathered for 20 years.",
+      "date": "2024-04-15",
+      "active": true
+    },
+    {
+      "utility_slug": "southern-california-edison",
+      "utility_name": "SCE",
+      "type": "policy_change",
+      "severity": "high",
+      "message": "SCE NEM 3.0 in effect. Time-of-use rate optimization and battery storage strongly recommended to maximize savings under new export compensation structure.",
+      "date": "2024-04-15",
+      "active": true
+    },
+    {
+      "utility_slug": "san-diego-gas-electric",
+      "utility_name": "SDG&E",
+      "type": "rate_change",
+      "severity": "medium",
+      "message": "SDG&E has the highest peak rates in California at $0.42/kWh. Solar plus storage maximizes savings by avoiding peak grid purchases and optimizing export timing.",
+      "date": "2025-01-01",
+      "active": true
+    },
+    {
+      "utility_slug": "nv-energy",
+      "utility_name": "NV Energy",
+      "type": "cap_warning",
+      "severity": "high",
+      "message": "NV Energy net metering program has reached capacity limits. New solar customers receive reduced export compensation. Battery storage increasingly important for maximizing value.",
+      "date": "2025-06-01",
+      "active": true
+    },
+    {
+      "utility_slug": "dte-energy",
+      "utility_name": "DTE Energy",
+      "type": "cap_warning",
+      "severity": "high",
+      "message": "DTE Energy net metering cap reached. New residential solar customers are placed on the distributed generation program with avoided-cost export rates rather than full retail credit.",
+      "date": "2025-03-01",
+      "active": true
+    },
+    {
+      "utility_slug": "firstenergy-ohio",
+      "utility_name": "FirstEnergy Ohio",
+      "type": "cap_warning",
+      "severity": "medium",
+      "message": "FirstEnergy Ohio approaching net metering capacity limits in some service territories. Contact utility for current availability before finalizing solar installation plans.",
+      "date": "2025-08-01",
+      "active": true
+    },
+    {
+      "utility_slug": "pseg-long-island",
+      "utility_name": "PSEG Long Island",
+      "type": "cap_warning",
+      "severity": "medium",
+      "message": "PSEG Long Island net metering capacity approaching limits. Interconnection queue times are increasing. Submit applications early to secure current compensation rates.",
+      "date": "2025-05-01",
+      "active": true
+    },
+    {
+      "utility_slug": "hawaiian-electric",
+      "utility_name": "Hawaiian Electric",
+      "type": "policy_change",
+      "severity": "high",
+      "message": "Hawaiian Electric traditional net metering is closed to new applicants. Smart Export and Customer Grid Supply programs available with lower export rates. Battery storage essential for new installations.",
+      "date": "2025-01-01",
+      "active": true
+    }
+  ]
+}

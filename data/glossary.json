@@ -1,0 +1,471 @@
+[
+  {
+    "term": "Net Metering",
+    "slug": "net-metering",
+    "definition": "A billing mechanism that credits solar energy system owners for the electricity they add to the grid. When your solar panels produce more electricity than your home uses, the excess is sent to the grid and you receive a credit on your electric bill. Net metering policies vary significantly by state and utility, with some offering full retail rate credits and others offering lower avoided-cost rates.",
+    "category": "policy",
+    "related_terms": ["net-billing", "feed-in-tariff", "grid-tied-system", "export-compensation"]
+  },
+  {
+    "term": "Solar Renewable Energy Credit (SREC)",
+    "slug": "srec",
+    "definition": "A tradeable certificate that represents the environmental benefits of one megawatt-hour (MWh) of solar electricity generation. SRECs can be sold to utilities that need to meet renewable energy requirements, providing additional income for solar system owners. SREC values vary by state market, from around $25 to over $400 depending on supply and demand.",
+    "category": "financial",
+    "related_terms": ["renewable-portfolio-standard", "net-metering"]
+  },
+  {
+    "term": "Investment Tax Credit (ITC)",
+    "slug": "investment-tax-credit",
+    "definition": "A federal tax credit that allows homeowners and businesses to deduct a percentage of the cost of installing a solar energy system from their federal taxes. The ITC is currently set at 30% through 2032 under the Inflation Reduction Act, stepping down to 26% in 2033 and 22% in 2034. This is a dollar-for-dollar reduction in the income taxes you owe, making it one of the most valuable solar incentives available.",
+    "category": "financial",
+    "related_terms": ["tax-credit", "inflation-reduction-act"]
+  },
+  {
+    "term": "Feed-in Tariff",
+    "slug": "feed-in-tariff",
+    "definition": "A policy mechanism that offers a guaranteed payment rate for renewable energy fed into the electricity grid. Feed-in tariffs provide long-term contracts (typically 15-20 years) at a fixed rate, providing revenue certainty for solar system owners. They are more common in Europe but some U.S. programs exist at the municipal level.",
+    "category": "policy",
+    "related_terms": ["net-metering", "net-billing", "export-compensation"]
+  },
+  {
+    "term": "Power Purchase Agreement (PPA)",
+    "slug": "power-purchase-agreement",
+    "definition": "A financial arrangement where a solar developer installs, owns, and maintains a solar system on your property, and you agree to purchase the electricity at a predetermined rate, usually below the utility rate. PPAs are similar to leases but you pay per kWh produced rather than a fixed monthly amount. PPAs require no upfront investment but the homeowner does not own the system or receive the tax credits.",
+    "category": "financial",
+    "related_terms": ["solar-lease", "third-party-ownership"]
+  },
+  {
+    "term": "Solar Lease",
+    "slug": "solar-lease",
+    "definition": "A financing arrangement where a solar company installs panels on your roof and you pay a fixed monthly fee to use the electricity they produce. With a lease, the solar company owns the system and is responsible for maintenance. Leases typically last 20-25 years and may include annual escalator clauses of 1-3%. The homeowner does not receive tax credits under a lease arrangement.",
+    "category": "financial",
+    "related_terms": ["power-purchase-agreement", "solar-loan", "third-party-ownership"]
+  },
+  {
+    "term": "Time of Use (TOU)",
+    "slug": "time-of-use",
+    "definition": "An electricity rate structure that charges different prices based on the time of day. Peak rates are highest during afternoon and evening hours when demand is greatest, while off-peak rates are lower during nighttime and weekends. TOU rates significantly affect solar savings calculations and make battery storage more valuable for shifting energy use to avoid peak pricing.",
+    "category": "policy",
+    "related_terms": ["peak-rate", "net-metering", "demand-charge"]
+  },
+  {
+    "term": "Peak Sun Hours",
+    "slug": "peak-sun-hours",
+    "definition": "The equivalent number of hours per day when solar irradiance averages 1,000 watts per square meter. Peak sun hours are used to estimate solar production and vary by location. For example, Phoenix averages about 6.5 peak sun hours per day while Seattle averages about 3.5. This metric is crucial for sizing solar systems and estimating annual electricity production.",
+    "category": "measurement",
+    "related_terms": ["solar-irradiance", "kilowatt-hour"]
+  },
+  {
+    "term": "Kilowatt-Hour (kWh)",
+    "slug": "kilowatt-hour",
+    "definition": "A unit of energy equal to one kilowatt of power used for one hour. Your electricity bill is measured in kWh, and this is the standard unit for comparing solar production to home energy consumption. The average American home uses about 900 kWh per month. Understanding your kWh consumption is essential for sizing a solar system correctly.",
+    "category": "measurement",
+    "related_terms": ["kilowatt", "megawatt-hour", "peak-sun-hours"]
+  },
+  {
+    "term": "Kilowatt (kW)",
+    "slug": "kilowatt",
+    "definition": "A unit of power equal to 1,000 watts. Solar system sizes are typically measured in kilowatts. A typical residential solar system is between 5-10 kW, depending on energy needs and available roof space. One kilowatt of solar panels produces approximately 1,200-1,800 kWh per year depending on location and system orientation.",
+    "category": "measurement",
+    "related_terms": ["kilowatt-hour", "watt", "nameplate-capacity"]
+  },
+  {
+    "term": "Photovoltaic (PV)",
+    "slug": "photovoltaic",
+    "definition": "The technology used to convert sunlight directly into electricity using semiconductor materials. Photovoltaic cells are the building blocks of solar panels. When sunlight hits a PV cell, it creates an electric field that causes electricity to flow. Modern PV cells can convert 18-24% of sunlight into electricity depending on the cell technology used.",
+    "category": "technology",
+    "related_terms": ["solar-panel-efficiency", "monocrystalline", "polycrystalline"]
+  },
+  {
+    "term": "Solar Panel",
+    "slug": "solar-panel",
+    "definition": "A device that converts sunlight into electricity, consisting of many photovoltaic cells connected together. Solar panels are typically warranted for 25-30 years and can produce electricity for even longer. Modern panels degrade at approximately 0.3-0.5% per year, meaning they still produce about 87-90% of their original output after 25 years.",
+    "category": "technology",
+    "related_terms": ["photovoltaic", "monocrystalline", "polycrystalline", "solar-panel-efficiency"]
+  },
+  {
+    "term": "Inverter",
+    "slug": "inverter",
+    "definition": "A device that converts the direct current (DC) electricity produced by solar panels into alternating current (AC) electricity used in homes and businesses. There are three main types: string inverters, microinverters, and power optimizers. The inverter also manages grid connection and safety features such as anti-islanding protection.",
+    "category": "technology",
+    "related_terms": ["microinverter", "string-inverter", "power-optimizer", "ac-vs-dc"]
+  },
+  {
+    "term": "Microinverter",
+    "slug": "microinverter",
+    "definition": "A small inverter installed on each individual solar panel that converts DC to AC electricity at the panel level. Microinverters optimize each panel independently, making them ideal for roofs with shading issues or multiple orientations. They typically cost more than string inverters but offer better performance monitoring and longer warranties (25 years). Enphase is the leading manufacturer.",
+    "category": "technology",
+    "related_terms": ["inverter", "string-inverter", "power-optimizer"]
+  },
+  {
+    "term": "String Inverter",
+    "slug": "string-inverter",
+    "definition": "A central inverter that converts DC electricity from a series (string) of solar panels into AC electricity. String inverters are the most cost-effective option for unshaded roofs with a single orientation. However, if one panel in the string underperforms due to shading or malfunction, it can reduce the output of the entire string.",
+    "category": "technology",
+    "related_terms": ["inverter", "microinverter", "power-optimizer"]
+  },
+  {
+    "term": "Power Optimizer",
+    "slug": "power-optimizer",
+    "definition": "A DC-to-DC converter installed on each solar panel that optimizes the power output before sending it to a central string inverter. Power optimizers offer panel-level optimization similar to microinverters but at a lower cost. SolarEdge is the most well-known manufacturer of power optimizer systems.",
+    "category": "technology",
+    "related_terms": ["inverter", "microinverter", "string-inverter"]
+  },
+  {
+    "term": "Solar Panel Efficiency",
+    "slug": "solar-panel-efficiency",
+    "definition": "The percentage of sunlight hitting a solar panel that is converted into usable electricity. Modern residential solar panels typically have efficiencies ranging from 18% to 22.8%, with premium panels reaching up to 24%. Higher efficiency panels produce more electricity per square foot, making them ideal for roofs with limited space. Efficiency is affected by cell technology, temperature, shading, and panel age.",
+    "category": "technology",
+    "related_terms": ["monocrystalline", "polycrystalline", "thin-film", "degradation-rate"]
+  },
+  {
+    "term": "Net Billing",
+    "slug": "net-billing",
+    "definition": "A compensation structure where excess solar energy exported to the grid is credited at a rate different from (usually lower than) the retail electricity rate. Unlike traditional net metering which credits at full retail rate, net billing typically compensates at wholesale or avoided cost rates. California's NEM 3.0 is a prominent example. Net billing makes battery storage more financially attractive.",
+    "category": "policy",
+    "related_terms": ["net-metering", "feed-in-tariff", "export-compensation"]
+  },
+  {
+    "term": "Grid-Tied System",
+    "slug": "grid-tied-system",
+    "definition": "A solar energy system that is connected to the utility electrical grid. Grid-tied systems can send excess electricity to the grid and draw from it when solar production is insufficient. Most residential solar installations are grid-tied because they benefit from net metering and do not require battery storage. Grid-tied systems must shut down during outages for safety unless paired with batteries.",
+    "category": "installation",
+    "related_terms": ["off-grid-system", "hybrid-system", "net-metering", "interconnection-agreement"]
+  },
+  {
+    "term": "Off-Grid System",
+    "slug": "off-grid-system",
+    "definition": "A solar energy system that operates independently of the utility grid, relying entirely on solar panels and battery storage for electricity. Off-grid systems require significantly more battery capacity and are typically more expensive than grid-tied systems. They are most common in remote locations without grid access where the cost of running utility lines would be prohibitive.",
+    "category": "installation",
+    "related_terms": ["grid-tied-system", "battery-storage", "hybrid-system"]
+  },
+  {
+    "term": "Hybrid System",
+    "slug": "hybrid-system",
+    "definition": "A solar energy system that combines grid connection with battery storage. Hybrid systems can store excess solar energy in batteries for use during peak hours or outages while still maintaining grid connection as backup. They offer the best of both worlds: energy independence during outages and the financial benefits of net metering or export compensation.",
+    "category": "installation",
+    "related_terms": ["grid-tied-system", "off-grid-system", "battery-storage"]
+  },
+  {
+    "term": "Battery Storage",
+    "slug": "battery-storage",
+    "definition": "A system that stores excess solar energy for later use, typically using lithium-ion batteries. Popular residential options include the Tesla Powerwall, Enphase IQ Battery, and LG RESU. Battery storage allows homeowners to use solar energy at night, during peak rate periods, or during power outages. Typical home battery systems store 10-15 kWh of energy.",
+    "category": "technology",
+    "related_terms": ["solar-battery", "hybrid-system", "off-grid-system"]
+  },
+  {
+    "term": "Solar Battery",
+    "slug": "solar-battery",
+    "definition": "A rechargeable battery specifically designed to be paired with a solar energy system to store excess electricity generated during the day for use at night or during grid outages. Modern solar batteries use lithium-ion technology and typically cost between $8,000 and $16,000 installed. The federal ITC applies to battery storage when charged by solar panels.",
+    "category": "technology",
+    "related_terms": ["battery-storage", "hybrid-system", "grid-tied-system"]
+  },
+  {
+    "term": "Monocrystalline Solar Panel",
+    "slug": "monocrystalline",
+    "definition": "A type of solar cell made from a single crystal of silicon, offering the highest efficiency ratings (typically 20-24%) among mainstream panel technologies. Monocrystalline panels are recognizable by their uniform dark appearance. They perform better in low-light conditions and high temperatures compared to polycrystalline panels. Most premium residential installations today use monocrystalline technology.",
+    "category": "technology",
+    "related_terms": ["polycrystalline", "thin-film", "solar-panel-efficiency"]
+  },
+  {
+    "term": "Polycrystalline Solar Panel",
+    "slug": "polycrystalline",
+    "definition": "A type of solar cell made from multiple silicon crystals melted together, offering slightly lower efficiency (typically 15-17%) than monocrystalline but at a lower cost. Polycrystalline panels have a distinctive blue speckled appearance. They have largely been displaced in the residential market by increasingly affordable monocrystalline panels but remain common in some commercial installations.",
+    "category": "technology",
+    "related_terms": ["monocrystalline", "thin-film", "solar-panel-efficiency"]
+  },
+  {
+    "term": "Thin Film Solar Panel",
+    "slug": "thin-film",
+    "definition": "A type of solar panel made by depositing one or more thin layers of photovoltaic material onto a substrate such as glass, plastic, or metal. Thin film panels are lighter and more flexible than crystalline silicon panels but are generally less efficient (10-13%). Common thin film technologies include cadmium telluride (CdTe), amorphous silicon (a-Si), and copper indium gallium selenide (CIGS).",
+    "category": "technology",
+    "related_terms": ["monocrystalline", "polycrystalline", "solar-panel-efficiency"]
+  },
+  {
+    "term": "Interconnection Agreement",
+    "slug": "interconnection-agreement",
+    "definition": "A legal contract between a solar energy system owner and the local utility company that establishes the terms and conditions for connecting the solar system to the electrical grid. The agreement covers technical requirements, metering arrangements, safety standards, insurance requirements, and compensation for excess electricity. Most utilities require an approved interconnection agreement before a solar system can be activated.",
+    "category": "installation",
+    "related_terms": ["grid-tied-system", "net-metering", "utility-interconnection"]
+  },
+  {
+    "term": "Utility Interconnection",
+    "slug": "utility-interconnection",
+    "definition": "The physical and administrative process of connecting a distributed energy resource, such as a rooftop solar system, to the utility electrical grid. This process involves submitting an application, technical review, system inspection, installing a bidirectional meter, and receiving permission to operate (PTO). Interconnection timelines and fees vary by utility, from a few weeks to several months.",
+    "category": "installation",
+    "related_terms": ["interconnection-agreement", "grid-tied-system"]
+  },
+  {
+    "term": "Solar Loan",
+    "slug": "solar-loan",
+    "definition": "A financing product specifically designed for purchasing a solar energy system. Solar loans allow homeowners to own their system, claim tax credits and incentives, and build equity. Terms typically range from 5-25 years with competitive interest rates. Many solar loans offer zero-down-payment options. Unlike a solar lease or PPA, a solar loan allows the homeowner to own the system outright.",
+    "category": "financial",
+    "related_terms": ["solar-lease", "power-purchase-agreement", "heloc"]
+  },
+  {
+    "term": "PACE Financing",
+    "slug": "pace-financing",
+    "definition": "Property Assessed Clean Energy (PACE) financing allows homeowners to fund energy improvements through an assessment on their property tax bill. PACE loans are tied to the property rather than the homeowner, so they transfer with the property if sold. No credit score is required, but PACE creates a senior lien on the property. Available primarily in California, Florida, and Missouri.",
+    "category": "financial",
+    "related_terms": ["solar-loan", "solar-lease", "heloc"]
+  },
+  {
+    "term": "Home Equity Line of Credit (HELOC)",
+    "slug": "heloc",
+    "definition": "A revolving line of credit secured by the equity in your home that can be used to finance solar panel installation. HELOCs typically offer lower interest rates than unsecured personal loans because they use your home as collateral. The interest paid on a HELOC may be tax-deductible if the funds are used for home improvements like solar. Variable interest rates and the risk of foreclosure are important considerations.",
+    "category": "financial",
+    "related_terms": ["solar-loan", "pace-financing"]
+  },
+  {
+    "term": "Tax Credit",
+    "slug": "tax-credit",
+    "definition": "A dollar-for-dollar reduction in the amount of income tax you owe. Solar tax credits, like the Federal ITC, directly reduce your tax bill rather than your taxable income. A $6,000 tax credit saves you $6,000 in taxes, while a $6,000 tax deduction only saves you the taxes on that amount of income. Unused solar tax credits can typically be carried forward to future tax years.",
+    "category": "financial",
+    "related_terms": ["investment-tax-credit", "inflation-reduction-act"]
+  },
+  {
+    "term": "Inflation Reduction Act",
+    "slug": "inflation-reduction-act",
+    "definition": "A landmark US federal law signed in August 2022 that extended and expanded clean energy tax credits, including the solar Investment Tax Credit (ITC). The IRA set the residential solar ITC at 30% through 2032, with a step-down to 26% in 2033 and 22% in 2034. The law represents the largest climate investment in US history and has significantly boosted the solar industry.",
+    "category": "policy",
+    "related_terms": ["investment-tax-credit", "tax-credit"]
+  },
+  {
+    "term": "Solar Rebate",
+    "slug": "solar-rebate",
+    "definition": "A financial incentive offered by states, utilities, or local governments that provides a direct payment or credit for installing solar panels. Unlike tax credits, rebates provide immediate value and do not require tax liability. Rebate amounts vary widely and many programs have caps or are available on a first-come, first-served basis, creating urgency to act.",
+    "category": "financial",
+    "related_terms": ["investment-tax-credit", "srec", "tax-credit"]
+  },
+  {
+    "term": "Renewable Portfolio Standard (RPS)",
+    "slug": "renewable-portfolio-standard",
+    "definition": "A state regulation that requires utilities to source a specified percentage of their electricity from renewable energy sources by a target date. RPS policies drive demand for SRECs and other renewable energy certificates. States with ambitious RPS targets, such as California (100% by 2045) and New York (70% by 2030), tend to have stronger solar incentive programs and higher SREC values.",
+    "category": "policy",
+    "related_terms": ["srec", "net-metering"]
+  },
+  {
+    "term": "Solar Access Law",
+    "slug": "solar-access-law",
+    "definition": "Legislation that protects a homeowner's right to install and use solar energy systems. Solar access laws vary by state but may include protection from HOA restrictions on solar panels, limits on utility interconnection barriers, and prohibitions against unreasonable permitting requirements. Over 25 states have enacted some form of solar access or solar rights legislation.",
+    "category": "policy",
+    "related_terms": ["solar-easement", "solar-rights"]
+  },
+  {
+    "term": "Solar Easement",
+    "slug": "solar-easement",
+    "definition": "A legal agreement that ensures a property owner's access to sunlight cannot be blocked by neighboring properties. A solar easement prevents adjacent landowners from planting trees, constructing buildings, or making other changes that would cast shadows on an existing solar installation. Solar easements can be voluntarily negotiated or obtained through legal processes in some states.",
+    "category": "policy",
+    "related_terms": ["solar-access-law", "solar-rights", "shading-analysis"]
+  },
+  {
+    "term": "Solar Rights",
+    "slug": "solar-rights",
+    "definition": "Laws that protect homeowners' ability to install solar panels on their own property. Solar rights laws prohibit homeowners associations (HOAs), local governments, and other entities from banning or unreasonably restricting solar installations. Most solar rights laws allow HOAs to establish reasonable aesthetic guidelines but not to effectively prohibit solar installation.",
+    "category": "policy",
+    "related_terms": ["solar-access-law", "solar-easement"]
+  },
+  {
+    "term": "Property Tax Exemption",
+    "slug": "property-tax-exemption",
+    "definition": "A state or local policy that exempts the added value of a solar installation from property tax assessments. While solar panels increase home value by an average of 4%, a property tax exemption ensures your property taxes do not increase as a result. Over 35 states offer some form of property tax exemption for solar installations.",
+    "category": "financial",
+    "related_terms": ["sales-tax-exemption", "investment-tax-credit"]
+  },
+  {
+    "term": "Sales Tax Exemption",
+    "slug": "sales-tax-exemption",
+    "definition": "A state policy that exempts solar energy equipment from sales tax at the time of purchase. This can save homeowners 4-10% of the system cost depending on the state sales tax rate. Approximately 25 states offer a sales tax exemption for solar equipment. Some exemptions cover the full system cost while others apply only to equipment and not installation labor.",
+    "category": "financial",
+    "related_terms": ["property-tax-exemption", "investment-tax-credit"]
+  },
+  {
+    "term": "Payback Period",
+    "slug": "payback-period",
+    "definition": "The amount of time it takes for a solar investment to pay for itself through energy savings and incentives. The average solar payback period in the U.S. is 6-10 years, after which the system produces essentially free electricity for its remaining 15-20+ year lifespan. States with high electricity rates and strong incentives have shorter payback periods.",
+    "category": "financial",
+    "related_terms": ["return-on-investment", "levelized-cost-of-energy"]
+  },
+  {
+    "term": "Return on Investment (ROI)",
+    "slug": "return-on-investment",
+    "definition": "A measure of the profitability of a solar investment, expressed as a percentage of the initial investment. Solar ROI accounts for total savings over the system lifetime minus the net cost of installation. Most residential solar systems deliver 100-300% ROI over their 25-year lifespan, making solar one of the best home improvements for financial return.",
+    "category": "financial",
+    "related_terms": ["payback-period", "levelized-cost-of-energy"]
+  },
+  {
+    "term": "Levelized Cost of Energy (LCOE)",
+    "slug": "levelized-cost-of-energy",
+    "definition": "The average cost per unit of electricity generated over the lifetime of a solar system, accounting for all costs including installation, maintenance, and financing. LCOE allows direct comparison between solar and utility electricity costs. Residential solar LCOE in the U.S. ranges from $0.05-$0.10/kWh, often below retail utility rates.",
+    "category": "financial",
+    "related_terms": ["payback-period", "return-on-investment"]
+  },
+  {
+    "term": "Nameplate Capacity",
+    "slug": "nameplate-capacity",
+    "definition": "The maximum rated output of a solar panel or system under standard test conditions (STC), expressed in watts or kilowatts. Standard test conditions define a cell temperature of 25 degrees Celsius and solar irradiance of 1,000 W/m2. Actual real-world output is typically 15-25% less than nameplate capacity due to temperature, shading, wiring losses, and inverter efficiency.",
+    "category": "measurement",
+    "related_terms": ["kilowatt", "solar-panel-efficiency"]
+  },
+  {
+    "term": "AC vs DC",
+    "slug": "ac-vs-dc",
+    "definition": "Solar panels produce direct current (DC) electricity, where electrons flow in one direction. Most home appliances and the electrical grid use alternating current (AC), where electrons periodically reverse direction. An inverter converts DC from solar panels to AC for home use, with 3-5% energy loss in the conversion. Solar panels are rated in DC watts while actual home output is in AC watts.",
+    "category": "technology",
+    "related_terms": ["inverter", "nameplate-capacity"]
+  },
+  {
+    "term": "Degradation Rate",
+    "slug": "degradation-rate",
+    "definition": "The rate at which solar panel output decreases over time, typically about 0.3-0.5% per year for quality panels. After 25 years, a panel with a 0.5% annual degradation rate will still produce about 87.5% of its original output. Premium panels may have degradation rates as low as 0.25% per year. Manufacturers guarantee minimum output over the warranty period.",
+    "category": "measurement",
+    "related_terms": ["solar-panel-efficiency", "nameplate-capacity"]
+  },
+  {
+    "term": "Solar Irradiance",
+    "slug": "solar-irradiance",
+    "definition": "The amount of solar radiation energy received per unit area, measured in watts per square meter (W/m2). Solar irradiance varies by location, season, time of day, and weather conditions. The standard reference value used for testing solar panels is 1,000 W/m2. The southwestern United States receives the highest irradiance in the country.",
+    "category": "measurement",
+    "related_terms": ["peak-sun-hours", "solar-panel-efficiency"]
+  },
+  {
+    "term": "Azimuth",
+    "slug": "azimuth",
+    "definition": "The compass direction that a solar panel or roof surface faces, measured in degrees from true north. In the Northern Hemisphere, solar panels are most productive when facing due south (180 degrees azimuth). Southwest-facing panels can be beneficial in time-of-use rate areas because they produce more electricity during afternoon peak demand periods.",
+    "category": "installation",
+    "related_terms": ["tilt-angle", "solar-irradiance", "shading-analysis"]
+  },
+  {
+    "term": "Tilt Angle",
+    "slug": "tilt-angle",
+    "definition": "The angle at which solar panels are installed relative to the horizontal ground surface, measured in degrees. The optimal tilt angle for maximum annual energy production is generally close to the latitude of the installation location. Most residential rooftop installations use the existing roof pitch, which is typically 20-40 degrees and close enough to optimal for effective production.",
+    "category": "installation",
+    "related_terms": ["azimuth", "solar-irradiance"]
+  },
+  {
+    "term": "Shading Analysis",
+    "slug": "shading-analysis",
+    "definition": "An assessment of how much shade falls on a potential solar installation site throughout the day and year. Shading from trees, chimneys, neighboring buildings, and other obstructions can significantly reduce solar panel output. Professional installers use tools like satellite imagery, drone surveys, or the Solmetric SunEye to evaluate shading impacts before designing a system.",
+    "category": "installation",
+    "related_terms": ["azimuth", "tilt-angle", "microinverter"]
+  },
+  {
+    "term": "Energy Audit",
+    "slug": "energy-audit",
+    "definition": "A comprehensive assessment of a home's energy consumption patterns and efficiency. An energy audit identifies where a home is losing energy and recommends improvements like insulation, air sealing, and efficient appliances. Performing an energy audit before installing solar panels is recommended because reducing consumption first means you can install a smaller, less expensive solar system.",
+    "category": "installation",
+    "related_terms": ["kilowatt-hour", "demand-charge"]
+  },
+  {
+    "term": "Demand Charge",
+    "slug": "demand-charge",
+    "definition": "A fee charged by utilities based on the highest rate of electricity consumption (measured in kW) during a billing period, rather than total energy consumed. Demand charges are most common for commercial customers but some residential TOU rates include them. Solar plus battery storage can help reduce demand charges by limiting peak grid draws.",
+    "category": "financial",
+    "related_terms": ["time-of-use", "tiered-rate", "battery-storage"]
+  },
+  {
+    "term": "Tiered Rate",
+    "slug": "tiered-rate",
+    "definition": "An electricity pricing structure where the rate per kilowatt-hour increases as total consumption rises through different usage tiers. Solar is particularly valuable under tiered rate structures because it reduces consumption from the most expensive upper tiers first, providing the greatest dollar savings per kWh offset.",
+    "category": "financial",
+    "related_terms": ["flat-rate", "time-of-use", "demand-charge"]
+  },
+  {
+    "term": "Flat Rate",
+    "slug": "flat-rate",
+    "definition": "An electricity pricing structure where the rate per kilowatt-hour remains constant regardless of the time of use or total consumption level. Flat rates are the simplest pricing structure and make solar savings easy to calculate. Under a flat rate, every kWh of solar production saves the same amount regardless of when it is produced.",
+    "category": "financial",
+    "related_terms": ["tiered-rate", "time-of-use"]
+  },
+  {
+    "term": "Peak Rate",
+    "slug": "peak-rate",
+    "definition": "The highest electricity rate charged during periods of peak demand under a time-of-use (TOU) rate structure. Peak rates typically apply during late afternoon and early evening hours (4-9 PM) when electricity demand is highest. Peak rates can be 2-4 times higher than off-peak rates. Pairing solar with battery storage allows homeowners to avoid expensive peak-rate electricity.",
+    "category": "financial",
+    "related_terms": ["time-of-use", "demand-charge"]
+  },
+  {
+    "term": "Third-Party Ownership",
+    "slug": "third-party-ownership",
+    "definition": "A solar installation model where a company other than the homeowner owns the solar panels installed on the homeowner's roof. The two main forms are solar leases and power purchase agreements (PPAs). The third-party company installs, maintains, and insures the system at no upfront cost, and claims the tax credits and depreciation benefits.",
+    "category": "financial",
+    "related_terms": ["solar-lease", "power-purchase-agreement"]
+  },
+  {
+    "term": "Export Compensation",
+    "slug": "export-compensation",
+    "definition": "The rate at which a utility pays solar system owners for excess electricity exported to the grid. Export compensation rates vary widely, from full retail rate under traditional net metering to wholesale or avoided-cost rates of 2-5 cents/kWh. Many states and utilities are transitioning to lower export compensation, making battery storage more attractive.",
+    "category": "policy",
+    "related_terms": ["net-metering", "feed-in-tariff", "net-billing"]
+  },
+  {
+    "term": "Carbon Offset",
+    "slug": "carbon-offset",
+    "definition": "A reduction in greenhouse gas emissions made to compensate for emissions produced elsewhere. A residential solar energy system generates carbon offsets by displacing electricity from fossil fuels. The average US home solar system offsets approximately 3-4 tons of carbon dioxide per year, equivalent to planting about 100 trees annually.",
+    "category": "measurement",
+    "related_terms": ["greenhouse-gas", "net-zero"]
+  },
+  {
+    "term": "Greenhouse Gas",
+    "slug": "greenhouse-gas",
+    "definition": "Gases in the Earth's atmosphere that trap heat and contribute to global warming, primarily carbon dioxide (CO2), methane (CH4), and nitrous oxide (N2O). Electricity generation from fossil fuels is a major source of greenhouse gas emissions. Solar energy produces zero greenhouse gas emissions during operation.",
+    "category": "measurement",
+    "related_terms": ["carbon-offset", "net-zero"]
+  },
+  {
+    "term": "Net Zero",
+    "slug": "net-zero",
+    "definition": "A state in which a building, home, or community produces as much renewable energy as it consumes over the course of a year. A net-zero home typically achieves this through a combination of energy-efficient design, high-performance insulation and appliances, and a solar energy system, often with battery storage.",
+    "category": "measurement",
+    "related_terms": ["zero-energy-building", "carbon-offset", "energy-audit"]
+  },
+  {
+    "term": "Zero Energy Building",
+    "slug": "zero-energy-building",
+    "definition": "A building that generates as much energy from renewable sources as it consumes over the course of a year. Zero energy buildings combine highly efficient building design with on-site renewable energy generation, typically solar panels. The US Department of Energy defines a zero energy building as one with zero net energy consumption annually.",
+    "category": "measurement",
+    "related_terms": ["net-zero", "energy-audit"]
+  },
+  {
+    "term": "Watt",
+    "slug": "watt",
+    "definition": "The basic unit of electrical power, measuring the rate of energy generation or consumption. Solar panel output is rated in watts (W), with typical residential panels producing 350-450 watts each. A kilowatt (kW) equals 1,000 watts, and residential solar systems typically range from 5,000-10,000 watts (5-10 kW).",
+    "category": "measurement",
+    "related_terms": ["kilowatt", "kilowatt-hour"]
+  },
+  {
+    "term": "Megawatt-Hour (MWh)",
+    "slug": "megawatt-hour",
+    "definition": "A unit of energy equal to 1,000 kilowatt-hours, commonly used for measuring utility-scale solar production and SREC trading. One MWh is enough electricity to power approximately 330 average homes for one hour, or one average home for about 33 days. SRECs represent the environmental value of one MWh of solar generation.",
+    "category": "measurement",
+    "related_terms": ["kilowatt-hour", "kilowatt", "srec"]
+  },
+  {
+    "term": "Racking and Mounting",
+    "slug": "racking-and-mounting",
+    "definition": "The structural hardware system used to securely attach solar panels to a roof, ground surface, or pole. Racking systems must withstand wind, snow, and seismic loads while maintaining proper tilt angle and orientation. Common types include flush roof mount, tilted roof mount, ground mount, and pole mount. Racking typically accounts for about 10% of total installation cost.",
+    "category": "installation",
+    "related_terms": ["tilt-angle", "azimuth", "ground-mount", "roof-mount"]
+  },
+  {
+    "term": "Ground Mount",
+    "slug": "ground-mount",
+    "definition": "A solar panel installation where panels are mounted on a frame attached to the ground rather than the roof. Ground mounts are ideal for properties with ample land, poor roof conditions, or significant roof shading. They can be fixed-tilt or use tracking systems to follow the sun for 15-25% increased production compared to fixed systems.",
+    "category": "installation",
+    "related_terms": ["roof-mount", "racking-and-mounting", "tilt-angle"]
+  },
+  {
+    "term": "Roof Mount",
+    "slug": "roof-mount",
+    "definition": "The most common residential solar installation method where panels are attached to the existing roof using racking systems. Roof mounts are cost-effective and do not require additional land. The roof should ideally face south with minimal shading and have 15 or more years of remaining life before needing replacement.",
+    "category": "installation",
+    "related_terms": ["ground-mount", "racking-and-mounting", "azimuth"]
+  },
+  {
+    "term": "Solar Monitoring",
+    "slug": "solar-monitoring",
+    "definition": "A system that tracks the real-time and historical performance of a solar installation, usually through a smartphone app or web portal. Monitoring systems show energy production, consumption, savings, and can alert homeowners to performance issues. Most modern inverters and microinverters include built-in monitoring capabilities.",
+    "category": "technology",
+    "related_terms": ["inverter", "microinverter"]
+  }
+]

@@ -1,0 +1,356 @@
+{
+  "providers": [
+    {
+      "name": "Sunrun",
+      "slug": "sunrun",
+      "type": "lease",
+      "apr_low": 0,
+      "apr_high": 0,
+      "term_years": [
+        20,
+        25
+      ],
+      "min_credit_score": 650,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Most states",
+      "pros": [
+        "No upfront cost",
+        "Includes maintenance",
+        "Predictable payments"
+      ],
+      "cons": [
+        "Lower total savings",
+        "Dont own system",
+        "Escalator clauses possible"
+      ]
+    },
+    {
+      "name": "Tesla Solar",
+      "slug": "tesla-solar",
+      "type": "loan",
+      "apr_low": 4.49,
+      "apr_high": 6.99,
+      "term_years": [
+        10,
+        20,
+        25
+      ],
+      "min_credit_score": 650,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Most states",
+      "pros": [
+        "Own your system",
+        "Competitive rates",
+        "Includes Powerwall option"
+      ],
+      "cons": [
+        "Limited customization",
+        "Longer wait times",
+        "Tesla panels only"
+      ]
+    },
+    {
+      "name": "SunPower",
+      "slug": "sunpower",
+      "type": "loan",
+      "apr_low": 3.99,
+      "apr_high": 7.99,
+      "term_years": [
+        10,
+        15,
+        20,
+        25
+      ],
+      "min_credit_score": 680,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Most states",
+      "pros": [
+        "Highest efficiency panels",
+        "Strong warranty",
+        "Flexible terms"
+      ],
+      "cons": [
+        "Premium pricing",
+        "Higher credit requirements",
+        "May require deposit"
+      ]
+    },
+    {
+      "name": "Mosaic",
+      "slug": "mosaic",
+      "type": "loan",
+      "apr_low": 2.99,
+      "apr_high": 8.99,
+      "term_years": [
+        5,
+        10,
+        15,
+        20,
+        25
+      ],
+      "min_credit_score": 640,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Most states",
+      "pros": [
+        "Low starting APR",
+        "Multiple term options",
+        "Fast approval"
+      ],
+      "cons": [
+        "Rate depends on credit",
+        "Dealer fees possible",
+        "Longer terms cost more"
+      ]
+    },
+    {
+      "name": "GoodLeap",
+      "slug": "goodleap",
+      "type": "loan",
+      "apr_low": 3.99,
+      "apr_high": 8.99,
+      "term_years": [
+        5,
+        7,
+        10,
+        12,
+        15,
+        20,
+        25
+      ],
+      "min_credit_score": 600,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Most states",
+      "pros": [
+        "Low credit requirements",
+        "Many term options",
+        "Quick funding"
+      ],
+      "cons": [
+        "Higher rates for lower credit",
+        "Dealer fees",
+        "Some prepayment terms"
+      ]
+    },
+    {
+      "name": "Dividend Finance",
+      "slug": "dividend-finance",
+      "type": "loan",
+      "apr_low": 3.49,
+      "apr_high": 8.49,
+      "term_years": [
+        5,
+        7,
+        10,
+        12,
+        15,
+        20,
+        25
+      ],
+      "min_credit_score": 640,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Most states",
+      "pros": [
+        "Competitive rates",
+        "Flexible terms",
+        "No prepayment penalty"
+      ],
+      "cons": [
+        "Credit score dependent",
+        "Not available everywhere",
+        "Some dealer fees"
+      ]
+    },
+    {
+      "name": "Sunlight Financial",
+      "slug": "sunlight-financial",
+      "type": "loan",
+      "apr_low": 3.49,
+      "apr_high": 7.99,
+      "term_years": [
+        7,
+        10,
+        12,
+        15,
+        20,
+        25
+      ],
+      "min_credit_score": 650,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Most states",
+      "pros": [
+        "Good rates",
+        "Fast approval process",
+        "Includes storage"
+      ],
+      "cons": [
+        "Limited direct access",
+        "Through dealers only",
+        "Variable availability"
+      ]
+    },
+    {
+      "name": "Sunnova",
+      "slug": "sunnova",
+      "type": "lease",
+      "apr_low": 0,
+      "apr_high": 0,
+      "term_years": [
+        25
+      ],
+      "min_credit_score": 600,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Most states",
+      "pros": [
+        "Low credit requirement",
+        "No upfront cost",
+        "Includes monitoring"
+      ],
+      "cons": [
+        "Lease only",
+        "Long term commitment",
+        "Escalator clauses"
+      ]
+    },
+    {
+      "name": "PACE (Property Assessed Clean Energy)",
+      "slug": "pace",
+      "type": "PACE",
+      "apr_low": 5,
+      "apr_high": 9,
+      "term_years": [
+        10,
+        15,
+        20,
+        25,
+        30
+      ],
+      "min_credit_score": 0,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Select states (CA, FL, MO)",
+      "pros": [
+        "No credit score requirement",
+        "Tax-deductible interest",
+        "Transfers with property"
+      ],
+      "cons": [
+        "Higher rates",
+        "Property lien",
+        "Limited availability"
+      ]
+    },
+    {
+      "name": "Credit Union Solar Loans",
+      "slug": "credit-union",
+      "type": "loan",
+      "apr_low": 4.49,
+      "apr_high": 8.99,
+      "term_years": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "min_credit_score": 660,
+      "zero_down": false,
+      "battery_financing": true,
+      "states_available": "Varies by credit union",
+      "pros": [
+        "Member benefits",
+        "Personalized service",
+        "Competitive rates"
+      ],
+      "cons": [
+        "Membership required",
+        "May require down payment",
+        "Slower process"
+      ]
+    },
+    {
+      "name": "Home Equity Loan (HELOC)",
+      "slug": "heloc",
+      "type": "HELOC",
+      "apr_low": 6.5,
+      "apr_high": 10,
+      "term_years": [
+        5,
+        10,
+        15,
+        20
+      ],
+      "min_credit_score": 680,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "All states",
+      "pros": [
+        "Tax-deductible interest",
+        "Lower rates possible",
+        "Flexible use"
+      ],
+      "cons": [
+        "Home as collateral",
+        "Variable rates possible",
+        "Appraisal required"
+      ]
+    },
+    {
+      "name": "Vivint Solar",
+      "slug": "vivint-solar",
+      "type": "PPA",
+      "apr_low": 0,
+      "apr_high": 0,
+      "term_years": [
+        20,
+        25
+      ],
+      "min_credit_score": 650,
+      "zero_down": true,
+      "battery_financing": true,
+      "states_available": "Select states",
+      "pros": [
+        "Pay per kWh produced",
+        "No upfront cost",
+        "Maintenance included"
+      ],
+      "cons": [
+        "Lower savings than ownership",
+        "Long contract",
+        "Rate escalators"
+      ]
+    }
+  ],
+  "financing_types": {
+    "cash": {
+      "description": "Pay the full cost upfront and own your system immediately. Maximizes total savings and qualifies for all tax credits.",
+      "avg_roi_multiplier": 1
+    },
+    "loan": {
+      "description": "Finance your solar purchase with a solar loan. You own the system, get tax credits, and pay over time.",
+      "avg_roi_multiplier": 0.85
+    },
+    "lease": {
+      "description": "Lease solar panels with no money down. The leasing company owns the system and you pay a monthly fee.",
+      "avg_roi_multiplier": 0.5
+    },
+    "ppa": {
+      "description": "Power Purchase Agreement where you pay for the electricity produced at a fixed rate, typically below utility rates.",
+      "avg_roi_multiplier": 0.45
+    },
+    "pace": {
+      "description": "Property Assessed Clean Energy financing is repaid through your property tax bill over 10-30 years.",
+      "avg_roi_multiplier": 0.7
+    },
+    "heloc": {
+      "description": "Use your home equity to finance solar. Interest may be tax-deductible and rates can be competitive.",
+      "avg_roi_multiplier": 0.8
+    }
+  }
+}
