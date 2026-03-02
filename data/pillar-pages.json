@@ -1,0 +1,69 @@
+[
+  {
+    "title": "The Complete Guide to Home Solar Energy",
+    "slug": "complete-guide-home-solar",
+    "description": "Everything you need to know about going solar: costs, savings, installation, financing, and incentives.",
+    "category": "guide",
+    "sections": [
+      {"heading": "How Solar Energy Works", "content": "Solar panels convert sunlight into electricity through photovoltaic cells. When photons hit the silicon cells, they knock electrons loose, creating an electric current. This direct current (DC) is then converted to alternating current (AC) by an inverter, making it compatible with your home's electrical system and the grid."},
+      {"heading": "Average Cost of Solar Panels in 2026", "content": "The average cost of a residential solar system in 2026 ranges from $10,000 to $25,000 before incentives. After the 30% federal tax credit, most homeowners pay $7,000 to $17,500. Costs vary by state, system size, equipment quality, and installer. The national average is approximately $2.75 per watt installed."},
+      {"heading": "Federal Solar Tax Credit (ITC)", "content": "The Investment Tax Credit (ITC) allows homeowners to deduct 30% of their solar installation cost from federal taxes. This credit is available through 2032 and steps down to 26% in 2033 and 22% in 2034. The ITC applies to the full cost of the system, including equipment, labor, and permitting. Source: IRS Form 5695, energy.gov."},
+      {"heading": "State Solar Incentives and Rebates", "content": "Beyond the federal tax credit, many states offer additional incentives. These include state tax credits (up to 25-35% in states like South Carolina and Hawaii), rebates ($500-$5,000), Solar Renewable Energy Credits (SRECs worth $25-$250 each), property tax exemptions, and sales tax exemptions on solar equipment."},
+      {"heading": "Net Metering Explained", "content": "Net metering allows solar homeowners to send excess electricity back to the grid in exchange for credits on their utility bill. When your panels produce more than you use during the day, the surplus flows to the grid and your meter runs backward. At night, you draw from the grid using your credits. Net metering policies vary by state and utility."},
+      {"heading": "Solar Panel Types Compared", "content": "The three main types of solar panels are monocrystalline (20-22% efficiency, premium), polycrystalline (15-17% efficiency, budget-friendly), and thin-film (10-12% efficiency, flexible). Most residential installations use monocrystalline panels for their superior performance and compact size."},
+      {"heading": "Solar Installation Process", "content": "A typical solar installation follows these steps: site assessment and design (1-2 weeks), permitting (2-4 weeks), installation (1-3 days), inspection (1-2 weeks), and utility interconnection (1-4 weeks). The total timeline from signing a contract to powering on is usually 6-12 weeks."},
+      {"heading": "Solar Financing Options", "content": "Homeowners can finance solar through cash purchase (highest ROI), solar loans (own the system, 3-9% APR), solar leases ($0 down, lower savings), PPAs (pay per kWh produced), PACE financing (paid through property taxes), or home equity loans (tax-deductible interest)."},
+      {"heading": "Solar Return on Investment", "content": "Most solar installations pay for themselves within 5-10 years and generate $20,000-$60,000 in net savings over 20 years. ROI depends on local electricity rates, sun exposure, system size, incentives, and financing method. States with high electricity rates and strong incentives see the fastest payback."},
+      {"heading": "Choosing a Solar Installer", "content": "When selecting a solar installer, verify their licensing and insurance, check reviews and references, compare at least 3 quotes, ask about warranties (workmanship, equipment, production), confirm they handle permitting and interconnection, and ensure they offer the panel brands and financing you want."}
+    ],
+    "faqs": [
+      {"question": "How much do solar panels cost in 2026?", "answer": "The average residential solar system costs $10,000-$25,000 before the 30% federal tax credit. After incentives, most homeowners pay $7,000-$17,500. The national average is approximately $2.75 per watt installed."},
+      {"question": "Are solar panels worth it in 2026?", "answer": "Yes, for most homeowners. With the 30% federal tax credit, falling panel costs, and rising electricity rates, solar panels typically pay for themselves in 5-10 years and save $20,000-$60,000 over their 25+ year lifespan."},
+      {"question": "How long do solar panels last?", "answer": "Modern solar panels are warrantied for 25-30 years but can produce electricity for 35-40+ years. Most panels degrade at about 0.5% per year, meaning they still produce 87.5% of their original output after 25 years."},
+      {"question": "Do solar panels work in cloudy weather?", "answer": "Yes, solar panels produce electricity on cloudy days, though at reduced output (10-25% of full capacity). Germany, one of the cloudiest countries in Europe, is a world leader in solar energy."},
+      {"question": "What happens to solar panels at night?", "answer": "Solar panels do not produce electricity at night. Grid-tied systems draw power from the grid, while systems with battery storage use stored energy. Net metering credits from daytime overproduction offset nighttime usage."}
+    ]
+  },
+  {
+    "title": "Solar Tax Credits and Incentives Guide 2026",
+    "slug": "solar-tax-credits-incentives-guide",
+    "description": "Comprehensive guide to federal, state, and local solar tax credits, rebates, and incentive programs for 2026.",
+    "category": "incentives",
+    "sections": [
+      {"heading": "Federal Solar Investment Tax Credit (ITC)", "content": "The federal ITC allows homeowners to claim 30% of their total solar installation cost as a dollar-for-dollar tax credit. For a $20,000 system, that is a $6,000 tax credit. The credit applies to equipment, labor, permitting, and sales tax on the system. It is claimed on IRS Form 5695 and can be carried forward to future tax years if your tax liability is insufficient. Source: energy.gov, IRS Publication 5695."},
+      {"heading": "ITC Timeline and Step-Down Schedule", "content": "The 30% ITC is available through December 31, 2032. It steps down to 26% in 2033 and 22% in 2034. After 2034, the residential credit expires unless Congress extends it. This creates urgency for homeowners to act while the full 30% credit is available."},
+      {"heading": "State Solar Tax Credits", "content": "Several states offer their own solar tax credits on top of the federal ITC: New York (25% up to $5,000), South Carolina (25% with no cap), Arizona (25% up to $1,000), Massachusetts (15% up to $1,000), Hawaii (35% of system cost), Idaho (40% deduction over 4 years), Iowa (15% of installation cost), and New Mexico (10% up to $6,000)."},
+      {"heading": "State Rebate Programs", "content": "State rebate programs provide direct cash back for solar installations. Colorado offers up to $2,000, Hawaii up to $5,000, Maryland $1,000 through the Clean Energy Grant, Montana $1,000 through the Alternative Energy program, and New Hampshire $1,000 ($0.20/watt). Utility-specific rebates are also available from providers like Duke Energy, Xcel Energy, and Austin Energy."},
+      {"heading": "Solar Renewable Energy Credits (SRECs)", "content": "SRECs are tradeable certificates representing the environmental benefit of solar electricity generation. States with SREC markets include Massachusetts ($250/SREC), New Jersey ($200/TREC), Illinois ($75/SREC), Maryland ($65/SREC), Ohio ($40/SREC), Pennsylvania ($35/SREC), and Delaware ($25/SREC). One SREC equals 1 megawatt-hour (MWh) of solar generation."},
+      {"heading": "Property and Sales Tax Exemptions", "content": "Many states exempt solar installations from property tax increases and/or sales tax. Property tax exemptions mean your home value increase from solar does not raise your taxes. Sales tax exemptions reduce the upfront cost of your system. Check your state page for specific exemption availability."},
+      {"heading": "How to Claim the Federal Solar Tax Credit", "content": "To claim the ITC: 1) Keep all receipts from your solar installation, 2) Obtain IRS Form 5695 (Residential Energy Credits), 3) Calculate 30% of your total eligible costs, 4) Enter the credit on your Form 1040, 5) If the credit exceeds your tax liability, carry the remainder to the next tax year. Consult a tax professional for personalized guidance."}
+    ],
+    "faqs": [
+      {"question": "How does the 30% solar tax credit work?", "answer": "The federal solar tax credit allows you to deduct 30% of your total solar installation cost from your federal taxes. For example, a $20,000 system would give you a $6,000 tax credit, directly reducing your tax bill."},
+      {"question": "Can I claim the solar tax credit if I finance?", "answer": "Yes, you can claim the full 30% ITC whether you pay cash or finance with a loan. However, you cannot claim it with a solar lease or PPA since the leasing company owns the system."},
+      {"question": "What happens if I dont owe enough taxes?", "answer": "If your tax credit exceeds your tax liability for the year, you can carry the remaining credit forward to future tax years until it is fully used."},
+      {"question": "Do state tax credits stack with the federal credit?", "answer": "Yes, state solar tax credits are separate from and additional to the federal ITC. You can claim both, though some states require you to reduce the cost basis by the federal credit amount."}
+    ]
+  },
+  {
+    "title": "Solar Panel Installation Guide",
+    "slug": "solar-panel-installation-guide",
+    "description": "Step-by-step guide to the solar panel installation process, from initial consultation to system activation.",
+    "category": "guide",
+    "sections": [
+      {"heading": "Step 1: Initial Consultation and Site Assessment", "content": "The process begins with a site assessment where a solar consultant evaluates your roof condition, orientation, shading, and electrical panel. They use satellite imagery and sometimes drone surveys to design an optimal system. This step typically takes 1-2 weeks and includes a review of your electricity bills to properly size the system."},
+      {"heading": "Step 2: System Design and Proposal", "content": "Based on the assessment, the installer creates a custom system design showing panel placement, expected production, and financial projections. You will receive a detailed proposal with equipment specifications (panel brand, inverter type, racking system), total cost, financing options, and estimated savings over 25 years."},
+      {"heading": "Step 3: Financing and Contract", "content": "After reviewing proposals from multiple installers (recommended: at least 3 quotes), choose your preferred option and sign a contract. Select your financing method: cash, solar loan, lease, PPA, or PACE. The installer will walk you through warranty terms, production guarantees, and the installation timeline."},
+      {"heading": "Step 4: Permitting", "content": "Your installer handles the permitting process with your local building department and utility company. This includes submitting structural and electrical plans, applying for building permits, filing utility interconnection applications, and coordinating HOA approval if needed. Permitting typically takes 2-4 weeks."},
+      {"heading": "Step 5: Installation Day", "content": "Physical installation usually takes 1-3 days for a residential system. The crew installs racking on your roof, mounts the solar panels, installs the inverter and monitoring equipment, connects the system to your electrical panel, and ensures everything meets code requirements. Most installations cause minimal disruption to your daily routine."},
+      {"heading": "Step 6: Inspection and Interconnection", "content": "After installation, a local building inspector verifies the work meets electrical and structural codes. Once approved, your utility company installs a bi-directional meter and grants permission to operate (PTO). This process takes 1-4 weeks depending on your utility."},
+      {"heading": "Step 7: System Activation and Monitoring", "content": "Once PTO is granted, your system goes live. Your installer will walk you through the monitoring app that tracks real-time production, consumption, and savings. Most modern systems include 24/7 monitoring to detect any issues automatically."}
+    ],
+    "faqs": [
+      {"question": "How long does solar panel installation take?", "answer": "The physical installation takes 1-3 days, but the full process from contract signing to system activation is typically 6-12 weeks including permitting and utility approval."},
+      {"question": "Will solar installation damage my roof?", "answer": "Professional installations use engineered mounting systems with flashing that actually improve roof waterproofing at penetration points. Reputable installers warranty their roof work for 10-25 years."},
+      {"question": "Do I need to be home during solar installation?", "answer": "You should be available for the initial and final walkthrough, but you do not need to be present during the entire installation. The crew will need access to your electrical panel."},
+      {"question": "What maintenance do solar panels require?", "answer": "Solar panels require minimal maintenance. Occasional cleaning (1-2 times per year) and annual inspection are recommended. Rain handles most cleaning naturally. Inverters may need replacement after 10-15 years."}
+    ]
+  }
+]

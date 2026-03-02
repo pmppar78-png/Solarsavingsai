@@ -25,6 +25,14 @@ function loadJSON(filename) {
   return JSON.parse(fs.readFileSync(path.join(DATA_DIR, filename), 'utf-8'));
 }
 
+function loadJSONSafe(filename) {
+  const filePath = path.join(DATA_DIR, filename);
+  if (fs.existsSync(filePath)) {
+    return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  }
+  return [];
+}
+
 // ---------------------------------------------------------------------------
 // Load data
 // ---------------------------------------------------------------------------
@@ -35,6 +43,8 @@ const cities = loadJSON('cities.json');
 const financing = loadJSON('financing.json');
 const glossary = loadJSON('glossary.json');
 const alerts = loadJSON('alerts.json');
+const comparisons = loadJSONSafe('comparisons.json');
+const pillarPages = loadJSONSafe('pillar-pages.json');
 
 const data = { states, utilities, cities, financing, glossary, alerts };
 
@@ -43,6 +53,8 @@ console.log(`  ${utilities.length} utilities`);
 console.log(`  ${cities.length} cities`);
 console.log(`  ${financing.providers.length} financing providers`);
 console.log(`  ${glossary.length} glossary terms`);
+console.log(`  ${comparisons.length} comparisons`);
+console.log(`  ${pillarPages.length} pillar pages`);
 
 // ---------------------------------------------------------------------------
 // Load templates
@@ -137,6 +149,26 @@ writePage(
 );
 pageCount++;
 
+// Comparison pages
+if (comparisons.length > 0) {
+  console.log(`Generating ${comparisons.length} comparison pages...`);
+  for (const comparison of comparisons) {
+    const filePath = path.join(DIST_DIR, 'compare', comparison.slug, 'index.html');
+    writePage(filePath, templates.generateComparisonPage(comparison, comparisons));
+    pageCount++;
+  }
+}
+
+// Pillar / Authority pages
+if (pillarPages.length > 0) {
+  console.log(`Generating ${pillarPages.length} pillar pages...`);
+  for (const pillar of pillarPages) {
+    const filePath = path.join(DIST_DIR, 'guide', pillar.slug, 'index.html');
+    writePage(filePath, templates.generatePillarPage(pillar, pillarPages));
+    pageCount++;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Generate sitemap.xml
 // ---------------------------------------------------------------------------
@@ -155,6 +187,16 @@ for (const state of states) {
 }
 
 addEntry('solar-financing/', 0.8);
+
+// Pillar pages (high authority)
+for (const pillar of pillarPages) {
+  addEntry(`guide/${pillar.slug}/`, 0.8);
+}
+
+// Comparison pages (commercial intent)
+for (const comparison of comparisons) {
+  addEntry(`compare/${comparison.slug}/`, 0.8);
+}
 
 for (const utility of utilities) {
   addEntry(`utility-rebates/${utility.slug}/`, 0.7);

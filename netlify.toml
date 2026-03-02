@@ -37,3 +37,13 @@
   from = "/solar-rebates"
   to = "/#state-map"
   status = 301
+
+[[redirects]]
+  from = "/comparisons"
+  to = "/compare/solar-panels-vs-grid-power/"
+  status = 301
+
+[[redirects]]
+  from = "/guides"
+  to = "/guide/complete-guide-home-solar/"
+  status = 301
