@@ -453,7 +453,8 @@ function handleWidgetSubmit(form) {
 
   // Find or create a results container
   var parent = form.closest('.eligibility-widget') || form.parentNode;
-  var existingResults = parent.querySelector('.widget-results');
+  var resultsHost = parent.querySelector('#results');
+  var existingResults = (resultsHost || parent).querySelector('.widget-results');
   if (existingResults) {
     existingResults.parentNode.removeChild(existingResults);
   }
@@ -462,7 +463,11 @@ function handleWidgetSubmit(form) {
   form.style.display = 'none';
   var resultsContainer = document.createElement('div');
   resultsContainer.innerHTML = resultsHTML;
-  parent.appendChild(resultsContainer.firstChild);
+  if (resultsHost) {
+    resultsHost.appendChild(resultsContainer.firstChild);
+  } else {
+    parent.appendChild(resultsContainer.firstChild);
+  }
 
   // Also hide sticky CTA since user already submitted
   var stickyCta = document.querySelector('.sticky-cta');

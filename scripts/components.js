@@ -80,7 +80,7 @@ function headerComponent() {
 <a href="/" class="site-brand">${escapeHtml(SITE.name)}</a>
 <div class="header-ctas">
 <a href="/chat.html" class="cta-btn cta-btn-hero" role="button" aria-label="Try Our Solar AI"><span class="ai-sparkle-icon"></span>Try Our Solar AI</a>
-<a href="#savings" class="cta-btn cta-btn-savings" role="button" aria-label="See Your Solar Savings">See Your Solar Savings</a>
+<a href="#results" class="cta-btn cta-btn-savings" role="button" aria-label="See Your Solar Savings">See Your Solar Savings</a>
 <a href="#estimate" class="cta-btn cta-btn-estimate" role="button" aria-label="Get Estimate">Get Estimate</a>
 </div>
 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
@@ -89,14 +89,8 @@ function headerComponent() {
 <nav class="site-nav">
 <ul class="nav-links" id="nav-links">
 <li><a href="/chat.html" class="nav-cta-btn nav-cta-hero" role="button"><span class="ai-sparkle-icon"></span>Try Our Solar AI</a></li>
-<li><a href="#savings" class="nav-cta-btn nav-cta-savings" role="button">See Your Solar Savings</a></li>
+<li><a href="#results" class="nav-cta-btn nav-cta-savings" role="button">See Your Solar Savings</a></li>
 <li><a href="#estimate" class="nav-cta-btn nav-cta-estimate" role="button">Get Estimate</a></li>
-<li><a href="/#state-map" class="nav-link">State Rebates</a></li>
-<li><a href="/guide/best-solar-panels-2026/" class="nav-link">Best Panels</a></li>
-<li><a href="/solar-financing/" class="nav-link">Financing</a></li>
-<li><a href="/reviews/" class="nav-link">Reviews</a></li>
-<li><a href="/articles/" class="nav-link">Articles</a></li>
-<li><a href="/about/" class="nav-link">About</a></li>
 </ul>
 </nav>
 </div>
@@ -174,10 +168,13 @@ function eligibilityWidget(placement) {
   const p = escapeHtml(placement || 'hero');
   const idPrefix = 'widget-' + p;
   const isHero = p === 'hero';
-  const estimateAnchor = isHero ? '<span id="estimate" class="scroll-anchor"></span>' : '';
-  const savingsAnchor = isHero ? '<span id="savings" class="scroll-anchor scroll-anchor-results"></span>' : '';
+  const estimateWrapperStart = isHero ? '<div id="estimate">' : '';
+  const estimateWrapperEnd = isHero ? '</div>' : '';
+  const resultsAnchor = isHero
+    ? '<div id="results" class="widget-results-anchor"><span id="savings" class="scroll-anchor scroll-anchor-results"></span></div>'
+    : '';
 
-  return `${estimateAnchor}
+  return `${estimateWrapperStart}
 <div class="eligibility-widget" id="${idPrefix}">
 <h3 class="widget-title">Check Your Solar Savings</h3>
 <form class="widget-form" id="${idPrefix}-form" aria-label="Solar savings eligibility form">
@@ -208,8 +205,9 @@ function eligibilityWidget(placement) {
 <span class="trust-badge">&#9889; Instant results</span>
 <span class="trust-badge">&#9989; 100% free</span>
 </div>
-${savingsAnchor}
-</div>`;
+${resultsAnchor}
+</div>
+${estimateWrapperEnd}`;
 }
 
 /* --------------------------------------------------------------------------

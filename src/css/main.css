@@ -449,6 +449,12 @@ body.menu-open {
   height: 0;
 }
 
+#estimate,
+#results,
+#savings {
+  scroll-margin-top: 90px;
+}
+
 /* AI Sparkle Icon */
 .ai-sparkle-icon {
   display: inline-block;
@@ -506,7 +512,7 @@ body.menu-open {
 }
 
 /* Responsive: hide header CTAs on mobile, show in dropdown */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .header-ctas {
     display: none;
   }
