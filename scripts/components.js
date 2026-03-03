@@ -173,9 +173,11 @@ ${stateLinks}
 function eligibilityWidget(placement) {
   const p = escapeHtml(placement || 'hero');
   const idPrefix = 'widget-' + p;
+  const isHero = p === 'hero';
+  const estimateAnchor = isHero ? '<span id="estimate" class="scroll-anchor"></span>' : '';
+  const savingsAnchor = isHero ? '<span id="savings" class="scroll-anchor scroll-anchor-results"></span>' : '';
 
-  return `<span id="estimate" class="scroll-anchor"></span>
-<span id="savings" class="scroll-anchor"></span>
+  return `${estimateAnchor}
 <div class="eligibility-widget" id="${idPrefix}">
 <h3 class="widget-title">Check Your Solar Savings</h3>
 <form class="widget-form" id="${idPrefix}-form" aria-label="Solar savings eligibility form">
@@ -206,6 +208,7 @@ function eligibilityWidget(placement) {
 <span class="trust-badge">&#9889; Instant results</span>
 <span class="trust-badge">&#9989; 100% free</span>
 </div>
+${savingsAnchor}
 </div>`;
 }
 

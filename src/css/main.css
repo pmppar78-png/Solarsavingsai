@@ -232,6 +232,7 @@ input, select, textarea, button {
   font-weight: 700;
   font-size: 1.2rem;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
   background: linear-gradient(135deg, #00f0ff, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -499,9 +500,20 @@ body.menu-open {
   border-color: var(--color-primary);
 }
 
+.nav-links.active .nav-cta-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 /* Responsive: hide header CTAs on mobile, show in dropdown */
 @media (max-width: 767px) {
   .header-ctas {
+    display: none;
+  }
+}
+
+@media (max-width: 1120px) {
+  .header-ctas .cta-btn-estimate {
     display: none;
   }
 }
