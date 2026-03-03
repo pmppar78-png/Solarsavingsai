@@ -314,6 +314,8 @@ body.menu-open {
   top: var(--header-height);
   left: 0;
   right: 0;
+  align-items: stretch;
+  gap: 8px;
   background: rgba(10, 14, 23, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -485,7 +487,9 @@ body.menu-open {
   text-align: center;
   text-decoration: none;
   border: 2px solid transparent;
-  margin-bottom: 6px;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
   color: #fff;
 }
 
