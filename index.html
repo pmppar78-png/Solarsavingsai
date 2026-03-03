@@ -15,12 +15,20 @@
         <div class="brand-subtitle">Clear, unbiased help for rebates &amp; clean-energy upgrades.</div>
       </div>
     </div>
-    <nav class="nav-links">
+    <div class="header-ctas">
+      <a href="#rebates" class="header-cta-btn header-cta-estimate">Get Estimate</a>
+      <a href="chat.html" class="header-cta-btn header-cta-ai"><span class="ai-sparkle-icon"></span>Try AI</a>
+    </div>
+    <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="main-nav">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav class="nav-links" id="main-nav">
+      <a href="#rebates" class="nav-link nav-link-cta">Get Estimate</a>
+      <a href="chat.html" class="nav-link nav-link-ai"><span class="ai-sparkle-icon"></span>Try AI</a>
       <a href="#rebates">Find Rebates</a>
       <a href="#state-programs">State Programs</a>
       <a href="#ppa-vs-loan">PPA vs Loan</a>
       <a href="#faq">FAQ</a>
-      <a href="chat.html" class="nav-openai">Open AI Guide</a>
     </nav>
   </header>
 
@@ -88,5 +96,29 @@
     <p>Information only. Not financial, tax, or legal advice. Always confirm details with licensed professionals.</p>
     <p>Business &amp; advertising inquiries: <a href="mailto:advertise@homesolarrebatefinder.com">advertise@homesolarrebatefinder.com</a></p>
   </footer>
+  <script>
+  (function(){
+    var toggle = document.querySelector('.mobile-menu-toggle');
+    var nav = document.querySelector('.nav-links');
+    if (!toggle || !nav) return;
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var open = nav.classList.toggle('active');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') {
+        nav.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('click', function(e) {
+      if (nav.classList.contains('active') && !nav.contains(e.target) && !toggle.contains(e.target)) {
+        nav.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+  </script>
 </body>
 </html>

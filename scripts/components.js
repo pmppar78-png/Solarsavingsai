@@ -55,7 +55,6 @@ ${schemaHtml}
 </head>
 <body>
 <div class="site-wrapper">
-${opts.alertHtml}
 ${headerComponent()}
 ${breadcrumbsHtml}
 <main class="main-content">
@@ -79,11 +78,17 @@ function headerComponent() {
   return `<header class="site-header">
 <div class="container">
 <a href="/" class="site-brand">${escapeHtml(SITE.name)}</a>
+<div class="header-ctas">
+<a href="#widget-hero" class="header-cta-btn header-cta-estimate">Get Estimate</a>
+<a href="/chat.html" class="header-cta-btn header-cta-ai"><span class="ai-sparkle-icon"></span>Try AI</a>
+</div>
 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
 </button>
 <nav class="site-nav">
 <ul class="nav-links" id="nav-links">
+<li><a href="#widget-hero" class="nav-link nav-link-cta">Get Estimate</a></li>
+<li><a href="/chat.html" class="nav-link nav-link-ai"><span class="ai-sparkle-icon"></span>Try AI</a></li>
 <li><a href="/#state-map" class="nav-link">State Rebates</a></li>
 <li><a href="/guide/best-solar-panels-2026/" class="nav-link">Best Panels</a></li>
 <li><a href="/solar-financing/" class="nav-link">Financing</a></li>
