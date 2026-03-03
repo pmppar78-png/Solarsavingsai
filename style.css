@@ -40,6 +40,7 @@ body {
   z-index: 100;
   gap: 16px;
   min-height: 64px;
+  flex-wrap: nowrap;
 }
 
 .brand {
@@ -176,6 +177,12 @@ body {
   height: 0;
 }
 
+#estimate,
+#results,
+#savings {
+  scroll-margin-top: 90px;
+}
+
 /* AI Sparkle Icon */
 .ai-sparkle-icon {
   display: inline-block;
@@ -285,7 +292,7 @@ body {
 }
 
 /* Responsive: mobile layout */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .site-header {
     flex-wrap: nowrap;
   }
