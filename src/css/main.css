@@ -221,6 +221,7 @@ input, select, textarea, button {
   width: 100%;
   gap: 20px;
   flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 .site-nav {
@@ -242,7 +243,6 @@ input, select, textarea, button {
   border-bottom: none;
   white-space: nowrap;
   flex-shrink: 0;
-  margin-right: auto;
 }
 
 .site-brand:hover {
@@ -510,6 +510,14 @@ body.menu-open {
 }
 
 @media (min-width: 900px) {
+  .site-header .container {
+    justify-content: flex-start;
+  }
+
+  .header-ctas {
+    margin-left: auto;
+  }
+
   .mobile-cta-container {
     display: none;
   }
