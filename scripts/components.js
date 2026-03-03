@@ -74,23 +74,31 @@ ${analyticsScript()}
 /* --------------------------------------------------------------------------
    2. headerComponent
    -------------------------------------------------------------------------- */
+function headerCtasMarkup() {
+  return [
+    '<a href="/chat.html" class="cta-btn cta-btn-hero" role="button" aria-label="Try Our Solar AI"><span class="ai-sparkle-icon"></span>Try Our Solar AI</a>',
+    '<a href="/#results" class="cta-btn cta-btn-savings" role="button" aria-label="See Your Solar Savings">See Your Solar Savings</a>',
+    '<a href="/#estimate" class="cta-btn cta-btn-estimate" role="button" aria-label="Get Estimate">Get Estimate</a>'
+  ].join('');
+}
+
 function headerComponent() {
+  const ctasMarkup = headerCtasMarkup();
+
   return `<header class="site-header">
 <div class="container">
 <a href="/" class="site-brand">${escapeHtml(SITE.name)}</a>
 <div class="header-ctas">
-<a href="/chat.html" class="cta-btn cta-btn-hero" role="button" aria-label="Try Our Solar AI"><span class="ai-sparkle-icon"></span>Try Our Solar AI</a>
-<a href="/#results" class="cta-btn cta-btn-savings" role="button" aria-label="See Your Solar Savings">See Your Solar Savings</a>
-<a href="/#estimate" class="cta-btn cta-btn-estimate" role="button" aria-label="Get Estimate">Get Estimate</a>
+${ctasMarkup}
 </div>
 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
 </button>
 <nav class="site-nav">
 <ul class="nav-links" id="nav-links">
-<li><a href="/chat.html" class="nav-cta-btn nav-cta-hero" role="button"><span class="ai-sparkle-icon"></span>Try Our Solar AI</a></li>
-<li><a href="/#results" class="nav-cta-btn nav-cta-savings" role="button">See Your Solar Savings</a></li>
-<li><a href="/#estimate" class="nav-cta-btn nav-cta-estimate" role="button">Get Estimate</a></li>
+<li class="mobile-cta-container">
+${ctasMarkup}
+</li>
 </ul>
 </nav>
 </div>
