@@ -220,6 +220,7 @@ input, select, textarea, button {
   align-items: center;
   width: 100%;
   gap: 20px;
+  flex-wrap: nowrap;
 }
 
 .site-nav {
@@ -470,71 +471,50 @@ body.menu-open {
   font-size: 13px;
 }
 
-/* Nav CTA buttons — hidden on desktop, shown in mobile dropdown */
-.nav-cta-btn {
+/* Mobile CTA container in dropdown */
+.mobile-cta-container {
   display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0 10px;
 }
 
-.nav-links.active .nav-cta-btn {
+.nav-links.active .mobile-cta-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 14px 18px;
-  border-radius: var(--border-radius-pill);
-  font-weight: 800;
-  font-size: var(--font-size-base);
-  text-align: center;
-  text-decoration: none;
-  border: 2px solid transparent;
+}
+
+.nav-links.active .mobile-cta-container .cta-btn {
   width: 100%;
   max-width: 360px;
-  margin: 0 auto;
-  color: #fff;
-}
-
-.nav-links.active .nav-cta-hero {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
-  box-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
-}
-
-.nav-links.active .nav-cta-savings {
-  background: transparent;
-  color: var(--color-primary) !important;
-  border-color: var(--color-primary);
-}
-
-.nav-links.active .nav-cta-estimate {
-  background: var(--color-primary);
-  color: var(--color-dark) !important;
-  border-color: var(--color-primary);
-}
-
-.nav-links.active .nav-cta-btn:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+  justify-content: center;
+  font-size: var(--font-size-base);
+  padding: 14px 18px;
 }
 
 /* Responsive: hide header CTAs on mobile, show in dropdown */
-@media (max-width: 768px) {
+@media (max-width: 899px) {
   .header-ctas {
     display: none;
   }
 }
 
-@media (max-width: 1120px) {
-  .header-ctas .cta-btn-estimate {
-    display: none;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 960px) {
+@media (min-width: 900px) and (max-width: 1100px) {
   .header-ctas {
     gap: 8px;
   }
   .cta-btn {
     padding: 8px 10px;
     font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .mobile-cta-container {
+    display: none;
+  }
+  .nav-links.active .mobile-cta-container {
+    display: none;
   }
 }
 
