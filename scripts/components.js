@@ -6,6 +6,7 @@ const SITE = {
   url: 'https://solarsavingsai.com',
   year: new Date().getFullYear()
 };
+const BUILD_ID = process.env.BUILD_ID || String(Date.now());
 
 /* --------------------------------------------------------------------------
    Utility: HTML-escape special characters to prevent XSS / broken markup
@@ -50,7 +51,7 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
 <meta property="og:description" content="${safeDesc}">
 <meta property="og:url" content="${escapeHtml(canonicalUrl)}">
 <meta property="og:site_name" content="${escapeHtml(SITE.name)}">
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/main.css?v=${escapeHtml(BUILD_ID)}">
 ${schemaHtml}
 </head>
 <body>
@@ -65,7 +66,7 @@ ${leadCaptureForm()}
 ${stickyCtaComponent()}
 ${exitIntentModal()}
 </div>
-<script src="/js/app.js" defer></script>
+<script src="/js/app.js?v=${escapeHtml(BUILD_ID)}" defer></script>
 ${analyticsScript()}
 </body>
 </html>`;

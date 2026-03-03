@@ -8,6 +8,8 @@ const ROOT = path.resolve(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
 const DIST_DIR = path.join(ROOT, 'dist');
 const SITE_URL = 'https://solarsavingsai.com';
+const BUILD_ID = process.env.BUILD_ID || String(Date.now());
+process.env.BUILD_ID = BUILD_ID;
 
 // ---------------------------------------------------------------------------
 // Helpers
