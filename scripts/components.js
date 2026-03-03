@@ -83,8 +83,26 @@ function headerCtasMarkup() {
   ].join('');
 }
 
+function headerNavLinksMarkup() {
+  return [
+    '<li><a href="/solar-financing/" class="nav-link">Solar Financing</a></li>',
+    '<li><a href="/solar-glossary/" class="nav-link">Solar Glossary</a></li>',
+    '<li><a href="/guide/best-solar-panels-2026/" class="nav-link">Best Solar Panels</a></li>',
+    '<li><a href="/guide/best-solar-companies-2026/" class="nav-link">Best Solar Companies</a></li>',
+    '<li><a href="/reviews/" class="nav-link">Brand Reviews</a></li>',
+    '<li><a href="/articles/" class="nav-link">Solar Articles</a></li>',
+    '<li><a href="/about/" class="nav-link">About Us</a></li>',
+    '<li><a href="/contact/" class="nav-link">Contact</a></li>',
+    '<li><a href="/authors/" class="nav-link">Our Team</a></li>',
+    '<li><a href="/methodology/" class="nav-link">Methodology</a></li>',
+    '<li><a href="/editorial-standards/" class="nav-link">Editorial Standards</a></li>',
+    '<li><a href="/privacy-policy/" class="nav-link">Privacy Policy</a></li>'
+  ].join('');
+}
+
 function headerComponent() {
   const ctasMarkup = headerCtasMarkup();
+  const navLinksMarkup = headerNavLinksMarkup();
 
   return `<header class="site-header">
 <div class="container">
@@ -100,6 +118,7 @@ ${ctasMarkup}
 <li class="mobile-cta-container">
 ${ctasMarkup}
 </li>
+${navLinksMarkup}
 </ul>
 </nav>
 </div>
