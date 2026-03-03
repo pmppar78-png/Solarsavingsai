@@ -334,75 +334,50 @@ body.menu-open {
 }
 
 /* --------------------------------------------------------------------------
-   Header CTA Buttons
+   Header CTA Pill Buttons
    -------------------------------------------------------------------------- */
 .header-ctas {
   display: flex;
-  gap: 16px;
   align-items: center;
+  gap: 12px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   flex-shrink: 0;
 }
 
-/* CTA group: "See Your Solar Savings | Get Estimate" */
-.header-cta-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.header-cta-label {
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  color: var(--color-text-light);
-  white-space: nowrap;
-}
-
-.header-cta-btn {
+/* Base pill button */
+.cta-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 9px 18px;
+  padding: 10px 14px;
   border-radius: var(--border-radius-pill);
   font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-weight: 800;
   text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
   transition: all 0.25s ease;
   white-space: nowrap;
-  border: none;
-  cursor: pointer;
+  position: relative;
+  color: #fff;
 }
 
-.header-cta-estimate {
-  background: var(--color-primary);
-  color: var(--color-dark);
-}
-
-.header-cta-estimate:hover {
-  background: var(--color-primary-light);
-  box-shadow: var(--glow-teal);
-  text-decoration: none;
-}
-
-.header-cta-estimate:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-/* AI button: flagship premium styling */
+/* Shimmer animation for hero CTA */
 @keyframes shimmer {
   0% { background-position: -200% center; }
   100% { background-position: 200% center; }
 }
 
-.header-cta-ai {
+/* Hero CTA: "Try Our Solar AI" — strongest glow + gradient border */
+.cta-btn-hero {
   background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
-  color: #fff;
-  position: relative;
+  border-color: transparent;
   overflow: hidden;
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.15);
 }
 
-.header-cta-ai::before {
+.cta-btn-hero::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -413,33 +388,64 @@ body.menu-open {
   pointer-events: none;
 }
 
-.header-cta-ai::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: var(--border-radius-pill);
-  padding: 1px;
-  background: linear-gradient(135deg, #8b5cf6, #06b6d4, #8b5cf6);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.header-cta-ai:hover {
-  box-shadow: 0 0 24px rgba(139, 92, 246, 0.4), 0 0 48px rgba(139, 92, 246, 0.15);
+.cta-btn-hero:hover {
+  box-shadow: 0 0 22px rgba(139, 92, 246, 0.45), 0 0 44px rgba(139, 92, 246, 0.15);
   transform: translateY(-1px);
   text-decoration: none;
 }
 
-.header-cta-ai:hover::after {
-  opacity: 1;
-}
-
-.header-cta-ai:focus-visible {
+.cta-btn-hero:focus-visible {
   outline: 2px solid #8b5cf6;
   outline-offset: 2px;
+}
+
+/* "See Your Solar Savings" — accent outline pill */
+.cta-btn-savings {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.cta-btn-savings:hover {
+  background: var(--color-primary);
+  color: var(--color-dark);
+  box-shadow: var(--glow-teal);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.cta-btn-savings:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* "Get Estimate" — solid accent pill */
+.cta-btn-estimate {
+  background: var(--color-primary);
+  color: var(--color-dark);
+  border-color: var(--color-primary);
+}
+
+.cta-btn-estimate:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+  box-shadow: var(--glow-teal);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.cta-btn-estimate:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Scroll anchors */
+.scroll-anchor {
+  display: block;
+  position: relative;
+  top: -80px;
+  visibility: hidden;
+  height: 0;
 }
 
 /* AI Sparkle Icon */
@@ -455,64 +461,58 @@ body.menu-open {
   font-size: 13px;
 }
 
-/* Nav CTA items in dropdown */
-.nav-link-cta {
+/* Nav CTA buttons — hidden on desktop, shown in mobile dropdown */
+.nav-cta-btn {
+  display: none;
+}
+
+.nav-links.active .nav-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 14px 18px;
+  border-radius: var(--border-radius-pill);
+  font-weight: 800;
+  font-size: var(--font-size-base);
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid transparent;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.nav-links.active .nav-cta-hero {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.2);
+}
+
+.nav-links.active .nav-cta-savings {
+  background: transparent;
   color: var(--color-primary) !important;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
+  border-color: var(--color-primary);
 }
 
-.nav-link-ai {
-  color: #a78bfa !important;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.nav-links.active .nav-link-cta {
-  background: rgba(0, 240, 255, 0.06);
-  margin-bottom: 4px;
-}
-
-.nav-links.active .nav-link-ai {
-  background: rgba(139, 92, 246, 0.06);
-  margin-bottom: 4px;
-}
-
-.nav-links.active .nav-link-cta:hover {
-  background: rgba(0, 240, 255, 0.12);
-}
-
-.nav-links.active .nav-link-ai:hover {
-  background: rgba(139, 92, 246, 0.12);
+.nav-links.active .nav-cta-estimate {
+  background: var(--color-primary);
+  color: var(--color-dark) !important;
+  border-color: var(--color-primary);
 }
 
 /* Responsive: hide header CTAs on mobile, show in dropdown */
-@media (max-width: 640px) {
+@media (max-width: 767px) {
   .header-ctas {
     display: none;
   }
 }
 
-@media (max-width: 480px) {
-  .header-cta-btn {
-    padding: 6px 10px;
-    font-size: 0.75rem;
-  }
-}
-
-@media (min-width: 641px) and (max-width: 900px) {
-  .header-cta-label {
-    display: none;
-  }
+@media (min-width: 768px) and (max-width: 960px) {
   .header-ctas {
     gap: 8px;
   }
-  .header-cta-btn {
-    padding: 7px 12px;
-    font-size: 0.8rem;
+  .cta-btn {
+    padding: 8px 10px;
+    font-size: 0.75rem;
   }
 }
 
