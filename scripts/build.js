@@ -46,7 +46,12 @@ const financing = loadJSON('financing.json');
 const glossary = loadJSON('glossary.json');
 const alerts = loadJSON('alerts.json');
 const comparisons = loadJSONSafe('comparisons.json');
-const pillarPages = loadJSONSafe('pillar-pages.json');
+const rawPillarPages = loadJSONSafe('pillar-pages.json');
+const pillarPages = rawPillarPages.map((pillar) => ({
+  ...pillar,
+  description: pillar.description || pillar.meta_description || pillar.intro || '',
+  category: pillar.category || pillar.hub || 'Solar Guide'
+}));
 const brandReviews = loadJSONSafe('brand-reviews.json');
 const bestOf = loadJSONSafe('best-of.json');
 const authors = loadJSONSafe('authors.json');
@@ -86,10 +91,16 @@ ensureDir(DIST_DIR);
 console.log('Copying static assets...');
 ensureDir(path.join(DIST_DIR, 'css'));
 ensureDir(path.join(DIST_DIR, 'js'));
+ensureDir(path.join(DIST_DIR, 'images'));
 fs.copyFileSync(path.join(ROOT, 'src', 'css', 'main.css'), path.join(DIST_DIR, 'css', 'main.css'));
 fs.copyFileSync(path.join(ROOT, 'src', 'js', 'app.js'), path.join(DIST_DIR, 'js', 'app.js'));
 fs.copyFileSync(path.join(ROOT, 'chat.html'), path.join(DIST_DIR, 'chat.html'));
 fs.copyFileSync(path.join(ROOT, 'js', 'chat.js'), path.join(DIST_DIR, 'js', 'chat.js'));
+fs.copyFileSync(path.join(ROOT, 'src', 'assets', 'favicon.ico'), path.join(DIST_DIR, 'favicon.ico'));
+fs.copyFileSync(path.join(ROOT, 'src', 'assets', 'apple-touch-icon.png'), path.join(DIST_DIR, 'apple-touch-icon.png'));
+fs.copyFileSync(path.join(ROOT, 'src', 'assets', 'og-image.png'), path.join(DIST_DIR, 'og-image.png'));
+fs.copyFileSync(path.join(ROOT, 'src', 'assets', 'manifest.json'), path.join(DIST_DIR, 'manifest.json'));
+fs.copyFileSync(path.join(ROOT, 'src', 'assets', 'images', 'logo.svg'), path.join(DIST_DIR, 'images', 'logo.svg'));
 
 // ---------------------------------------------------------------------------
 // Generate pages
@@ -395,6 +406,6 @@ const sitemapCount = sitemapEntries.length;
 console.log('\n--- Build Statistics ---');
 console.log(`Pages generated: ${pageCount}`);
 console.log(`Sitemap entries: ${sitemapCount}`);
-console.log(`Static assets:   2 (main.css, app.js)`);
+console.log('Static assets:   7 (main.css, app.js, favicon.ico, apple-touch-icon.png, og-image.png, manifest.json, images/logo.svg)');
 console.log(`Output directory: ${DIST_DIR}`);
 console.log('Build complete!\n');
