@@ -51,6 +51,14 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
 <meta property="og:description" content="${safeDesc}">
 <meta property="og:url" content="${escapeHtml(canonicalUrl)}">
 <meta property="og:site_name" content="${escapeHtml(SITE.name)}">
+<meta property="og:image" content="https://solarsavingsai.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://solarsavingsai.com/og-image.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.json">
 <link rel="stylesheet" href="/css/main.css?v=${escapeHtml(BUILD_ID)}">
 ${schemaHtml}
 </head>
