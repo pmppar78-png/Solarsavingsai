@@ -75,14 +75,6 @@ ${analyticsScript()}
 /* --------------------------------------------------------------------------
    2. headerComponent
    -------------------------------------------------------------------------- */
-function headerCtasMarkup() {
-  return [
-    '<a href="/chat.html" class="cta-btn cta-btn-hero" role="button" aria-label="Try Our Solar AI"><span class="ai-sparkle-icon"></span>Try Our Solar AI</a>',
-    '<a href="/#results" class="cta-btn cta-btn-savings" role="button" aria-label="See Your Solar Savings">See Your Solar Savings</a>',
-    '<a href="/#estimate" class="cta-btn cta-btn-estimate" role="button" aria-label="Get Estimate">Get Estimate</a>'
-  ].join('');
-}
-
 function headerNavLinksMarkup() {
   return [
     '<li><a href="/solar-financing/" class="nav-link">Solar Financing</a></li>',
@@ -101,27 +93,40 @@ function headerNavLinksMarkup() {
 }
 
 function headerComponent() {
-  const ctasMarkup = headerCtasMarkup();
   const navLinksMarkup = headerNavLinksMarkup();
 
   return `<header class="site-header">
-<div class="container">
+<div class="container header-row">
 <a href="/" class="site-brand">${escapeHtml(SITE.name)}</a>
-<div class="header-ctas">
-${ctasMarkup}
+
+<div class="header-ctas-desktop" aria-label="Primary actions">
+<a href="/chat.html" class="cta-btn cta-ai" role="button">
+<span class="ai-sparkle-icon" aria-hidden="true"></span>
+Try Our Solar AI
+</a>
+<a href="/#estimate" class="cta-btn cta-estimate" role="button">Get Estimate</a>
 </div>
 <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
 </button>
-<nav class="site-nav">
+</div>
+<nav class="site-nav" aria-label="Site navigation">
 <ul class="nav-links" id="nav-links">
-<li class="mobile-cta-container">
-${ctasMarkup}
+<li class="nav-cta">
+<a href="/chat.html" class="nav-cta-btn nav-cta-ai" role="button">
+<span class="ai-sparkle-icon" aria-hidden="true"></span>
+Try Our Solar AI
+</a>
+</li>
+<li class="nav-cta">
+<a href="/#results" class="nav-cta-btn nav-cta-savings" role="button">See Your Solar Savings</a>
+</li>
+<li class="nav-cta">
+<a href="/#estimate" class="nav-cta-btn nav-cta-estimate" role="button">Get Estimate</a>
 </li>
 ${navLinksMarkup}
 </ul>
 </nav>
-</div>
 </header>`;
 }
 
