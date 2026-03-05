@@ -97,10 +97,22 @@
       .replace(/'/g, '&#39;');
   }
 
+  var affiliateDomains = ['energysage.com', 'sunrun.com', 'sunpower.com', 'modernize.com', 'solarreviews.com', 'tesla.com'];
+
+  function isAffiliateDomain(url) {
+    try {
+      var hostname = new URL(url).hostname;
+      return affiliateDomains.some(function (d) { return hostname === d || hostname.endsWith('.' + d); });
+    } catch (e) {
+      return false;
+    }
+  }
+
   function linkify(text) {
     var urlPattern = /(https?:\/\/[^\s<]+)/g;
     return text.replace(urlPattern, function (url) {
-      return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+      var rel = isAffiliateDomain(url) ? 'sponsored noopener noreferrer' : 'noopener noreferrer';
+      return '<a href="' + url + '" target="_blank" rel="' + rel + '">' + url + '</a>';
     });
   }
 })();

@@ -38,6 +38,7 @@ function calculateROI(installCost, systemSize, sunHours, kwRate, fedCredit, stat
 }
 
 function faqSchema(faqs) {
+  if (!faqs || faqs.length === 0) return '';
   return JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -49,6 +50,10 @@ function faqSchema(faqs) {
       };
     })
   });
+}
+
+function joinSchemas() {
+  return Array.prototype.slice.call(arguments).filter(Boolean).join('</script><script type="application/ld+json">');
 }
 
 function breadcrumbSchema(crumbs) {
@@ -436,7 +441,7 @@ ${ctaBlock('primary', 'Get Your ' + state.state_name + ' Solar Estimate', 'See e
     {
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, state.state_abbrev),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(state.state_name + ' Solar Rebates & Incentives', 'Find solar rebates, tax credits, and incentives in ' + state.state_name, '/solar-rebates-incentives-' + state.slug + '/'),
+      schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(state.state_name + ' Solar Rebates & Incentives', 'Find solar rebates, tax credits, and incentives in ' + state.state_name, '/solar-rebates-incentives-' + state.slug + '/')),
       states: states
     }
   );
@@ -552,7 +557,7 @@ ${ctaBlock('primary', 'Check Your Solar Savings', 'See how much you can save as 
     {
       breadcrumbs: crumbs,
       alertHtml: utilityAlerts(alerts, utility.slug),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(utility.utility_name + ' Solar Policy & Net Metering Guide', 'Complete solar policy guide for ' + utility.utility_name + ' customers in ' + utility.state, '/utility-rebates/' + utility.slug + '/'),
+      schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(utility.utility_name + ' Solar Policy & Net Metering Guide', 'Complete solar policy guide for ' + utility.utility_name + ' customers in ' + utility.state, '/utility-rebates/' + utility.slug + '/')),
       states: states
     }
   );
@@ -709,7 +714,7 @@ ${ctaBlock('primary', 'Get Your ' + city.city_name + ' Solar Estimate', 'See exa
     {
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, city.state_abbrev),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema('Is Solar Worth It in ' + city.city_name + ', ' + city.state_abbrev + '?', 'Solar ROI analysis for ' + city.city_name + ', ' + city.state_abbrev, '/' + slug + '/'),
+      schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema('Is Solar Worth It in ' + city.city_name + ', ' + city.state_abbrev + '?', 'Solar ROI analysis for ' + city.city_name + ', ' + city.state_abbrev, '/' + slug + '/')),
       states: states
     }
   );
@@ -822,9 +827,9 @@ ${detailCards}
 <h2>Compare Trusted Solar Financing Partners</h2>
 <p>Use these tools to compare financing structures, loan options, and incentives before you choose a provider.</p>
 <div class="cta-group" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
-<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary" target="_blank" rel="sponsored noopener" data-affiliate="energysage-financing">Compare Solar Financing</a>
-<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener" data-affiliate="sunrun-financing">Get Solar Loan Quotes</a>
-<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener" data-affiliate="solarreviews-financing">Check Solar Incentives</a>
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary" target="_blank" rel="sponsored noopener noreferrer" data-affiliate="energysage-financing">Compare Solar Financing</a>
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener noreferrer" data-affiliate="sunrun-financing">Get Solar Loan Quotes</a>
+<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener noreferrer" data-affiliate="solarreviews-financing">Check Solar Incentives</a>
 </div>
 </div>
 </section>
@@ -842,7 +847,7 @@ ${ctaBlock('primary', 'Find Your Solar Financing Match', 'Enter your ZIP code to
     {
       breadcrumbs: crumbs,
       alertHtml: federalAlert(alerts),
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs),
+      schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs)),
       states: data.states || []
     }
   );
@@ -1185,7 +1190,7 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Ready to go solar? Enter 
     body,
     {
       breadcrumbs: crumbs,
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(comparison.title, comparison.description, '/compare/' + comparison.slug + '/'),
+      schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(comparison.title, comparison.description, '/compare/' + comparison.slug + '/')),
       states: []
     }
   );
@@ -1275,7 +1280,7 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Use our calculator to see
     body,
     {
       breadcrumbs: crumbs,
-      schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(pillar.title, pillar.description, '/guide/' + pillar.slug + '/'),
+      schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(pillar.title, pillar.description, '/guide/' + pillar.slug + '/')),
       states: []
     }
   );
@@ -1706,7 +1711,7 @@ ${relatedPagesSection('More Solar Brand Reviews', otherBrands.map(function(b) {
 
   return baseTemplate(brandName + ' Solar Review ' + SITE.year, brandName + ' solar review: ' + brandRating + '/5 rating. ' + (brand.best_for || '') + '. Pros, cons, pricing, warranty analysis.', '/reviews/' + brand.slug + '/', body, {
     breadcrumbs: crumbs,
-    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + reviewSchema(brandName, 'Product', brandRating || 0, brand.review_count || 150) + '</script><script type="application/ld+json">' + articleSchema(brandName + ' Solar Review', brandDescription, '/reviews/' + brand.slug + '/')
+    schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), reviewSchema(brandName, 'Product', brandRating || 0, brand.review_count || 150), articleSchema(brandName + ' Solar Review', brandDescription, '/reviews/' + brand.slug + '/'))
   });
 }
 
@@ -1856,7 +1861,7 @@ ${relatedPagesSection('More Best-Of Guides', otherBestOf.map(function(b) {
 
   return baseTemplate(bestOf.title, metaDesc, '/best/' + bestOf.slug + '/', body, {
     breadcrumbs: crumbs,
-    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(bestOf.title, metaDesc, '/best/' + bestOf.slug + '/')
+    schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(bestOf.title, metaDesc, '/best/' + bestOf.slug + '/'))
   });
 }
 
@@ -1976,7 +1981,7 @@ ${relatedPagesSection('Best Solar Companies in Other Locations', otherEntries.ma
 
   return baseTemplate(pageTitle, pageDescription, '/best-solar-companies/' + entry.slug + '/', body, {
     breadcrumbs: crumbs,
-    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(pageTitle, pageDescription, '/best-solar-companies/' + entry.slug + '/')
+    schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(pageTitle, pageDescription, '/best-solar-companies/' + entry.slug + '/'))
   });
 }
 
@@ -2000,6 +2005,11 @@ function generateArticlePage(article, allArticles) {
     return '<span class="article-tag">' + escapeHtml(t) + '</span>';
   }).join(' ');
 
+  var processedContent = (article.content_html || '').replace(
+    /<a href="(https:\/\/(?:www\.energysage\.com|www\.sunrun\.com|us\.sunpower\.com|modernize\.com|www\.solarreviews\.com|www\.tesla\.com)[^"]*)" rel="sponsored">/g,
+    '<a href="$1" rel="sponsored noopener noreferrer" target="_blank">'
+  );
+
   var body = `
 <article class="content-section" itemscope itemtype="https://schema.org/Article">
 <div class="container">
@@ -2012,7 +2022,7 @@ ${lastUpdatedBlock(article.author)}
 </div>
 <div class="article-tags">${tagHtml}</div>
 <div class="article-content" itemprop="articleBody">
-${article.content_html}
+${processedContent}
 </div>
 ${affiliateCtaBlock('Your Area', 'article-bottom')}
 ${calculatorResultMonetization('Your Area')}
@@ -2132,7 +2142,8 @@ function generateNotFoundPage() {
 
   return baseTemplate('Page Not Found', 'The requested page could not be found.', '/404.html', body, {
     breadcrumbs: crumbs,
-    schema: breadcrumbSchema(crumbs)
+    schema: breadcrumbSchema(crumbs),
+    noindex: true
   });
 }
 
