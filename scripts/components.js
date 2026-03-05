@@ -100,7 +100,7 @@ function headerComponent() {
 <a href="/" class="site-brand">${escapeHtml(SITE.name)}</a>
 
 <div class="header-ctas-desktop" aria-label="Primary actions">
-<a href="/#estimate" class="cta-btn cta-ai" role="button">
+<a href="/chat.html" class="cta-btn cta-ai" role="button">
 <span class="ai-sparkle-icon" aria-hidden="true"></span>
 Try Our Solar AI
 </a>
@@ -113,7 +113,7 @@ Try Our Solar AI
 <nav class="site-nav" aria-label="Site navigation">
 <ul class="nav-links" id="nav-links">
 <li class="nav-cta">
-<a href="/#estimate" class="nav-cta-btn nav-cta-ai" role="button">
+<a href="/chat.html" class="nav-cta-btn nav-cta-ai" role="button">
 <span class="ai-sparkle-icon" aria-hidden="true"></span>
 Try Our Solar AI
 </a>

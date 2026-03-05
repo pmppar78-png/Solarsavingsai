@@ -88,6 +88,8 @@ ensureDir(path.join(DIST_DIR, 'css'));
 ensureDir(path.join(DIST_DIR, 'js'));
 fs.copyFileSync(path.join(ROOT, 'src', 'css', 'main.css'), path.join(DIST_DIR, 'css', 'main.css'));
 fs.copyFileSync(path.join(ROOT, 'src', 'js', 'app.js'), path.join(DIST_DIR, 'js', 'app.js'));
+fs.copyFileSync(path.join(ROOT, 'chat.html'), path.join(DIST_DIR, 'chat.html'));
+fs.copyFileSync(path.join(ROOT, 'js', 'chat.js'), path.join(DIST_DIR, 'js', 'chat.js'));
 
 // ---------------------------------------------------------------------------
 // Generate pages
