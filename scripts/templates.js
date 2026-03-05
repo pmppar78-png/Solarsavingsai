@@ -1862,11 +1862,71 @@ ${relatedPagesSection('More Best-Of Guides', otherBestOf.map(function(b) {
 // 20. State/City Best Companies Page
 // ---------------------------------------------------------------------------
 function generateStateBestCompaniesPage(entry, allEntries) {
-  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Solar Companies' }, { label: entry.name }];
+  var stateNameByAbbrev = {
+    AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
+    CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia',
+    HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa',
+    KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland',
+    MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri',
+    MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey',
+    NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio',
+    OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
+    SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
+    VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming'
+  };
+
+  function titleCaseSlug(slug) {
+    return String(slug || '').split('-').filter(Boolean).map(function (part) {
+      if (part.length <= 2) return part.toUpperCase();
+      return part.charAt(0).toUpperCase() + part.slice(1);
+    }).join(' ');
+  }
+
+  function parseLocationFromTitle(title) {
+    var m = String(title || '').match(/Best Solar Companies in (.+?)(?: \d{4})?$/i);
+    return m ? m[1].trim() : '';
+  }
+
+  var locationName = entry.location_name || parseLocationFromTitle(entry.title) || entry.name || titleCaseSlug(entry.slug);
+  var stateName = entry.state_name || '';
+  var cityName = entry.city_name || '';
+
+  if (entry.location_type === 'city') {
+    if (!cityName) cityName = locationName.split(',')[0].trim();
+    if (!stateName) {
+      var trailingToken = locationName.indexOf(',') >= 0 ? locationName.split(',').slice(1).join(',').trim() : '';
+      if (trailingToken.length === 2) {
+        stateName = stateNameByAbbrev[trailingToken.toUpperCase()] || trailingToken.toUpperCase();
+      } else if (trailingToken) {
+        stateName = trailingToken;
+      }
+    }
+  } else if (!stateName) {
+    stateName = locationName;
+  }
+
+  if (!stateName && entry.state_abbrev) {
+    stateName = stateNameByAbbrev[String(entry.state_abbrev).toUpperCase()] || String(entry.state_abbrev).toUpperCase();
+  }
+
+  var utilityName = entry.utility_name || entry.utilityName || entry.utility || 'local utility provider';
+  var marketName = entry.market_name || entry.marketName || ((cityName || stateName || locationName) + ' solar market');
+  var pageTitle = entry.title || ('Best Solar Companies in ' + (cityName || stateName || locationName));
+  var pageDescription = entry.description || entry.meta_description || entry.intro || ('Compare top-rated installers in ' + (cityName || stateName || locationName) + '.');
+  var displayLocation = cityName || stateName || locationName;
+
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Solar Companies' }, { label: displayLocation }];
   var otherEntries = (allEntries || []).filter(function(e) { return e.slug !== entry.slug; }).slice(0, 8);
 
-  var companiesHtml = (entry.companies || []).map(function(c) {
-    return '<div class="stat-card" style="text-align:left;"><span class="stat-value" style="font-size:1rem;">#' + c.rank + ' ' + c.name + ' (' + c.rating + '/5)</span><span class="stat-label">' + c.type + ' — ' + c.highlight + '</span><p style="font-size:0.85rem;margin-top:0.25rem;"><strong>Services:</strong> ' + (c.services || []).join(', ') + ' | <strong>Best for:</strong> ' + c.best_for + '</p></div>';
+  var companiesHtml = (entry.companies || []).map(function(c, idx) {
+    var rank = c.rank || (idx + 1);
+    var companyName = c.name || 'Solar Installer';
+    var rating = c.rating != null ? c.rating : 'N/A';
+    var type = c.type ? (c.type.charAt(0).toUpperCase() + c.type.slice(1)) : 'Installer';
+    var highlight = c.highlight || c.summary || 'Strong local track record';
+    var services = c.services || c.strengths || [];
+    var bestFor = c.best_for || c.summary || 'Residential solar installations';
+    return '<div class="stat-card" style="text-align:left;"><span class="stat-value" style="font-size:1rem;">#' + rank + ' ' + companyName + ' (' + rating + '/5)</span><span class="stat-label">' + type + ' — ' + highlight + '</span><p style="font-size:0.85rem;margin-top:0.25rem;"><strong>Services:</strong> ' + services.join(', ') + ' | <strong>Best for:</strong> ' + bestFor + '</p></div>';
   }).join('');
 
   var faqs = entry.faqs || [];
@@ -1874,17 +1934,17 @@ function generateStateBestCompaniesPage(entry, allEntries) {
   var body = `
 <section class="content-section">
 <div class="container">
-<h1>${entry.title}</h1>
-<p class="lead">${entry.description}</p>
+<h1>${pageTitle}</h1>
+<p class="lead">${pageDescription}</p>
 ${lastUpdatedBlock('Emily Watson', 'emily-watson')}
 </div>
 </section>
 
-${aboveFoldQuoteCta(entry.name)}
+${aboveFoldQuoteCta(displayLocation)}
 
 <section class="content-section bg-light">
 <div class="container">
-<h2>Top-Rated Solar Companies in ${entry.name}</h2>
+<h2>Top-Rated Solar Companies in ${displayLocation}</h2>
 <div class="stats-grid" style="grid-template-columns:1fr;">
 ${companiesHtml}
 </div>
@@ -1894,14 +1954,14 @@ ${companiesHtml}
 <section class="content-section">
 <div class="container">
 <div class="content-prose">
-<h2>${entry.name} Solar Market Overview</h2>
-<p>${entry.local_market_info || 'The solar market in ' + entry.name + ' continues to grow as homeowners take advantage of federal and state incentives.'}</p>
+<h2>${displayLocation} Solar Market Overview</h2>
+<p>${entry.local_market_info || ('The ' + marketName + ' continues to grow as homeowners served by ' + utilityName + ' take advantage of federal and state incentives.')}</p>
 <p>${entry.intro || ''}</p>
 </div>
 </div>
 </section>
 
-${affiliateCtaBlock(entry.name, 'best-companies-' + entry.slug)}
+${affiliateCtaBlock(displayLocation, 'best-companies-' + entry.slug)}
 
 ${faqSection(faqs)}
 
@@ -1912,9 +1972,9 @@ ${relatedPagesSection('Best Solar Companies in Other Locations', otherEntries.ma
 }))}
 `;
 
-  return baseTemplate(entry.title, entry.description, '/best-solar-companies/' + entry.slug + '/', body, {
+  return baseTemplate(pageTitle, pageDescription, '/best-solar-companies/' + entry.slug + '/', body, {
     breadcrumbs: crumbs,
-    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(entry.title, entry.description, '/best-solar-companies/' + entry.slug + '/')
+    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(pageTitle, pageDescription, '/best-solar-companies/' + entry.slug + '/')
   });
 }
 
