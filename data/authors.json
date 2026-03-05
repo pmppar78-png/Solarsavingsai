@@ -90,5 +90,46 @@
       "linkedin": "https://linkedin.com/in/david-okafor-solar",
       "twitter": "https://twitter.com/dokafor_solar"
     }
+  },
+  {
+    "slug": "emily-watson",
+    "name": "Emily Watson",
+    "title": "Solar Research & Energy Analyst",
+    "bio": "Emily Watson is a solar research analyst focused on independent equipment and installer evaluations. Her work synthesizes product performance, warranty quality, customer sentiment, and financing tradeoffs to help homeowners make confident solar decisions.",
+    "credentials": [
+      "M.S. Energy Policy and Analysis",
+      "8+ years of residential solar market research",
+      "Specialist in product and installer review methodology"
+    ],
+    "expertise": [
+      "Solar brand and installer reviews",
+      "Warranty and long-term reliability analysis",
+      "Residential solar market trends",
+      "Financing and total-cost comparisons"
+    ],
+    "experience_years": 8,
+    "image_alt": "Emily Watson, Solar Research and Energy Analyst at SolarSavingsAI",
+    "social": {
+      "linkedin": "https://linkedin.com/in/emily-watson-solar",
+      "twitter": "https://twitter.com/emilywatsonsolar"
+    },
+    "authored_articles": [
+      { "title": "Solar Brand Reviews Hub", "url": "/reviews/" },
+      { "title": "SunPower Solar Review", "url": "/reviews/sunpower-panels-review/" },
+      { "title": "LG Solar Panels Review", "url": "/reviews/lg-solar-panels-review/" },
+      { "title": "Panasonic Solar Panels Review", "url": "/reviews/panasonic-solar-panels-review/" },
+      { "title": "Canadian Solar Review", "url": "/reviews/canadian-solar-review/" },
+      { "title": "Q CELLS Solar Panels Review", "url": "/reviews/qcells-solar-panels-review/" },
+      { "title": "REC Solar Panels Review", "url": "/reviews/rec-solar-panels-review/" },
+      { "title": "JinKo Solar Review", "url": "/reviews/jinko-solar-review/" },
+      { "title": "Trina Solar Review", "url": "/reviews/trina-solar-review/" },
+      { "title": "Silfab Solar Review", "url": "/reviews/silfab-solar-review/" },
+      { "title": "Enphase Microinverters Review", "url": "/reviews/enphase-microinverters-review/" },
+      { "title": "Sunrun Review", "url": "/reviews/sunrun-review/" },
+      { "title": "Tesla Solar Review", "url": "/reviews/tesla-solar-review/" },
+      { "title": "Palmetto Solar Review", "url": "/reviews/palmetto-solar-review/" },
+      { "title": "Blue Raven Solar Review", "url": "/reviews/blue-raven-solar-review/" },
+      { "title": "Freedom Solar Review", "url": "/reviews/freedom-solar-review/" }
+    ]
   }
 ]

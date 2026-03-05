@@ -52,7 +52,16 @@ const pillarPages = rawPillarPages.map((pillar) => ({
   description: pillar.description || pillar.meta_description || pillar.intro || '',
   category: pillar.category || pillar.hub || 'Solar Guide'
 }));
-const brandReviews = loadJSONSafe('brand-reviews.json');
+const rawBrandReviews = loadJSONSafe('brand-reviews.json');
+const brandReviews = rawBrandReviews.map((review) => ({
+  ...review,
+  brand: review.brand || review.brand_name || review.name || '',
+  rating: review.rating != null ? review.rating : review.overall_rating,
+  slug: review.slug,
+  name: review.name || review.brand_name || review.brand || '',
+  overall_rating: review.overall_rating != null ? review.overall_rating : review.rating,
+  type: review.type || review.brand_type || 'solar'
+}));
 const bestOf = loadJSONSafe('best-of.json');
 const authors = loadJSONSafe('authors.json');
 const stateBestCompanies = loadJSONSafe('state-best-companies.json');
@@ -262,6 +271,13 @@ if (brandReviews.length > 0) {
 // NEW: Best-Of Roundup pages
 // ---------------------------------------------------------------------------
 if (bestOf.length > 0) {
+  console.log('Generating best hub page...');
+  writePage(
+    path.join(DIST_DIR, 'best', 'index.html'),
+    templates.generateBestHubPage()
+  );
+  pageCount++;
+
   console.log(`Generating ${bestOf.length} best-of roundup pages...`);
   for (const entry of bestOf) {
     const filePath = path.join(DIST_DIR, 'best', entry.slug, 'index.html');
@@ -304,6 +320,16 @@ if (articles.length > 0) {
 }
 
 // ---------------------------------------------------------------------------
+// Custom 404 page
+// ---------------------------------------------------------------------------
+console.log('Generating custom 404 page...');
+writePage(
+  path.join(DIST_DIR, '404.html'),
+  templates.generateNotFoundPage()
+);
+pageCount++;
+
+// ---------------------------------------------------------------------------
 // Generate sitemap.xml
 // ---------------------------------------------------------------------------
 console.log('\nGenerating sitemap.xml...');
@@ -334,6 +360,7 @@ for (const comparison of comparisons) {
 }
 
 // Best-of pages (commercial intent)
+addEntry('best/', 0.7);
 for (const entry of bestOf) {
   addEntry(`best/${entry.slug}/`, 0.8);
 }
