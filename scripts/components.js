@@ -25,10 +25,11 @@ function escapeHtml(str) {
    1. baseTemplate
    -------------------------------------------------------------------------- */
 function baseTemplate(title, description, canonicalPath, bodyContent, options) {
-  const opts = Object.assign({ breadcrumbs: null, schema: '', alertHtml: '', states: [] }, options || {});
+  const opts = Object.assign({ breadcrumbs: null, schema: '', alertHtml: '', states: [], noindex: false }, options || {});
   const fullTitle = escapeHtml(title) + ' | ' + escapeHtml(SITE.name);
   const safeDesc = escapeHtml(description);
   const canonicalUrl = SITE.url + (canonicalPath || '/');
+  const noindexTag = opts.noindex ? '\n<meta name="robots" content="noindex">' : '';
 
   const breadcrumbsHtml = opts.breadcrumbs
     ? '<div class="container">' + breadcrumbComponent(opts.breadcrumbs) + '</div>'
@@ -44,7 +45,7 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${fullTitle}</title>
-<meta name="description" content="${safeDesc}">
+<meta name="description" content="${safeDesc}">${noindexTag}
 <link rel="canonical" href="${escapeHtml(canonicalUrl)}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="${fullTitle}">
@@ -457,28 +458,28 @@ function affiliateCtaBlock(location, placement) {
 <p>Get personalized quotes from vetted solar installers. Compare prices, financing, and equipment side-by-side.</p>
 </div>
 <div class="affiliate-providers">
-<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="affiliate-card affiliate-card-featured" rel="sponsored noopener" target="_blank" data-affiliate="energysage-${p}">
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="affiliate-card affiliate-card-featured" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="energysage-${p}">
 <span class="affiliate-badge">Most Popular</span>
 <strong class="affiliate-name">EnergySage</strong>
 <span class="affiliate-desc">Compare quotes from local installers</span>
 <span class="btn btn-primary btn-sm">Get Free Quotes</span>
 </a>
-<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="affiliate-card" rel="sponsored noopener" target="_blank" data-affiliate="sunrun-${p}">
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="affiliate-card" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="sunrun-${p}">
 <strong class="affiliate-name">Sunrun</strong>
 <span class="affiliate-desc">$0 down solar lease &amp; loan options</span>
 <span class="btn btn-outline btn-sm">View Plans</span>
 </a>
-<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="affiliate-card" rel="sponsored noopener" target="_blank" data-affiliate="sunpower-${p}">
+<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="affiliate-card" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="sunpower-${p}">
 <strong class="affiliate-name">SunPower</strong>
 <span class="affiliate-desc">Premium panels, 25-year warranty</span>
 <span class="btn btn-outline btn-sm">Get Quote</span>
 </a>
-<a href="https://modernize.com/solar?aff=solarsavingsai" class="affiliate-card" rel="sponsored noopener" target="_blank" data-affiliate="modernize-${p}">
+<a href="https://modernize.com/solar?aff=solarsavingsai" class="affiliate-card" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="modernize-${p}">
 <strong class="affiliate-name">Modernize</strong>
 <span class="affiliate-desc">Get matched with top local installers</span>
 <span class="btn btn-outline btn-sm">Compare Now</span>
 </a>
-<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="affiliate-card" rel="sponsored noopener" target="_blank" data-affiliate="solarreviews-${p}">
+<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="affiliate-card" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="solarreviews-${p}">
 <strong class="affiliate-name">SolarReviews</strong>
 <span class="affiliate-desc">Read installer reviews &amp; get quotes</span>
 <span class="btn btn-outline btn-sm">Find Installers</span>
@@ -547,7 +548,7 @@ function aboveFoldQuoteCta(location) {
 <span>Compare quotes from top-rated installers. No obligation.</span>
 </div>
 <div class="above-fold-cta-actions">
-<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary btn-lg" rel="sponsored noopener" target="_blank" data-affiliate="above-fold-energysage">Get Free Quotes</a>
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary btn-lg" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="above-fold-energysage">Get Free Quotes</a>
 <a href="#widget-hero" class="btn btn-outline btn-lg">Calculate Savings</a>
 </div>
 </div>
@@ -567,7 +568,7 @@ function midContentFinancingCta(location, annualSavings) {
 <h3>Explore Solar Financing for ${loc}</h3>
 <p>$0 down options available. Own your system and claim the 30% federal tax credit.${savingsText}</p>
 <div class="mid-content-cta-actions">
-<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-primary" rel="sponsored noopener" target="_blank" data-affiliate="mid-sunrun">$0 Down Plans</a>
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-primary" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="mid-sunrun">$0 Down Plans</a>
 <a href="/solar-financing/" class="btn btn-outline">Compare All Options</a>
 </div>
 <p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Affiliate link. <a href="/editorial-standards/">Disclosure</a>.</p>
@@ -584,22 +585,22 @@ function sidebarAffiliateWidget(location) {
   return `<div class="sidebar-affiliate-widget">
 <div class="sidebar-widget-header"><strong>Top Solar Providers for ${loc}</strong></div>
 <div class="sidebar-widget-list">
-<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener" target="_blank" data-affiliate="sidebar-energysage">
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="sidebar-energysage">
 <span class="sidebar-widget-name">EnergySage</span>
 <span class="sidebar-widget-detail">Compare local quotes free</span>
 <span class="sidebar-widget-action">Get Quotes &rarr;</span>
 </a>
-<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener" target="_blank" data-affiliate="sidebar-sunrun">
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="sidebar-sunrun">
 <span class="sidebar-widget-name">Sunrun</span>
 <span class="sidebar-widget-detail">$0 down solar lease/loan</span>
 <span class="sidebar-widget-action">View Plans &rarr;</span>
 </a>
-<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener" target="_blank" data-affiliate="sidebar-sunpower">
+<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="sidebar-sunpower">
 <span class="sidebar-widget-name">SunPower</span>
 <span class="sidebar-widget-detail">Premium panels, 25yr warranty</span>
 <span class="sidebar-widget-action">Get Quote &rarr;</span>
 </a>
-<a href="https://modernize.com/solar?aff=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener" target="_blank" data-affiliate="sidebar-modernize">
+<a href="https://modernize.com/solar?aff=solarsavingsai" class="sidebar-widget-item" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="sidebar-modernize">
 <span class="sidebar-widget-name">Modernize</span>
 <span class="sidebar-widget-detail">Top local installer matching</span>
 <span class="sidebar-widget-action">Compare &rarr;</span>
@@ -619,23 +620,23 @@ function calculatorResultMonetization(location) {
 <h3>Ready to Get Real Quotes for ${loc}?</h3>
 <p>Your estimate shows strong savings potential. Get exact pricing from vetted installers.</p>
 <div class="calculator-monetization-grid">
-<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="calc-monetize-card calc-monetize-featured" rel="sponsored noopener" target="_blank" data-affiliate="calc-result-energysage">
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="calc-monetize-card calc-monetize-featured" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="calc-result-energysage">
 <span class="calc-monetize-badge">Recommended</span>
 <strong>EnergySage Marketplace</strong>
 <span>Compare 3-7 installer quotes</span>
 <span class="btn btn-primary btn-sm">Get Free Quotes</span>
 </a>
-<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener" target="_blank" data-affiliate="calc-result-sunrun">
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="calc-result-sunrun">
 <strong>Sunrun</strong>
 <span>$0 down lease &amp; loan</span>
 <span class="btn btn-outline btn-sm">See Plans</span>
 </a>
-<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener" target="_blank" data-affiliate="calc-result-sunpower">
+<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="calc-result-sunpower">
 <strong>SunPower</strong>
 <span>Highest efficiency panels</span>
 <span class="btn btn-outline btn-sm">Get Quote</span>
 </a>
-<a href="https://modernize.com/solar?aff=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener" target="_blank" data-affiliate="calc-result-modernize">
+<a href="https://modernize.com/solar?aff=solarsavingsai" class="calc-monetize-card" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="calc-result-modernize">
 <strong>Modernize</strong>
 <span>Match with local pros</span>
 <span class="btn btn-outline btn-sm">Get Matched</span>
@@ -674,7 +675,7 @@ function comparisonAffiliateTable(title, items) {
 
   var rows = items.map(function (item) {
     var ctaHtml = item.affiliate_url
-      ? '<a href="' + escapeHtml(item.affiliate_url) + '" class="btn btn-primary btn-sm" rel="sponsored noopener" target="_blank" data-affiliate="table-' + escapeHtml(item.slug || '') + '">' + escapeHtml(item.cta_text || 'Get Quote') + '</a>'
+      ? '<a href="' + escapeHtml(item.affiliate_url) + '" class="btn btn-primary btn-sm" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="table-' + escapeHtml(item.slug || '') + '">' + escapeHtml(item.cta_text || 'Get Quote') + '</a>'
       : '<span class="text-muted">N/A</span>';
     return '<tr><td><strong>' + escapeHtml(item.name) + '</strong></td><td>' + escapeHtml(item.type || '') + '</td><td>' + escapeHtml(item.highlight || '') + '</td><td>' + escapeHtml(item.rating || '') + '</td><td>' + ctaHtml + '</td></tr>';
   }).join('\n');
@@ -831,8 +832,9 @@ function itemListSchema(name, description, items) {
    -------------------------------------------------------------------------- */
 function lastUpdatedBlock(authorName, authorSlug) {
   var dateStr = SITE.year + '-03-01';
+  var authorLink = authorSlug ? '/authors/' + escapeHtml(authorSlug) + '/' : '/authors/';
   var authorHtml = authorName
-    ? '<span class="content-meta-item">Reviewed by: <a href="/authors/' + escapeHtml(authorSlug || '') + '/">' + escapeHtml(authorName) + '</a></span>'
+    ? '<span class="content-meta-item">Reviewed by: <a href="' + authorLink + '">' + escapeHtml(authorName) + '</a></span>'
     : '<span class="content-meta-item">Reviewed by: <a href="/authors/">SolarSavingsAI Research Team</a></span>';
   return '<div class="content-meta">' +
     '<span class="content-meta-item">Last updated: <time datetime="' + dateStr + '">' + dateStr + '</time></span>' +
