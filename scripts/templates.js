@@ -822,9 +822,9 @@ ${detailCards}
 <h2>Compare Trusted Solar Financing Partners</h2>
 <p>Use these tools to compare financing structures, loan options, and incentives before you choose a provider.</p>
 <div class="cta-group" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
-<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary" target="_blank" rel="sponsored noopener">Compare Solar Financing</a>
-<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener">Get Solar Loan Quotes</a>
-<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener">Check Solar Incentives</a>
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary" target="_blank" rel="sponsored noopener" data-affiliate="energysage-financing">Compare Solar Financing</a>
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener" data-affiliate="sunrun-financing">Get Solar Loan Quotes</a>
+<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener" data-affiliate="solarreviews-financing">Check Solar Incentives</a>
 </div>
 </div>
 </section>
@@ -1218,7 +1218,7 @@ function generatePillarPage(pillar, allPillars) {
 
   var crumbs = [
     { label: 'Home', url: '/' },
-    { label: 'Guides', url: '/' },
+    { label: 'Guides', url: '/articles/' },
     { label: pillar.title }
   ];
 
@@ -1784,7 +1784,7 @@ ${bestLinks.map(function(link) {
 
 ${hubLinksSection('Explore More Solar Resources', [
   { title: 'Solar Reviews', url: '/reviews/', meta: 'Read brand and installer reviews' },
-  { title: 'Solar Guides', url: '/guides/', meta: 'Explore educational solar content' },
+  { title: 'Solar Guides', url: '/articles/', meta: 'Explore educational solar content' },
   { title: 'Solar Financing', url: '/solar-financing/', meta: 'Compare financing options' }
 ])}
 `;
@@ -1803,9 +1803,9 @@ function generateBestOfPage(bestOf, allBestOf) {
   var otherBestOf = (allBestOf || []).filter(function(b) { return b.slug !== bestOf.slug; }).slice(0, 6);
 
   var picksHtml = (bestOf.picks || []).map(function(pick, i) {
-    return '<div class="stat-card" style="text-align:left;"><span class="stat-value" style="font-size:1rem;">#' + pick.rank + ' ' + pick.name + '</span><span class="stat-label">' + pick.highlight + '</span><p style="font-size:0.85rem;margin-top:0.5rem;"><strong>Rating:</strong> ' + pick.rating + '/5 | <strong>Price:</strong> ' + pick.price_range + ' | <strong>Best for:</strong> ' + pick.best_for + '</p>' +
-      '<div style="font-size:0.85rem;"><strong>Pros:</strong> ' + (pick.pros || []).join(', ') + '</div>' +
-      '<div style="font-size:0.85rem;"><strong>Cons:</strong> ' + (pick.cons || []).join(', ') + '</div></div>';
+    return '<div class="stat-card" style="text-align:left;"><span class="stat-value" style="font-size:1rem;">#' + (i + 1) + ' ' + pick.name + '</span><span class="stat-label">' + (pick.best_for || '') + '</span><p style="font-size:0.85rem;margin-top:0.5rem;"><strong>Rating:</strong> ' + pick.rating + '/5 | <strong>Best for:</strong> ' + (pick.best_for || '') + '</p>' +
+      '<div style="font-size:0.85rem;margin-top:0.25rem;">' + (pick.summary || '') + '</div>' +
+      '<div style="font-size:0.85rem;"><strong>Pros:</strong> ' + (pick.pros || []).join(', ') + '</div></div>';
   }).join('');
 
   var faqs = bestOf.faqs || [];
@@ -1814,7 +1814,7 @@ function generateBestOfPage(bestOf, allBestOf) {
 <section class="content-section">
 <div class="container">
 <h1>${bestOf.title}</h1>
-<p class="lead">${bestOf.description}</p>
+<p class="lead">${bestOf.intro || bestOf.meta_description || ''}</p>
 ${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 </div>
 </section>
@@ -1852,9 +1852,11 @@ ${relatedPagesSection('More Best-Of Guides', otherBestOf.map(function(b) {
 }))}
 `;
 
-  return baseTemplate(bestOf.title, bestOf.description, '/best/' + bestOf.slug + '/', body, {
+  var metaDesc = bestOf.meta_description || bestOf.intro || '';
+
+  return baseTemplate(bestOf.title, metaDesc, '/best/' + bestOf.slug + '/', body, {
     breadcrumbs: crumbs,
-    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(bestOf.title, bestOf.description, '/best/' + bestOf.slug + '/')
+    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema(bestOf.title, metaDesc, '/best/' + bestOf.slug + '/')
   });
 }
 
@@ -1915,7 +1917,7 @@ function generateStateBestCompaniesPage(entry, allEntries) {
   var pageDescription = entry.description || entry.meta_description || entry.intro || ('Compare top-rated installers in ' + (cityName || stateName || locationName) + '.');
   var displayLocation = cityName || stateName || locationName;
 
-  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Solar Companies' }, { label: displayLocation }];
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Solar Companies', url: '/best/best-solar-companies/' }, { label: displayLocation }];
   var otherEntries = (allEntries || []).filter(function(e) { return e.slug !== entry.slug; }).slice(0, 8);
 
   var companiesHtml = (entry.companies || []).map(function(c, idx) {
@@ -2120,7 +2122,7 @@ function generateNotFoundPage() {
 <div class="container">
 <h2>Popular Sections</h2>
 <div class="related-grid">
-<a href="/guides/" class="related-card"><span class="related-title">Guides</span><span class="related-meta">Learn how solar works</span></a>
+<a href="/articles/" class="related-card"><span class="related-title">Guides</span><span class="related-meta">Learn how solar works</span></a>
 <a href="/reviews/" class="related-card"><span class="related-title">Reviews</span><span class="related-meta">Read solar brand reviews</span></a>
 <a href="/best/" class="related-card"><span class="related-title">Best Lists</span><span class="related-meta">Compare top solar picks</span></a>
 </div>

@@ -55,6 +55,8 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${fullTitle}">
+<meta name="twitter:description" content="${safeDesc}">
 <meta name="twitter:image" content="https://solarsavingsai.com/og-image.png">
 <link rel="icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
