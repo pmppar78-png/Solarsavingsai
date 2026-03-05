@@ -817,6 +817,18 @@ ${detailCards}
 </div>
 </section>
 
+<section class="content-section bg-light">
+<div class="container">
+<h2>Compare Trusted Solar Financing Partners</h2>
+<p>Use these tools to compare financing structures, loan options, and incentives before you choose a provider.</p>
+<div class="cta-group" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary" target="_blank" rel="sponsored noopener">Compare Solar Financing</a>
+<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener">Get Solar Loan Quotes</a>
+<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener">Check Solar Incentives</a>
+</div>
+</div>
+</section>
+
 ${faqSection(faqs)}
 
 ${ctaBlock('primary', 'Find Your Solar Financing Match', 'Enter your ZIP code to see available financing options and estimated savings for your home.', '#widget-financing')}
@@ -1563,6 +1575,12 @@ function generateAuthorPage(author, allAuthors) {
   var expertiseHtml = (author.expertise || []).map(function(e) {
     return '<span class="badge badge-sm">' + e + '</span>';
   }).join(' ');
+  var authoredArticles = Array.isArray(author.authored_articles) ? author.authored_articles : [];
+  var authoredArticlesHtml = authoredArticles.length > 0
+    ? '<h2>Authored Articles</h2><ul>' + authoredArticles.map(function(article) {
+      return '<li><a href="' + article.url + '">' + article.title + '</a></li>';
+    }).join('') + '</ul>'
+    : '';
 
   var body = `
 <section class="content-section">
@@ -1584,6 +1602,7 @@ function generateAuthorPage(author, allAuthors) {
 
 <h2>Areas of Expertise</h2>
 <p>${author.name} specializes in ${(author.expertise || []).join(', ')}. With ${author.experience_years || 5}+ years of experience in the solar energy industry, ${author.name.split(' ')[0]} contributes to ${SITE.name}'s data analysis, content creation, and editorial review processes.</p>
+${authoredArticlesHtml}
 </div>
 </div>
 </section>
@@ -1609,7 +1628,14 @@ ${relatedPagesSection('Other Team Members', otherAuthors.map(function(a) {
 // 16. Brand Review Page
 // ---------------------------------------------------------------------------
 function generateBrandReviewPage(brand, allBrands) {
-  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Reviews', url: '/reviews/' }, { label: brand.name }];
+  var brandName = brand.brand || brand.name || brand.brand_name || 'Solar Brand';
+  var brandRating = brand.rating != null ? brand.rating : brand.overall_rating;
+  var brandType = brand.type || brand.brand_type || 'Solar';
+  var brandDescription = brand.description || brand.meta_description || brand.intro || ('Comprehensive review of ' + brandName + ' solar products, pricing, warranty, and customer experience.');
+  var brandPriceRange = brand.price_range || (brand.key_specs && brand.key_specs.price_range) || '$$';
+  var brandWarranty = brand.warranty_details || (brand.key_specs && brand.key_specs.warranty) || 'Comprehensive coverage';
+  var brandWarrantyYears = brand.warranty_years || ((brand.key_specs && brand.key_specs.warranty) ? brand.key_specs.warranty : 25);
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Reviews', url: '/reviews/' }, { label: brandName }];
   var otherBrands = (allBrands || []).filter(function(b) { return b.slug !== brand.slug; }).slice(0, 6);
 
   var ratingsHtml = '';
@@ -1624,7 +1650,7 @@ function generateBrandReviewPage(brand, allBrands) {
   var consHtml = (brand.cons || []).map(function(c) { return '<li>' + c + '</li>'; }).join('');
 
   var sectionsHtml = (brand.sections || []).map(function(s, i) {
-    var monetization = i === 2 ? affiliateCtaBlock(brand.name, 'review-mid-' + brand.slug) : '';
+    var monetization = i === 2 ? affiliateCtaBlock(brandName, 'review-mid-' + brand.slug) : '';
     return '<h2>' + s.heading + '</h2><div class="content-prose"><p>' + s.content + '</p></div>' + monetization;
   }).join('\n');
 
@@ -1633,15 +1659,15 @@ function generateBrandReviewPage(brand, allBrands) {
   var body = `
 <section class="content-section">
 <div class="container">
-<h1>${brand.name} Solar Review (${SITE.year})</h1>
-<p class="lead">${brand.description || 'Comprehensive review of ' + brand.name + ' solar products, pricing, warranty, and customer experience.'}</p>
+<h1>${brandName} Solar Review (${SITE.year})</h1>
+<p class="lead">${brandDescription}</p>
 ${lastUpdatedBlock('Emily Watson', 'emily-watson')}
 </div>
 </section>
 
 <section class="content-section bg-light">
 <div class="container">
-<h2>Overall Rating: ${brand.overall_rating}/5</h2>
+<h2>Overall Rating: ${brandRating}/5</h2>
 ${ratingsHtml}
 <div class="content-prose">
 <div class="pros-cons" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
@@ -1649,8 +1675,8 @@ ${ratingsHtml}
 <div><h3>Cons</h3><ul>${consHtml}</ul></div>
 </div>
 <p><strong>Best For:</strong> ${brand.best_for || 'General solar needs'}</p>
-<p><strong>Price Range:</strong> ${brand.price_range || '$$'}</p>
-<p><strong>Warranty:</strong> ${brand.warranty_years || 25} years — ${brand.warranty_details || 'Comprehensive coverage'}</p>
+<p><strong>Price Range:</strong> ${brandPriceRange}</p>
+<p><strong>Warranty:</strong> ${brandWarrantyYears} years — ${brandWarranty}</p>
 </div>
 </div>
 </section>
@@ -1663,8 +1689,8 @@ ${sectionsHtml}
 
 ${faqSection(faqs)}
 
-${comparisonAffiliateTable('Compare ' + brand.name + ' with Alternatives', [
-  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare ' + brand.name + ' quotes', rating: '4.8/5', slug: 'energysage-' + brand.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Compare Quotes' },
+${comparisonAffiliateTable('Compare ' + brandName + ' with Alternatives', [
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare ' + brandName + ' quotes', rating: '4.8/5', slug: 'energysage-' + brand.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Compare Quotes' },
   { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar options', rating: '4.5/5', slug: 'sunrun-' + brand.slug, affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
   { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-' + brand.slug, affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
 ])}
@@ -1672,13 +1698,15 @@ ${comparisonAffiliateTable('Compare ' + brand.name + ' with Alternatives', [
 ${authorBioBlock()}
 
 ${relatedPagesSection('More Solar Brand Reviews', otherBrands.map(function(b) {
-  return { title: b.name + ' Review', url: '/reviews/' + b.slug + '/', meta: b.overall_rating + '/5 — ' + (b.type || 'Solar') };
+  var relatedBrand = b.brand || b.name || b.brand_name || 'Solar Brand';
+  var relatedRating = b.rating != null ? b.rating : b.overall_rating;
+  return { title: relatedBrand + ' Review', url: '/reviews/' + b.slug + '/', meta: relatedRating + '/5 — ' + (b.type || b.brand_type || 'Solar') };
 }))}
 `;
 
-  return baseTemplate(brand.name + ' Solar Review ' + SITE.year, brand.name + ' solar review: ' + brand.overall_rating + '/5 rating. ' + (brand.best_for || '') + '. Pros, cons, pricing, warranty analysis.', '/reviews/' + brand.slug + '/', body, {
+  return baseTemplate(brandName + ' Solar Review ' + SITE.year, brandName + ' solar review: ' + brandRating + '/5 rating. ' + (brand.best_for || '') + '. Pros, cons, pricing, warranty analysis.', '/reviews/' + brand.slug + '/', body, {
     breadcrumbs: crumbs,
-    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + reviewSchema(brand.name, 'Product', brand.overall_rating, 150) + '</script><script type="application/ld+json">' + articleSchema(brand.name + ' Solar Review', brand.description || '', '/reviews/' + brand.slug + '/')
+    schema: faqSchema(faqs) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + reviewSchema(brandName, 'Product', brandRating || 0, brand.review_count || 150) + '</script><script type="application/ld+json">' + articleSchema(brandName + ' Solar Review', brandDescription, '/reviews/' + brand.slug + '/')
   });
 }
 
@@ -1689,8 +1717,12 @@ function generateBrandReviewsIndexPage(brands) {
   var brandsList = Array.isArray(brands) ? brands : [];
   var crumbs = [{ label: 'Home', url: '/' }, { label: 'Solar Brand Reviews' }];
 
-  var cardsHtml = brandsList.map(function(b) {
-    return '<a href="/reviews/' + b.slug + '/" class="related-card"><span class="related-title">' + b.name + '</span><span class="related-meta">' + b.overall_rating + '/5 — ' + (b.type || 'Solar') + ' — ' + (b.best_for || '') + '</span></a>';
+  var cardsHtml = brandsList.map(function(review) {
+    var reviewBrand = review.brand || review.name || review.brand_name || 'Solar Brand';
+    var reviewRating = review.rating != null ? review.rating : review.overall_rating;
+    var reviewSlug = review.slug;
+    var reviewType = review.type || review.brand_type || 'Solar';
+    return '<a href="/reviews/' + reviewSlug + '/" class="related-card"><span class="related-title">' + reviewBrand + '</span><span class="related-meta">' + reviewRating + '/5 — ' + reviewType + ' — ' + (review.best_for || '') + '</span></a>';
   }).join('');
 
   var body = `
@@ -1720,7 +1752,51 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Compare quotes from top-r
 }
 
 // ---------------------------------------------------------------------------
-// 18. Best-Of Roundup Page
+// 18. Best Hub Page
+// ---------------------------------------------------------------------------
+function generateBestHubPage() {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Solar' }];
+  var bestLinks = [
+    { title: 'Best Solar Panels', url: '/best/best-solar-panels-for-home/', meta: 'Top panel picks' },
+    { title: 'Best Solar Companies', url: '/best/best-solar-companies/', meta: 'Top installer options' },
+    { title: 'Best Solar Batteries', url: '/best/best-solar-battery-storage/', meta: 'Backup and storage picks' },
+    { title: 'Best Solar Inverters', url: '/best/best-solar-inverters/', meta: 'Top inverter options' },
+    { title: 'Best Solar Installers', url: '/best/best-solar-companies/', meta: 'Installer rankings' }
+  ];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Best Solar Products &amp; Companies</h1>
+<p class="lead">Explore our expert-ranked best solar lists for panels, companies, batteries, and inverters.</p>
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<div class="related-grid">
+${bestLinks.map(function(link) {
+  return '<a href="' + link.url + '" class="related-card"><span class="related-title">' + link.title + '</span><span class="related-meta">' + link.meta + '</span></a>';
+}).join('')}
+</div>
+</div>
+</section>
+
+${hubLinksSection('Explore More Solar Resources', [
+  { title: 'Solar Reviews', url: '/reviews/', meta: 'Read brand and installer reviews' },
+  { title: 'Solar Guides', url: '/guides/', meta: 'Explore educational solar content' },
+  { title: 'Solar Financing', url: '/solar-financing/', meta: 'Compare financing options' }
+])}
+`;
+
+  return baseTemplate('Best Solar Lists', 'Browse our top-rated best solar lists for panels, companies, batteries, and inverters.', '/best/', body, {
+    breadcrumbs: crumbs,
+    schema: breadcrumbSchema(crumbs) + '</script><script type="application/ld+json">' + articleSchema('Best Solar Lists', 'Browse our top-rated best solar lists.', '/best/')
+  });
+}
+
+// ---------------------------------------------------------------------------
+// 19. Best-Of Roundup Page
 // ---------------------------------------------------------------------------
 function generateBestOfPage(bestOf, allBestOf) {
   var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Of', url: '/best/' }, { label: bestOf.title }];
@@ -1783,7 +1859,7 @@ ${relatedPagesSection('More Best-Of Guides', otherBestOf.map(function(b) {
 }
 
 // ---------------------------------------------------------------------------
-// 19. State/City Best Companies Page
+// 20. State/City Best Companies Page
 // ---------------------------------------------------------------------------
 function generateStateBestCompaniesPage(entry, allEntries) {
   var crumbs = [{ label: 'Home', url: '/' }, { label: 'Best Solar Companies' }, { label: entry.name }];
@@ -1884,7 +1960,8 @@ ${authorBioBlock()}
 ${relatedPagesSection('More Solar Guides', relatedArticles)}
 `;
 
-  var schema = articleSchema(article.title, article.description, '/article/' + article.slug + '/', article.date_published, article.author);
+  var schema = articleSchema(article.title, article.description, '/article/' + article.slug + '/', article.date_published, article.author) +
+    '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs);
 
   return baseTemplate(
     article.title,
@@ -1946,7 +2023,7 @@ ${affiliateCtaBlock('Your Area', 'articles-index')}
     description: 'Expert solar energy articles covering tax credits, ROI analysis, financing, installation guides, and more.',
     url: SITE.url + '/articles/',
     publisher: { '@type': 'Organization', name: SITE.name }
-  });
+  }) + '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs);
 
   return baseTemplate(
     'Solar Energy Articles & Guides',
@@ -1959,6 +2036,42 @@ ${affiliateCtaBlock('Your Area', 'articles-index')}
       states: []
     }
   );
+}
+
+// ---------------------------------------------------------------------------
+// Custom 404 Page
+// ---------------------------------------------------------------------------
+function generateNotFoundPage() {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Page Not Found' }];
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Page Not Found</h1>
+<p class="lead">The page being requested could not be found. Use the links below to continue exploring.</p>
+<div class="cta-group" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+<a href="/" class="btn btn-primary">Return Home</a>
+<a href="/chat.html" class="btn btn-outline">Try Solar AI</a>
+<a href="/#estimate" class="btn btn-outline">Check Solar Savings</a>
+</div>
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>Popular Sections</h2>
+<div class="related-grid">
+<a href="/guides/" class="related-card"><span class="related-title">Guides</span><span class="related-meta">Learn how solar works</span></a>
+<a href="/reviews/" class="related-card"><span class="related-title">Reviews</span><span class="related-meta">Read solar brand reviews</span></a>
+<a href="/best/" class="related-card"><span class="related-title">Best Lists</span><span class="related-meta">Compare top solar picks</span></a>
+</div>
+</div>
+</section>
+`;
+
+  return baseTemplate('Page Not Found', 'The requested page could not be found.', '/404.html', body, {
+    breadcrumbs: crumbs,
+    schema: breadcrumbSchema(crumbs)
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -1982,8 +2095,10 @@ module.exports = {
   generateAuthorPage,
   generateBrandReviewPage,
   generateBrandReviewsIndexPage,
+  generateBestHubPage,
   generateBestOfPage,
   generateStateBestCompaniesPage,
   generateArticlePage,
-  generateArticlesIndexPage
+  generateArticlesIndexPage,
+  generateNotFoundPage
 };
