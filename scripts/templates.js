@@ -2140,7 +2140,7 @@ function generateNotFoundPage() {
 </section>
 `;
 
-  return baseTemplate('Page Not Found', 'The requested page could not be found.', '/404.html', body, {
+  return baseTemplate('Page Not Found', 'The requested page could not be found.', '/', body, {
     breadcrumbs: crumbs,
     schema: breadcrumbSchema(crumbs),
     noindex: true
