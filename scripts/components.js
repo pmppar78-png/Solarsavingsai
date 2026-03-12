@@ -731,12 +731,15 @@ function organizationSchema() {
     '@type': 'Organization',
     name: SITE.name,
     url: SITE.url,
-    description: 'Solar rebate data and ROI analysis. Find incentives, estimate savings, and make informed decisions about going solar.',
+    logo: SITE.url + '/images/logo.svg',
+    description: 'Solar rebate data and ROI analysis powered by AI. Find federal tax credits, state incentives, utility rebates, and calculate your solar savings across all 50 states.',
     foundingDate: '2024',
+    knowsAbout: ['Solar Energy', 'Solar Tax Credits', 'Solar Rebates', 'Solar Incentives', 'Net Metering', 'Solar Financing', 'Solar Panel Installation', 'Renewable Energy'],
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      url: SITE.url + '/contact/'
+      url: SITE.url + '/contact/',
+      email: 'contact@solarsavingsai.com'
     },
     sameAs: []
   });
@@ -788,8 +791,9 @@ function websiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE.name,
+    alternateName: 'SolarSavingsAI',
     url: SITE.url,
-    description: 'Solar rebate data and ROI analysis powered by AI. Find incentives, estimate savings, and compare solar options.',
+    description: 'Solar rebate data and ROI analysis powered by AI. Find the federal solar tax credit, state incentives, utility rebates, and calculate your savings across all 50 states.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -801,8 +805,13 @@ function websiteSchema() {
     publisher: {
       '@type': 'Organization',
       name: SITE.name,
-      url: SITE.url
-    }
+      url: SITE.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: SITE.url + '/images/logo.svg'
+      }
+    },
+    inLanguage: 'en-US'
   });
 }
 
