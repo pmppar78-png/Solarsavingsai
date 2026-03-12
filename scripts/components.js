@@ -47,6 +47,7 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
 <title>${fullTitle}</title>
 <meta name="description" content="${safeDesc}">${noindexTag}
 <link rel="canonical" href="${escapeHtml(canonicalUrl)}">
+<meta name="robots" content="max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="${fullTitle}">
 <meta property="og:description" content="${safeDesc}">
@@ -55,6 +56,7 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
 <meta property="og:image" content="https://solarsavingsai.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${fullTitle}">
 <meta name="twitter:description" content="${safeDesc}">
@@ -62,6 +64,9 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
 <link rel="icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.energysage.com">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <link rel="stylesheet" href="/css/main.css?v=${escapeHtml(BUILD_ID)}">
 ${schemaHtml}
 </head>
@@ -176,10 +181,13 @@ ${stateLinks}
 <ul>
 <li><a href="/solar-financing/">Solar Financing Guide</a></li>
 <li><a href="/solar-glossary/">Solar Glossary</a></li>
-<li><a href="/guide/best-solar-panels-2026/">Best Solar Panels</a></li>
+<li><a href="/guide/best-solar-panels-2026/">Best Solar Panels ${SITE.year}</a></li>
 <li><a href="/guide/best-solar-companies-2026/">Best Solar Companies</a></li>
 <li><a href="/reviews/">Brand Reviews</a></li>
 <li><a href="/articles/">Solar Articles</a></li>
+<li><a href="/guide/complete-guide-home-solar/">Complete Solar Guide</a></li>
+<li><a href="/article/federal-solar-tax-credit-2026-complete-guide/">Solar Tax Credit Guide</a></li>
+<li><a href="/compare/solar-panels-vs-grid-power/">Solar vs. Grid Power</a></li>
 </ul>
 </div>
 <div class="footer-col">
@@ -708,7 +716,7 @@ function articleSchema(title, description, url, datePublished, authorName) {
     description: description,
     url: SITE.url + url,
     datePublished: datePublished || SITE.year + '-01-15',
-    dateModified: SITE.year + '-03-01',
+    dateModified: SITE.year + '-03-12',
     author: author,
     publisher: {
       '@type': 'Organization',
@@ -731,17 +739,29 @@ function organizationSchema() {
     '@type': 'Organization',
     name: SITE.name,
     url: SITE.url,
-    logo: SITE.url + '/images/logo.svg',
+    logo: {
+      '@type': 'ImageObject',
+      url: SITE.url + '/images/logo.svg',
+      width: 512,
+      height: 512
+    },
+    image: SITE.url + '/og-image.png',
     description: 'Solar rebate data and ROI analysis powered by AI. Find federal tax credits, state incentives, utility rebates, and calculate your solar savings across all 50 states.',
     foundingDate: '2024',
-    knowsAbout: ['Solar Energy', 'Solar Tax Credits', 'Solar Rebates', 'Solar Incentives', 'Net Metering', 'Solar Financing', 'Solar Panel Installation', 'Renewable Energy'],
+    knowsAbout: ['Solar Energy', 'Solar Tax Credits', 'Solar Rebates', 'Solar Incentives', 'Net Metering', 'Solar Financing', 'Solar Panel Installation', 'Renewable Energy', 'Solar Savings Calculator', 'Solar Cost Analysis', 'Solar ROI', 'Federal Solar Investment Tax Credit', 'State Solar Rebates', 'Solar Battery Storage', 'Residential Solar Power'],
+    areaServed: {
+      '@type': 'Country',
+      name: 'United States'
+    },
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
       url: SITE.url + '/contact/',
-      email: 'contact@solarsavingsai.com'
+      email: 'contact@solarsavingsai.com',
+      availableLanguage: 'English'
     },
-    sameAs: []
+    sameAs: [],
+    slogan: 'Find Solar Tax Credits, Rebates & Calculate Your Savings'
   });
 }
 
@@ -791,7 +811,7 @@ function websiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE.name,
-    alternateName: 'SolarSavingsAI',
+    alternateName: ['SolarSavingsAI', 'Solar Savings AI', 'Solar Savings Calculator'],
     url: SITE.url,
     description: 'Solar rebate data and ROI analysis powered by AI. Find the federal solar tax credit, state incentives, utility rebates, and calculate your savings across all 50 states.',
     potentialAction: {
@@ -837,10 +857,30 @@ function itemListSchema(name, description, items) {
 }
 
 /* --------------------------------------------------------------------------
+   SolarEnergyService schema – Service structured data for key pages
+   -------------------------------------------------------------------------- */
+function serviceSchema(serviceName, serviceDescription, areaServed) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: serviceName,
+    description: serviceDescription,
+    provider: {
+      '@type': 'Organization',
+      name: SITE.name,
+      url: SITE.url
+    },
+    areaServed: areaServed ? { '@type': 'State', name: areaServed } : { '@type': 'Country', name: 'United States' },
+    serviceType: 'Solar Energy Consulting',
+    category: 'Solar Energy'
+  });
+}
+
+/* --------------------------------------------------------------------------
    29. lastUpdatedBlock – "Last updated" + "Reviewed by" metadata for E-E-A-T
    -------------------------------------------------------------------------- */
 function lastUpdatedBlock(authorName, authorSlug) {
-  var dateStr = SITE.year + '-03-01';
+  var dateStr = SITE.year + '-03-12';
   var authorLink = authorSlug ? '/authors/' + escapeHtml(authorSlug) + '/' : '/authors/';
   var authorHtml = authorName
     ? '<span class="content-meta-item">Reviewed by: <a href="' + authorLink + '">' + escapeHtml(authorName) + '</a></span>'
@@ -964,6 +1004,7 @@ module.exports = {
   reviewSchema,
   websiteSchema,
   itemListSchema,
+  serviceSchema,
   lastUpdatedBlock,
   analyticsScript,
   displayAdSlot,

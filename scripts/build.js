@@ -337,7 +337,7 @@ const sitemapEntries = [];
 
 function addEntry(urlPath, priority, lastmod) {
   const loc = urlPath === '/' ? SITE_URL + '/' : `${SITE_URL}/${urlPath}`;
-  const lastmodDate = lastmod || '2026-03-01';
+  const lastmodDate = lastmod || '2026-03-12';
   sitemapEntries.push(`  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmodDate}</lastmod>\n    <changefreq>${priority >= 0.8 ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${priority.toFixed(1)}</priority>\n  </url>`);
 }
 
@@ -383,7 +383,7 @@ for (const city of cities) {
   addEntry(`is-solar-worth-it-in-${city.slug}-${city.state_abbrev.toLowerCase()}/`, 0.7);
 }
 
-addEntry('solar-glossary/', 0.6);
+addEntry('solar-glossary/', 0.7);
 
 // Trust & authority pages
 addEntry('about/', 0.6);
@@ -421,6 +421,12 @@ console.log('Generating robots.txt...');
 const robotsTxt = `User-agent: *
 Allow: /
 Disallow: /.netlify/
+Disallow: /chat.html
+
+User-agent: Googlebot
+Allow: /
+Disallow: /.netlify/
+Disallow: /chat.html
 
 Sitemap: ${SITE_URL}/sitemap.xml`;
 
