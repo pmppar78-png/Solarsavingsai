@@ -28,6 +28,20 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+[[headers]]
+  for = "/chat.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# --- Canonical domain enforcement: www → non-www ---
+# Ensures Google and all crawlers see only the canonical domain.
+# Netlify handles http→https at the CDN level via "Force HTTPS" setting.
+[[redirects]]
+  from = "https://www.solarsavingsai.com/*"
+  to = "https://solarsavingsai.com/:splat"
+  status = 301
+  force = true
+
 # --- Redirect /index.html and /*/index.html to clean trailing-slash URLs ---
 # Prevents duplicate content from explicit index.html access (force required
 # because the files exist on disk).
@@ -43,7 +57,7 @@
   status = 301
   force = true
 
-# --- Legacy / deprecated URL redirects ---
+# --- Legacy / deprecated URL redirects (single-hop to canonical) ---
 [[redirects]]
   from = "/states"
   to = "/#state-map"
