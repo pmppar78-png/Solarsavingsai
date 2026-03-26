@@ -135,8 +135,8 @@ function generateHomepage(data) {
 <section class="hero">
 <div class="container">
 <div class="hero-content">
-<h1>Solar Tax Credit ${SITE.year}: Calculate Your Savings, Find Rebates &amp; Incentives</h1>
-<p class="hero-subtitle">Discover how much you can save with solar energy. Our free <strong>solar savings calculator</strong> analyzes the <strong>30% federal solar tax credit</strong>, state rebates, utility incentives, and local programs to give you an accurate savings estimate. Over ${fmt(cities.length)} cities and all 50 states covered. Join thousands of homeowners who have used SolarSavingsAI to make informed solar decisions.</p>
+<h1>Solar Panel Cost Calculator (${SITE.year}): See Your Exact Savings, Tax Credits &amp; Rebates</h1>
+<p class="hero-subtitle"><strong>How much do solar panels cost in ${SITE.year}?</strong> Our free <strong>solar savings calculator</strong> shows your exact cost after the <strong>30% federal solar tax credit</strong>, state rebates, and utility incentives. Average homeowner saves <strong>$20,000–$60,000</strong> over 20 years. Over ${fmt(cities.length)} cities and all 50 states covered. Calculate your savings in 30 seconds.</p>
 ${eligibilityWidget('hero')}
 </div>
 </div>
@@ -315,8 +315,8 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above
   ];
 
   return baseTemplate(
-    'Solar Tax Credit Calculator ' + SITE.year + ': Rebates, Incentives & Savings by State',
-    'Free solar savings calculator: find the 30% federal solar tax credit, state rebates, utility incentives & net metering programs. Compare financing, estimate your ROI, and discover how much you can save going solar in ' + SITE.year + '. Trusted by thousands of homeowners.',
+    'Solar Panel Cost Calculator (' + SITE.year + '): See Your Exact Savings, Tax Credits & Rebates',
+    'How much do solar panels cost in ' + SITE.year + '? Free calculator shows your exact savings with the 30% federal tax credit, state rebates & utility incentives. Average homeowner saves $20,000-$60,000. Calculate your ROI in 30 seconds.',
     '/',
     body,
     {
@@ -403,8 +403,17 @@ function generateStatePage(state, stateData) {
   var body = `
 <section class="content-section">
 <div class="container">
-<h1>${state.state_name} Solar Rebates, Tax Credits &amp; Incentives Guide (${SITE.year})</h1>
-<p class="lead">Complete guide to <strong>solar incentives in ${state.state_name}</strong>. Discover the 30% federal solar tax credit, state rebates, utility net metering programs, SREC income, and local incentives. Average savings: <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong> with a break-even period of ~${roi.breakEvenYears} years. Calculate your savings with our free tool below.</p>
+<h1>Solar Panel Cost in ${state.state_name} (${SITE.year}): See Your Exact Savings</h1>
+<p class="lead"><strong>How much does solar cost in ${state.state_name}?</strong> A ${state.avg_system_size} kW system averages ${dollar(state.avg_install_cost)} before incentives — but after the <strong>30% federal tax credit</strong>${state.state_tax_credit_percent > 0 ? ' and ' + state.state_tax_credit_percent + '% state credit' : ''}, your net cost drops to <strong>${dollar(roi.netCost)}</strong>. That means <strong>${dollar(roi.twentyYearSavings)} in savings over 20 years</strong> with a break-even of just ~${roi.breakEvenYears} years. Use our free calculator below to see your exact savings.</p>
+
+<div class="info-box" style="background:#e8f5e9;border-left:4px solid #2e7d32;padding:1rem 1.25rem;margin:1.5rem 0;">
+<strong>Quick Answer: Solar Cost in ${state.state_name} (${SITE.year})</strong><br>
+Average system cost: ${dollar(state.avg_install_cost)} (before incentives)<br>
+Your net cost after tax credits: <strong>${dollar(roi.netCost)}</strong><br>
+Annual electricity savings: <strong>${dollar(roi.annualSavings)}/year</strong><br>
+20-year total savings: <strong>${dollar(roi.twentyYearSavings)}</strong><br>
+Break-even timeline: <strong>~${roi.breakEvenYears} years</strong>
+</div>
 ${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${aboveFoldQuoteCta(state.state_name)}
@@ -462,6 +471,39 @@ ${calculatorResultMonetization(state.state_name)}
 
 ${urgencyBlock('The 30% federal solar tax credit is available through 2032. It drops to 26% in 2033. Lock in maximum savings in ' + state.state_name + ' now.')}
 
+<section class="content-section bg-light">
+<div class="container">
+<h2>How Much Does Solar Cost in ${state.state_name} in ${SITE.year}?</h2>
+<div class="content-prose">
+<p>The average <strong>solar panel cost in ${state.state_name}</strong> is <strong>${dollar(state.avg_install_cost)}</strong> for a ${state.avg_system_size} kW system before any incentives. Here is exactly how the math works:</p>
+<ul>
+<li><strong>Gross system cost:</strong> ${dollar(state.avg_install_cost)}</li>
+<li><strong>30% federal tax credit:</strong> -${dollar(roi.fedSavings)}</li>
+${state.state_tax_credit_percent > 0 ? '<li><strong>' + state.state_tax_credit_percent + '% state tax credit:</strong> -' + dollar(state.avg_install_cost * state.state_tax_credit_percent / 100) + '</li>' : ''}
+${state.state_rebate_amount > 0 ? '<li><strong>State rebate:</strong> -' + dollar(state.state_rebate_amount) + '</li>' : ''}
+<li><strong>Your net cost:</strong> <strong>${dollar(roi.netCost)}</strong></li>
+</ul>
+<p>That means incentives cover <strong>${pct(Math.round((roi.fedSavings + roi.stateSavings) / state.avg_install_cost * 100))}</strong> of the total cost. Compare this to the average U.S. solar cost of $15,000 — ${state.state_name} is ${state.avg_install_cost < 15000 ? 'below average, making it a great value' : 'close to the national average'}.</p>
+</div>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+<h2>Solar vs. Electric Bill in ${state.state_name}: ${SITE.year} Comparison</h2>
+<div class="content-prose">
+<p>At <strong>$${state.avg_kwh_rate}/kWh</strong>, the average ${state.state_name} household spends approximately <strong>${dollar(Math.round(state.avg_kwh_rate * 10800))}/year</strong> on electricity (based on 900 kWh/month national average). Here is how solar compares:</p>
+${comparisonTable(['', 'Without Solar', 'With Solar'], [
+  ['Annual electric cost', dollar(Math.round(state.avg_kwh_rate * 10800)), dollar(Math.max(0, Math.round(state.avg_kwh_rate * 10800 - roi.annualSavings)))],
+  ['5-year electric cost', dollar(Math.round(state.avg_kwh_rate * 10800 * 5)), dollar(Math.max(0, Math.round((state.avg_kwh_rate * 10800 - roi.annualSavings) * 5 + roi.netCost)))],
+  ['20-year electric cost', dollar(Math.round(state.avg_kwh_rate * 10800 * 20)), dollar(Math.max(0, Math.round(roi.netCost - roi.twentyYearSavings + state.avg_kwh_rate * 10800 * 20)))],
+  ['Total 20-year savings', '—', dollar(roi.twentyYearSavings)]
+])}
+<p><strong>Bottom line:</strong> Solar saves ${state.state_name} homeowners an average of <strong>${dollar(roi.annualSavings)} per year</strong> — that is ${dollar(Math.round(roi.annualSavings / 12))} per month back in your pocket. Over 20 years, that adds up to <strong>${dollar(roi.twentyYearSavings)}</strong> in total savings.</p>
+</div>
+</div>
+</section>
+
 <section class="content-section">
 <div class="container">
 <h2>How to Go Solar in ${state.state_name}: Step-by-Step</h2>
@@ -502,11 +544,24 @@ ${relatedPagesSection('Explore Nearby States', nearbyStates.map(function (s) {
 }))}
 
 ${ctaBlock('primary', 'Get Your ' + state.state_name + ' Solar Estimate', 'See exactly how much you can save with solar in ' + state.state_name + '. Enter your ZIP code to get started.', '#widget-state')}
+
+${contextualLinksBlock('Related Solar Savings Guides', [
+  { title: 'Solar Panel Cost Guide (' + SITE.year + ')', url: '/guide/solar-panel-cost-guide/' },
+  { title: 'How Solar Panels Work', url: '/guide/how-solar-panels-work/' },
+  { title: 'Best Solar Panels ' + SITE.year, url: '/guide/best-solar-panels-2026/' },
+  { title: 'Solar Financing Options', url: '/solar-financing/' },
+  { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/' },
+  { title: 'Solar Loan vs Lease', url: '/compare/solar-loan-vs-solar-lease/' },
+  { title: 'Best Solar Companies ' + SITE.year, url: '/guide/best-solar-companies-2026/' },
+  { title: 'Solar Battery Buying Guide', url: '/guide/solar-battery-buying-guide/' },
+  { title: 'Solar Installation Guide', url: '/guide/solar-installation-guide/' },
+  { title: 'Solar vs Grid Power', url: '/compare/solar-panels-vs-grid-power/' }
+])}
 `;
 
   return baseTemplate(
-    state.state_name + ' Solar Rebates & Tax Credit ' + SITE.year + ': Incentives, Cost & Savings',
-    'Complete ' + state.state_name + ' solar incentives guide ' + SITE.year + ': 30% federal tax credit' + (state.state_tax_credit_percent > 0 ? ' + ' + state.state_tax_credit_percent + '% state credit' : '') + '. Net cost ' + dollar(roi.netCost) + ' for a ' + state.avg_system_size + ' kW system. Save ' + dollar(roi.twentyYearSavings) + ' over 20 years. Break-even in ~' + roi.breakEvenYears + ' years. Free calculator.',
+    'Solar Panel Cost in ' + state.state_name + ' (' + SITE.year + '): Calculator, Savings & Tax Credits',
+    'How much do solar panels cost in ' + state.state_name + ' in ' + SITE.year + '? Use our free calculator: ' + dollar(roi.netCost) + ' net cost after 30% tax credit. Save ' + dollar(roi.twentyYearSavings) + ' over 20 years. See ' + state.state_name + ' rebates, incentives & break-even in ~' + roi.breakEvenYears + ' yrs.',
     '/solar-rebates-incentives-' + state.slug + '/',
     body,
     {
@@ -547,8 +602,8 @@ function generateUtilityPage(utility, utilityData) {
   var body = `
 <section class="content-section">
 <div class="container">
-<h1>${utility.utility_name} Solar Rates, Net Metering &amp; Incentives (${SITE.year})</h1>
-<p class="lead">Complete solar policy guide for ${utility.utility_name} customers in ${utility.state}. Review net metering rates, export compensation, interconnection fees, time-of-use rates, and available solar programs. See how to maximize savings with your utility.</p>
+<h1>${utility.utility_name} Solar Savings: Net Metering, Rates &amp; Rebates (${SITE.year})</h1>
+<p class="lead">How much can <strong>${utility.utility_name}</strong> customers save with solar in ${SITE.year}? With <strong>${utility.net_metering_rate}</strong> net metering and <strong>$${utility.export_compensation}/kWh</strong> export compensation, solar is a strong investment. Plus the 30% federal tax credit cuts your upfront cost significantly. See the full breakdown below.</p>
 ${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${statsGrid([
@@ -618,11 +673,22 @@ ${relatedPagesSection('Other Utilities in ' + utility.state, sameStateUtils.map(
 }))}
 
 ${ctaBlock('primary', 'Check Your Solar Savings', 'See how much you can save as a ' + utility.utility_name + ' customer. Enter your ZIP code to get started.', '#widget-utility')}
+
+${contextualLinksBlock('Compare Your Solar Options', [
+  { title: utility.state + ' Solar Rebates & Incentives', url: parentState ? '/solar-rebates-incentives-' + parentState.slug + '/' : '/' },
+  { title: 'Solar Panel Cost Guide (' + SITE.year + ')', url: '/guide/solar-panel-cost-guide/' },
+  { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/' },
+  { title: 'Solar Financing Options', url: '/solar-financing/' },
+  { title: 'Best Solar Panels ' + SITE.year, url: '/guide/best-solar-panels-2026/' },
+  { title: 'Solar Panels vs Grid Power', url: '/compare/solar-panels-vs-grid-power/' },
+  { title: 'How to Choose a Solar Installer', url: '/guide/how-to-choose-solar-installer/' },
+  { title: 'Solar Brand Reviews', url: '/reviews/' }
+])}
 `;
 
   return baseTemplate(
-    utility.utility_name + ' Solar Net Metering & Rates ' + SITE.year + ' — Incentives Guide',
-    utility.utility_name + ' solar guide ' + SITE.year + ': ' + utility.net_metering_rate + ' net metering, $' + utility.export_compensation + '/kWh export rate, $' + utility.interconnection_fee + ' interconnection fee. Complete solar policy guide for ' + fmt(utility.customers_served) + ' customers in ' + utility.state + '.',
+    utility.utility_name + ' Solar Savings (' + SITE.year + '): Net Metering, Rates & Rebate Guide',
+    utility.utility_name + ' solar customers: save with ' + utility.net_metering_rate + ' net metering at $' + utility.export_compensation + '/kWh export rate. ' + SITE.year + ' complete guide to solar incentives, rates & savings for ' + fmt(utility.customers_served) + ' customers in ' + utility.state + '.',
     '/utility-rebates/' + utility.slug + '/',
     body,
     {
@@ -687,8 +753,15 @@ function generateCityPage(city, cityData) {
   var body = `
 <section class="content-section">
 <div class="container">
-<h1>Is Solar Worth It in ${city.city_name}, ${city.state_abbrev}? Cost, Tax Credits &amp; ROI (${SITE.year})</h1>
-<p class="lead">Is solar worth it in ${city.city_name}? With ${city.avg_sun_hours} peak sun hours per day and electricity at $${city.avg_electricity_rate}/kWh (${city.electricity_trend} trend), solar delivers <strong>estimated savings of ${dollar(roi.twentyYearSavings)} over 20 years</strong>. See your personalized estimate including the 30% federal tax credit, <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} state incentives</a>, and local programs.</p>
+<h1>Solar Panel Cost in ${city.city_name}, ${city.state_abbrev} (${SITE.year}): Savings Calculator &amp; Tax Credits</h1>
+<div class="info-box" style="background:#e8f5e9;border-left:4px solid #2e7d32;padding:1rem 1.25rem;margin:0 0 1.5rem;">
+<strong>How Much Does Solar Cost in ${city.city_name}? (${SITE.year})</strong><br>
+Net cost after 30% tax credit: <strong>${dollar(roi.netCost)}</strong><br>
+Annual electricity savings: <strong>${dollar(roi.annualSavings)}/year</strong><br>
+20-year total savings: <strong>${dollar(roi.twentyYearSavings)}</strong><br>
+Break-even: <strong>~${roi.breakEvenYears} years</strong> | Sun hours: <strong>${city.avg_sun_hours} hrs/day</strong>
+</div>
+<p class="lead"><strong>How much can you save with solar in ${city.city_name}?</strong> With electricity at $${city.avg_electricity_rate}/kWh (${city.electricity_trend} trend) and ${city.avg_sun_hours} peak sun hours per day, ${city.city_name} homeowners save an estimated <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong>. After the 30% federal tax credit and <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} state incentives</a>, net system cost is just <strong>${dollar(roi.netCost)}</strong>. Solar pays for itself in ~${roi.breakEvenYears} years — then it's free electricity.</p>
 ${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${aboveFoldQuoteCta(city.city_name + ', ' + city.state_abbrev)}
@@ -718,6 +791,42 @@ ${comparisonTable(['Period', 'Cumulative Savings', 'Net Position', 'Status'], ye
 </section>
 
 ${midContentFinancingCta(city.city_name, dollar(roi.annualSavings))}
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>How Much Can You Save With Solar in ${city.city_name}? (${SITE.year})</h2>
+<div class="content-prose">
+<p>Here is the exact savings math for a typical ${city.city_name} solar installation:</p>
+<ul>
+<li><strong>System cost:</strong> ${dollar(parentState.avg_install_cost)} for ${parentState.avg_system_size} kW</li>
+<li><strong>Federal tax credit (30%):</strong> -${dollar(roi.fedSavings)}</li>
+${parentState.state_tax_credit_percent > 0 ? '<li><strong>State tax credit (' + parentState.state_tax_credit_percent + '%):</strong> -' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '</li>' : ''}
+${parentState.state_rebate_amount > 0 ? '<li><strong>State rebate:</strong> -' + dollar(parentState.state_rebate_amount) + '</li>' : ''}
+<li><strong>Your net cost:</strong> ${dollar(roi.netCost)}</li>
+<li><strong>Annual savings:</strong> ${dollar(roi.annualSavings)}/year (${dollar(Math.round(roi.annualSavings / 12))}/month)</li>
+<li><strong>Break-even:</strong> ~${roi.breakEvenYears} years</li>
+<li><strong>20-year profit:</strong> ${dollar(roi.twentyYearSavings)}</li>
+</ul>
+<p>With electricity rates ${city.electricity_trend} in ${city.city_name}, your actual savings are likely to be <strong>even higher</strong> than these estimates. Every year you wait, you miss out on approximately ${dollar(roi.annualSavings)} in savings.</p>
+</div>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+<h2>Solar vs. Electric Bill: ${city.city_name} (${SITE.year})</h2>
+<div class="content-prose">
+<p>At $${city.avg_electricity_rate}/kWh with rates that are <strong>${city.electricity_trend}</strong>, here is how much ${city.city_name} homeowners spend on electricity vs. what they'd pay with solar:</p>
+${comparisonTable(['Timeframe', 'Electric Bill Only', 'With Solar Panels', 'You Save'], [
+  ['Monthly', dollar(Math.round(city.avg_electricity_rate * 900)), dollar(Math.max(0, Math.round((city.avg_electricity_rate * 900) - (roi.annualSavings / 12)))), dollar(Math.round(roi.annualSavings / 12))],
+  ['Annual', dollar(Math.round(city.avg_electricity_rate * 10800)), dollar(Math.max(0, Math.round(city.avg_electricity_rate * 10800 - roi.annualSavings))), dollar(roi.annualSavings)],
+  ['10 Years', dollar(Math.round(city.avg_electricity_rate * 10800 * 10)), '—', dollar(Math.round(roi.annualSavings * 10 - roi.netCost))],
+  ['20 Years', dollar(Math.round(city.avg_electricity_rate * 10800 * 20)), '—', dollar(roi.twentyYearSavings)]
+])}
+<p><strong>The verdict:</strong> Solar panels in ${city.city_name} deliver a <strong>${Math.round((roi.twentyYearSavings / roi.netCost) * 100)}% return on investment</strong> over 20 years. That is ${Math.round(roi.twentyYearSavings / roi.netCost)}x your money back.</p>
+</div>
+</div>
+</section>
 
 <section class="content-section">
 <div class="container">
@@ -794,11 +903,22 @@ ${relatedPagesSection('More Cities in ' + city.state_name, nearbyCities.map(func
 }))}
 
 ${ctaBlock('primary', 'Get Your ' + city.city_name + ' Solar Estimate', 'See exactly how much you can save with solar in ' + city.city_name + '. It takes less than 30 seconds.', '#widget-city')}
+
+${contextualLinksBlock('Estimate Your Solar Savings', [
+  { title: city.state_name + ' Solar Rebates & Tax Credits', url: '/solar-rebates-incentives-' + parentState.slug + '/' },
+  { title: 'Solar Panel Cost Guide (' + SITE.year + ')', url: '/guide/solar-panel-cost-guide/' },
+  { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/' },
+  { title: 'Best Solar Panels ' + SITE.year, url: '/guide/best-solar-panels-2026/' },
+  { title: 'Solar Financing: $0 Down Options', url: '/solar-financing/' },
+  { title: 'Solar Loan vs Solar Lease', url: '/compare/solar-loan-vs-solar-lease/' },
+  { title: 'How to Choose a Solar Installer', url: '/guide/how-to-choose-solar-installer/' },
+  { title: 'Solar Battery Buying Guide', url: '/guide/solar-battery-buying-guide/' }
+])}
 `;
 
   return baseTemplate(
-    'Is Solar Worth It in ' + city.city_name + ', ' + city.state_abbrev + '? Cost, Tax Credits & ROI (' + SITE.year + ')',
-    'Is solar worth it in ' + city.city_name + ', ' + city.state_abbrev + '? Save ' + dollar(roi.twentyYearSavings) + ' over 20 years with ' + city.avg_sun_hours + ' sun hours/day. Net cost after incentives: ' + dollar(roi.netCost) + '. Break-even in ~' + roi.breakEvenYears + ' years. Calculate your exact savings free.',
+    'Solar Panel Cost in ' + city.city_name + ', ' + city.state_abbrev + ' (' + SITE.year + '): Calculator & Savings',
+    'Solar panels in ' + city.city_name + ', ' + city.state_abbrev + ' cost ' + dollar(roi.netCost) + ' after the 30% tax credit (' + SITE.year + '). Save ' + dollar(roi.twentyYearSavings) + ' over 20 years. ' + city.avg_sun_hours + ' sun hrs/day, $' + city.avg_electricity_rate + '/kWh rates (' + city.electricity_trend + '). Free savings calculator.',
     '/' + slug + '/',
     body,
     {
@@ -1246,8 +1366,8 @@ function generateComparisonPage(comparison, allComparisons) {
   var body = `
 <section class="content-section">
 <div class="container">
-<h1>${comparison.title} (${SITE.year} Comparison)</h1>
-<p class="lead">${comparison.description}</p>
+<h1>${comparison.title}: Cost &amp; Savings Compared (${SITE.year})</h1>
+<p class="lead"><strong>Which saves you more money — ${comparison.option_a} or ${comparison.option_b}?</strong> ${comparison.description} See our side-by-side cost and savings breakdown below.</p>
 
 ${aboveFoldQuoteCta('Your Area')}
 </div>
@@ -1293,11 +1413,20 @@ ${relatedPagesSection('More Solar Comparisons', relatedComparisons.map(function 
 }))}
 
 ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Ready to go solar? Enter your ZIP code to see your personalized savings estimate.', '#widget-comparison')}
+
+${contextualLinksBlock('Explore Solar Savings Guides', [
+  { title: 'Solar Panel Cost Guide (' + SITE.year + ')', url: '/guide/solar-panel-cost-guide/' },
+  { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/' },
+  { title: 'Best Solar Panels ' + SITE.year, url: '/guide/best-solar-panels-2026/' },
+  { title: 'Solar Financing Options', url: '/solar-financing/' },
+  { title: 'Solar Brand Reviews', url: '/reviews/' },
+  { title: 'Best Solar Companies', url: '/guide/best-solar-companies-2026/' }
+])}
 `;
 
   return baseTemplate(
-    comparison.title + ' — ' + SITE.year + ' Expert Analysis',
-    comparison.description + ' Compare ' + comparison.option_a + ' vs. ' + comparison.option_b + ' for your home in ' + SITE.year + '. Data-driven analysis with savings calculations.',
+    comparison.title + ' (' + SITE.year + '): Cost, Savings & Which Is Better',
+    comparison.option_a + ' vs ' + comparison.option_b + ': which saves you more money in ' + SITE.year + '? ' + comparison.description + ' Side-by-side cost & savings comparison.',
     '/compare/' + comparison.slug + '/',
     body,
     {
@@ -1342,7 +1471,7 @@ function generatePillarPage(pillar, allPillars) {
   var body = `
 <section class="content-section">
 <div class="container">
-<h1>${pillar.title} (${SITE.year})</h1>
+<h1>${pillar.title} (${SITE.year} Guide)</h1>
 <p class="lead">${pillar.description}</p>
 
 ${aboveFoldQuoteCta('Your Area')}
@@ -1383,11 +1512,22 @@ ${relatedPagesSection('More Solar Guides', relatedPillars.map(function (p) {
 }))}
 
 ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Use our calculator to see how much you can save with solar energy.', '#widget-pillar')}
+
+${contextualLinksBlock('Related Solar Savings Resources', [
+  { title: 'Solar Panel Cost Guide', url: '/guide/solar-panel-cost-guide/' },
+  { title: 'Best Solar Panels ' + SITE.year, url: '/guide/best-solar-panels-2026/' },
+  { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/' },
+  { title: 'Solar Financing: $0 Down Options', url: '/solar-financing/' },
+  { title: 'Solar Loan vs Solar Lease', url: '/compare/solar-loan-vs-solar-lease/' },
+  { title: 'Best Solar Companies ' + SITE.year, url: '/guide/best-solar-companies-2026/' },
+  { title: 'Solar Brand Reviews', url: '/reviews/' },
+  { title: 'Solar Battery Buying Guide', url: '/guide/solar-battery-buying-guide/' }
+])}
 `;
 
   return baseTemplate(
-    pillar.title,
-    pillar.description,
+    pillar.title + ' (' + SITE.year + ' Guide)',
+    pillar.description + ' Updated for ' + SITE.year + ' with real cost data, savings calculations, and expert analysis.',
     '/guide/' + pillar.slug + '/',
     body,
     {
@@ -1776,7 +1916,7 @@ function generateBrandReviewPage(brand, allBrands) {
   var body = `
 <section class="content-section">
 <div class="container">
-<h1>${brandName} Solar Review (${SITE.year})</h1>
+<h1>${brandName} Solar Review (${SITE.year}): Cost, Warranty &amp; Is It Worth It?</h1>
 <p class="lead">${brandDescription}</p>
 ${lastUpdatedBlock('Emily Watson', 'emily-watson')}
 </div>
@@ -1821,7 +1961,7 @@ ${relatedPagesSection('More Solar Brand Reviews', otherBrands.map(function(b) {
 }))}
 `;
 
-  return baseTemplate(brandName + ' Solar Review ' + SITE.year + ': Pricing, Warranty & Rating', brandName + ' solar review ' + SITE.year + ': rated ' + brandRating + '/5. ' + (brand.best_for || 'Detailed analysis') + '. Pros, cons, pricing, warranty analysis & comparison with alternatives.', '/reviews/' + brand.slug + '/', body, {
+  return baseTemplate(brandName + ' Solar Review (' + SITE.year + '): Cost, Warranty & Is It Worth It?', brandName + ' solar panels review ' + SITE.year + ': rated ' + brandRating + '/5. How much do they cost? ' + (brand.best_for || 'Detailed analysis') + '. Pros, cons, pricing, warranty & real savings comparison.', '/reviews/' + brand.slug + '/', body, {
     breadcrumbs: crumbs,
     schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), reviewSchema(brandName, 'Product', brandRating || 0, brand.review_count || 150), articleSchema(brandName + ' Solar Review', brandDescription, '/reviews/' + brand.slug + '/'))
   });
@@ -1969,9 +2109,9 @@ ${relatedPagesSection('More Best-Of Guides', otherBestOf.map(function(b) {
 }))}
 `;
 
-  var metaDesc = bestOf.meta_description || bestOf.intro || '';
+  var metaDesc = (bestOf.meta_description || bestOf.intro || '') + ' Updated for ' + SITE.year + ' with real pricing, ratings & savings data.';
 
-  return baseTemplate(bestOf.title, metaDesc, '/best/' + bestOf.slug + '/', body, {
+  return baseTemplate(bestOf.title + ' (' + SITE.year + ')', metaDesc, '/best/' + bestOf.slug + '/', body, {
     breadcrumbs: crumbs,
     schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(bestOf.title, metaDesc, '/best/' + bestOf.slug + '/'))
   });
@@ -2091,7 +2231,10 @@ ${relatedPagesSection('Best Solar Companies in Other Locations', otherEntries.ma
 }))}
 `;
 
-  return baseTemplate(pageTitle, pageDescription, '/best-solar-companies/' + entry.slug + '/', body, {
+  var seoTitle = pageTitle + (pageTitle.indexOf(SITE.year) >= 0 ? '' : ' (' + SITE.year + ')');
+  var seoDescription = pageDescription + ' Compare quotes, pricing & customer reviews. Updated ' + SITE.year + '.';
+
+  return baseTemplate(seoTitle, seoDescription, '/best-solar-companies/' + entry.slug + '/', body, {
     breadcrumbs: crumbs,
     schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(pageTitle, pageDescription, '/best-solar-companies/' + entry.slug + '/'))
   });
@@ -2148,8 +2291,8 @@ ${relatedPagesSection('More Solar Guides', relatedArticles)}
     '</script><script type="application/ld+json">' + breadcrumbSchema(crumbs);
 
   return baseTemplate(
-    article.title,
-    article.description,
+    article.title + (article.title.indexOf(SITE.year) >= 0 ? '' : ' (' + SITE.year + ')'),
+    article.description + (article.description.indexOf(SITE.year) >= 0 ? '' : ' Updated for ' + SITE.year + '.'),
     '/article/' + article.slug + '/',
     body,
     {
