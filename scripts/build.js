@@ -420,23 +420,6 @@ fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemap);
 console.log('Generating robots.txt...');
 const robotsTxt = `User-agent: *
 Allow: /
-Disallow: /.netlify/
-Disallow: /chat.html
-Disallow: /states
-Disallow: /solar-rebates
-Disallow: /comparisons
-Disallow: /guides
-Disallow: /blog
-
-User-agent: Googlebot
-Allow: /
-Disallow: /.netlify/
-Disallow: /chat.html
-Disallow: /states
-Disallow: /solar-rebates
-Disallow: /comparisons
-Disallow: /guides
-Disallow: /blog
 
 Sitemap: ${SITE_URL}/sitemap.xml`;
 
