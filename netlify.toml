@@ -33,18 +33,18 @@
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
 
-# --- Canonical domain enforcement: www → non-www ---
-# Ensures Google and all crawlers see only the canonical domain.
-# Netlify handles http→https at the CDN level via "Force HTTPS" setting.
+# --- Canonical domain enforcement: www → non-www (single 301 hop) ---
+# Netlify handles http→https at the CDN level via the "Force HTTPS" setting,
+# so no separate https rule is required here.
 [[redirects]]
   from = "https://www.solarsavingsai.com/*"
   to = "https://solarsavingsai.com/:splat"
   status = 301
   force = true
 
-# --- Redirect /index.html and /*/index.html to clean trailing-slash URLs ---
-# Prevents duplicate content from explicit index.html access (force required
-# because the files exist on disk).
+# --- Canonical URL form: /index.html → trailing-slash equivalent ---
+# Prevents duplicate-content discovery via explicit index.html access. Force
+# is required because the source files exist on disk under each route.
 [[redirects]]
   from = "/index.html"
   to = "/"
@@ -57,33 +57,42 @@
   status = 301
   force = true
 
-# --- Legacy / deprecated URL redirects (single-hop to canonical) ---
+# --- Removed legacy URLs: serve 410 Gone so Google permanently drops them ---
+# These paths formerly 301-redirected, which Google flagged as
+# "Page with redirect" in Search Console. 410 tells crawlers the URL is gone
+# for good and is removed from the index faster than a 301 ever would be.
 [[redirects]]
   from = "/states"
-  to = "/#state-map"
-  status = 301
+  to = "/404.html"
+  status = 410
+  force = true
 
 [[redirects]]
   from = "/solar-rebates"
-  to = "/#state-map"
-  status = 301
+  to = "/404.html"
+  status = 410
+  force = true
 
 [[redirects]]
   from = "/comparisons"
-  to = "/compare/solar-panels-vs-grid-power/"
-  status = 301
+  to = "/404.html"
+  status = 410
+  force = true
 
 [[redirects]]
   from = "/guides"
-  to = "/guide/complete-guide-home-solar/"
-  status = 301
+  to = "/404.html"
+  status = 410
+  force = true
 
 [[redirects]]
   from = "/blog"
-  to = "/articles/"
-  status = 301
+  to = "/404.html"
+  status = 410
+  force = true
 
 [[redirects]]
   from = "/blog/*"
-  to = "/articles/"
-  status = 301
+  to = "/404.html"
+  status = 410
+  force = true
