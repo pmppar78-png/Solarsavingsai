@@ -93,7 +93,10 @@ ${analyticsScript()}
    -------------------------------------------------------------------------- */
 function headerNavLinksMarkup() {
   return [
+    '<li><a href="/states" class="nav-link">State Rebates</a></li>',
+    '<li><a href="/solar-rebates" class="nav-link">Solar Rebates</a></li>',
     '<li><a href="/solar-financing/" class="nav-link">Solar Financing</a></li>',
+    '<li><a href="/comparisons" class="nav-link">Comparisons</a></li>',
     '<li><a href="/solar-glossary/" class="nav-link">Solar Glossary</a></li>',
     '<li><a href="/guide/best-solar-panels-2026/" class="nav-link">Best Solar Panels</a></li>',
     '<li><a href="/guide/best-solar-companies-2026/" class="nav-link">Best Solar Companies</a></li>',

@@ -121,6 +121,16 @@ console.log('\nGenerating homepage...');
 writePage(path.join(DIST_DIR, 'index.html'), templates.generateHomepage(data));
 pageCount++;
 
+// Public hub pages restored for legacy Search Console URLs. These are written
+// as flat HTML files so the clean URLs resolve without a directory slash hop.
+console.log('Generating public hub pages...');
+writePage(path.join(DIST_DIR, 'states.html'), templates.generateStatesHubPage({ states, cities }));
+pageCount++;
+writePage(path.join(DIST_DIR, 'solar-rebates.html'), templates.generateSolarRebatesHubPage({ states }));
+pageCount++;
+writePage(path.join(DIST_DIR, 'comparisons.html'), templates.generateComparisonsHubPage(comparisons));
+pageCount++;
+
 // State pages
 console.log(`Generating ${states.length} state pages...`);
 for (const state of states) {
@@ -342,6 +352,9 @@ function addEntry(urlPath, priority, lastmod) {
 }
 
 addEntry('/', 1.0);
+addEntry('states', 0.8);
+addEntry('solar-rebates', 0.8);
+addEntry('comparisons', 0.7);
 
 for (const state of states) {
   addEntry(`solar-rebates-incentives-${state.slug}/`, 0.9);
