@@ -57,26 +57,45 @@
   status = 301
   force = true
 
-# --- Removed legacy URLs: serve 410 Gone so Google permanently drops them ---
-# These paths formerly 301-redirected, which Google flagged as
-# "Page with redirect" in Search Console. 410 tells crawlers the URL is gone
-# for good and is removed from the index faster than a 301 ever would be.
+# --- Restored public hubs: serve clean URLs directly with 200 rewrites ---
+# These legacy public URLs were previously forced to 410 after being reported
+# as redirecting pages. They are now indexable hub pages with slashless
+# canonicals, and the slash variants are internally rewritten to the same
+# content so crawlers do not hit a redirect before the final page.
 [[redirects]]
   from = "/states"
-  to = "/404.html"
-  status = 410
+  to = "/states.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/states/"
+  to = "/states.html"
+  status = 200
   force = true
 
 [[redirects]]
   from = "/solar-rebates"
-  to = "/404.html"
-  status = 410
+  to = "/solar-rebates.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/solar-rebates/"
+  to = "/solar-rebates.html"
+  status = 200
   force = true
 
 [[redirects]]
   from = "/comparisons"
-  to = "/404.html"
-  status = 410
+  to = "/comparisons.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/comparisons/"
+  to = "/comparisons.html"
+  status = 200
   force = true
 
 [[redirects]]

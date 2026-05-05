@@ -338,7 +338,205 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above
 }
 
 // ---------------------------------------------------------------------------
-// 2. State Page
+// 2. Public Hub Pages
+// ---------------------------------------------------------------------------
+function generateStatesHubPage(data) {
+  var states = data.states || [];
+  var cities = data.cities || [];
+
+  var regionMap = {};
+  states.forEach(function (s) {
+    var region = s.region || 'other';
+    if (!regionMap[region]) regionMap[region] = [];
+    regionMap[region].push(s);
+  });
+
+  var regionNames = { northeast: 'Northeast', southeast: 'Southeast', midwest: 'Midwest', southwest: 'Southwest', west: 'West', pacific: 'Pacific', other: 'Other' };
+  var stateSections = Object.keys(regionMap).sort().map(function (region) {
+    var links = regionMap[region].sort(function (a, b) {
+      return a.state_name.localeCompare(b.state_name);
+    }).map(function (s) {
+      return '<a href="/solar-rebates-incentives-' + s.slug + '/" class="related-card"><span class="related-title">' + escapeHtml(s.state_name) + ' Solar Rebates</span><span class="related-meta">' + s.sunlight_hours + ' sun hrs/day &middot; $' + s.avg_kwh_rate + '/kWh</span></a>';
+    }).join('');
+    return '<section class="content-section"><div class="container"><h2>' + (regionNames[region] || escapeHtml(region)) + '</h2><div class="related-grid">' + links + '</div></div></section>';
+  }).join('');
+
+  var topCities = cities.slice(0, 12).map(function (c) {
+    return '<a href="/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/" class="related-card"><span class="related-title">' + escapeHtml(c.city_name) + ', ' + escapeHtml(c.state_abbrev) + '</span><span class="related-meta">' + c.avg_sun_hours + ' sun hrs/day &middot; $' + c.avg_electricity_rate + '/kWh</span></a>';
+  }).join('');
+
+  var crumbs = [
+    { label: 'Home', url: '/' },
+    { label: 'States' }
+  ];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Solar Rebates and Incentives by State (${SITE.year})</h1>
+<p class="lead">Compare solar tax credits, rebates, net metering rules, estimated installation costs, and 20-year savings across all 50 states.</p>
+${statsGrid([
+  { value: '50', label: 'States Covered' },
+  { value: '30%', label: 'Federal Solar Tax Credit' },
+  { value: fmt(cities.length) + '+', label: 'City Solar ROI Reports' },
+  { value: '$20K+', label: 'Typical 20-Year Savings' }
+])}
+${eligibilityWidget('states-hub')}
+</div>
+</section>
+
+${stateSections}
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>Popular City Solar Reports</h2>
+<div class="related-grid">${topCities}</div>
+</div>
+</section>
+
+${ctaBlock('primary', 'Calculate Your State Solar Savings', 'Enter your ZIP code to see rebates, tax credits, and estimated payback for your home.', '#widget-states-hub')}
+`;
+
+  return baseTemplate(
+    'Solar Rebates and Incentives by State (' + SITE.year + ')',
+    'Browse solar rebates, tax credits, net metering rules, installation costs, and savings estimates for all 50 states.',
+    '/states',
+    body,
+    {
+      breadcrumbs: crumbs,
+      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Rebates and Incentives by State', 'State-by-state solar rebate and incentive directory.', '/states')),
+      states: states
+    }
+  );
+}
+
+function generateSolarRebatesHubPage(data) {
+  var states = data.states || [];
+
+  var highValueStates = states.slice().sort(function (a, b) {
+    var aValue = (a.state_tax_credit_percent || 0) + (a.state_rebate_amount || 0) / 1000 + (a.srec_available ? 5 : 0) + (a.property_tax_exemption ? 2 : 0) + (a.sales_tax_exemption ? 2 : 0);
+    var bValue = (b.state_tax_credit_percent || 0) + (b.state_rebate_amount || 0) / 1000 + (b.srec_available ? 5 : 0) + (b.property_tax_exemption ? 2 : 0) + (b.sales_tax_exemption ? 2 : 0);
+    return bValue - aValue;
+  }).slice(0, 12);
+
+  var rebateCards = highValueStates.map(function (s) {
+    var details = [];
+    if (s.state_tax_credit_percent > 0) details.push(s.state_tax_credit_percent + '% state tax credit');
+    if (s.state_rebate_amount > 0) details.push(dollar(s.state_rebate_amount) + ' state rebate');
+    if (s.srec_available) details.push('SRECs available');
+    if (s.property_tax_exemption) details.push('property tax exemption');
+    if (s.sales_tax_exemption) details.push('sales tax exemption');
+    return '<a href="/solar-rebates-incentives-' + s.slug + '/" class="related-card"><span class="related-title">' + escapeHtml(s.state_name) + '</span><span class="related-meta">' + (details.length ? details.join(' &middot; ') : 'Federal tax credit plus local utility programs') + '</span></a>';
+  }).join('');
+
+  var rows = states.map(function (s) {
+    return [
+      '<a href="/solar-rebates-incentives-' + s.slug + '/">' + escapeHtml(s.state_name) + '</a>',
+      s.state_tax_credit_percent > 0 ? s.state_tax_credit_percent + '%' : 'None',
+      s.state_rebate_amount > 0 ? dollar(s.state_rebate_amount) : 'Varies',
+      s.net_metering_status,
+      s.srec_available ? '$' + s.srec_value + '/MWh' : 'No'
+    ];
+  });
+
+  var crumbs = [
+    { label: 'Home', url: '/' },
+    { label: 'Solar Rebates' }
+  ];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Solar Rebates, Tax Credits, and Incentives (${SITE.year})</h1>
+<p class="lead">Find the federal solar tax credit, state rebates, SREC programs, property tax exemptions, sales tax exemptions, and net metering policies available where you live.</p>
+${aboveFoldQuoteCta('Your Area')}
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>States With Strong Solar Incentives</h2>
+<div class="related-grid">${rebateCards}</div>
+</div>
+</section>
+
+<section class="content-section">
+<div class="container">
+<h2>State Solar Incentive Directory</h2>
+${comparisonTable(['State', 'State Tax Credit', 'State Rebate', 'Net Metering', 'SRECs'], rows)}
+</div>
+</section>
+
+${contextualLinksBlock('Solar Incentive Guides', [
+  { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/' },
+  { title: 'Solar Financing Options', url: '/solar-financing/' },
+  { title: 'Solar Panel Cost Guide', url: '/guide/solar-panel-cost-guide/' },
+  { title: 'Solar Glossary', url: '/solar-glossary/' }
+])}
+`;
+
+  return baseTemplate(
+    'Solar Rebates, Tax Credits, and Incentives (' + SITE.year + ')',
+    'Find solar rebates, tax credits, SRECs, property tax exemptions, sales tax exemptions, and net metering policies by state.',
+    '/solar-rebates',
+    body,
+    {
+      breadcrumbs: crumbs,
+      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Rebates, Tax Credits, and Incentives', 'Complete state-by-state solar incentive directory.', '/solar-rebates')),
+      states: states
+    }
+  );
+}
+
+function generateComparisonsHubPage(comparisons) {
+  var items = comparisons || [];
+  var comparisonCards = items.map(function (c) {
+    return '<a href="/compare/' + c.slug + '/" class="related-card"><span class="related-title">' + escapeHtml(c.title) + '</span><span class="related-meta">' + escapeHtml(c.description) + '</span></a>';
+  }).join('');
+
+  var crumbs = [
+    { label: 'Home', url: '/' },
+    { label: 'Comparisons' }
+  ];
+
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Solar Comparisons (${SITE.year})</h1>
+<p class="lead">Compare solar panels, grid electricity, batteries, financing options, leases, PPAs, and other common solar decisions before choosing a system.</p>
+${eligibilityWidget('comparisons-hub')}
+</div>
+</section>
+
+<section class="content-section bg-light">
+<div class="container">
+<h2>Compare Solar Options</h2>
+<div class="related-grid">${comparisonCards}</div>
+</div>
+</section>
+
+${comparisonAffiliateTable('Compare Top Solar Providers', [
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare 3-7 quotes free', rating: '4.8/5', slug: 'energysage-comparisons', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down lease and loan options', rating: '4.5/5', slug: 'sunrun-comparisons', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
+  { name: 'SunPower', type: 'Premium', highlight: 'High-efficiency panel systems', rating: '4.6/5', slug: 'sunpower-comparisons', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+])}
+`;
+
+  return baseTemplate(
+    'Solar Comparisons (' + SITE.year + '): Panels, Financing, Batteries and More',
+    'Compare solar panels, grid power, batteries, financing, leases, PPAs, and other solar options with side-by-side savings analysis.',
+    '/comparisons',
+    body,
+    {
+      breadcrumbs: crumbs,
+      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Comparisons', 'Side-by-side solar comparison guides.', '/comparisons')),
+      states: []
+    }
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 3. State Page
 // ---------------------------------------------------------------------------
 function generateStatePage(state, stateData) {
   var states = stateData.states || [];
@@ -396,7 +594,7 @@ function generateStatePage(state, stateData) {
 
   var crumbs = [
     { label: 'Home', url: '/' },
-    { label: 'State Rebates', url: '/#state-map' },
+    { label: 'State Rebates', url: '/states' },
     { label: state.state_name }
   ];
 
@@ -1359,7 +1557,7 @@ function generateComparisonPage(comparison, allComparisons) {
 
   var crumbs = [
     { label: 'Home', url: '/' },
-    { label: 'Comparisons', url: '/#comparisons' },
+    { label: 'Comparisons', url: '/comparisons' },
     { label: comparison.title }
   ];
 
@@ -2407,6 +2605,9 @@ function generateNotFoundPage() {
 // ---------------------------------------------------------------------------
 module.exports = {
   generateHomepage,
+  generateStatesHubPage,
+  generateSolarRebatesHubPage,
+  generateComparisonsHubPage,
   generateStatePage,
   generateUtilityPage,
   generateCityPage,
