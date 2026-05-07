@@ -29,7 +29,9 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
   const fullTitle = escapeHtml(title) + ' | ' + escapeHtml(SITE.name);
   const safeDesc = escapeHtml(description);
   const canonicalUrl = SITE.url + (canonicalPath || '/');
-  const noindexTag = opts.noindex ? '\n<meta name="robots" content="noindex">' : '';
+  const robotsContent = opts.noindex
+    ? 'noindex,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'
+    : 'max-image-preview:large,max-snippet:-1,max-video-preview:-1';
 
   const breadcrumbsHtml = opts.breadcrumbs
     ? '<div class="container">' + breadcrumbComponent(opts.breadcrumbs) + '</div>'
@@ -45,9 +47,9 @@ function baseTemplate(title, description, canonicalPath, bodyContent, options) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${fullTitle}</title>
-<meta name="description" content="${safeDesc}">${noindexTag}
+<meta name="description" content="${safeDesc}">
 <link rel="canonical" href="${escapeHtml(canonicalUrl)}">
-<meta name="robots" content="max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="robots" content="${robotsContent}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="${fullTitle}">
 <meta property="og:description" content="${safeDesc}">
@@ -97,17 +99,10 @@ function headerNavLinksMarkup() {
     '<li><a href="/solar-rebates" class="nav-link">Solar Rebates</a></li>',
     '<li><a href="/solar-financing/" class="nav-link">Solar Financing</a></li>',
     '<li><a href="/comparisons" class="nav-link">Comparisons</a></li>',
-    '<li><a href="/solar-glossary/" class="nav-link">Solar Glossary</a></li>',
+    '<li><a href="/guide/solar-panel-cost-guide/" class="nav-link">Solar Cost Guide</a></li>',
+    '<li><a href="/article/federal-solar-tax-credit-2026-complete-guide/" class="nav-link">Tax Credit Guide</a></li>',
     '<li><a href="/guide/best-solar-panels-2026/" class="nav-link">Best Solar Panels</a></li>',
-    '<li><a href="/guide/best-solar-companies-2026/" class="nav-link">Best Solar Companies</a></li>',
-    '<li><a href="/reviews/" class="nav-link">Brand Reviews</a></li>',
-    '<li><a href="/articles/" class="nav-link">Solar Articles</a></li>',
-    '<li><a href="/about/" class="nav-link">About Us</a></li>',
-    '<li><a href="/contact/" class="nav-link">Contact</a></li>',
-    '<li><a href="/authors/" class="nav-link">Our Team</a></li>',
-    '<li><a href="/methodology/" class="nav-link">Methodology</a></li>',
-    '<li><a href="/editorial-standards/" class="nav-link">Editorial Standards</a></li>',
-    '<li><a href="/privacy-policy/" class="nav-link">Privacy Policy</a></li>'
+    '<li><a href="/guide/best-solar-companies-2026/" class="nav-link">Best Solar Companies</a></li>'
   ].join('');
 }
 
@@ -183,12 +178,9 @@ ${stateLinks}
 <h4>Resources</h4>
 <ul>
 <li><a href="/solar-financing/">Solar Financing Guide</a></li>
-<li><a href="/solar-glossary/">Solar Glossary</a></li>
+<li><a href="/guide/solar-panel-cost-guide/">Solar Cost Guide</a></li>
 <li><a href="/guide/best-solar-panels-2026/">Best Solar Panels ${SITE.year}</a></li>
 <li><a href="/guide/best-solar-companies-2026/">Best Solar Companies</a></li>
-<li><a href="/reviews/">Brand Reviews</a></li>
-<li><a href="/articles/">Solar Articles</a></li>
-<li><a href="/guide/complete-guide-home-solar/">Complete Solar Guide</a></li>
 <li><a href="/article/federal-solar-tax-credit-2026-complete-guide/">Solar Tax Credit Guide</a></li>
 <li><a href="/compare/solar-panels-vs-grid-power/">Solar vs. Grid Power</a></li>
 </ul>

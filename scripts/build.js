@@ -68,6 +68,55 @@ const stateBestCompanies = loadJSONSafe('state-best-companies.json');
 
 const data = { states, utilities, cities, financing, glossary, alerts };
 
+// ---------------------------------------------------------------------------
+// Priority indexing model
+// ---------------------------------------------------------------------------
+const PRIORITY_STATE_SLUGS = [
+  'california', 'texas', 'florida', 'arizona', 'new-york',
+  'massachusetts', 'new-jersey', 'nevada', 'colorado', 'north-carolina'
+];
+const PRIORITY_CITY_KEYS = [
+  'los-angeles-ca', 'phoenix-az', 'houston-tx', 'san-diego-ca', 'denver-co',
+  'orlando-fl', 'charlotte-nc', 'san-antonio-tx', 'austin-tx', 'tampa-fl'
+];
+const PRIORITY_GUIDE_SLUGS = [
+  'solar-panel-cost-guide',
+  'solar-tax-credits-guide',
+  'solar-roi-payback-period',
+  'solar-energy-savings-calculator',
+  'solar-financing-complete-guide',
+  'solar-loans-vs-leases-vs-ppa',
+  'best-solar-panels-2026',
+  'best-solar-companies-2026',
+  'how-to-choose-solar-installer'
+];
+const PRIORITY_ARTICLE_SLUGS = [
+  'federal-solar-tax-credit-2026-complete-guide',
+  'solar-panel-roi-real-numbers-analysis',
+  'net-metering-explained-selling-solar-energy-back',
+  'solar-panels-vs-grid-power-20-year-cost-comparison',
+  'solar-financing-cash-loan-lease-ppa-compared',
+  'electricity-prices-rising-solar-locks-rate',
+  'solar-battery-storage-worth-investment-2026',
+  'solar-savings-index-2026'
+];
+const priorityStateSet = new Set(PRIORITY_STATE_SLUGS);
+const priorityCitySet = new Set(PRIORITY_CITY_KEYS);
+const priorityGuideSet = new Set(PRIORITY_GUIDE_SLUGS);
+const priorityArticleSet = new Set(PRIORITY_ARTICLE_SLUGS);
+
+function cityKey(city) {
+  return `${city.slug}-${city.state_abbrev.toLowerCase()}`;
+}
+
+function priorityFilteredData(extra) {
+  return Object.assign({}, data, {
+    states: states.filter((s) => priorityStateSet.has(s.slug)),
+    cities: cities.filter((c) => priorityCitySet.has(cityKey(c))),
+    utilities: []
+  }, extra || {});
+}
+
 console.log(`  ${states.length} states`);
 console.log(`  ${utilities.length} utilities`);
 console.log(`  ${cities.length} cities`);
@@ -118,15 +167,15 @@ let pageCount = 0;
 
 // Homepage
 console.log('\nGenerating homepage...');
-writePage(path.join(DIST_DIR, 'index.html'), templates.generateHomepage(data));
+writePage(path.join(DIST_DIR, 'index.html'), templates.generateHomepage(priorityFilteredData()));
 pageCount++;
 
 // Public hub pages restored for legacy Search Console URLs. These are written
 // as flat HTML files so the clean URLs resolve without a directory slash hop.
 console.log('Generating public hub pages...');
-writePage(path.join(DIST_DIR, 'states.html'), templates.generateStatesHubPage({ states, cities }));
+writePage(path.join(DIST_DIR, 'states.html'), templates.generateStatesHubPage(priorityFilteredData()));
 pageCount++;
-writePage(path.join(DIST_DIR, 'solar-rebates.html'), templates.generateSolarRebatesHubPage({ states }));
+writePage(path.join(DIST_DIR, 'solar-rebates.html'), templates.generateSolarRebatesHubPage(priorityFilteredData()));
 pageCount++;
 writePage(path.join(DIST_DIR, 'comparisons.html'), templates.generateComparisonsHubPage(comparisons));
 pageCount++;
@@ -134,7 +183,7 @@ pageCount++;
 // State pages
 console.log(`Generating ${states.length} state pages...`);
 for (const state of states) {
-  const stateData = { states, utilities, cities, alerts };
+  const stateData = priorityFilteredData({ alerts, priorityIndex: priorityStateSet.has(state.slug) });
   const filePath = path.join(DIST_DIR, `solar-rebates-incentives-${state.slug}`, 'index.html');
   writePage(filePath, templates.generateStatePage(state, stateData));
   pageCount++;
@@ -143,7 +192,7 @@ for (const state of states) {
 // Utility pages
 console.log(`Generating ${utilities.length} utility pages...`);
 for (const utility of utilities) {
-  const utilityData = { states, utilities, cities, alerts };
+  const utilityData = priorityFilteredData({ alerts, priorityIndex: false });
   const filePath = path.join(DIST_DIR, 'utility-rebates', utility.slug, 'index.html');
   writePage(filePath, templates.generateUtilityPage(utility, utilityData));
   pageCount++;
@@ -152,7 +201,7 @@ for (const utility of utilities) {
 // City pages
 console.log(`Generating ${cities.length} city pages...`);
 for (const city of cities) {
-  const cityData = { states, utilities, cities, alerts, financing };
+  const cityData = priorityFilteredData({ alerts, financing, priorityIndex: priorityCitySet.has(cityKey(city)) });
   const slug = `is-solar-worth-it-in-${city.slug}-${city.state_abbrev.toLowerCase()}`;
   const filePath = path.join(DIST_DIR, slug, 'index.html');
   writePage(filePath, templates.generateCityPage(city, cityData));
@@ -206,7 +255,11 @@ if (pillarPages.length > 0) {
   console.log(`Generating ${pillarPages.length} pillar pages...`);
   for (const pillar of pillarPages) {
     const filePath = path.join(DIST_DIR, 'guide', pillar.slug, 'index.html');
-    writePage(filePath, templates.generatePillarPage(pillar, pillarPages));
+    writePage(filePath, templates.generatePillarPage(
+      pillar,
+      pillarPages.filter((p) => priorityGuideSet.has(p.slug)),
+      { priorityIndex: priorityGuideSet.has(pillar.slug) }
+    ));
     pageCount++;
   }
 }
@@ -316,7 +369,11 @@ if (articles.length > 0) {
   console.log(`Generating ${articles.length} editorial articles...`);
   for (const article of articles) {
     const filePath = path.join(DIST_DIR, 'article', article.slug, 'index.html');
-    writePage(filePath, templates.generateArticlePage(article, articles));
+    writePage(filePath, templates.generateArticlePage(
+      article,
+      articles.filter((a) => priorityArticleSet.has(a.slug)),
+      { priorityIndex: priorityArticleSet.has(article.slug) }
+    ));
     pageCount++;
   }
 
@@ -352,73 +409,32 @@ function addEntry(urlPath, priority, lastmod) {
 }
 
 addEntry('/', 1.0);
-addEntry('states', 0.8);
-addEntry('solar-rebates', 0.8);
-addEntry('comparisons', 0.7);
+addEntry('states', 0.9);
+addEntry('solar-rebates', 0.9);
+addEntry('comparisons', 0.8);
+addEntry('solar-financing/', 0.9);
 
-for (const state of states) {
-  addEntry(`solar-rebates-incentives-${state.slug}/`, 0.9);
+for (const slug of PRIORITY_STATE_SLUGS) {
+  addEntry(`solar-rebates-incentives-${slug}/`, 0.9);
 }
 
-addEntry('solar-financing/', 0.8);
-
-// Pillar pages (high authority)
-for (const pillar of pillarPages) {
-  addEntry(`guide/${pillar.slug}/`, 0.8);
+for (const key of PRIORITY_CITY_KEYS) {
+  const city = cities.find((c) => cityKey(c) === key);
+  if (city) addEntry(`is-solar-worth-it-in-${key}/`, 0.8);
 }
 
-// Comparison pages (commercial intent)
 for (const comparison of comparisons) {
   addEntry(`compare/${comparison.slug}/`, 0.8);
 }
 
-// Best-of pages (commercial intent)
-addEntry('best/', 0.7);
-for (const entry of bestOf) {
-  addEntry(`best/${entry.slug}/`, 0.8);
+for (const slug of PRIORITY_GUIDE_SLUGS) {
+  addEntry(`guide/${slug}/`, 0.8);
 }
 
-// State/City best companies (commercial intent)
-for (const entry of stateBestCompanies) {
-  addEntry(`best-solar-companies/${entry.slug}/`, 0.8);
+for (const slug of PRIORITY_ARTICLE_SLUGS) {
+  const article = articles.find((a) => a.slug === slug);
+  if (article) addEntry(`article/${slug}/`, 0.8, article.date_modified || '2026-03-01');
 }
-
-// Brand review pages
-for (const brand of brandReviews) {
-  addEntry(`reviews/${brand.slug}/`, 0.7);
-}
-
-for (const utility of utilities) {
-  addEntry(`utility-rebates/${utility.slug}/`, 0.7);
-}
-
-for (const city of cities) {
-  addEntry(`is-solar-worth-it-in-${city.slug}-${city.state_abbrev.toLowerCase()}/`, 0.7);
-}
-
-addEntry('solar-glossary/', 0.7);
-
-// Trust & authority pages
-addEntry('about/', 0.6);
-addEntry('authors/', 0.6);
-addEntry('reviews/', 0.6);
-addEntry('contact/', 0.5);
-addEntry('methodology/', 0.5);
-addEntry('editorial-standards/', 0.5);
-addEntry('privacy-policy/', 0.4);
-
-// Individual author pages
-for (const author of authors) {
-  addEntry(`authors/${author.slug}/`, 0.5);
-}
-
-// Editorial articles
-for (const article of articles) {
-  addEntry(`article/${article.slug}/`, 0.8, article.date_modified || '2026-03-01');
-}
-
-// Articles index page
-addEntry('articles/', 0.7);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
