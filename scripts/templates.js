@@ -546,6 +546,7 @@ function generateStatePage(state, stateData) {
 
   var stateUtilities = utilities.filter(function (u) { return u.state_abbrev === state.state_abbrev; });
   var stateCities = cities.filter(function (c) { return c.state_abbrev === state.state_abbrev; });
+  var priorityIndex = stateData.priorityIndex !== false;
 
   var roi = calculateROI(
     state.avg_install_cost, state.avg_system_size, state.sunlight_hours,
@@ -602,7 +603,7 @@ function generateStatePage(state, stateData) {
 <section class="content-section">
 <div class="container">
 <h1>Solar Panel Cost in ${state.state_name} (${SITE.year}): See Your Exact Savings</h1>
-<p class="lead"><strong>How much does solar cost in ${state.state_name}?</strong> A ${state.avg_system_size} kW system averages ${dollar(state.avg_install_cost)} before incentives — but after the <strong>30% federal tax credit</strong>${state.state_tax_credit_percent > 0 ? ' and ' + state.state_tax_credit_percent + '% state credit' : ''}, your net cost drops to <strong>${dollar(roi.netCost)}</strong>. That means <strong>${dollar(roi.twentyYearSavings)} in savings over 20 years</strong> with a break-even of just ~${roi.breakEvenYears} years. Use our free calculator below to see your exact savings.</p>
+<p class="lead"><strong>Quick decision:</strong> A typical ${state.state_name} homeowner can save about <strong>${dollar(roi.annualSavings)}/year</strong> and <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong>. You qualify for the <strong>30% federal tax credit</strong> if you own the home and owe federal tax${state.state_tax_credit_percent > 0 ? ', plus a ' + state.state_tax_credit_percent + '% ' + state.state_name + ' credit may apply' : ''}${state.state_rebate_amount > 0 ? ', and a ' + dollar(state.state_rebate_amount) + ' state rebate may apply' : ''}. Fastest next step: enter your ZIP and monthly bill below, then compare at least 3 local installer quotes before signing.</p>
 
 <div class="info-box" style="background:#e8f5e9;border-left:4px solid #2e7d32;padding:1rem 1.25rem;margin:1.5rem 0;">
 <strong>Quick Answer: Solar Cost in ${state.state_name} (${SITE.year})</strong><br>
@@ -766,7 +767,8 @@ ${contextualLinksBlock('Related Solar Savings Guides', [
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, state.state_abbrev),
       schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(state.state_name + ' Solar Rebates & Tax Credit ' + SITE.year, 'Complete guide to solar incentives in ' + state.state_name + '. Federal tax credit, state rebates, utility programs, and savings calculator.', '/solar-rebates-incentives-' + state.slug + '/'), serviceSchema('Solar Savings Analysis for ' + state.state_name, 'Personalized solar savings calculator for ' + state.state_name + ' homeowners. Find the federal tax credit, state rebates, and utility incentives.', state.state_name)),
-      states: states
+      states: states,
+      noindex: !priorityIndex
     }
   );
 }
@@ -780,6 +782,7 @@ function generateUtilityPage(utility, utilityData) {
   var alerts = utilityData.alerts || {};
 
   var parentState = states.find(function (s) { return s.state_abbrev === utility.state_abbrev; });
+  var priorityIndex = utilityData.priorityIndex === true;
   var sameStateUtils = utilities.filter(function (u) { return u.state_abbrev === utility.state_abbrev && u.slug !== utility.slug; }).slice(0, 6);
   var servedCities = (utilityData.cities || []).filter(function(c) { return c.state_abbrev === utility.state_abbrev; }).slice(0, 8);
 
@@ -893,7 +896,8 @@ ${contextualLinksBlock('Compare Your Solar Options', [
       breadcrumbs: crumbs,
       alertHtml: utilityAlerts(alerts, utility.slug),
       schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(utility.utility_name + ' Net Metering & Solar Rates ' + SITE.year, 'Complete solar policy guide for ' + utility.utility_name + ' customers in ' + utility.state, '/utility-rebates/' + utility.slug + '/')),
-      states: states
+      states: states,
+      noindex: !priorityIndex
     }
   );
 }
@@ -906,6 +910,7 @@ function generateCityPage(city, cityData) {
   var cities = cityData.cities || [];
   var financing = cityData.financing || {};
   var alerts = cityData.alerts || {};
+  var priorityIndex = cityData.priorityIndex === true;
 
   var parentState = states.find(function (s) { return s.state_abbrev === city.state_abbrev; });
   if (!parentState) parentState = { state_name: city.state_name, slug: city.state_name.toLowerCase().replace(/\s+/g, '-'), avg_install_cost: 15000, avg_system_size: 7, state_tax_credit_percent: 0, state_rebate_amount: 0, net_metering_status: 'varies', sunlight_hours: city.avg_sun_hours, avg_kwh_rate: city.avg_electricity_rate };
@@ -959,7 +964,7 @@ Annual electricity savings: <strong>${dollar(roi.annualSavings)}/year</strong><b
 20-year total savings: <strong>${dollar(roi.twentyYearSavings)}</strong><br>
 Break-even: <strong>~${roi.breakEvenYears} years</strong> | Sun hours: <strong>${city.avg_sun_hours} hrs/day</strong>
 </div>
-<p class="lead"><strong>How much can you save with solar in ${city.city_name}?</strong> With electricity at $${city.avg_electricity_rate}/kWh (${city.electricity_trend} trend) and ${city.avg_sun_hours} peak sun hours per day, ${city.city_name} homeowners save an estimated <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong>. After the 30% federal tax credit and <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} state incentives</a>, net system cost is just <strong>${dollar(roi.netCost)}</strong>. Solar pays for itself in ~${roi.breakEvenYears} years — then it's free electricity.</p>
+<p class="lead"><strong>Quick decision:</strong> ${city.city_name} homeowners can save about <strong>${dollar(Math.round(roi.annualSavings / 12))}/month</strong>, <strong>${dollar(roi.annualSavings)}/year</strong>, and <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong>. You likely qualify if you own the home, have an unshaded roof, and can use the 30% federal tax credit; <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} incentives</a> can lower the net cost to roughly <strong>${dollar(roi.netCost)}</strong>. Fastest next step: enter ZIP + electric bill, then compare 3 installer quotes before choosing cash, loan, lease, or PPA.</p>
 ${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${aboveFoldQuoteCta(city.city_name + ', ' + city.state_abbrev)}
@@ -1123,7 +1128,8 @@ ${contextualLinksBlock('Estimate Your Solar Savings', [
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, city.state_abbrev),
       schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema('Solar Savings in ' + city.city_name + ', ' + city.state_abbrev + ' — Cost, Tax Credits & ROI', 'Solar ROI analysis for ' + city.city_name + ', ' + city.state_abbrev, '/' + slug + '/')),
-      states: states
+      states: states,
+      noindex: !priorityIndex
     }
   );
 }
@@ -1638,8 +1644,9 @@ ${contextualLinksBlock('Explore Solar Savings Guides', [
 // ---------------------------------------------------------------------------
 // 10. Pillar/Authority Page
 // ---------------------------------------------------------------------------
-function generatePillarPage(pillar, allPillars) {
+function generatePillarPage(pillar, allPillars, options) {
   var pillars = allPillars || [];
+  var priorityIndex = !options || options.priorityIndex !== false;
 
   var tocHtml = pillar.sections.map(function (s, i) {
     var anchor = s.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -1731,7 +1738,8 @@ ${contextualLinksBlock('Related Solar Savings Resources', [
     {
       breadcrumbs: crumbs,
       schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(pillar.title, pillar.description, '/guide/' + pillar.slug + '/')),
-      states: []
+      states: [],
+      noindex: !priorityIndex
     }
   );
 }
@@ -2441,7 +2449,8 @@ ${relatedPagesSection('Best Solar Companies in Other Locations', otherEntries.ma
 // ---------------------------------------------------------------------------
 // Editorial Article Page
 // ---------------------------------------------------------------------------
-function generateArticlePage(article, allArticles) {
+function generateArticlePage(article, allArticles, options) {
+  var priorityIndex = !options || options.priorityIndex !== false;
   var crumbs = [
     { label: 'Home', url: '/' },
     { label: 'Articles', url: '/articles/' },
@@ -2496,7 +2505,8 @@ ${relatedPagesSection('More Solar Guides', relatedArticles)}
     {
       breadcrumbs: crumbs,
       schema: schema,
-      states: []
+      states: [],
+      noindex: !priorityIndex
     }
   );
 }
