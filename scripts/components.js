@@ -95,10 +95,10 @@ ${analyticsScript()}
    -------------------------------------------------------------------------- */
 function headerNavLinksMarkup() {
   return [
-    '<li><a href="/states" class="nav-link">State Rebates</a></li>',
-    '<li><a href="/solar-rebates" class="nav-link">Solar Rebates</a></li>',
+    '<li><a href="/states/" class="nav-link">State Rebates</a></li>',
+    '<li><a href="/solar-rebates/" class="nav-link">Solar Rebates</a></li>',
     '<li><a href="/solar-financing/" class="nav-link">Solar Financing</a></li>',
-    '<li><a href="/comparisons" class="nav-link">Comparisons</a></li>',
+    '<li><a href="/comparisons/" class="nav-link">Comparisons</a></li>',
     '<li><a href="/guide/solar-panel-cost-guide/" class="nav-link">Solar Cost Guide</a></li>',
     '<li><a href="/article/federal-solar-tax-credit-2026-complete-guide/" class="nav-link">Tax Credit Guide</a></li>',
     '<li><a href="/guide/best-solar-panels-2026/" class="nav-link">Best Solar Panels</a></li>',

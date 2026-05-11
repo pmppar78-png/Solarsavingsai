@@ -173,11 +173,11 @@ pageCount++;
 // Public hub pages restored for legacy Search Console URLs. These are written
 // as flat HTML files so the clean URLs resolve without a directory slash hop.
 console.log('Generating public hub pages...');
-writePage(path.join(DIST_DIR, 'states.html'), templates.generateStatesHubPage(priorityFilteredData()));
+writePage(path.join(DIST_DIR, 'states', 'index.html'), templates.generateStatesHubPage(priorityFilteredData()));
 pageCount++;
-writePage(path.join(DIST_DIR, 'solar-rebates.html'), templates.generateSolarRebatesHubPage(priorityFilteredData()));
+writePage(path.join(DIST_DIR, 'solar-rebates', 'index.html'), templates.generateSolarRebatesHubPage(priorityFilteredData()));
 pageCount++;
-writePage(path.join(DIST_DIR, 'comparisons.html'), templates.generateComparisonsHubPage(comparisons));
+writePage(path.join(DIST_DIR, 'comparisons', 'index.html'), templates.generateComparisonsHubPage(comparisons));
 pageCount++;
 
 // State pages
@@ -409,9 +409,9 @@ function addEntry(urlPath, priority, lastmod) {
 }
 
 addEntry('/', 1.0);
-addEntry('states', 0.9);
-addEntry('solar-rebates', 0.9);
-addEntry('comparisons', 0.8);
+addEntry('states/', 0.9);
+addEntry('solar-rebates/', 0.9);
+addEntry('comparisons/', 0.8);
 addEntry('solar-financing/', 0.9);
 
 for (const slug of PRIORITY_STATE_SLUGS) {
