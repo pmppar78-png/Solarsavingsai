@@ -400,11 +400,11 @@ ${ctaBlock('primary', 'Calculate Your State Solar Savings', 'Enter your ZIP code
   return baseTemplate(
     'Solar Rebates and Incentives by State (' + SITE.year + ')',
     'Browse solar rebates, tax credits, net metering rules, installation costs, and savings estimates for all 50 states.',
-    '/states',
+    '/states/',
     body,
     {
       breadcrumbs: crumbs,
-      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Rebates and Incentives by State', 'State-by-state solar rebate and incentive directory.', '/states')),
+      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Rebates and Incentives by State', 'State-by-state solar rebate and incentive directory.', '/states/')),
       states: states
     }
   );
@@ -478,11 +478,11 @@ ${contextualLinksBlock('Solar Incentive Guides', [
   return baseTemplate(
     'Solar Rebates, Tax Credits, and Incentives (' + SITE.year + ')',
     'Find solar rebates, tax credits, SRECs, property tax exemptions, sales tax exemptions, and net metering policies by state.',
-    '/solar-rebates',
+    '/solar-rebates/',
     body,
     {
       breadcrumbs: crumbs,
-      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Rebates, Tax Credits, and Incentives', 'Complete state-by-state solar incentive directory.', '/solar-rebates')),
+      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Rebates, Tax Credits, and Incentives', 'Complete state-by-state solar incentive directory.', '/solar-rebates/')),
       states: states
     }
   );
@@ -525,11 +525,11 @@ ${comparisonAffiliateTable('Compare Top Solar Providers', [
   return baseTemplate(
     'Solar Comparisons (' + SITE.year + '): Panels, Financing, Batteries and More',
     'Compare solar panels, grid power, batteries, financing, leases, PPAs, and other solar options with side-by-side savings analysis.',
-    '/comparisons',
+    '/comparisons/',
     body,
     {
       breadcrumbs: crumbs,
-      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Comparisons', 'Side-by-side solar comparison guides.', '/comparisons')),
+      schema: joinSchemas(breadcrumbSchema(crumbs), articleSchema('Solar Comparisons', 'Side-by-side solar comparison guides.', '/comparisons/')),
       states: []
     }
   );
@@ -595,7 +595,7 @@ function generateStatePage(state, stateData) {
 
   var crumbs = [
     { label: 'Home', url: '/' },
-    { label: 'State Rebates', url: '/states' },
+    { label: 'State Rebates', url: '/states/' },
     { label: state.state_name }
   ];
 
@@ -767,8 +767,7 @@ ${contextualLinksBlock('Related Solar Savings Guides', [
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, state.state_abbrev),
       schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(state.state_name + ' Solar Rebates & Tax Credit ' + SITE.year, 'Complete guide to solar incentives in ' + state.state_name + '. Federal tax credit, state rebates, utility programs, and savings calculator.', '/solar-rebates-incentives-' + state.slug + '/'), serviceSchema('Solar Savings Analysis for ' + state.state_name, 'Personalized solar savings calculator for ' + state.state_name + ' homeowners. Find the federal tax credit, state rebates, and utility incentives.', state.state_name)),
-      states: states,
-      noindex: !priorityIndex
+      states: states
     }
   );
 }
@@ -896,8 +895,7 @@ ${contextualLinksBlock('Compare Your Solar Options', [
       breadcrumbs: crumbs,
       alertHtml: utilityAlerts(alerts, utility.slug),
       schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(utility.utility_name + ' Net Metering & Solar Rates ' + SITE.year, 'Complete solar policy guide for ' + utility.utility_name + ' customers in ' + utility.state, '/utility-rebates/' + utility.slug + '/')),
-      states: states,
-      noindex: !priorityIndex
+      states: states
     }
   );
 }
@@ -1128,8 +1126,7 @@ ${contextualLinksBlock('Estimate Your Solar Savings', [
       breadcrumbs: crumbs,
       alertHtml: stateAlerts(alerts, city.state_abbrev),
       schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema('Solar Savings in ' + city.city_name + ', ' + city.state_abbrev + ' — Cost, Tax Credits & ROI', 'Solar ROI analysis for ' + city.city_name + ', ' + city.state_abbrev, '/' + slug + '/')),
-      states: states,
-      noindex: !priorityIndex
+      states: states
     }
   );
 }
@@ -1563,7 +1560,7 @@ function generateComparisonPage(comparison, allComparisons) {
 
   var crumbs = [
     { label: 'Home', url: '/' },
-    { label: 'Comparisons', url: '/comparisons' },
+    { label: 'Comparisons', url: '/comparisons/' },
     { label: comparison.title }
   ];
 
@@ -1738,8 +1735,7 @@ ${contextualLinksBlock('Related Solar Savings Resources', [
     {
       breadcrumbs: crumbs,
       schema: joinSchemas(faqSchema(faqs), breadcrumbSchema(crumbs), articleSchema(pillar.title, pillar.description, '/guide/' + pillar.slug + '/')),
-      states: [],
-      noindex: !priorityIndex
+      states: []
     }
   );
 }
@@ -2505,8 +2501,7 @@ ${relatedPagesSection('More Solar Guides', relatedArticles)}
     {
       breadcrumbs: crumbs,
       schema: schema,
-      states: [],
-      noindex: !priorityIndex
+      states: []
     }
   );
 }

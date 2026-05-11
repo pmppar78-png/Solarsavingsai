@@ -55,48 +55,11 @@
   from = "/*/index.html"
   to = "/:splat/"
   status = 301
-  force = true
 
-# --- Restored public hubs: serve clean URLs directly with 200 rewrites ---
-# These legacy public URLs were previously forced to 410 after being reported
-# as redirecting pages. They are now indexable hub pages with slashless
-# canonicals, and the slash variants are internally rewritten to the same
-# content so crawlers do not hit a redirect before the final page.
-[[redirects]]
-  from = "/states"
-  to = "/states.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/states/"
-  to = "/states.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/solar-rebates"
-  to = "/solar-rebates.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/solar-rebates/"
-  to = "/solar-rebates.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/comparisons"
-  to = "/comparisons.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/comparisons/"
-  to = "/comparisons.html"
-  status = 200
-  force = true
+# --- Hub pages (states, solar-rebates, comparisons) ---
+# Each hub is a directory with index.html. Netlify natively serves
+# /states/ from the directory. The non-slash form gets Netlify's default
+# trailing-slash 301, so no explicit rule is needed for it.
 
 [[redirects]]
   from = "/guides"
