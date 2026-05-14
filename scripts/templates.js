@@ -26,6 +26,80 @@ function pct(n) {
   return n + '%';
 }
 
+function solarRating(sunHours) {
+  if (sunHours >= 5.5) return 'excellent';
+  if (sunHours >= 4.5) return 'above-average';
+  if (sunHours >= 3.5) return 'moderate';
+  return 'below-average';
+}
+
+function costCompare(stateCost) {
+  var avg = 15000;
+  var diff = Math.round(Math.abs(stateCost - avg) / avg * 100);
+  if (stateCost < avg - 500) return diff + '% below the U.S. average of ' + dollar(avg);
+  if (stateCost > avg + 500) return diff + '% above the U.S. average of ' + dollar(avg);
+  return 'near the U.S. average of ' + dollar(avg);
+}
+
+function buildLocalIncentives(city, parentState) {
+  var parts = [];
+  parts.push('The 30% federal Investment Tax Credit (ITC) covers ' + dollar(parentState.avg_install_cost * 0.3) + ' of a typical ' + city.city_name + ' installation.');
+  if (parentState.state_tax_credit_percent > 0) {
+    parts.push(city.state_name + ' adds a ' + parentState.state_tax_credit_percent + '% state tax credit worth up to ' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '.');
+  }
+  if (parentState.state_rebate_amount > 0) {
+    parts.push('A ' + dollar(parentState.state_rebate_amount) + ' state rebate further reduces your net cost.');
+  }
+  if (parentState.property_tax_exemption) {
+    parts.push(city.state_name + ' exempts solar installations from property tax increases, so your home value rises without higher taxes.');
+  }
+  if (parentState.sales_tax_exemption) {
+    parts.push('Solar equipment purchases in ' + city.state_name + ' are exempt from state sales tax.');
+  }
+  if (parentState.srec_available) {
+    parts.push(city.state_name + ' participates in Solar Renewable Energy Credits (SRECs) worth approximately $' + parentState.srec_value + '/MWh, providing ongoing income from your system.');
+  }
+  var nmStatus = parentState.net_metering_status;
+  if (nmStatus === 'full') {
+    parts.push(city.state_name + ' offers full retail-rate net metering, meaning you receive full credit for excess solar energy sent to the grid.');
+  } else if (nmStatus === 'partial') {
+    parts.push(city.state_name + ' offers partial net metering — credits may be below the retail rate. Check with your local utility for exact compensation.');
+  } else {
+    parts.push('Net metering in ' + city.state_name + ' is currently limited. Battery storage can help maximize self-consumption of solar energy.');
+  }
+  if (parentState.additional_incentives) {
+    parts.push(parentState.additional_incentives);
+  }
+  if (parentState.incentive_expiration) {
+    parts.push('<strong>Act soon:</strong> Some ' + city.state_name + ' incentives expire ' + parentState.incentive_expiration + '.');
+  }
+  return parts.join(' ');
+}
+
+function cityIntroContent(city, parentState, roi) {
+  var rating = solarRating(city.avg_sun_hours);
+  var costPos = costCompare(parentState.avg_install_cost);
+  var popLabel = city.population >= 500000 ? 'major metro' : city.population >= 100000 ? 'mid-size city' : 'growing community';
+  var trendMsg = city.electricity_trend === 'increasing'
+    ? 'With electricity rates trending upward in ' + city.city_name + ', solar provides a valuable hedge — locking in energy costs for 25+ years while grid prices continue to climb.'
+    : 'Even with relatively stable electricity rates in ' + city.city_name + ', solar offers significant long-term savings by eliminating most or all of your monthly electric bill.';
+  var regionContext = '';
+  if (parentState.region === 'southwest' || parentState.region === 'west') {
+    regionContext = city.city_name + '\'s abundant sunshine makes it one of the top solar markets in the country.';
+  } else if (parentState.region === 'southeast') {
+    regionContext = 'The Southeast\'s warm climate and lengthy daylight hours give ' + city.city_name + ' strong solar production potential year-round.';
+  } else if (parentState.region === 'northeast') {
+    regionContext = 'Despite shorter winter days, ' + city.city_name + '\'s annual solar production remains strong — and higher electricity rates mean faster payback.';
+  } else if (parentState.region === 'midwest') {
+    regionContext = 'Midwestern solar has grown rapidly — ' + city.city_name + ' homeowners benefit from competitive installation costs and improving state incentives.';
+  } else {
+    regionContext = city.city_name + ' offers solid solar potential with ' + city.avg_sun_hours + ' peak sun hours per day.';
+  }
+
+  return '<p>' + regionContext + ' As a ' + popLabel + ' of ' + fmt(city.population) + ' residents, ' + city.city_name + ' has a growing network of qualified solar installers and competitive pricing — installation costs are ' + costPos + '. With a ' + rating + ' solar rating of ' + city.avg_sun_hours + ' peak sun hours per day, a typical homeowner can generate roughly ' + fmt(roi.annualKwh) + ' kWh of clean energy annually.</p>'
+    + '<p>' + trendMsg + ' At the current rate of $' + city.avg_electricity_rate + '/kWh, your solar investment pays for itself in approximately ' + roi.breakEvenYears + ' years — then delivers free electricity for the remaining 15–20 year system lifespan.</p>';
+}
+
 function calculateROI(installCost, systemSize, sunHours, kwRate, fedCredit, stateCredit, stateRebate) {
   const annualKwh = systemSize * sunHours * 365;
   const annualSavings = annualKwh * kwRate;
@@ -935,7 +1009,7 @@ function generateCityPage(city, cityData) {
   var faqs = [
     { question: 'Is solar worth it in ' + city.city_name + ', ' + city.state_abbrev + ' in ' + SITE.year + '?', answer: 'Yes. With ' + city.avg_sun_hours + ' average peak sun hours per day and electricity rates at $' + city.avg_electricity_rate + '/kWh (' + city.electricity_trend + ' trend), solar is a strong investment in ' + city.city_name + '. The estimated 20-year savings is ' + dollar(roi.twentyYearSavings) + ' with a break-even period of approximately ' + roi.breakEvenYears + ' years. After break-even, electricity savings are essentially free income.' },
     { question: 'How much do solar panels cost in ' + city.city_name + '?', answer: 'The average solar installation in the ' + city.city_name + ' area costs approximately ' + dollar(parentState.avg_install_cost) + ' for a ' + parentState.avg_system_size + ' kW system before incentives. After the 30% federal tax credit and <a href="/solar-rebates-incentives-' + parentState.slug + '/">' + city.state_name + ' state incentives</a>, the net cost drops to approximately ' + dollar(roi.netCost) + '.' },
-    { question: 'What solar incentives are available in ' + city.city_name + '?', answer: city.local_incentives + ' The 30% federal Investment Tax Credit (ITC) is available to all ' + city.city_name + ' homeowners.' + (parentState.state_tax_credit_percent > 0 ? ' ' + city.state_name + ' also offers a ' + parentState.state_tax_credit_percent + '% state tax credit.' : '') + ' <a href="/solar-rebates-incentives-' + parentState.slug + '/">See all ' + city.state_name + ' incentives</a>.' },
+    { question: 'What solar incentives are available in ' + city.city_name + '?', answer: 'The 30% federal Investment Tax Credit (ITC) saves ' + city.city_name + ' homeowners ' + dollar(roi.fedSavings) + ' on a typical installation.' + (parentState.state_tax_credit_percent > 0 ? ' ' + city.state_name + ' adds a ' + parentState.state_tax_credit_percent + '% state tax credit worth up to ' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '.' : '') + (parentState.state_rebate_amount > 0 ? ' A ' + dollar(parentState.state_rebate_amount) + ' state rebate is also available.' : '') + (parentState.property_tax_exemption ? ' Solar is exempt from property tax increases in ' + city.state_name + '.' : '') + (parentState.sales_tax_exemption ? ' No sales tax on solar equipment.' : '') + (parentState.srec_available ? ' SRECs worth $' + parentState.srec_value + '/MWh provide ongoing income.' : '') + ' Net metering status: ' + parentState.net_metering_status + '. <a href="/solar-rebates-incentives-' + parentState.slug + '/">See all ' + city.state_name + ' incentives</a>.' },
     { question: 'How many solar panels do I need for my home in ' + city.city_name + '?', answer: 'A typical home in ' + city.city_name + ' uses a ' + parentState.avg_system_size + ' kW system (approximately ' + Math.round(parentState.avg_system_size / 0.4) + ' panels). This produces roughly ' + fmt(roi.annualKwh) + ' kWh per year based on ' + city.avg_sun_hours + ' peak sun hours per day. Your actual system size depends on your electricity usage, roof space, and shading.' },
     { question: 'Are electricity rates going up in ' + city.city_name + '?', answer: 'Electricity rates in ' + city.city_name + ' are currently ' + city.electricity_trend + '. The current average rate is $' + city.avg_electricity_rate + '/kWh. Historically, U.S. electricity rates have risen 2-3% annually. Solar locks in your energy costs and protects against future rate increases for 25+ years.' },
     { question: 'Can I install solar panels in ' + city.city_name + ' with $0 down?', answer: 'Yes. Multiple <a href="/solar-financing/">financing options</a> let ' + city.city_name + ' homeowners go solar with no upfront cost. Solar loans let you own the system and claim the 30% tax credit. Solar leases and PPAs require $0 down but you do not own the system or receive tax credits directly.' },
@@ -1045,11 +1119,11 @@ ${calculatorResultMonetization(city.city_name)}
 
 <section class="content-section bg-light">
 <div class="container">
-<h2>Local Solar Incentives in ${city.city_name}</h2>
+<h2>${city.city_name}, ${city.state_abbrev} Solar Incentives &amp; Rebates (${SITE.year})</h2>
 <div class="content-prose">
-<p><strong>Local Programs:</strong> ${city.local_incentives}</p>
-<p><strong>Electricity Trend:</strong> Rates in ${city.city_name} are currently <strong>${city.electricity_trend}</strong>. Solar locks in your energy costs and provides a hedge against future rate increases.</p>
-${parentState ? '<p><strong>State Incentives:</strong> ' + city.state_name + ' offers ' + (parentState.state_tax_credit_percent > 0 ? 'a ' + parentState.state_tax_credit_percent + '% state tax credit, ' : '') + (parentState.state_rebate_amount > 0 ? 'a ' + dollar(parentState.state_rebate_amount) + ' rebate, ' : '') + 'net metering (' + parentState.net_metering_status + ')' + (parentState.srec_available ? ', and SRECs worth $' + parentState.srec_value + '/MWh' : '') + '. <a href="/solar-rebates-incentives-' + parentState.slug + '/">See all ' + city.state_name + ' incentives</a>.</p>' : ''}
+<p>${buildLocalIncentives(city, parentState)}</p>
+<p><strong>Electricity Trend:</strong> Rates in ${city.city_name} are currently <strong>${city.electricity_trend}</strong> at $${city.avg_electricity_rate}/kWh. ${city.electricity_trend === 'increasing' ? 'Rising rates make solar increasingly valuable — every year you wait costs approximately ' + dollar(roi.annualSavings) + ' in missed savings.' : 'Stable rates still mean significant long-term savings of ' + dollar(roi.twentyYearSavings) + ' over 20 years.'}</p>
+<p>For the full breakdown of every incentive available in ${city.state_name}, see our <a href="/solar-rebates-incentives-${parentState.slug}/">complete ${city.state_name} solar incentives guide</a>.</p>
 </div>
 </div>
 </section>
@@ -1058,10 +1132,10 @@ ${sidebarAffiliateWidget(city.city_name)}
 
 <section class="content-section">
 <div class="container">
-<h2>Going Solar in ${city.city_name}: What You Need to Know</h2>
+<h2>Is Solar Worth It in ${city.city_name}, ${city.state_abbrev}? (${SITE.year} Analysis)</h2>
 <div class="content-prose">
-<p><strong>${city.city_name}</strong> receives an average of <strong>${city.avg_sun_hours} peak sun hours per day</strong>, making it ${city.avg_sun_hours >= 5 ? 'an excellent' : city.avg_sun_hours >= 4 ? 'a good' : 'a viable'} location for residential solar. Combined with electricity rates at $${city.avg_electricity_rate}/kWh (which are ${city.electricity_trend}), homeowners can expect strong returns on their solar investment.</p>
-<p>The most important steps for ${city.city_name} homeowners considering solar:</p>
+${cityIntroContent(city, parentState, roi)}
+<h3>Key Steps for ${city.city_name} Homeowners Considering Solar</h3>
 <ul>
 <li><strong>Check your roof:</strong> South-facing roofs with minimal shading produce the most energy. Read our <a href="/guide/complete-guide-home-solar/">complete guide to home solar</a> for details.</li>
 <li><strong>Understand incentives:</strong> Beyond the 30% federal credit, <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} offers additional incentives</a> that significantly reduce your net cost.</li>
