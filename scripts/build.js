@@ -183,7 +183,7 @@ pageCount++;
 // State pages
 console.log(`Generating ${states.length} state pages...`);
 for (const state of states) {
-  const stateData = priorityFilteredData({ alerts, priorityIndex: priorityStateSet.has(state.slug) });
+  const stateData = Object.assign({}, data, { alerts, financing, priorityIndex: priorityStateSet.has(state.slug) });
   const filePath = path.join(DIST_DIR, `solar-rebates-incentives-${state.slug}`, 'index.html');
   writePage(filePath, templates.generateStatePage(state, stateData));
   pageCount++;
@@ -192,7 +192,7 @@ for (const state of states) {
 // Utility pages
 console.log(`Generating ${utilities.length} utility pages...`);
 for (const utility of utilities) {
-  const utilityData = priorityFilteredData({ alerts, priorityIndex: false });
+  const utilityData = Object.assign({}, data, { alerts, financing, priorityIndex: false });
   const filePath = path.join(DIST_DIR, 'utility-rebates', utility.slug, 'index.html');
   writePage(filePath, templates.generateUtilityPage(utility, utilityData));
   pageCount++;
@@ -201,7 +201,8 @@ for (const utility of utilities) {
 // City pages
 console.log(`Generating ${cities.length} city pages...`);
 for (const city of cities) {
-  const cityData = priorityFilteredData({ alerts, financing, priorityIndex: priorityCitySet.has(cityKey(city)) });
+  const isPriority = priorityCitySet.has(cityKey(city));
+  const cityData = Object.assign({}, data, { alerts, financing, priorityIndex: isPriority });
   const slug = `is-solar-worth-it-in-${city.slug}-${city.state_abbrev.toLowerCase()}`;
   const filePath = path.join(DIST_DIR, slug, 'index.html');
   writePage(filePath, templates.generateCityPage(city, cityData));
@@ -404,7 +405,7 @@ const sitemapEntries = [];
 
 function addEntry(urlPath, priority, lastmod) {
   const loc = urlPath === '/' ? SITE_URL + '/' : `${SITE_URL}/${urlPath}`;
-  const lastmodDate = lastmod || '2026-03-12';
+  const lastmodDate = lastmod || '2026-05-14';
   sitemapEntries.push(`  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmodDate}</lastmod>\n    <changefreq>${priority >= 0.8 ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${priority.toFixed(1)}</priority>\n  </url>`);
 }
 
@@ -414,13 +415,15 @@ addEntry('solar-rebates/', 0.9);
 addEntry('comparisons/', 0.8);
 addEntry('solar-financing/', 0.9);
 
-for (const slug of PRIORITY_STATE_SLUGS) {
-  addEntry(`solar-rebates-incentives-${slug}/`, 0.9);
+for (const state of states) {
+  const isPriority = priorityStateSet.has(state.slug);
+  addEntry(`solar-rebates-incentives-${state.slug}/`, isPriority ? 0.9 : 0.7);
 }
 
-for (const key of PRIORITY_CITY_KEYS) {
-  const city = cities.find((c) => cityKey(c) === key);
-  if (city) addEntry(`is-solar-worth-it-in-${key}/`, 0.8);
+for (const city of cities) {
+  const key = cityKey(city);
+  const isPriority = priorityCitySet.has(key);
+  addEntry(`is-solar-worth-it-in-${key}/`, isPriority ? 0.8 : 0.6);
 }
 
 for (const comparison of comparisons) {

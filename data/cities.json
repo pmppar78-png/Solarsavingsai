@@ -82,7 +82,7 @@
     "state_name": "Alabama",
     "state_abbrev": "AL",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 71072,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -148,7 +148,7 @@
     "state_name": "Alaska",
     "state_abbrev": "AK",
     "avg_electricity_rate": 0.21,
-    "avg_sun_hours": 3.0,
+    "avg_sun_hours": 3,
     "population": 10529,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -181,7 +181,7 @@
     "state_name": "Alaska",
     "state_abbrev": "AK",
     "avg_electricity_rate": 0.22,
-    "avg_sun_hours": 3.0,
+    "avg_sun_hours": 3,
     "population": 7424,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -192,7 +192,7 @@
     "state_name": "Alaska",
     "state_abbrev": "AK",
     "avg_electricity_rate": 0.21,
-    "avg_sun_hours": 3.0,
+    "avg_sun_hours": 3,
     "population": 7306,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -313,7 +313,7 @@
     "state_name": "Arizona",
     "state_abbrev": "AZ",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 7.0,
+    "avg_sun_hours": 7,
     "population": 95548,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -324,7 +324,7 @@
     "state_name": "Arizona",
     "state_abbrev": "AZ",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 6.0,
+    "avg_sun_hours": 6,
     "population": 73964,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "stable"
@@ -478,7 +478,7 @@
     "state_name": "California",
     "state_abbrev": "CA",
     "avg_electricity_rate": 0.28,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 873965,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -522,7 +522,7 @@
     "state_name": "California",
     "state_abbrev": "CA",
     "avg_electricity_rate": 0.27,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 433031,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -786,7 +786,7 @@
     "state_name": "Connecticut",
     "state_abbrev": "CT",
     "avg_electricity_rate": 0.25,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 121054,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -797,7 +797,7 @@
     "state_name": "Connecticut",
     "state_abbrev": "CT",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 114403,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -819,7 +819,7 @@
     "state_name": "Connecticut",
     "state_abbrev": "CT",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 86518,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -830,7 +830,7 @@
     "state_name": "Connecticut",
     "state_abbrev": "CT",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 74135,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -841,7 +841,7 @@
     "state_name": "Connecticut",
     "state_abbrev": "CT",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 60850,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -852,7 +852,7 @@
     "state_name": "Connecticut",
     "state_abbrev": "CT",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 60833,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "stable"
@@ -880,7 +880,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Newark DE",
+    "city_name": "Newark",
     "slug": "newark-de",
     "state_name": "Delaware",
     "state_abbrev": "DE",
@@ -935,7 +935,7 @@
     "electricity_trend": "stable"
   },
   {
-    "city_name": "Georgetown DE",
+    "city_name": "Georgetown",
     "slug": "georgetown-de",
     "state_name": "Delaware",
     "state_abbrev": "DE",
@@ -1028,7 +1028,7 @@
     "state_name": "Florida",
     "state_abbrev": "FL",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 196169,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -1083,7 +1083,7 @@
     "state_name": "Florida",
     "state_abbrev": "FL",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 141085,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -1122,7 +1122,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Columbus GA",
+    "city_name": "Columbus",
     "slug": "columbus-ga",
     "state_name": "Georgia",
     "state_abbrev": "GA",
@@ -1160,7 +1160,7 @@
     "state_name": "Georgia",
     "state_abbrev": "GA",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 147780,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -1210,12 +1210,12 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Albany GA",
+    "city_name": "Albany",
     "slug": "albany-ga",
     "state_name": "Georgia",
     "state_abbrev": "GA",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 69654,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -1259,7 +1259,7 @@
     "state_name": "Hawaii",
     "state_abbrev": "HI",
     "avg_electricity_rate": 0.35,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 45703,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -1430,7 +1430,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Aurora IL",
+    "city_name": "Aurora",
     "slug": "aurora-il",
     "state_name": "Illinois",
     "state_abbrev": "IL",
@@ -1496,7 +1496,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Peoria IL",
+    "city_name": "Peoria",
     "slug": "peoria-il",
     "state_name": "Illinois",
     "state_abbrev": "IL",
@@ -1518,7 +1518,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Decatur IL",
+    "city_name": "Decatur",
     "slug": "decatur-il",
     "state_name": "Illinois",
     "state_abbrev": "IL",
@@ -1595,7 +1595,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Bloomington IN",
+    "city_name": "Bloomington",
     "slug": "bloomington-in",
     "state_name": "Indiana",
     "state_abbrev": "IN",
@@ -1771,7 +1771,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Kansas City KS",
+    "city_name": "Kansas City",
     "slug": "kansas-city-ks",
     "state_name": "Kansas",
     "state_abbrev": "KS",
@@ -1798,7 +1798,7 @@
     "state_name": "Kansas",
     "state_abbrev": "KS",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 126587,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -1837,12 +1837,12 @@
     "electricity_trend": "stable"
   },
   {
-    "city_name": "Manhattan KS",
+    "city_name": "Manhattan",
     "slug": "manhattan-ks",
     "state_name": "Kansas",
     "state_abbrev": "KS",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 54832,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -1914,7 +1914,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Richmond KY",
+    "city_name": "Richmond",
     "slug": "richmond-ky",
     "state_name": "Kentucky",
     "state_abbrev": "KY",
@@ -1936,7 +1936,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Florence KY",
+    "city_name": "Florence",
     "slug": "florence-ky",
     "state_name": "Kentucky",
     "state_abbrev": "KY",
@@ -2002,7 +2002,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Lafayette LA",
+    "city_name": "Lafayette",
     "slug": "lafayette-la",
     "state_name": "Louisiana",
     "state_abbrev": "LA",
@@ -2079,7 +2079,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Portland ME",
+    "city_name": "Portland",
     "slug": "portland-me",
     "state_name": "Maine",
     "state_abbrev": "ME",
@@ -2090,7 +2090,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Lewiston ME",
+    "city_name": "Lewiston",
     "slug": "lewiston-me",
     "state_name": "Maine",
     "state_abbrev": "ME",
@@ -2117,13 +2117,13 @@
     "state_name": "Maine",
     "state_abbrev": "ME",
     "avg_electricity_rate": 0.19,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 25665,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Auburn ME",
+    "city_name": "Auburn",
     "slug": "auburn-me",
     "state_name": "Maine",
     "state_abbrev": "ME",
@@ -2139,7 +2139,7 @@
     "state_name": "Maine",
     "state_abbrev": "ME",
     "avg_electricity_rate": 0.19,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 22668,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -2150,13 +2150,13 @@
     "state_name": "Maine",
     "state_abbrev": "ME",
     "avg_electricity_rate": 0.19,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 20381,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Augusta ME",
+    "city_name": "Augusta",
     "slug": "augusta-me",
     "state_name": "Maine",
     "state_abbrev": "ME",
@@ -2282,7 +2282,7 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.25,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 675647,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -2293,13 +2293,13 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 206518,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Springfield MA",
+    "city_name": "Springfield",
     "slug": "springfield-ma",
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
@@ -2315,7 +2315,7 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.25,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 118403,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -2326,7 +2326,7 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 115554,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -2337,7 +2337,7 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 105643,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -2348,7 +2348,7 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.25,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 101636,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -2359,7 +2359,7 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 101253,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -2370,7 +2370,7 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 101079,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -2381,7 +2381,7 @@
     "state_name": "Massachusetts",
     "state_abbrev": "MA",
     "avg_electricity_rate": 0.24,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 93885,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "stable"
@@ -2519,7 +2519,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Rochester MN",
+    "city_name": "Rochester",
     "slug": "rochester-mn",
     "state_name": "Minnesota",
     "state_abbrev": "MN",
@@ -2541,7 +2541,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Bloomington MN",
+    "city_name": "Bloomington",
     "slug": "bloomington-mn",
     "state_name": "Minnesota",
     "state_abbrev": "MN",
@@ -2695,7 +2695,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Oxford MS",
+    "city_name": "Oxford",
     "slug": "oxford-ms",
     "state_name": "Mississippi",
     "state_abbrev": "MS",
@@ -2706,7 +2706,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Greenville MS",
+    "city_name": "Greenville",
     "slug": "greenville-ms",
     "state_name": "Mississippi",
     "state_abbrev": "MS",
@@ -2739,7 +2739,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Springfield MO",
+    "city_name": "Springfield",
     "slug": "springfield-mo",
     "state_name": "Missouri",
     "state_abbrev": "MO",
@@ -2750,7 +2750,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Columbia MO",
+    "city_name": "Columbia",
     "slug": "columbia-mo",
     "state_name": "Missouri",
     "state_abbrev": "MO",
@@ -2992,7 +2992,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Norfolk NE",
+    "city_name": "Norfolk",
     "slug": "norfolk-ne",
     "state_name": "Nebraska",
     "state_abbrev": "NE",
@@ -3008,13 +3008,13 @@
     "state_name": "Nebraska",
     "state_abbrev": "NE",
     "avg_electricity_rate": 0.1,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 23747,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Columbus NE",
+    "city_name": "Columbus",
     "slug": "columbus-ne",
     "state_name": "Nebraska",
     "state_abbrev": "NE",
@@ -3140,7 +3140,7 @@
     "state_name": "New Hampshire",
     "state_abbrev": "NH",
     "avg_electricity_rate": 0.21,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 115644,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -3151,7 +3151,7 @@
     "state_name": "New Hampshire",
     "state_abbrev": "NH",
     "avg_electricity_rate": 0.21,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 91322,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -3162,24 +3162,24 @@
     "state_name": "New Hampshire",
     "state_abbrev": "NH",
     "avg_electricity_rate": 0.21,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 43976,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Dover NH",
+    "city_name": "Dover",
     "slug": "dover-nh",
     "state_name": "New Hampshire",
     "state_abbrev": "NH",
     "avg_electricity_rate": 0.21,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 32741,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Rochester NH",
+    "city_name": "Rochester",
     "slug": "rochester-nh",
     "state_name": "New Hampshire",
     "state_abbrev": "NH",
@@ -3278,7 +3278,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Union City NJ",
+    "city_name": "Union City",
     "slug": "union-city-nj",
     "state_name": "New Jersey",
     "state_abbrev": "NJ",
@@ -3371,7 +3371,7 @@
     "state_name": "New Mexico",
     "state_abbrev": "NM",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 6.0,
+    "avg_sun_hours": 6,
     "population": 89117,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -3393,7 +3393,7 @@
     "state_name": "New Mexico",
     "state_abbrev": "NM",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 6.0,
+    "avg_sun_hours": 6,
     "population": 44372,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -3421,7 +3421,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Carlsbad NM",
+    "city_name": "Carlsbad",
     "slug": "carlsbad-nm",
     "state_name": "New Mexico",
     "state_abbrev": "NM",
@@ -3476,7 +3476,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Rochester NY",
+    "city_name": "Rochester",
     "slug": "rochester-ny",
     "state_name": "New York",
     "state_abbrev": "NY",
@@ -3498,7 +3498,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Albany NY",
+    "city_name": "Albany",
     "slug": "albany-ny",
     "state_name": "New York",
     "state_abbrev": "NY",
@@ -3663,7 +3663,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Fayetteville NC",
+    "city_name": "Fayetteville",
     "slug": "fayetteville-nc",
     "state_name": "North Carolina",
     "state_abbrev": "NC",
@@ -3685,7 +3685,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Wilmington NC",
+    "city_name": "Wilmington",
     "slug": "wilmington-nc",
     "state_name": "North Carolina",
     "state_abbrev": "NC",
@@ -3833,7 +3833,7 @@
     "state_name": "Ohio",
     "state_abbrev": "OH",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 309317,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -3866,7 +3866,7 @@
     "state_name": "Ohio",
     "state_abbrev": "OH",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 137644,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -3932,7 +3932,7 @@
     "state_name": "Oklahoma",
     "state_abbrev": "OK",
     "avg_electricity_rate": 0.1,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 413066,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -3954,7 +3954,7 @@
     "state_name": "Oklahoma",
     "state_abbrev": "OK",
     "avg_electricity_rate": 0.1,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 113540,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4026,7 +4026,7 @@
     "electricity_trend": "stable"
   },
   {
-    "city_name": "Portland OR",
+    "city_name": "Portland",
     "slug": "portland-or",
     "state_name": "Oregon",
     "state_abbrev": "OR",
@@ -4114,7 +4114,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Springfield OR",
+    "city_name": "Springfield",
     "slug": "springfield-or",
     "state_name": "Oregon",
     "state_abbrev": "OR",
@@ -4141,7 +4141,7 @@
     "state_name": "Pennsylvania",
     "state_abbrev": "PA",
     "avg_electricity_rate": 0.15,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 1603797,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4213,7 +4213,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Lancaster PA",
+    "city_name": "Lancaster",
     "slug": "lancaster-pa",
     "state_name": "Pennsylvania",
     "state_abbrev": "PA",
@@ -4251,7 +4251,7 @@
     "state_name": "Rhode Island",
     "state_abbrev": "RI",
     "avg_electricity_rate": 0.23,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 190934,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4262,7 +4262,7 @@
     "state_name": "Rhode Island",
     "state_abbrev": "RI",
     "avg_electricity_rate": 0.23,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 82934,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4273,7 +4273,7 @@
     "state_name": "Rhode Island",
     "state_abbrev": "RI",
     "avg_electricity_rate": 0.23,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 82823,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4284,7 +4284,7 @@
     "state_name": "Rhode Island",
     "state_abbrev": "RI",
     "avg_electricity_rate": 0.23,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 75604,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4295,7 +4295,7 @@
     "state_name": "Rhode Island",
     "state_abbrev": "RI",
     "avg_electricity_rate": 0.23,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 47139,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4306,7 +4306,7 @@
     "state_name": "Rhode Island",
     "state_abbrev": "RI",
     "avg_electricity_rate": 0.23,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 44328,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "stable"
@@ -4328,7 +4328,7 @@
     "state_name": "Rhode Island",
     "state_abbrev": "RI",
     "avg_electricity_rate": 0.23,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 22583,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4339,7 +4339,7 @@
     "state_name": "South Carolina",
     "state_abbrev": "SC",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 150227,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4361,7 +4361,7 @@
     "state_name": "South Carolina",
     "state_abbrev": "SC",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 115382,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4372,7 +4372,7 @@
     "state_name": "South Carolina",
     "state_abbrev": "SC",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 94974,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4389,7 +4389,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Greenville SC",
+    "city_name": "Greenville",
     "slug": "greenville-sc",
     "state_name": "South Carolina",
     "state_abbrev": "SC",
@@ -4405,7 +4405,7 @@
     "state_name": "South Carolina",
     "state_abbrev": "SC",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 53643,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4438,7 +4438,7 @@
     "state_name": "South Carolina",
     "state_abbrev": "SC",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 35682,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4460,7 +4460,7 @@
     "state_name": "South Dakota",
     "state_abbrev": "SD",
     "avg_electricity_rate": 0.11,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 77503,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4488,7 +4488,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Watertown SD",
+    "city_name": "Watertown",
     "slug": "watertown-sd",
     "state_name": "South Dakota",
     "state_abbrev": "SD",
@@ -4515,7 +4515,7 @@
     "state_name": "South Dakota",
     "state_abbrev": "SD",
     "avg_electricity_rate": 0.11,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 14091,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4598,7 +4598,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Franklin TN",
+    "city_name": "Franklin",
     "slug": "franklin-tn",
     "state_name": "Tennessee",
     "state_abbrev": "TN",
@@ -4620,7 +4620,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Jackson TN",
+    "city_name": "Jackson",
     "slug": "jackson-tn",
     "state_name": "Tennessee",
     "state_abbrev": "TN",
@@ -4669,7 +4669,7 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 1304379,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4691,7 +4691,7 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 918915,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4702,18 +4702,18 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 6.0,
+    "avg_sun_hours": 6,
     "population": 678815,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Arlington TX",
+    "city_name": "Arlington",
     "slug": "arlington-tx",
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 394266,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4735,7 +4735,7 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 285494,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4757,7 +4757,7 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 256684,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4779,7 +4779,7 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 239928,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4790,7 +4790,7 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 200509,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4812,7 +4812,7 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 199177,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4823,7 +4823,7 @@
     "state_name": "Texas",
     "state_abbrev": "TX",
     "avg_electricity_rate": 0.12,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 196100,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -4917,7 +4917,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Sandy UT",
+    "city_name": "Sandy",
     "slug": "sandy-ut",
     "state_name": "Utah",
     "state_abbrev": "UT",
@@ -4933,7 +4933,7 @@
     "state_name": "Utah",
     "state_abbrev": "UT",
     "avg_electricity_rate": 0.1,
-    "avg_sun_hours": 6.0,
+    "avg_sun_hours": 6,
     "population": 95342,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -5115,7 +5115,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Alexandria VA",
+    "city_name": "Alexandria",
     "slug": "alexandria-va",
     "state_name": "Virginia",
     "state_abbrev": "VA",
@@ -5203,7 +5203,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Vancouver WA",
+    "city_name": "Vancouver",
     "slug": "vancouver-wa",
     "state_name": "Washington",
     "state_abbrev": "WA",
@@ -5214,7 +5214,7 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Bellevue WA",
+    "city_name": "Bellevue",
     "slug": "bellevue-wa",
     "state_name": "Washington",
     "state_abbrev": "WA",
@@ -5280,12 +5280,12 @@
     "electricity_trend": "stable"
   },
   {
-    "city_name": "Charleston WV",
+    "city_name": "Charleston",
     "slug": "charleston-wv",
     "state_name": "West Virginia",
     "state_abbrev": "WV",
     "avg_electricity_rate": 0.1,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 47215,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -5296,7 +5296,7 @@
     "state_name": "West Virginia",
     "state_abbrev": "WV",
     "avg_electricity_rate": 0.1,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 46048,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -5340,7 +5340,7 @@
     "state_name": "West Virginia",
     "state_abbrev": "WV",
     "avg_electricity_rate": 0.1,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 18370,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "stable"
@@ -5373,7 +5373,7 @@
     "state_name": "Wisconsin",
     "state_abbrev": "WI",
     "avg_electricity_rate": 0.14,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 577222,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -5406,7 +5406,7 @@
     "state_name": "Wisconsin",
     "state_abbrev": "WI",
     "avg_electricity_rate": 0.14,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 99986,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -5417,7 +5417,7 @@
     "state_name": "Wisconsin",
     "state_abbrev": "WI",
     "avg_electricity_rate": 0.14,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 78860,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -5439,7 +5439,7 @@
     "state_name": "Wisconsin",
     "state_abbrev": "WI",
     "avg_electricity_rate": 0.14,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 72489,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -5472,7 +5472,7 @@
     "state_name": "Wisconsin",
     "state_abbrev": "WI",
     "avg_electricity_rate": 0.13,
-    "avg_sun_hours": 4.0,
+    "avg_sun_hours": 4,
     "population": 52680,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "increasing"
@@ -5555,12 +5555,12 @@
     "electricity_trend": "increasing"
   },
   {
-    "city_name": "Jackson WY",
+    "city_name": "Jackson",
     "slug": "jackson-wy",
     "state_name": "Wyoming",
     "state_abbrev": "WY",
     "avg_electricity_rate": 0.1,
-    "avg_sun_hours": 5.0,
+    "avg_sun_hours": 5,
     "population": 10532,
     "local_incentives": "Federal ITC plus applicable state and local incentives",
     "electricity_trend": "stable"
