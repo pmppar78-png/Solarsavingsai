@@ -9,6 +9,14 @@ const SITE = {
 const BUILD_ID = process.env.BUILD_ID || String(Date.now());
 
 /* --------------------------------------------------------------------------
+   Utility: build canonical city URL key, avoiding double state-abbreviation
+   -------------------------------------------------------------------------- */
+function cityUrlKey(city) {
+  var abbrev = city.state_abbrev.toLowerCase();
+  return city.slug.endsWith('-' + abbrev) ? city.slug : city.slug + '-' + abbrev;
+}
+
+/* --------------------------------------------------------------------------
    Utility: HTML-escape special characters to prevent XSS / broken markup
    -------------------------------------------------------------------------- */
 function escapeHtml(str) {
@@ -1006,5 +1014,6 @@ module.exports = {
   contextualLinksBlock,
   hubLinksSection,
   enhancedAuthorBioBlock,
+  cityUrlKey,
   SITE
 };

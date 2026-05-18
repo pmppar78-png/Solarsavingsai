@@ -106,7 +106,8 @@ const priorityGuideSet = new Set(PRIORITY_GUIDE_SLUGS);
 const priorityArticleSet = new Set(PRIORITY_ARTICLE_SLUGS);
 
 function cityKey(city) {
-  return `${city.slug}-${city.state_abbrev.toLowerCase()}`;
+  const abbrev = city.state_abbrev.toLowerCase();
+  return city.slug.endsWith('-' + abbrev) ? city.slug : `${city.slug}-${abbrev}`;
 }
 
 function priorityFilteredData(extra) {
@@ -203,7 +204,7 @@ console.log(`Generating ${cities.length} city pages...`);
 for (const city of cities) {
   const isPriority = priorityCitySet.has(cityKey(city));
   const cityData = Object.assign({}, data, { alerts, financing, priorityIndex: isPriority });
-  const slug = `is-solar-worth-it-in-${city.slug}-${city.state_abbrev.toLowerCase()}`;
+  const slug = `is-solar-worth-it-in-${cityKey(city)}`;
   const filePath = path.join(DIST_DIR, slug, 'index.html');
   writePage(filePath, templates.generateCityPage(city, cityData));
   pageCount++;
@@ -458,6 +459,24 @@ Disallow: /api/
 Sitemap: ${SITE_URL}/sitemap.xml`;
 
 fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt);
+
+// ---------------------------------------------------------------------------
+// Generate _redirects for old double-abbreviation city URLs
+// ---------------------------------------------------------------------------
+console.log('Generating _redirects for corrected city URLs...');
+const redirectLines = [];
+for (const city of cities) {
+  const abbrev = city.state_abbrev.toLowerCase();
+  if (city.slug.endsWith('-' + abbrev)) {
+    const oldPath = `/is-solar-worth-it-in-${city.slug}-${abbrev}/`;
+    const newPath = `/is-solar-worth-it-in-${city.slug}/`;
+    redirectLines.push(`${oldPath}  ${newPath}  301`);
+  }
+}
+if (redirectLines.length > 0) {
+  fs.writeFileSync(path.join(DIST_DIR, '_redirects'), redirectLines.join('\n') + '\n');
+  console.log(`  ${redirectLines.length} redirect rules written`);
+}
 
 // ---------------------------------------------------------------------------
 // Build statistics
