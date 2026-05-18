@@ -8,7 +8,7 @@ const {
   calculatorResultMonetization, authorBioBlock, comparisonAffiliateTable,
   articleSchema, organizationSchema, howToSchema, reviewSchema, serviceSchema,
   lastUpdatedBlock, displayAdSlot, contextualLinksBlock, hubLinksSection,
-  enhancedAuthorBioBlock, SITE
+  enhancedAuthorBioBlock, cityUrlKey, SITE
 } = require('./components');
 
 // ---------------------------------------------------------------------------
@@ -202,7 +202,7 @@ function generateHomepage(data) {
 
   var topCities = cities.slice(0, 12);
   var cityLinksHtml = topCities.map(function (c) {
-    return '<a href="/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/" class="related-card"><span class="related-title">' + c.city_name + ', ' + c.state_abbrev + '</span><span class="related-meta">' + c.avg_sun_hours + ' sun hrs/day &middot; $' + c.avg_electricity_rate + '/kWh</span></a>';
+    return '<a href="/is-solar-worth-it-in-' + cityUrlKey(c) + '/" class="related-card"><span class="related-title">' + c.city_name + ', ' + c.state_abbrev + '</span><span class="related-meta">' + c.avg_sun_hours + ' sun hrs/day &middot; $' + c.avg_electricity_rate + '/kWh</span></a>';
   }).join('');
 
   var body = `
@@ -436,7 +436,7 @@ function generateStatesHubPage(data) {
   }).join('');
 
   var topCities = cities.slice(0, 12).map(function (c) {
-    return '<a href="/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/" class="related-card"><span class="related-title">' + escapeHtml(c.city_name) + ', ' + escapeHtml(c.state_abbrev) + '</span><span class="related-meta">' + c.avg_sun_hours + ' sun hrs/day &middot; $' + c.avg_electricity_rate + '/kWh</span></a>';
+    return '<a href="/is-solar-worth-it-in-' + cityUrlKey(c) + '/" class="related-card"><span class="related-title">' + escapeHtml(c.city_name) + ', ' + escapeHtml(c.state_abbrev) + '</span><span class="related-meta">' + c.avg_sun_hours + ' sun hrs/day &middot; $' + c.avg_electricity_rate + '/kWh</span></a>';
   }).join('');
 
   var crumbs = [
@@ -651,7 +651,7 @@ function generateStatePage(state, stateData) {
   }).join('');
 
   var cityLinksHtml = stateCities.map(function (c) {
-    return '<a href="/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/" class="related-card"><span class="related-title">' + c.city_name + '</span><span class="related-meta">' + c.avg_sun_hours + ' sun hrs &middot; $' + c.avg_electricity_rate + '/kWh</span></a>';
+    return '<a href="/is-solar-worth-it-in-' + cityUrlKey(c) + '/" class="related-card"><span class="related-title">' + c.city_name + '</span><span class="related-meta">' + c.avg_sun_hours + ' sun hrs &middot; $' + c.avg_electricity_rate + '/kWh</span></a>';
   }).join('');
 
   var nearbyStates = states.filter(function (s) { return s.region === state.region && s.slug !== state.slug; }).slice(0, 6);
@@ -940,7 +940,7 @@ ${faqSection(faqs)}
 
 ${authorBioBlock()}
 
-${servedCities.length > 0 ? relatedPagesSection('Cities Served by ' + utility.utility_name, servedCities.map(function(c) { return { title: c.city_name + ', ' + c.state_abbrev, url: '/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/', meta: c.avg_sun_hours + ' sun hrs/day' }; })) : ''}
+${servedCities.length > 0 ? relatedPagesSection('Cities Served by ' + utility.utility_name, servedCities.map(function(c) { return { title: c.city_name + ', ' + c.state_abbrev, url: '/is-solar-worth-it-in-' + cityUrlKey(c) + '/', meta: c.avg_sun_hours + ' sun hrs/day' }; })) : ''}
 
 ${relatedPagesSection('Other Utilities in ' + utility.state, sameStateUtils.map(function (u) {
   return { title: u.utility_name, url: '/utility-rebates/' + u.slug + '/', meta: 'Net metering: ' + u.net_metering_rate };
@@ -1023,7 +1023,7 @@ function generateCityPage(city, cityData) {
     { label: city.city_name }
   ];
 
-  var slug = 'is-solar-worth-it-in-' + city.slug + '-' + city.state_abbrev.toLowerCase();
+  var slug = 'is-solar-worth-it-in-' + cityUrlKey(city);
 
   var body = `
 <section class="content-section">
@@ -1174,7 +1174,7 @@ ${authorBioBlock()}
 ${cityUtilities.length > 0 ? '<section class="content-section"><div class="container"><h2>Your Local Utilities in ' + city.state_name + '</h2><p>Review net metering policies and solar programs from utilities serving ' + city.city_name + '.</p><div class="related-grid">' + cityUtilities.map(function(u) { return '<a href="/utility-rebates/' + u.slug + '/" class="related-card"><span class="related-title">' + u.utility_name + '</span><span class="related-meta">Net metering: ' + u.net_metering_rate + '</span></a>'; }).join('') + '</div></div></section>' : ''}
 
 ${relatedPagesSection('More Cities in ' + city.state_name, nearbyCities.map(function (c) {
-  return { title: c.city_name + ', ' + c.state_abbrev, url: '/is-solar-worth-it-in-' + c.slug + '-' + c.state_abbrev.toLowerCase() + '/', meta: c.avg_sun_hours + ' sun hrs · $' + c.avg_electricity_rate + '/kWh' };
+  return { title: c.city_name + ', ' + c.state_abbrev, url: '/is-solar-worth-it-in-' + cityUrlKey(c) + '/', meta: c.avg_sun_hours + ' sun hrs · $' + c.avg_electricity_rate + '/kWh' };
 }))}
 
 ${ctaBlock('primary', 'Get Your ' + city.city_name + ' Solar Estimate', 'See exactly how much you can save with solar in ' + city.city_name + '. It takes less than 30 seconds.', '#widget-city')}
