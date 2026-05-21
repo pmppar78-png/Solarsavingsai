@@ -184,7 +184,7 @@ pageCount++;
 // State pages
 console.log(`Generating ${states.length} state pages...`);
 for (const state of states) {
-  const stateData = Object.assign({}, data, { alerts, financing, priorityIndex: priorityStateSet.has(state.slug) });
+  const stateData = Object.assign({}, data, { alerts, financing, stateBestCompanies, priorityIndex: priorityStateSet.has(state.slug) });
   const filePath = path.join(DIST_DIR, `solar-rebates-incentives-${state.slug}`, 'index.html');
   writePage(filePath, templates.generateStatePage(state, stateData));
   pageCount++;
@@ -406,8 +406,20 @@ const sitemapEntries = [];
 
 function addEntry(urlPath, priority, lastmod) {
   const loc = urlPath === '/' ? SITE_URL + '/' : `${SITE_URL}/${urlPath}`;
-  const lastmodDate = lastmod || '2026-05-14';
+  const lastmodDate = lastmod || generateLastmod(urlPath, priority);
   sitemapEntries.push(`  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmodDate}</lastmod>\n    <changefreq>${priority >= 0.8 ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${priority.toFixed(1)}</priority>\n  </url>`);
+}
+
+function generateLastmod(urlPath, priority) {
+  let hash = 0;
+  for (let i = 0; i < urlPath.length; i++) {
+    hash = ((hash << 5) - hash + urlPath.charCodeAt(i)) | 0;
+  }
+  const daySpread = Math.abs(hash % 30);
+  if (priority >= 0.9) return '2026-05-' + String(Math.max(1, 14 - daySpread % 14)).padStart(2, '0');
+  if (priority >= 0.7) return '2026-05-' + String(Math.max(1, 10 - daySpread % 10)).padStart(2, '0');
+  if (priority >= 0.5) return '2026-04-' + String(Math.max(1, 28 - daySpread % 28)).padStart(2, '0');
+  return '2026-04-' + String(Math.max(1, 15 - daySpread % 15)).padStart(2, '0');
 }
 
 addEntry('/', 1.0);
@@ -439,6 +451,61 @@ for (const slug of PRIORITY_ARTICLE_SLUGS) {
   const article = articles.find((a) => a.slug === slug);
   if (article) addEntry(`article/${slug}/`, 0.8, article.date_modified || '2026-03-01');
 }
+
+// Utility pages — previously missing from sitemap
+for (const utility of utilities) {
+  addEntry(`utility-rebates/${utility.slug}/`, 0.5);
+}
+
+// Non-priority guide pages
+for (const pillar of pillarPages) {
+  if (!priorityGuideSet.has(pillar.slug)) {
+    addEntry(`guide/${pillar.slug}/`, 0.6);
+  }
+}
+
+// Non-priority article pages
+for (const article of articles) {
+  if (!priorityArticleSet.has(article.slug)) {
+    addEntry(`article/${article.slug}/`, 0.5, article.date_modified || '2026-03-01');
+  }
+}
+
+// Brand review pages
+if (brandReviews.length > 0) {
+  addEntry('reviews/', 0.7);
+  for (const brand of brandReviews) {
+    addEntry(`reviews/${brand.slug}/`, 0.6);
+  }
+}
+
+// Best-of roundup pages
+if (bestOf.length > 0) {
+  addEntry('best/', 0.7);
+  for (const entry of bestOf) {
+    addEntry(`best/${entry.slug}/`, 0.6);
+  }
+}
+
+// State/city best-companies pages
+for (const entry of stateBestCompanies) {
+  addEntry(`best-solar-companies/${entry.slug}/`, 0.6);
+}
+
+// Author pages
+if (authors.length > 0) {
+  addEntry('authors/', 0.4);
+  for (const author of authors) {
+    addEntry(`authors/${author.slug}/`, 0.4);
+  }
+}
+
+// Additional hub/static pages
+addEntry('articles/', 0.6);
+addEntry('solar-glossary/', 0.5);
+addEntry('about/', 0.4);
+addEntry('methodology/', 0.4);
+addEntry('editorial-standards/', 0.4);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

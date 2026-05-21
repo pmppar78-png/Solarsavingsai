@@ -80,9 +80,15 @@ function cityIntroContent(city, parentState, roi) {
   var rating = solarRating(city.avg_sun_hours);
   var costPos = costCompare(parentState.avg_install_cost);
   var popLabel = city.population >= 500000 ? 'major metro' : city.population >= 100000 ? 'mid-size city' : 'growing community';
+  var rateTier = city.avg_electricity_rate >= 0.20 ? 'high' : city.avg_electricity_rate >= 0.13 ? 'moderate' : 'low';
+  var savingsTier = roi.twentyYearSavings >= 40000 ? 'exceptional' : roi.twentyYearSavings >= 25000 ? 'strong' : 'solid';
+  var breakEvenTier = roi.breakEvenYears <= 5 ? 'rapid' : roi.breakEvenYears <= 8 ? 'moderate' : 'longer';
+  var incentiveStrength = (parentState.state_tax_credit_percent > 0 || parentState.state_rebate_amount > 0 || parentState.srec_available) ? 'strong' : 'standard';
+
   var trendMsg = city.electricity_trend === 'increasing'
     ? 'With electricity rates trending upward in ' + city.city_name + ', solar provides a valuable hedge — locking in energy costs for 25+ years while grid prices continue to climb.'
     : 'Even with relatively stable electricity rates in ' + city.city_name + ', solar offers significant long-term savings by eliminating most or all of your monthly electric bill.';
+
   var regionContext = '';
   if (parentState.region === 'southwest' || parentState.region === 'west') {
     regionContext = city.city_name + '\'s abundant sunshine makes it one of the top solar markets in the country.';
@@ -96,7 +102,23 @@ function cityIntroContent(city, parentState, roi) {
     regionContext = city.city_name + ' offers solid solar potential with ' + city.avg_sun_hours + ' peak sun hours per day.';
   }
 
+  var economicContext = '';
+  if (rateTier === 'high' && breakEvenTier === 'rapid') {
+    economicContext = '<p><strong>Why ' + city.city_name + ' is ideal for solar:</strong> High electricity rates ($' + city.avg_electricity_rate + '/kWh) combined with ' + rating + ' sun exposure create one of the fastest payback scenarios in the country. Homeowners here typically recoup their investment in just ' + roi.breakEvenYears + ' years, then enjoy ' + (25 - roi.breakEvenYears) + '+ years of near-free electricity.</p>';
+  } else if (rateTier === 'high') {
+    economicContext = '<p><strong>' + city.city_name + ' electricity costs are above average</strong> at $' + city.avg_electricity_rate + '/kWh, which means solar offsets a larger monthly bill. Even with a ' + breakEvenTier + ' payback timeline of ' + roi.breakEvenYears + ' years, the ' + savingsTier + ' 20-year savings of ' + dollar(roi.twentyYearSavings) + ' make solar a worthwhile investment for most homeowners.</p>';
+  } else if (rating === 'excellent') {
+    economicContext = '<p><strong>' + city.city_name + '\'s ' + city.avg_sun_hours + ' peak sun hours per day</strong> rank among the highest in the nation. This translates to roughly ' + fmt(roi.annualKwh) + ' kWh of annual production from a standard system — enough to offset most or all of a typical household\'s electricity consumption and deliver ' + dollar(roi.twentyYearSavings) + ' in 20-year savings.</p>';
+  } else if (incentiveStrength === 'strong') {
+    economicContext = '<p><strong>' + city.state_name + '\'s generous incentive stack</strong> is a major advantage for ' + city.city_name + ' homeowners. Beyond the 30% federal credit' + (parentState.state_tax_credit_percent > 0 ? ', a ' + parentState.state_tax_credit_percent + '% state tax credit' : '') + (parentState.state_rebate_amount > 0 ? ', plus a ' + dollar(parentState.state_rebate_amount) + ' state rebate' : '') + (parentState.srec_available ? ', and SRECs worth $' + parentState.srec_value + '/MWh' : '') + ' — the combined incentives reduce the net cost to just ' + dollar(roi.netCost) + ', making the break-even math compelling.</p>';
+  } else if (city.population >= 500000) {
+    economicContext = '<p><strong>As one of the largest solar markets in ' + city.state_name + ',</strong> ' + city.city_name + '\'s ' + fmt(city.population) + ' residents have access to a competitive installer market that helps keep prices ' + costPos + '. Larger metro areas typically see 10-15% lower per-watt pricing due to installer competition and volume.</p>';
+  } else {
+    economicContext = '<p>For ' + city.city_name + ' homeowners, solar represents a ' + savingsTier + ' long-term investment. At $' + city.avg_electricity_rate + '/kWh with ' + city.avg_sun_hours + ' peak sun hours daily, the math works out to approximately ' + dollar(Math.round(roi.annualSavings / 12)) + '/month in savings — or ' + dollar(roi.twentyYearSavings) + ' over the 20-year analysis period after a ' + roi.breakEvenYears + '-year payback.</p>';
+  }
+
   return '<p>' + regionContext + ' As a ' + popLabel + ' of ' + fmt(city.population) + ' residents, ' + city.city_name + ' has a growing network of qualified solar installers and competitive pricing — installation costs are ' + costPos + '. With a ' + rating + ' solar rating of ' + city.avg_sun_hours + ' peak sun hours per day, a typical homeowner can generate roughly ' + fmt(roi.annualKwh) + ' kWh of clean energy annually.</p>'
+    + economicContext
     + '<p>' + trendMsg + ' At the current rate of $' + city.avg_electricity_rate + '/kWh, your solar investment pays for itself in approximately ' + roi.breakEvenYears + ' years — then delivers free electricity for the remaining 15–20 year system lifespan.</p>';
 }
 
@@ -654,6 +676,10 @@ function generateStatePage(state, stateData) {
     return '<a href="/is-solar-worth-it-in-' + cityUrlKey(c) + '/" class="related-card"><span class="related-title">' + c.city_name + '</span><span class="related-meta">' + c.avg_sun_hours + ' sun hrs &middot; $' + c.avg_electricity_rate + '/kWh</span></a>';
   }).join('');
 
+  var stateBestCompaniesEntries = (stateData.stateBestCompanies || []).filter(function(e) {
+    return e.state === state.state_name || e.state_abbrev === state.state_abbrev;
+  }).slice(0, 3);
+
   var nearbyStates = states.filter(function (s) { return s.region === state.region && s.slug !== state.slug; }).slice(0, 6);
 
   var faqs = [
@@ -800,6 +826,8 @@ ${stateUtilities.length > 0 ? '<section class="content-section bg-light"><div cl
 
 ${stateCities.length > 0 ? '<section class="content-section"><div class="container"><h2>City Solar Reports in ' + state.state_name + '</h2><p>Get city-specific solar ROI projections, local incentives, and break-even analysis.</p><div class="related-grid">' + cityLinksHtml + '</div></div></section>' : ''}
 
+${stateBestCompaniesEntries.length > 0 ? '<section class="content-section bg-light"><div class="container"><h2>Top-Rated Solar Companies in ' + state.state_name + '</h2><p>Find vetted solar installers serving ' + state.state_name + ' with pricing, reviews, and service details.</p><div class="related-grid">' + stateBestCompaniesEntries.map(function(e) { return '<a href="/best-solar-companies/' + e.slug + '/" class="related-card"><span class="related-title">' + (e.title || ('Best Solar Companies in ' + (e.city || state.state_name))) + '</span><span class="related-meta">Vetted installer guide</span></a>'; }).join('') + '</div></div></section>' : ''}
+
 ${comparisonAffiliateTable('Best Solar Options in ' + state.state_name, [
   { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare local ' + state.state_name + ' installers', rating: '4.8/5', slug: 'energysage-' + state.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
   { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar in ' + state.state_name, rating: '4.5/5', slug: 'sunrun-' + state.slug, affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
@@ -859,12 +887,17 @@ function generateUtilityPage(utility, utilityData) {
   var sameStateUtils = utilities.filter(function (u) { return u.state_abbrev === utility.state_abbrev && u.slug !== utility.slug; }).slice(0, 6);
   var servedCities = (utilityData.cities || []).filter(function(c) { return c.state_abbrev === utility.state_abbrev; }).slice(0, 8);
 
+  var nmLabel = utility.net_metering_rate === 'retail' ? 'full retail-rate' : utility.net_metering_rate === 'time_of_use' ? 'time-of-use-based' : utility.net_metering_rate === 'avoided_cost' ? 'avoided-cost' : 'limited';
+  var compTier = utility.export_compensation >= 0.10 ? 'above-average' : utility.export_compensation >= 0.05 ? 'moderate' : 'below-average';
+  var feeTier = utility.interconnection_fee <= 50 ? 'minimal' : utility.interconnection_fee <= 200 ? 'moderate' : 'higher-than-average';
+  var sizeTier = utility.customers_served >= 1000000 ? 'one of the largest utilities in ' + utility.state : utility.customers_served >= 200000 ? 'a major utility provider in ' + utility.state : 'a regional utility serving ' + utility.state;
+
   var faqs = [
-    { question: 'Does ' + utility.utility_name + ' offer net metering?', answer: utility.utility_name + ' offers net metering with a "' + utility.net_metering_rate + '" rate structure. Export compensation is approximately $' + utility.export_compensation + '/kWh.' + (utility.cap_reached ? ' Note: the net metering cap has been reached, which may affect new applicants.' : '') },
-    { question: 'What is the interconnection fee for ' + utility.utility_name + '?', answer: 'The interconnection fee for ' + utility.utility_name + ' is approximately $' + utility.interconnection_fee + '. This is a one-time fee to connect your solar system to the grid.' },
-    { question: 'Does ' + utility.utility_name + ' have time-of-use rates?', answer: utility.time_of_use_rate ? utility.utility_name + ' offers time-of-use (TOU) rates. Peak rate: $' + utility.peak_rate + '/kWh. Off-peak rate: $' + utility.off_peak_rate + '/kWh. Battery storage can help you shift usage to off-peak hours.' : utility.utility_name + ' does not currently offer time-of-use rates.' },
-    { question: 'Does ' + utility.utility_name + ' offer battery incentives?', answer: utility.battery_incentive ? 'Yes, ' + utility.utility_name + ' offers battery storage incentives. Pairing solar with battery storage can maximize your savings by storing excess energy for use during peak rate periods.' : utility.utility_name + ' does not currently offer specific battery incentives, but you may still benefit from battery storage with time-of-use rate optimization.' },
-    { question: 'How many customers does ' + utility.utility_name + ' serve?', answer: utility.utility_name + ' serves approximately ' + fmt(utility.customers_served) + ' customers in ' + utility.state + '.' }
+    { question: 'Does ' + utility.utility_name + ' offer net metering?', answer: 'Yes — ' + utility.utility_name + ' provides ' + nmLabel + ' net metering. Export compensation is approximately $' + utility.export_compensation + '/kWh, which is ' + compTier + ' compared to other ' + utility.state + ' utilities.' + (utility.cap_reached ? ' Important: the net metering cap has been reached, which may limit enrollment for new solar customers. Act quickly to secure the best available rate.' : ' The program is currently open to new enrollments.') },
+    { question: 'What is the interconnection fee for ' + utility.utility_name + '?', answer: utility.utility_name + '\'s interconnection fee is approximately $' + utility.interconnection_fee + ', which is ' + feeTier + ' for ' + utility.state + '. This is a one-time fee to connect your solar system to the grid.' + (utility.interconnection_fee > 200 ? ' While the fee is above average, the long-term savings from solar typically far outweigh this upfront cost.' : ' This ' + feeTier + ' fee keeps your upfront solar costs lower.') },
+    { question: 'Does ' + utility.utility_name + ' have time-of-use rates?', answer: utility.time_of_use_rate ? utility.utility_name + ' offers time-of-use (TOU) rates with peak pricing at $' + utility.peak_rate + '/kWh and off-peak at $' + utility.off_peak_rate + '/kWh — a spread of $' + (utility.peak_rate - utility.off_peak_rate).toFixed(2) + '/kWh. Solar panels produce the most energy during peak afternoon hours when rates are highest, maximizing bill savings. Adding <a href="/guide/solar-battery-buying-guide/">battery storage</a> lets you shift usage to capitalize on the TOU spread.' : utility.utility_name + ' does not currently offer time-of-use rates, meaning your electricity cost is the same regardless of when you use it. This makes solar economics straightforward — every kWh your panels produce saves you the standard rate.' },
+    { question: 'Does ' + utility.utility_name + ' offer battery incentives?', answer: utility.battery_incentive ? 'Yes — ' + utility.utility_name + ' offers battery storage incentives. A home battery paired with solar can store excess energy for use during ' + (utility.time_of_use_rate ? 'expensive peak periods ($' + utility.peak_rate + '/kWh vs. $' + utility.off_peak_rate + '/kWh off-peak)' : 'grid outages or evening hours') + ', improving your overall return on investment and energy independence.' : utility.utility_name + ' does not currently offer specific battery incentives. However, battery storage can still be valuable for ' + (utility.time_of_use_rate ? 'shifting usage to off-peak hours (saving $' + (utility.peak_rate - utility.off_peak_rate).toFixed(2) + '/kWh on the TOU spread)' : 'backup power during outages and maximizing self-consumption of solar energy') + '.' },
+    { question: 'How many customers does ' + utility.utility_name + ' serve?', answer: utility.utility_name + ' serves approximately ' + fmt(utility.customers_served) + ' customers in ' + utility.state + ', making it ' + sizeTier + '. ' + (utility.customers_served >= 500000 ? 'As a large utility, ' + utility.utility_name + '\'s solar policies affect a significant number of potential solar adopters.' : 'Solar policies vary between utilities — check that your installer is familiar with ' + utility.utility_name + '\'s specific interconnection process.') }
   ];
 
   var crumbs = [
@@ -922,6 +955,7 @@ ${comparisonTable(
 <div class="container">
 <h2>Maximizing Solar Savings with ${utility.utility_name}</h2>
 <div class="content-prose">
+<p>${utility.utility_name} customers — ${sizeTier} — ${utility.time_of_use_rate ? 'can leverage time-of-use rates to maximize solar value. With a peak/off-peak spread of $' + (utility.peak_rate - utility.off_peak_rate).toFixed(2) + '/kWh, strategically timing energy usage around solar production and ' + (utility.battery_incentive ? 'battery storage (incentivized by ' + utility.utility_name + ')' : 'optional battery storage') + ' can significantly boost savings beyond standard net metering credits.' : 'benefit from ' + nmLabel + ' net metering at $' + utility.export_compensation + '/kWh export compensation. ' + (compTier === 'above-average' ? 'This above-average rate means excess solar production is particularly valuable — every kWh you export earns strong credit toward your bill.' : compTier === 'moderate' ? 'This moderate export rate makes self-consumption optimization important — use solar energy directly when possible for maximum value.' : 'With below-average export rates, maximizing self-consumption is key. Consider battery storage to use more of your solar energy directly.')}</p>
 ${utility.time_of_use_rate ? '<h3>Time-of-Use Rate Optimization</h3><p>' + utility.utility_name + ' uses time-of-use rates with peak pricing at $' + utility.peak_rate + '/kWh and off-peak at $' + utility.off_peak_rate + '/kWh. Solar panels produce the most energy during peak afternoon hours when rates are highest, maximizing your bill savings. Adding battery storage lets you store excess solar energy and use it during expensive peak periods.</p>' : ''}
 <h3>Export Compensation</h3>
 <p>When your solar system produces more electricity than you use, the excess is exported to the grid. ${utility.utility_name} compensates you at $${utility.export_compensation}/kWh for exported energy under their ${utility.net_metering_rate} policy.</p>
@@ -960,9 +994,11 @@ ${contextualLinksBlock('Compare Your Solar Options', [
 ])}
 `;
 
+  var titleDetail = utility.time_of_use_rate ? 'TOU Rates' : utility.battery_incentive ? 'Battery Incentives' : utility.cap_reached ? 'Cap Alert' : 'Guide';
+
   return baseTemplate(
-    utility.utility_name + ' Solar Savings (' + SITE.year + '): Net Metering, Rates & Rebate Guide',
-    utility.utility_name + ' solar customers: save with ' + utility.net_metering_rate + ' net metering at $' + utility.export_compensation + '/kWh export rate. ' + SITE.year + ' complete guide to solar incentives, rates & savings for ' + fmt(utility.customers_served) + ' customers in ' + utility.state + '.',
+    utility.utility_name + ' Solar (' + SITE.year + '): Net Metering, ' + titleDetail + ' & Savings',
+    utility.utility_name + ' solar customers in ' + utility.state + ': ' + nmLabel + ' net metering at $' + utility.export_compensation + '/kWh (' + compTier + '). ' + (utility.time_of_use_rate ? 'TOU rates: $' + utility.peak_rate + ' peak/$' + utility.off_peak_rate + ' off-peak. ' : '') + fmt(utility.customers_served) + ' customers served. ' + SITE.year + ' guide to solar incentives & savings.',
     '/utility-rebates/' + utility.slug + '/',
     body,
     {
@@ -1006,15 +1042,44 @@ function generateCityPage(city, cityData) {
     yearSavingsRows.push(['Year 20', dollar(cumSavings20), dollar(cumSavings20 - roi.netCost), 'Profitable']);
   }
 
+  var rateTier = city.avg_electricity_rate >= 0.20 ? 'high' : city.avg_electricity_rate >= 0.13 ? 'moderate' : 'low';
+  var sunTier = city.avg_sun_hours >= 5.5 ? 'excellent' : city.avg_sun_hours >= 4.5 ? 'strong' : 'moderate';
+  var worthItReason = '';
+  if (rateTier === 'high') {
+    worthItReason = 'Above-average electricity rates ($' + city.avg_electricity_rate + '/kWh) mean solar offsets a larger monthly bill, delivering ' + dollar(roi.twentyYearSavings) + ' in 20-year savings.';
+  } else if (sunTier === 'excellent') {
+    worthItReason = 'Excellent sun exposure (' + city.avg_sun_hours + ' peak hours/day) drives high energy production, yielding ' + dollar(roi.twentyYearSavings) + ' in estimated 20-year savings.';
+  } else {
+    worthItReason = 'At $' + city.avg_electricity_rate + '/kWh with ' + city.avg_sun_hours + ' peak sun hours daily, solar delivers ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings — a ' + Math.round((roi.twentyYearSavings / roi.netCost) * 100) + '% return on investment.';
+  }
+
+  var panelContext = '';
+  if (city.avg_sun_hours >= 5.0) {
+    panelContext = ' High sun exposure in ' + city.city_name + ' means you may need fewer panels than the national average to meet your energy goals.';
+  } else if (city.avg_sun_hours < 4.0) {
+    panelContext = ' With ' + city.avg_sun_hours + ' sun hours, you may benefit from higher-efficiency panels (see our <a href="/guide/best-solar-panels-2026/">panel comparison guide</a>) to maximize production per square foot.';
+  } else {
+    panelContext = ' Panel efficiency matters — a 400W panel produces about ' + Math.round(0.4 * city.avg_sun_hours * 365) + ' kWh/year in ' + city.city_name + '\'s climate.';
+  }
+
+  var rateContext = '';
+  if (city.electricity_trend === 'increasing' && rateTier === 'high') {
+    rateContext = 'Electricity rates in ' + city.city_name + ' are ' + city.electricity_trend + ' and already above the national average at $' + city.avg_electricity_rate + '/kWh. If rates continue rising at the historic 2-3% annual pace, you could save significantly more than the projected ' + dollar(roi.twentyYearSavings) + '. Solar effectively locks in your electricity cost at $0/kWh for 25+ years.';
+  } else if (city.electricity_trend === 'increasing') {
+    rateContext = 'Electricity rates in ' + city.city_name + ' are trending upward from the current $' + city.avg_electricity_rate + '/kWh. At even a 2% annual increase, your rate would reach $' + (city.avg_electricity_rate * 1.49).toFixed(2) + '/kWh in 20 years — making today\'s solar investment increasingly valuable over time.';
+  } else {
+    rateContext = 'While electricity rates in ' + city.city_name + ' are currently stable at $' + city.avg_electricity_rate + '/kWh, the long-term national trend is upward (2-3% annually). Solar protects against future increases and delivers estimated savings of ' + dollar(roi.twentyYearSavings) + ' over 20 years even at current rates.';
+  }
+
   var faqs = [
-    { question: 'Is solar worth it in ' + city.city_name + ', ' + city.state_abbrev + ' in ' + SITE.year + '?', answer: 'Yes. With ' + city.avg_sun_hours + ' average peak sun hours per day and electricity rates at $' + city.avg_electricity_rate + '/kWh (' + city.electricity_trend + ' trend), solar is a strong investment in ' + city.city_name + '. The estimated 20-year savings is ' + dollar(roi.twentyYearSavings) + ' with a break-even period of approximately ' + roi.breakEvenYears + ' years. After break-even, electricity savings are essentially free income.' },
-    { question: 'How much do solar panels cost in ' + city.city_name + '?', answer: 'The average solar installation in the ' + city.city_name + ' area costs approximately ' + dollar(parentState.avg_install_cost) + ' for a ' + parentState.avg_system_size + ' kW system before incentives. After the 30% federal tax credit and <a href="/solar-rebates-incentives-' + parentState.slug + '/">' + city.state_name + ' state incentives</a>, the net cost drops to approximately ' + dollar(roi.netCost) + '.' },
-    { question: 'What solar incentives are available in ' + city.city_name + '?', answer: 'The 30% federal Investment Tax Credit (ITC) saves ' + city.city_name + ' homeowners ' + dollar(roi.fedSavings) + ' on a typical installation.' + (parentState.state_tax_credit_percent > 0 ? ' ' + city.state_name + ' adds a ' + parentState.state_tax_credit_percent + '% state tax credit worth up to ' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '.' : '') + (parentState.state_rebate_amount > 0 ? ' A ' + dollar(parentState.state_rebate_amount) + ' state rebate is also available.' : '') + (parentState.property_tax_exemption ? ' Solar is exempt from property tax increases in ' + city.state_name + '.' : '') + (parentState.sales_tax_exemption ? ' No sales tax on solar equipment.' : '') + (parentState.srec_available ? ' SRECs worth $' + parentState.srec_value + '/MWh provide ongoing income.' : '') + ' Net metering status: ' + parentState.net_metering_status + '. <a href="/solar-rebates-incentives-' + parentState.slug + '/">See all ' + city.state_name + ' incentives</a>.' },
-    { question: 'How many solar panels do I need for my home in ' + city.city_name + '?', answer: 'A typical home in ' + city.city_name + ' uses a ' + parentState.avg_system_size + ' kW system (approximately ' + Math.round(parentState.avg_system_size / 0.4) + ' panels). This produces roughly ' + fmt(roi.annualKwh) + ' kWh per year based on ' + city.avg_sun_hours + ' peak sun hours per day. Your actual system size depends on your electricity usage, roof space, and shading.' },
-    { question: 'Are electricity rates going up in ' + city.city_name + '?', answer: 'Electricity rates in ' + city.city_name + ' are currently ' + city.electricity_trend + '. The current average rate is $' + city.avg_electricity_rate + '/kWh. Historically, U.S. electricity rates have risen 2-3% annually. Solar locks in your energy costs and protects against future rate increases for 25+ years.' },
-    { question: 'Can I install solar panels in ' + city.city_name + ' with $0 down?', answer: 'Yes. Multiple <a href="/solar-financing/">financing options</a> let ' + city.city_name + ' homeowners go solar with no upfront cost. Solar loans let you own the system and claim the 30% tax credit. Solar leases and PPAs require $0 down but you do not own the system or receive tax credits directly.' },
-    { question: 'How long does solar installation take in ' + city.city_name + '?', answer: 'From signing a contract to system activation, solar installation in ' + city.city_name + ' typically takes 1-3 months. This includes site assessment, permitting (varies by municipality), installation (1-3 days on the roof), inspection, and utility interconnection. Choose an installer familiar with ' + city.city_name + ' permitting to speed up the process.' },
-    { question: 'What is the best solar company in ' + city.city_name + ', ' + city.state_abbrev + '?', answer: 'The best solar company depends on your priorities — lowest price, best equipment, financing options, or customer service. We recommend comparing quotes from at least 3 installers. EnergySage lets you compare multiple ' + city.city_name + ' installer quotes side by side. Also check our <a href="/reviews/">solar brand reviews</a> and <a href="/guide/how-to-choose-solar-installer/">how to choose a solar installer guide</a>.' }
+    { question: 'Is solar worth it in ' + city.city_name + ', ' + city.state_abbrev + ' in ' + SITE.year + '?', answer: 'Yes — solar is a ' + (roi.twentyYearSavings >= 40000 ? 'particularly strong' : roi.twentyYearSavings >= 25000 ? 'strong' : 'solid') + ' investment in ' + city.city_name + '. ' + worthItReason + ' The break-even period is approximately ' + roi.breakEvenYears + ' years, after which your electricity savings are essentially free income for the remaining system lifespan.' },
+    { question: 'How much do solar panels cost in ' + city.city_name + '?', answer: 'A typical solar installation in ' + city.city_name + ' costs approximately ' + dollar(parentState.avg_install_cost) + ' for a ' + parentState.avg_system_size + ' kW system (about $' + (parentState.avg_install_cost / (parentState.avg_system_size * 1000)).toFixed(2) + '/watt) before incentives. After the 30% federal tax credit' + (parentState.state_tax_credit_percent > 0 ? ' and ' + city.state_name + '\'s ' + parentState.state_tax_credit_percent + '% state credit' : '') + (parentState.state_rebate_amount > 0 ? ' plus the ' + dollar(parentState.state_rebate_amount) + ' state rebate' : '') + ', the net cost drops to approximately ' + dollar(roi.netCost) + '. That is ' + costCompare(parentState.avg_install_cost) + '. See all <a href="/solar-rebates-incentives-' + parentState.slug + '/">' + city.state_name + ' incentives</a>.' },
+    { question: 'What solar incentives are available in ' + city.city_name + '?', answer: 'The 30% federal Investment Tax Credit (ITC) saves ' + city.city_name + ' homeowners ' + dollar(roi.fedSavings) + ' on a typical installation.' + (parentState.state_tax_credit_percent > 0 ? ' ' + city.state_name + ' adds a ' + parentState.state_tax_credit_percent + '% state tax credit worth up to ' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '.' : '') + (parentState.state_rebate_amount > 0 ? ' A ' + dollar(parentState.state_rebate_amount) + ' state rebate is also available.' : '') + (parentState.property_tax_exemption ? ' Solar is exempt from property tax increases in ' + city.state_name + '.' : '') + (parentState.sales_tax_exemption ? ' No sales tax on solar equipment.' : '') + (parentState.srec_available ? ' SRECs worth $' + parentState.srec_value + '/MWh provide ongoing income.' : '') + ' Net metering status: ' + parentState.net_metering_status + '. Combined, these incentives reduce your cost by ' + Math.round(((roi.fedSavings + roi.stateSavings) / parentState.avg_install_cost) * 100) + '%. <a href="/solar-rebates-incentives-' + parentState.slug + '/">See all ' + city.state_name + ' incentives</a>.' },
+    { question: 'How many solar panels do I need for my home in ' + city.city_name + '?', answer: 'A typical home in ' + city.city_name + ' uses a ' + parentState.avg_system_size + ' kW system (approximately ' + Math.round(parentState.avg_system_size / 0.4) + ' panels at 400W each). This produces roughly ' + fmt(roi.annualKwh) + ' kWh per year based on ' + city.city_name + '\'s ' + city.avg_sun_hours + ' peak sun hours per day.' + panelContext + ' Your actual system size depends on your electricity usage, roof space, and shading.' },
+    { question: 'Are electricity rates going up in ' + city.city_name + '?', answer: rateContext },
+    { question: 'Can I install solar panels in ' + city.city_name + ' with $0 down?', answer: 'Yes. Multiple <a href="/solar-financing/">financing options</a> let ' + city.city_name + ' homeowners go solar with no upfront cost. A solar loan is typically the best value — you own the system, claim the ' + dollar(roi.fedSavings) + ' federal tax credit, and build equity. Solar leases and PPAs require $0 down but you do not own the system. At ' + city.city_name + '\'s rate of $' + city.avg_electricity_rate + '/kWh, a loan typically saves ' + (rateTier === 'high' ? 'significantly more' : '20-40% more') + ' over 20 years versus a lease. <a href="/compare/solar-loan-vs-solar-lease/">Compare loan vs. lease</a>.' },
+    { question: 'How long does solar installation take in ' + city.city_name + '?', answer: 'From signing a contract to system activation, solar installation in ' + city.city_name + ' typically takes 1-3 months. This includes site assessment, permitting (varies by ' + city.city_name + ' municipality), installation (1-3 days on the roof), inspection, and utility interconnection.' + (city.population >= 500000 ? ' Larger metros like ' + city.city_name + ' may have longer permitting queues — working with an experienced local installer helps navigate the process faster.' : city.population >= 100000 ? ' ' + city.city_name + '\'s permitting timeline is typical for mid-size cities. Choose an installer familiar with local requirements.' : ' Smaller communities like ' + city.city_name + ' often have shorter permitting wait times than major metros.') },
+    { question: 'What is the best solar company in ' + city.city_name + ', ' + city.state_abbrev + '?', answer: 'The best solar company in ' + city.city_name + ' depends on your priorities — lowest price, best equipment, financing options, or customer service. We recommend comparing at least 3 quotes.' + (city.population >= 200000 ? ' Larger markets like ' + city.city_name + ' typically have both national companies (SunPower, Sunrun) and competitive local installers.' : ' In ' + city.city_name + ', check both national companies and local ' + city.state_name + ' installers for the best pricing.') + ' Use EnergySage to compare ' + city.city_name + ' installer quotes side by side. Also check our <a href="/reviews/">solar brand reviews</a> and <a href="/guide/how-to-choose-solar-installer/">how to choose a solar installer guide</a>.' }
   ];
 
   var crumbs = [
@@ -1135,6 +1200,8 @@ ${sidebarAffiliateWidget(city.city_name)}
 <h2>Is Solar Worth It in ${city.city_name}, ${city.state_abbrev}? (${SITE.year} Analysis)</h2>
 <div class="content-prose">
 ${cityIntroContent(city, parentState, roi)}
+<h3>${city.city_name} Solar Verdict</h3>
+<p>${roi.breakEvenYears <= 6 ? city.city_name + ' ranks as one of the faster-payback solar markets' + (parentState.region ? ' in the ' + parentState.region : '') + ', breaking even in just ' + roi.breakEvenYears + ' years.' : roi.breakEvenYears <= 9 ? city.city_name + ' offers a solid solar payback timeline of ' + roi.breakEvenYears + ' years — well within the industry benchmark of 5-10 years.' : 'While ' + city.city_name + '\'s ' + roi.breakEvenYears + '-year payback is longer than the national average, the ' + dollar(roi.twentyYearSavings) + ' in 20-year savings still delivers a strong return.'} ${city.avg_sun_hours >= 5.0 ? 'Above-average sun exposure (' + city.avg_sun_hours + ' hrs/day) is a key advantage.' : city.avg_sun_hours >= 4.0 ? 'Solid sun exposure at ' + city.avg_sun_hours + ' hrs/day supports reliable year-round production.' : 'While sun hours are below the national average, ' + (rateTier === 'high' ? 'high electricity rates compensate by making each kWh offset worth more' : 'available incentives help close the gap') + '.'} ${parentState.net_metering_status === 'full' ? 'Full retail net metering in ' + city.state_name + ' means every excess kWh you export earns full credit — maximizing your ROI.' : parentState.net_metering_status === 'partial' ? 'Partial net metering in ' + city.state_name + ' means export credits are below retail rate — consider battery storage to maximize self-consumption.' : 'Net metering is limited in ' + city.state_name + ', so pairing solar with <a href="/guide/solar-battery-buying-guide/">battery storage</a> can significantly improve your return.'}</p>
 <h3>Key Steps for ${city.city_name} Homeowners Considering Solar</h3>
 <ul>
 <li><strong>Check your roof:</strong> South-facing roofs with minimal shading produce the most energy. Read our <a href="/guide/complete-guide-home-solar/">complete guide to home solar</a> for details.</li>
@@ -1184,16 +1251,18 @@ ${contextualLinksBlock('Estimate Your Solar Savings', [
   { title: 'Solar Panel Cost Guide (' + SITE.year + ')', url: '/guide/solar-panel-cost-guide/' },
   { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/' },
   { title: 'Best Solar Panels ' + SITE.year, url: '/guide/best-solar-panels-2026/' },
+  { title: 'Best Solar Companies in ' + city.state_name, url: '/best-solar-companies/' + parentState.slug + '/' },
   { title: 'Solar Financing: $0 Down Options', url: '/solar-financing/' },
-  { title: 'Solar Loan vs Solar Lease', url: '/compare/solar-loan-vs-solar-lease/' },
   { title: 'How to Choose a Solar Installer', url: '/guide/how-to-choose-solar-installer/' },
-  { title: 'Solar Battery Buying Guide', url: '/guide/solar-battery-buying-guide/' }
+  { title: 'Solar Brand Reviews', url: '/reviews/' }
 ])}
 `;
 
+  var titleQualifier = roi.breakEvenYears <= 6 ? 'Fast Payback' : city.avg_sun_hours >= 5.0 ? 'High Sun' : parentState.state_tax_credit_percent > 0 ? 'Tax Credits' : 'ROI Guide';
+
   return baseTemplate(
-    'Solar Panel Cost in ' + city.city_name + ', ' + city.state_abbrev + ' (' + SITE.year + '): Calculator & Savings',
-    'Solar panels in ' + city.city_name + ', ' + city.state_abbrev + ' cost ' + dollar(roi.netCost) + ' after the 30% tax credit (' + SITE.year + '). Save ' + dollar(roi.twentyYearSavings) + ' over 20 years. ' + city.avg_sun_hours + ' sun hrs/day, $' + city.avg_electricity_rate + '/kWh rates (' + city.electricity_trend + '). Free savings calculator.',
+    'Solar Panel Cost in ' + city.city_name + ', ' + city.state_abbrev + ' (' + SITE.year + '): ' + titleQualifier + ' Calculator & Savings',
+    city.city_name + ', ' + city.state_abbrev + ' solar: ' + dollar(roi.netCost) + ' net cost after incentives (' + SITE.year + '). ' + city.avg_sun_hours + ' sun hrs/day, $' + city.avg_electricity_rate + '/kWh (' + city.electricity_trend + '). Save ' + dollar(roi.twentyYearSavings) + ' over 20 yrs. Break even in ~' + roi.breakEvenYears + ' yrs. Free calculator & local installer quotes.',
     '/' + slug + '/',
     body,
     {
