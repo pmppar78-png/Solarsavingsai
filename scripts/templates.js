@@ -79,7 +79,7 @@ function buildLocalIncentives(city, parentState) {
 function cityIntroContent(city, parentState, roi) {
   var rating = solarRating(city.avg_sun_hours);
   var costPos = costCompare(parentState.avg_install_cost);
-  var popLabel = city.population >= 500000 ? 'major metro' : city.population >= 100000 ? 'mid-size city' : 'growing community';
+  var popLabel = city.population >= 500000 ? 'major metro' : city.population >= 200000 ? 'large city' : city.population >= 100000 ? 'mid-size city' : city.population >= 50000 ? 'growing community' : 'smaller community';
   var rateTier = city.avg_electricity_rate >= 0.20 ? 'high' : city.avg_electricity_rate >= 0.13 ? 'moderate' : 'low';
   var savingsTier = roi.twentyYearSavings >= 40000 ? 'exceptional' : roi.twentyYearSavings >= 25000 ? 'strong' : 'solid';
   var breakEvenTier = roi.breakEvenYears <= 5 ? 'rapid' : roi.breakEvenYears <= 8 ? 'moderate' : 'longer';
@@ -1043,30 +1043,57 @@ function generateCityPage(city, cityData) {
   }
 
   var rateTier = city.avg_electricity_rate >= 0.20 ? 'high' : city.avg_electricity_rate >= 0.13 ? 'moderate' : 'low';
-  var sunTier = city.avg_sun_hours >= 5.5 ? 'excellent' : city.avg_sun_hours >= 4.5 ? 'strong' : 'moderate';
+  var sunTier = city.avg_sun_hours >= 5.5 ? 'excellent' : city.avg_sun_hours >= 4.5 ? 'strong' : city.avg_sun_hours >= 3.5 ? 'moderate' : 'below-average';
+  var breakEvenTier = roi.breakEvenYears <= 5 ? 'rapid' : roi.breakEvenYears <= 7 ? 'fast' : roi.breakEvenYears <= 9 ? 'moderate' : 'longer';
+  var savingsTier = roi.twentyYearSavings >= 50000 ? 'exceptional' : roi.twentyYearSavings >= 35000 ? 'strong' : roi.twentyYearSavings >= 20000 ? 'solid' : 'modest';
+  var popLabel = city.population >= 500000 ? 'major metro' : city.population >= 200000 ? 'large city' : city.population >= 100000 ? 'mid-size city' : city.population >= 50000 ? 'growing community' : 'smaller community';
+  var monthlyBill = Math.round(city.avg_electricity_rate * 900);
+  var monthlySavings = Math.round(roi.annualSavings / 12);
+  var returnMultiple = Math.round(roi.twentyYearSavings / roi.netCost * 10) / 10;
+
   var worthItReason = '';
-  if (rateTier === 'high') {
-    worthItReason = 'Above-average electricity rates ($' + city.avg_electricity_rate + '/kWh) mean solar offsets a larger monthly bill, delivering ' + dollar(roi.twentyYearSavings) + ' in 20-year savings.';
+  if (rateTier === 'high' && sunTier === 'excellent') {
+    worthItReason = city.city_name + ' combines two powerful solar advantages: above-average electricity rates ($' + city.avg_electricity_rate + '/kWh) and excellent sun exposure (' + city.avg_sun_hours + ' peak hours/day). This combination drives ' + dollar(roi.twentyYearSavings) + ' in 20-year savings with a ' + breakEvenTier + ' payback of just ' + roi.breakEvenYears + ' years.';
+  } else if (rateTier === 'high' && breakEvenTier === 'rapid') {
+    worthItReason = 'High electricity rates ($' + city.avg_electricity_rate + '/kWh) in ' + city.city_name + ' mean solar offsets a substantial monthly bill of approximately $' + monthlyBill + '. With a payback period of just ' + roi.breakEvenYears + ' years, homeowners enjoy free electricity for 20+ years afterward — delivering ' + dollar(roi.twentyYearSavings) + ' in total savings.';
+  } else if (rateTier === 'high') {
+    worthItReason = 'Above-average electricity rates ($' + city.avg_electricity_rate + '/kWh) mean solar offsets a larger monthly bill of roughly $' + monthlyBill + ' in ' + city.city_name + ', delivering ' + dollar(roi.twentyYearSavings) + ' in 20-year savings. The typical homeowner saves about $' + monthlySavings + '/month from day one.';
+  } else if (sunTier === 'excellent' && (parentState.state_tax_credit_percent > 0 || parentState.srec_available)) {
+    worthItReason = 'Excellent sun exposure (' + city.avg_sun_hours + ' peak hours/day) combined with ' + city.state_name + '\'s generous incentive package makes ' + city.city_name + ' an especially attractive solar market. The system generates approximately ' + fmt(roi.annualKwh) + ' kWh annually, yielding ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings.';
   } else if (sunTier === 'excellent') {
-    worthItReason = 'Excellent sun exposure (' + city.avg_sun_hours + ' peak hours/day) drives high energy production, yielding ' + dollar(roi.twentyYearSavings) + ' in estimated 20-year savings.';
+    worthItReason = 'Excellent sun exposure (' + city.avg_sun_hours + ' peak hours/day) drives high energy production in ' + city.city_name + ', with a typical system generating ' + fmt(roi.annualKwh) + ' kWh per year. This translates to ' + dollar(roi.twentyYearSavings) + ' in estimated 20-year savings and a ' + returnMultiple + 'x return on the initial investment.';
+  } else if (rateTier === 'moderate' && sunTier === 'strong') {
+    worthItReason = city.city_name + ' offers a balanced solar proposition: ' + sunTier + ' sun exposure (' + city.avg_sun_hours + ' hrs/day) at ' + rateTier + ' electricity rates ($' + city.avg_electricity_rate + '/kWh). At roughly $' + monthlySavings + ' in monthly savings, the system pays for itself in ' + roi.breakEvenYears + ' years and delivers ' + dollar(roi.twentyYearSavings) + ' in total savings over 20 years.';
+  } else if (parentState.srec_available && parentState.srec_value > 100) {
+    worthItReason = city.state_name + '\'s SREC program (valued at $' + parentState.srec_value + '/MWh) significantly boosts the economics of solar in ' + city.city_name + '. Combined with the 30% federal tax credit, the net cost of ' + dollar(roi.netCost) + ' generates ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings.';
+  } else if (breakEvenTier === 'longer' && rateTier === 'low') {
+    worthItReason = 'While ' + city.city_name + '\'s lower electricity rates ($' + city.avg_electricity_rate + '/kWh) mean a longer ' + roi.breakEvenYears + '-year payback, solar still delivers a meaningful return: ' + dollar(roi.twentyYearSavings) + ' in savings over 20 years, representing a ' + returnMultiple + 'x return on the ' + dollar(roi.netCost) + ' net investment. The 30% federal tax credit is key to making the numbers work.';
   } else {
-    worthItReason = 'At $' + city.avg_electricity_rate + '/kWh with ' + city.avg_sun_hours + ' peak sun hours daily, solar delivers ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings — a ' + Math.round((roi.twentyYearSavings / roi.netCost) * 100) + '% return on investment.';
+    worthItReason = 'At $' + city.avg_electricity_rate + '/kWh with ' + city.avg_sun_hours + ' peak sun hours daily, solar in ' + city.city_name + ' delivers ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings — a ' + Math.round((roi.twentyYearSavings / roi.netCost) * 100) + '% return on investment. The ' + roi.breakEvenYears + '-year payback means ' + (25 - roi.breakEvenYears) + '+ years of essentially free electricity.';
   }
 
   var panelContext = '';
-  if (city.avg_sun_hours >= 5.0) {
+  if (city.avg_sun_hours >= 5.5) {
+    panelContext = ' With exceptional sun exposure, ' + city.city_name + ' homeowners may need fewer panels (roughly ' + Math.round(parentState.avg_system_size / 0.4 * 0.85) + ' vs. the typical ' + Math.round(parentState.avg_system_size / 0.4) + ') to meet their energy needs, potentially reducing upfront costs.';
+  } else if (city.avg_sun_hours >= 5.0) {
     panelContext = ' High sun exposure in ' + city.city_name + ' means you may need fewer panels than the national average to meet your energy goals.';
+  } else if (city.avg_sun_hours < 3.5) {
+    panelContext = ' With below-average sun hours, ' + city.city_name + ' homeowners should invest in higher-efficiency panels (see our <a href="/guide/best-solar-panels-2026/">panel comparison guide</a>) and consider a slightly larger system to maximize production.';
   } else if (city.avg_sun_hours < 4.0) {
     panelContext = ' With ' + city.avg_sun_hours + ' sun hours, you may benefit from higher-efficiency panels (see our <a href="/guide/best-solar-panels-2026/">panel comparison guide</a>) to maximize production per square foot.';
   } else {
-    panelContext = ' Panel efficiency matters — a 400W panel produces about ' + Math.round(0.4 * city.avg_sun_hours * 365) + ' kWh/year in ' + city.city_name + '\'s climate.';
+    panelContext = ' Panel efficiency matters — a 400W panel produces about ' + Math.round(0.4 * city.avg_sun_hours * 365) + ' kWh/year in ' + city.city_name + '\'s climate, and a ' + parentState.avg_system_size + ' kW system covers most household needs.';
   }
 
   var rateContext = '';
+  var projectedRate20yr = (city.avg_electricity_rate * 1.49).toFixed(2);
+  var projectedRate10yr = (city.avg_electricity_rate * 1.22).toFixed(2);
   if (city.electricity_trend === 'increasing' && rateTier === 'high') {
-    rateContext = 'Electricity rates in ' + city.city_name + ' are ' + city.electricity_trend + ' and already above the national average at $' + city.avg_electricity_rate + '/kWh. If rates continue rising at the historic 2-3% annual pace, you could save significantly more than the projected ' + dollar(roi.twentyYearSavings) + '. Solar effectively locks in your electricity cost at $0/kWh for 25+ years.';
+    rateContext = 'Electricity rates in ' + city.city_name + ' are ' + city.electricity_trend + ' and already above the national average at $' + city.avg_electricity_rate + '/kWh. If rates continue rising at the historic 2-3% annual pace, they could reach $' + projectedRate10yr + '/kWh by 2036 and $' + projectedRate20yr + '/kWh by 2046 — making your solar savings significantly greater than the projected ' + dollar(roi.twentyYearSavings) + '. Solar effectively locks in your electricity cost at $0/kWh for 25+ years.';
   } else if (city.electricity_trend === 'increasing') {
-    rateContext = 'Electricity rates in ' + city.city_name + ' are trending upward from the current $' + city.avg_electricity_rate + '/kWh. At even a 2% annual increase, your rate would reach $' + (city.avg_electricity_rate * 1.49).toFixed(2) + '/kWh in 20 years — making today\'s solar investment increasingly valuable over time.';
+    rateContext = 'Electricity rates in ' + city.city_name + ' are trending upward from the current $' + city.avg_electricity_rate + '/kWh. At even a 2% annual increase, your rate would reach $' + projectedRate20yr + '/kWh in 20 years — making today\'s solar investment increasingly valuable over time. Each year you delay means paying more for grid electricity and missing out on approximately ' + dollar(roi.annualSavings) + ' in annual savings.';
+  } else if (rateTier === 'high') {
+    rateContext = 'Even with currently stable rates at $' + city.avg_electricity_rate + '/kWh in ' + city.city_name + ', your above-average rate means solar delivers strong value from day one. Historically, electricity prices have risen 2-3% annually nationwide. If that trend resumes, your actual savings would exceed the projected ' + dollar(roi.twentyYearSavings) + ' over 20 years.';
   } else {
     rateContext = 'While electricity rates in ' + city.city_name + ' are currently stable at $' + city.avg_electricity_rate + '/kWh, the long-term national trend is upward (2-3% annually). Solar protects against future increases and delivers estimated savings of ' + dollar(roi.twentyYearSavings) + ' over 20 years even at current rates.';
   }
