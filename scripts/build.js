@@ -399,16 +399,9 @@ writePage(
 pageCount++;
 
 // ---------------------------------------------------------------------------
-// Generate sitemap.xml
+// Generate sitemap index with per-type sub-sitemaps
 // ---------------------------------------------------------------------------
-console.log('\nGenerating sitemap.xml...');
-const sitemapEntries = [];
-
-function addEntry(urlPath, priority, lastmod) {
-  const loc = urlPath === '/' ? SITE_URL + '/' : `${SITE_URL}/${urlPath}`;
-  const lastmodDate = lastmod || generateLastmod(urlPath, priority);
-  sitemapEntries.push(`  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmodDate}</lastmod>\n    <changefreq>${priority >= 0.8 ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${priority.toFixed(1)}</priority>\n  </url>`);
-}
+console.log('\nGenerating sitemap index...');
 
 function generateLastmod(urlPath, priority) {
   let hash = 0;
@@ -422,97 +415,118 @@ function generateLastmod(urlPath, priority) {
   return '2026-04-' + String(Math.max(1, 15 - daySpread % 15)).padStart(2, '0');
 }
 
-addEntry('/', 1.0);
-addEntry('states/', 0.9);
-addEntry('solar-rebates/', 0.9);
-addEntry('comparisons/', 0.8);
-addEntry('solar-financing/', 0.9);
-
-for (const state of states) {
-  const isPriority = priorityStateSet.has(state.slug);
-  addEntry(`solar-rebates-incentives-${state.slug}/`, isPriority ? 0.9 : 0.7);
+function buildUrlEntry(urlPath, priority, lastmod) {
+  const loc = urlPath === '/' ? SITE_URL + '/' : `${SITE_URL}/${urlPath}`;
+  const lastmodDate = lastmod || generateLastmod(urlPath, priority);
+  return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmodDate}</lastmod>\n    <changefreq>${priority >= 0.8 ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${priority.toFixed(1)}</priority>\n  </url>`;
 }
 
+function writeSitemap(filename, entries) {
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.join('\n')}\n</urlset>`;
+  fs.writeFileSync(path.join(DIST_DIR, filename), xml);
+  return filename;
+}
+
+const sitemapFiles = [];
+
+// 1. Core pages sitemap — highest-value pages
+const coreEntries = [];
+coreEntries.push(buildUrlEntry('/', 1.0));
+coreEntries.push(buildUrlEntry('states/', 0.9));
+coreEntries.push(buildUrlEntry('solar-rebates/', 0.9));
+coreEntries.push(buildUrlEntry('comparisons/', 0.8));
+coreEntries.push(buildUrlEntry('solar-financing/', 0.9));
+coreEntries.push(buildUrlEntry('articles/', 0.6));
+coreEntries.push(buildUrlEntry('solar-glossary/', 0.5));
+coreEntries.push(buildUrlEntry('about/', 0.4));
+coreEntries.push(buildUrlEntry('contact/', 0.4));
+coreEntries.push(buildUrlEntry('privacy-policy/', 0.3));
+coreEntries.push(buildUrlEntry('methodology/', 0.4));
+coreEntries.push(buildUrlEntry('editorial-standards/', 0.4));
+if (brandReviews.length > 0) coreEntries.push(buildUrlEntry('reviews/', 0.7));
+if (bestOf.length > 0) coreEntries.push(buildUrlEntry('best/', 0.7));
+if (authors.length > 0) {
+  coreEntries.push(buildUrlEntry('authors/', 0.4));
+  for (const author of authors) {
+    coreEntries.push(buildUrlEntry(`authors/${author.slug}/`, 0.4));
+  }
+}
+for (const comparison of comparisons) {
+  coreEntries.push(buildUrlEntry(`compare/${comparison.slug}/`, 0.8));
+}
+sitemapFiles.push(writeSitemap('sitemap-core.xml', coreEntries));
+
+// 2. Guides and articles sitemap
+const guidesEntries = [];
+for (const pillar of pillarPages) {
+  const isPriority = priorityGuideSet.has(pillar.slug);
+  guidesEntries.push(buildUrlEntry(`guide/${pillar.slug}/`, isPriority ? 0.8 : 0.6));
+}
+for (const article of articles) {
+  const isPriority = priorityArticleSet.has(article.slug);
+  guidesEntries.push(buildUrlEntry(`article/${article.slug}/`, isPriority ? 0.8 : 0.5, article.date_modified || '2026-03-01'));
+}
+if (guidesEntries.length > 0) {
+  sitemapFiles.push(writeSitemap('sitemap-guides.xml', guidesEntries));
+}
+
+// 3. State pages sitemap
+const stateEntries = [];
+for (const state of states) {
+  const isPriority = priorityStateSet.has(state.slug);
+  stateEntries.push(buildUrlEntry(`solar-rebates-incentives-${state.slug}/`, isPriority ? 0.9 : 0.7));
+}
+sitemapFiles.push(writeSitemap('sitemap-states.xml', stateEntries));
+
+// 4. City pages sitemap — split priority vs non-priority
+const priorityCityEntries = [];
+const otherCityEntries = [];
 for (const city of cities) {
   const key = cityKey(city);
   const isPriority = priorityCitySet.has(key);
-  addEntry(`is-solar-worth-it-in-${key}/`, isPriority ? 0.8 : 0.6);
+  if (isPriority) {
+    priorityCityEntries.push(buildUrlEntry(`is-solar-worth-it-in-${key}/`, 0.8));
+  } else {
+    otherCityEntries.push(buildUrlEntry(`is-solar-worth-it-in-${key}/`, 0.6));
+  }
+}
+if (priorityCityEntries.length > 0) {
+  sitemapFiles.push(writeSitemap('sitemap-cities-priority.xml', priorityCityEntries));
+}
+if (otherCityEntries.length > 0) {
+  sitemapFiles.push(writeSitemap('sitemap-cities.xml', otherCityEntries));
 }
 
-for (const comparison of comparisons) {
-  addEntry(`compare/${comparison.slug}/`, 0.8);
-}
-
-for (const slug of PRIORITY_GUIDE_SLUGS) {
-  addEntry(`guide/${slug}/`, 0.8);
-}
-
-for (const slug of PRIORITY_ARTICLE_SLUGS) {
-  const article = articles.find((a) => a.slug === slug);
-  if (article) addEntry(`article/${slug}/`, 0.8, article.date_modified || '2026-03-01');
-}
-
-// Utility pages — previously missing from sitemap
+// 5. Utility pages sitemap
+const utilityEntries = [];
 for (const utility of utilities) {
-  addEntry(`utility-rebates/${utility.slug}/`, 0.5);
+  utilityEntries.push(buildUrlEntry(`utility-rebates/${utility.slug}/`, 0.5));
+}
+if (utilityEntries.length > 0) {
+  sitemapFiles.push(writeSitemap('sitemap-utilities.xml', utilityEntries));
 }
 
-// Non-priority guide pages
-for (const pillar of pillarPages) {
-  if (!priorityGuideSet.has(pillar.slug)) {
-    addEntry(`guide/${pillar.slug}/`, 0.6);
-  }
+// 6. Reviews and best-of pages sitemap
+const reviewEntries = [];
+for (const brand of brandReviews) {
+  reviewEntries.push(buildUrlEntry(`reviews/${brand.slug}/`, 0.6));
 }
-
-// Non-priority article pages
-for (const article of articles) {
-  if (!priorityArticleSet.has(article.slug)) {
-    addEntry(`article/${article.slug}/`, 0.5, article.date_modified || '2026-03-01');
-  }
+for (const entry of bestOf) {
+  reviewEntries.push(buildUrlEntry(`best/${entry.slug}/`, 0.6));
 }
-
-// Brand review pages
-if (brandReviews.length > 0) {
-  addEntry('reviews/', 0.7);
-  for (const brand of brandReviews) {
-    addEntry(`reviews/${brand.slug}/`, 0.6);
-  }
-}
-
-// Best-of roundup pages
-if (bestOf.length > 0) {
-  addEntry('best/', 0.7);
-  for (const entry of bestOf) {
-    addEntry(`best/${entry.slug}/`, 0.6);
-  }
-}
-
-// State/city best-companies pages
 for (const entry of stateBestCompanies) {
-  addEntry(`best-solar-companies/${entry.slug}/`, 0.6);
+  reviewEntries.push(buildUrlEntry(`best-solar-companies/${entry.slug}/`, 0.6));
+}
+if (reviewEntries.length > 0) {
+  sitemapFiles.push(writeSitemap('sitemap-reviews.xml', reviewEntries));
 }
 
-// Author pages
-if (authors.length > 0) {
-  addEntry('authors/', 0.4);
-  for (const author of authors) {
-    addEntry(`authors/${author.slug}/`, 0.4);
-  }
-}
-
-// Additional hub/static pages
-addEntry('articles/', 0.6);
-addEntry('solar-glossary/', 0.5);
-addEntry('about/', 0.4);
-addEntry('methodology/', 0.4);
-addEntry('editorial-standards/', 0.4);
-
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapEntries.join('\n')}
-</urlset>`;
-
-fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemap);
+// Write sitemap index
+const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapFiles.map(f => `  <sitemap>\n    <loc>${SITE_URL}/${f}</loc>\n    <lastmod>2026-05-25</lastmod>\n  </sitemap>`).join('\n')}
+</sitemapindex>`;
+fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemapIndex);
 
 // ---------------------------------------------------------------------------
 // Generate robots.txt
@@ -548,10 +562,11 @@ if (redirectLines.length > 0) {
 // ---------------------------------------------------------------------------
 // Build statistics
 // ---------------------------------------------------------------------------
-const sitemapCount = sitemapEntries.length;
+const totalSitemapEntries = coreEntries.length + guidesEntries.length + stateEntries.length + priorityCityEntries.length + otherCityEntries.length + utilityEntries.length + reviewEntries.length;
 console.log('\n--- Build Statistics ---');
 console.log(`Pages generated: ${pageCount}`);
-console.log(`Sitemap entries: ${sitemapCount}`);
+console.log(`Sitemap files: ${sitemapFiles.length} sub-sitemaps in sitemap index`);
+console.log(`Sitemap entries: ${totalSitemapEntries}`);
 console.log('Static assets:   7 (main.css, app.js, favicon.ico, apple-touch-icon.png, og-image.png, manifest.json, images/logo.svg)');
 console.log(`Output directory: ${DIST_DIR}`);
 console.log('Build complete!\n');
