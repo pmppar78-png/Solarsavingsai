@@ -51,10 +51,15 @@
   status = 301
   force = true
 
+# Subdirectory index.html files exist on disk (every route is dir/index.html),
+# so without force Netlify serves /path/index.html as a duplicate 200. Force
+# guarantees a single clean 301 to the canonical trailing-slash URL, matching
+# the root rule above and keeping any indexed *.html/index.html out of the index.
 [[redirects]]
   from = "/*/index.html"
   to = "/:splat/"
   status = 301
+  force = true
 
 # --- Hub pages (states, solar-rebates, comparisons) ---
 # Each hub is a directory with index.html. Netlify natively serves
