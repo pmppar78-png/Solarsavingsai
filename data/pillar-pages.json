@@ -55,7 +55,7 @@
     "slug": "solar-panel-cost-guide",
     "title": "Solar Panel Cost Guide 2026: Prices, Savings & ROI",
     "meta_description": "How much do solar panels cost in 2026? Average prices range from $10,000-$25,000 before incentives. See costs by state, system size, and calculate your savings.",
-    "intro": "The average cost of residential solar panels in 2026 ranges from $10,000 to $25,000 before the federal tax credit. After the 30% ITC and state incentives, most homeowners pay $7,000-$17,500 for a complete system installation.",
+    "intro": "The average cost of residential solar panels in 2026 ranges from $10,000 to $25,000 before incentives. After state incentives (the federal homeowner credit ended after 2025), most homeowners pay $7,000-$17,500 for a complete system installation.",
     "hub": "getting-started",
     "sections": [
       {
@@ -72,7 +72,7 @@
       },
       {
         "heading": "Federal and State Incentives That Reduce Cost",
-        "content": "The 30% federal Investment Tax Credit reduces a $20,000 system to $14,000. Many states offer additional credits, rebates, and SREC income. Combined incentives can reduce total cost by 40-60% depending on your location."
+        "content": "The 30% federal homeowner credit ended after 2025, so get quotes priced without it. Many states offer additional credits, rebates, and SREC income. Combined incentives can reduce total cost by 40-60% depending on your location."
       },
       {
         "heading": "Is Solar Worth the Investment?",
@@ -82,7 +82,7 @@
     "faqs": [
       {
         "question": "How much do solar panels cost for a 2,000 sq ft house?",
-        "answer": "A typical 2,000 sq ft home needs a 6-8kW system, costing $16,500-$22,000 before incentives. After the 30% federal tax credit, expect to pay $11,550-$15,400."
+        "answer": "A typical 2,000 sq ft home needs a 6-8kW system, costing $16,500-$22,000 before incentives. The 30% federal homeowner credit ended after 2025, so that range is also close to what you pay unless state incentives apply."
       },
       {
         "question": "Are solar panels getting cheaper?",
@@ -156,11 +156,11 @@
     "sections": [
       {
         "heading": "Cash Purchase: Best ROI",
-        "content": "Paying cash offers the highest return on investment since you avoid interest charges and keep all incentives. A $20,000 system with the 30% tax credit costs $14,000 out of pocket and typically pays for itself in 5-7 years."
+        "content": "Paying cash offers the highest return on investment since you avoid interest charges and keep all incentives. The 30% federal homeowner credit ended after 2025, so get quotes priced without it."
       },
       {
         "heading": "Solar Loans: Own With $0 Down",
-        "content": "Solar loans let you own your system with little or no money down. Interest rates typically range from 3-9% APR with terms of 10-25 years. You qualify for the full 30% tax credit since you own the system. Monthly loan payments are often less than your previous electric bill."
+        "content": "Solar loans let you own your system with little or no money down. Interest rates typically range from 3-9% APR with terms of 10-25 years. You own the system and keep any state incentives. Monthly loan payments are often less than your previous electric bill."
       },
       {
         "heading": "Solar Leases and PPAs",
@@ -204,7 +204,7 @@
     "sections": [
       {
         "heading": "Solar Loans: Full Ownership Benefits",
-        "content": "Solar loans let you own your system and claim the 30% federal tax credit. Monthly payments are often lower than your previous electric bill. After the loan is paid off, you enjoy decades of free electricity. Ownership also increases your home's resale value by an average of $15,000-$25,000."
+        "content": "Solar loans let you own your system and keep any state incentives. Monthly payments are often lower than your previous electric bill. After the loan is paid off, you enjoy decades of free electricity. Ownership also increases your home's resale value by an average of $15,000-$25,000."
       },
       {
         "heading": "Solar Leases: Simplicity First",
@@ -243,7 +243,7 @@
     "slug": "solar-tax-credits-incentives",
     "title": "Solar Tax Credits & Incentives Guide 2026",
     "meta_description": "Complete guide to federal and state solar tax credits, rebates, SRECs, and incentive programs for 2026. Learn how to maximize your solar savings.",
-    "intro": "The federal solar Investment Tax Credit (ITC) lets homeowners deduct 30% of their installation cost from federal taxes through 2032. Combined with state incentives, homeowners can reduce solar costs by 40-60% depending on location.",
+    "intro": "The 30% federal homeowner credit ended after 2025, so get quotes priced without it. Combined with state incentives, homeowners can reduce solar costs by 40-60% depending on location.",
     "hub": "financing",
     "sections": [
       {
@@ -252,11 +252,11 @@
       },
       {
         "heading": "ITC Step-Down Schedule",
-        "content": "The 30% ITC remains through December 31, 2032. It steps down to 26% in 2033 and 22% in 2034. After 2034, the residential credit expires unless Congress extends it. This timeline creates urgency for homeowners considering solar."
+        "content": "The 30% federal homeowner credit (Section 25D) ended for expenditures made after December 31, 2025, under the One Big Beautiful Bill Act. Systems paid for and installed in 2025 can still be claimed on 2025 returns. For 2026 purchases, savings depend on state and utility incentives and net metering."
       },
       {
         "heading": "State Tax Credits and Rebates",
-        "content": "Many states offer additional incentives stacked on top of the federal ITC. New York offers 25% up to $5,000. South Carolina provides 25% with no cap. Hawaii offers 35% of system cost. State rebates from Colorado, Maryland, and others provide $500-$5,000 in direct cash back."
+        "content": "Many states offer additional incentives for eligible homeowners. New York offers 25% up to $5,000. South Carolina provides 25% with no cap. Hawaii offers 35% of system cost. State rebates from Colorado, Maryland, and others provide $500-$5,000 in direct cash back."
       },
       {
         "heading": "Solar Renewable Energy Credits (SRECs)",
@@ -274,7 +274,7 @@
       },
       {
         "question": "Can I claim the solar tax credit if I finance?",
-        "answer": "Yes, you can claim the full 30% ITC with cash purchase or solar loans. However, you cannot claim it with a solar lease or PPA since the leasing company owns the system."
+        "answer": "The 30% federal homeowner solar credit ended after 2025. However, you cannot claim it with a solar lease or PPA since the leasing company owns the system."
       },
       {
         "question": "What happens if I don't owe enough in taxes?",
@@ -282,7 +282,7 @@
       },
       {
         "question": "Do state credits stack with federal?",
-        "answer": "Yes, state solar tax credits are separate from and additional to the federal ITC. You can claim both, potentially reducing your total solar cost by 40-60%."
+        "answer": "Yes, state solar tax credits are claimed on your state return. With the federal homeowner credit gone after 2025, they can meaningfully reduce your total solar cost by 40-60%."
       }
     ],
     "related_slugs": [
@@ -352,7 +352,7 @@
       },
       {
         "heading": "Solar Battery Costs in 2026",
-        "content": "Battery storage adds $8,000-$16,000 to a solar installation, depending on capacity. The Tesla Powerwall installed costs approximately $11,500. The 30% federal tax credit applies to batteries installed with solar, reducing costs to $5,600-$11,200."
+        "content": "Battery storage adds $8,000-$16,000 to a solar installation, depending on capacity. The Tesla Powerwall installed costs approximately $11,500. The 30% federal homeowner credit ended after 2025, so get quotes priced without it."
       },
       {
         "heading": "Is Battery Storage Worth It?",
@@ -362,7 +362,7 @@
     "faqs": [
       {
         "question": "How much does a solar battery cost?",
-        "answer": "Solar batteries cost $8,000-$16,000 installed, depending on brand and capacity. The 30% federal tax credit applies when installed with solar, reducing the effective cost to $5,600-$11,200."
+        "answer": "Solar batteries cost $8,000-$16,000 installed, depending on brand and capacity. The 30% federal homeowner credit for batteries ended after 2025; check state and utility battery programs, which can reduce the effective cost to $5,600-$11,200."
       },
       {
         "question": "How long do solar batteries last?",
@@ -520,7 +520,7 @@
     "sections": [
       {
         "heading": "How the Solar Savings Calculator Works",
-        "content": "Our calculator uses your monthly electric bill, state location, and roof orientation to estimate system size, cost, and savings. We factor in the 30% federal tax credit, state incentives, local electricity rates, and solar irradiance data to provide accurate projections."
+        "content": "Our calculator uses your monthly electric bill, state location, and roof orientation to estimate system size, cost, and savings. We factor in state incentives, net metering, local electricity rates, and solar irradiance data to provide accurate projections."
       },
       {
         "heading": "Key Inputs for Accurate Estimates",
@@ -572,7 +572,7 @@
       },
       {
         "heading": "Incentive Structures",
-        "content": "Both sectors benefit from the 30% ITC, but commercial projects can also claim MACRS accelerated depreciation, recovering 85% of system cost through tax deductions over 5 years. This makes the effective commercial tax benefit 56% vs 30% for residential."
+        "content": "Homeowner purchases no longer get the 30% credit after 2025; businesses may still use a commercial credit, but commercial projects can also claim MACRS accelerated depreciation, recovering 85% of system cost through tax deductions over 5 years. This makes the effective commercial tax benefit 56% vs 30% for residential."
       },
       {
         "heading": "ROI Comparison",
@@ -586,7 +586,7 @@
       },
       {
         "question": "Can a business use the solar tax credit?",
-        "answer": "Yes, businesses can claim the 30% ITC plus MACRS accelerated depreciation. Combined, these incentives offset approximately 56% of the total system cost, making commercial solar highly attractive."
+        "answer": "Yes, businesses can claim the 30% ITC plus MACRS accelerated depreciation. Combined, these incentives offset approximately 56% of the total system cost, making commercial solar highly attractive. Under the One Big Beautiful Bill Act, commercial solar projects must begin construction by July 4, 2026, or be placed in service by December 31, 2027, to qualify for the clean electricity credit (Section 48E); homeowner purchases no longer get the 25D credit."
       },
       {
         "question": "What size solar system does a business need?",
@@ -840,7 +840,7 @@
       },
       {
         "heading": "Ownership and Incentive Eligibility",
-        "content": "Loans typically preserve ownership and federal tax credit eligibility. Leases and PPAs usually assign those benefits to the provider. See details in <a href=\"/guide/solar-tax-credits-guide/\">Solar Tax Credits Guide</a>."
+        "content": "The 30% federal homeowner solar credit ended after 2025. Leases and PPAs usually assign those benefits to the provider. See details in <a href=\"/guide/solar-tax-credits-guide/\">Solar Tax Credits Guide</a>."
       },
       {
         "heading": "25-Year Savings Outlook",
@@ -873,16 +873,16 @@
   },
   {
     "slug": "solar-tax-credits-guide",
-    "title": "Solar Tax Credits Guide 2026: Federal ITC and State Incentives",
-    "description": "Understand how to claim the federal solar tax credit and combine it with state and utility incentives to maximize total savings in 2026.",
-    "meta_description": "Understand how to claim the federal solar tax credit and combine it with state and utility incentives to maximize total savings in 2026.",
-    "intro": "Tax incentives can significantly lower net system cost when correctly planned and documented.",
+    "title": "Solar Tax Credits Guide 2026: Federal Credit Ended, State Incentives Remain",
+    "description": "What happened to the 30% federal solar tax credit after 2025, who can still claim it, and how to use state and utility incentives in 2026.",
+    "meta_description": "What happened to the 30% federal solar tax credit after 2025, who can still claim it, and how to use state and utility incentives in 2026.",
+    "intro": "The 30% federal homeowner solar credit ended for expenditures after December 31, 2025. State, utility and local incentives now decide most of your savings.",
     "hub": "financing",
     "category": "financing",
     "sections": [
       {
-        "heading": "Federal ITC Basics for Homeowners",
-        "content": "The federal Investment Tax Credit can substantially reduce net solar cost for eligible owners. Start with your installation estimate from the <a href=\"/\">home page</a> to model credit impact."
+        "heading": "What Happened to the Federal Solar Credit",
+        "content": "The Residential Clean Energy Credit (Section 25D) was 30% of installed cost. The One Big Beautiful Bill Act ended it for expenditures made after December 31, 2025 (<a href=\"https://www.irs.gov/credits-deductions/residential-clean-energy-credit\" rel=\"nofollow\">IRS</a>). If your system was paid for and installed in 2025, claim it on Form 5695 with your 2025 return. Model 2026 purchases on the <a href=\"/\">home page</a> without it."
       },
       {
         "heading": "How State and Utility Incentives Stack",
@@ -900,11 +900,11 @@
     "faqs": [
       {
         "question": "Can a leased system claim the homeowner tax credit?",
-        "answer": "Usually no. For leased systems, tax benefits commonly belong to the third-party owner."
+        "answer": "No. A leased or PPA system is owned by the installer or a third party. The homeowner credit has ended in any case, but the owner may still use commercial credits (Section 48E) under separate deadlines, which can affect lease pricing."
       },
       {
         "question": "Can unused federal tax credit carry forward?",
-        "answer": "In many situations, remaining credit can be carried to future eligible tax years."
+        "answer": "Yes. If you claimed the credit for a system installed in 2025 or earlier and could not use all of it, the unused amount can generally carry forward to future tax years."
       },
       {
         "question": "Do state incentives reduce federal credit eligibility?",
