@@ -14,6 +14,9 @@ const {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+// Slugs that have a /best-solar-companies/<slug>/ page, so we never link to a missing one.
+var BEST_COMPANY_SLUGS = new Set((function () { try { return require('../data/state-best-companies.json').map(function (e) { return e.slug; }); } catch (e) { return []; } })());
+
 function fmt(n) {
   return Number(n).toLocaleString('en-US');
 }
@@ -43,7 +46,7 @@ function costCompare(stateCost) {
 
 function buildLocalIncentives(city, parentState) {
   var parts = [];
-  parts.push('The 30% federal Investment Tax Credit (ITC) covers ' + dollar(parentState.avg_install_cost * 0.3) + ' of a typical ' + city.city_name + ' installation.');
+  parts.push('The 30% federal residential solar tax credit (25D) ended for systems paid for after December 31, 2025, so ' + city.city_name + ' savings now depend on state, utility and net-metering incentives.');
   if (parentState.state_tax_credit_percent > 0) {
     parts.push(city.state_name + ' adds a ' + parentState.state_tax_credit_percent + '% state tax credit worth up to ' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '.');
   }
@@ -104,13 +107,13 @@ function cityIntroContent(city, parentState, roi) {
 
   var economicContext = '';
   if (rateTier === 'high' && breakEvenTier === 'rapid') {
-    economicContext = '<p><strong>Why ' + city.city_name + ' is ideal for solar:</strong> High electricity rates ($' + city.avg_electricity_rate + '/kWh) combined with ' + rating + ' sun exposure create one of the fastest payback scenarios in the country. Homeowners here typically recoup their investment in just ' + roi.breakEvenYears + ' years, then enjoy ' + (25 - roi.breakEvenYears) + '+ years of near-free electricity.</p>';
+    economicContext = '<p><strong>Why ' + city.city_name + ' is ideal for solar:</strong> High electricity rates ($' + city.avg_electricity_rate + '/kWh) combined with ' + rating + ' sun exposure create one of the fastest payback scenarios in the country. Homeowners here typically recoup their investment in just ' + roi.breakEvenYears + ' years, then enjoy ' + Math.max(5, 25 - roi.breakEvenYears) + '+ years of near-free electricity.</p>';
   } else if (rateTier === 'high') {
     economicContext = '<p><strong>' + city.city_name + ' electricity costs are above average</strong> at $' + city.avg_electricity_rate + '/kWh, which means solar offsets a larger monthly bill. Even with a ' + breakEvenTier + ' payback timeline of ' + roi.breakEvenYears + ' years, the ' + savingsTier + ' 20-year savings of ' + dollar(roi.twentyYearSavings) + ' make solar a worthwhile investment for most homeowners.</p>';
   } else if (rating === 'excellent') {
     economicContext = '<p><strong>' + city.city_name + '\'s ' + city.avg_sun_hours + ' peak sun hours per day</strong> rank among the highest in the nation. This translates to roughly ' + fmt(roi.annualKwh) + ' kWh of annual production from a standard system — enough to offset most or all of a typical household\'s electricity consumption and deliver ' + dollar(roi.twentyYearSavings) + ' in 20-year savings.</p>';
   } else if (incentiveStrength === 'strong') {
-    economicContext = '<p><strong>' + city.state_name + '\'s generous incentive stack</strong> is a major advantage for ' + city.city_name + ' homeowners. Beyond the 30% federal credit' + (parentState.state_tax_credit_percent > 0 ? ', a ' + parentState.state_tax_credit_percent + '% state tax credit' : '') + (parentState.state_rebate_amount > 0 ? ', plus a ' + dollar(parentState.state_rebate_amount) + ' state rebate' : '') + (parentState.srec_available ? ', and SRECs worth $' + parentState.srec_value + '/MWh' : '') + ' — the combined incentives reduce the net cost to just ' + dollar(roi.netCost) + ', making the break-even math compelling.</p>';
+    economicContext = '<p><strong>' + city.state_name + '\'s generous incentive stack</strong> is a major advantage for ' + city.city_name + ' homeowners. With the federal homeowner credit gone in 2026, state programs matter more. They include' + (parentState.state_tax_credit_percent > 0 ? ' a ' + parentState.state_tax_credit_percent + '% state tax credit' : '') + (parentState.state_rebate_amount > 0 ? ', plus a ' + dollar(parentState.state_rebate_amount) + ' state rebate' : '') + (parentState.srec_available ? ', and SRECs worth $' + parentState.srec_value + '/MWh' : '') + ' — the combined incentives reduce the net cost to just ' + dollar(roi.netCost) + ', making the break-even math compelling.</p>';
   } else if (city.population >= 500000) {
     economicContext = '<p><strong>As one of the largest solar markets in ' + city.state_name + ',</strong> ' + city.city_name + '\'s ' + fmt(city.population) + ' residents have access to a competitive installer market that helps keep prices ' + costPos + '. Larger metro areas typically see 10-15% lower per-watt pricing due to installer competition and volume.</p>';
   } else {
@@ -122,10 +125,21 @@ function cityIntroContent(city, parentState, roi) {
     + '<p>' + trendMsg + ' At the current rate of $' + city.avg_electricity_rate + '/kWh, your solar investment pays for itself in approximately ' + roi.breakEvenYears + ' years — then delivers free electricity for the remaining 15–20 year system lifespan.</p>';
 }
 
-function calculateROI(installCost, systemSize, sunHours, kwRate, fedCredit, stateCredit, stateRebate) {
+// The federal Residential Clean Energy Credit (IRC 25D) ended for expenditures made after
+// Dec 31, 2025 (One Big Beautiful Bill Act; IRS FAQ). Homeowner purchases in 2026 get 0%.
+const FEDERAL_RESIDENTIAL_CREDIT_PERCENT = 0;
+// Share of solar output valued at the full retail rate, by net-metering status. Exported kWh
+// under partial / no net metering are credited below retail, so savings are discounted.
+const NET_METERING_VALUE_FACTOR = { full: 1.0, partial: 0.85, none: 0.7 };
+function netMeteringFactor(status) {
+  var f = NET_METERING_VALUE_FACTOR[String(status || '').toLowerCase()];
+  return typeof f === 'number' ? f : 0.85;
+}
+function calculateROI(installCost, systemSize, sunHours, kwRate, fedCredit, stateCredit, stateRebate, netMeteringStatus, srecValue) {
   const annualKwh = systemSize * sunHours * 365;
-  const annualSavings = annualKwh * kwRate;
-  const fedSavings = installCost * (fedCredit / 100);
+  const srecIncome = srecValue ? (annualKwh / 1000) * srecValue : 0;
+  const annualSavings = annualKwh * kwRate * netMeteringFactor(netMeteringStatus) + srecIncome;
+  const fedSavings = installCost * ((fedCredit || 0) / 100);
   const stateSavings = installCost * (stateCredit / 100) + (stateRebate || 0);
   const netCost = installCost - fedSavings - stateSavings;
   const breakEvenYears = netCost > 0 ? Math.ceil(netCost / annualSavings) : 1;
@@ -232,7 +246,7 @@ function generateHomepage(data) {
 <div class="container">
 <div class="hero-content">
 <h1>Solar Panel Cost Calculator (${SITE.year}): See Your Exact Savings, Tax Credits &amp; Rebates</h1>
-<p class="hero-subtitle"><strong>How much do solar panels cost in ${SITE.year}?</strong> Our free <strong>solar savings calculator</strong> shows your exact cost after the <strong>30% federal solar tax credit</strong>, state rebates, and utility incentives. Average homeowner saves <strong>$20,000–$60,000</strong> over 20 years. Over ${fmt(cities.length)} cities and all 50 states covered. Calculate your savings in 30 seconds.</p>
+<p class="hero-subtitle"><strong>How much do solar panels cost in ${SITE.year}?</strong> Our free <strong>solar savings calculator</strong> estimates your cost after state rebates, utility incentives and net metering (the 30% federal homeowner credit ended after 2025). Average homeowner saves <strong>$20,000–$60,000</strong> over 20 years. Over ${fmt(cities.length)} cities and all 50 states covered. Calculate your savings in 30 seconds.</p>
 ${eligibilityWidget('hero')}
 </div>
 </div>
@@ -243,7 +257,7 @@ ${aboveFoldQuoteCta('Your Area')}
 <section class="content-section">
 <div class="container">
 ${statsGrid([
-  { value: '30%', label: 'Federal Solar Tax Credit (ITC)' },
+  { value: '50', label: 'States With Incentive Data' },
   { value: '50', label: 'State Incentive Programs Tracked' },
   { value: fmt(utilities.length) + '+', label: 'Utility Net Metering Policies' },
   { value: fmt(cities.length) + '+', label: 'City Solar ROI Reports' }
@@ -263,7 +277,7 @@ ${statsGrid([
 <div class="step-card">
 <div class="step-number">2</div>
 <h3>See All Available Solar Incentives</h3>
-<p>We identify the 30% <a href="/article/federal-solar-tax-credit-2026-complete-guide/">federal solar tax credit</a>, state rebates, SREC income, utility programs, <a href="/solar-glossary/#term-net-metering">net metering</a> policies, and property tax exemptions available in your area.</p>
+<p>We identify state rebates (and explain the <a href="/article/federal-solar-tax-credit-2026-complete-guide/">end of the federal solar tax credit</a>), SREC income, utility programs, <a href="/solar-glossary/#term-net-metering">net metering</a> policies, and property tax exemptions available in your area.</p>
 </div>
 <div class="step-card">
 <div class="step-number">3</div>
@@ -280,8 +294,8 @@ ${affiliateCtaBlock('Your Area', 'homepage-top')}
 <div class="container">
 <h2 class="section-title text-center">Understanding Solar Tax Credits, Rebates &amp; Incentives in ${SITE.year}</h2>
 <div class="content-prose">
-<p>The <strong>federal solar tax credit</strong> (Investment Tax Credit or ITC) lets homeowners deduct <strong>30% of their solar installation cost</strong> from federal taxes. This incentive, extended through 2032 under the Inflation Reduction Act, is the single largest solar incentive available. For a typical $15,000 system, that is $4,500 back on your taxes. <a href="/article/federal-solar-tax-credit-2026-complete-guide/">Read our complete federal solar tax credit guide</a> for step-by-step claiming instructions.</p>
-<p>Beyond the federal credit, many states offer additional <strong>solar rebates</strong>, tax credits, and performance-based incentives. Some states like <a href="/solar-rebates-incentives-new-york/">New York</a>, <a href="/solar-rebates-incentives-california/">California</a>, and <a href="/solar-rebates-incentives-massachusetts/">Massachusetts</a> offer state tax credits worth thousands of dollars on top of the federal ITC. Others, like <a href="/solar-rebates-incentives-new-jersey/">New Jersey</a> and <a href="/solar-rebates-incentives-maryland/">Maryland</a>, have valuable SREC (Solar Renewable Energy Certificate) programs that provide ongoing income for solar production.</p>
+<p>The <strong>federal residential solar tax credit</strong> (Section 25D, often called the solar ITC) used to cover 30% of a homeowner’s installation cost. Under the One Big Beautiful Bill Act it <strong>ended for expenditures made after December 31, 2025</strong>, so systems bought in 2026 do not qualify. Systems paid for and installed in 2025 can still be claimed on 2025 returns. Leases and PPAs are owned by the installer, which may still use separate commercial credits. <a href="/article/federal-solar-tax-credit-2026-complete-guide/">Read our complete federal solar tax credit guide</a> for step-by-step claiming instructions.</p>
+<p>With the federal homeowner credit gone, state programs carry more weight. Many states offer additional <strong>solar rebates</strong>, tax credits, and performance-based incentives. Some states like <a href="/solar-rebates-incentives-new-york/">New York</a> and <a href="/solar-rebates-incentives-massachusetts/">Massachusetts</a> offer state income tax credits for eligible homeowners. Others, like <a href="/solar-rebates-incentives-new-jersey/">New Jersey</a> and <a href="/solar-rebates-incentives-maryland/">Maryland</a>, have valuable SREC (Solar Renewable Energy Certificate) programs that provide ongoing income for solar production.</p>
 <p>Utility companies also play a role through <strong>net metering</strong> policies, which credit you for excess solar energy sent back to the grid. The value of net metering varies significantly — <a href="/solar-rebates-incentives-arizona/">check your state</a> to see current rates. Combined, these <strong>solar incentives</strong> can reduce the cost of going solar by 40-70% depending on where you live.</p>
 <h3>How Much Can You Save with Solar in ${SITE.year}?</h3>
 <p>The average homeowner saves between <strong>$20,000 and $60,000 over 20 years</strong> after accounting for all available incentives. Your actual savings depend on local electricity rates, sun exposure, system size, and available state and utility programs. States with high electricity rates like <a href="/solar-rebates-incentives-connecticut/">Connecticut</a>, <a href="/solar-rebates-incentives-rhode-island/">Rhode Island</a>, and <a href="/solar-rebates-incentives-new-hampshire/">New Hampshire</a> often see the fastest payback periods. Use our <a href="#estimate">free solar savings calculator</a> above to get a personalized estimate based on your ZIP code.</p>
@@ -304,7 +318,7 @@ ${midContentFinancingCta('Your Home')}
 <h2 class="section-title text-center">Solar Installation Savings: What to Expect in ${SITE.year}</h2>
 <div class="content-prose">
 <h3>How Much Does Solar Cost After Incentives?</h3>
-<p>The average residential <strong>solar installation cost</strong> ranges from $13,500 to $18,000 before incentives. After applying the <strong>30% federal solar tax credit</strong> (worth $4,050–$5,400), the net cost drops to roughly $9,450–$12,600. Many states offer additional incentives that reduce costs further — in some cases to under $8,000. See our <a href="/guide/solar-panel-cost-guide/">detailed solar cost breakdown</a> for exact pricing by state.</p>
+<p>The average residential <strong>solar installation cost</strong> ranges from $13,500 to $18,000 before incentives. The 30% federal homeowner credit ended after 2025, so in 2026 your net cost depends on state rebates, utility incentives, SRECs and tax exemptions where you live. See our <a href="/guide/solar-panel-cost-guide/">detailed solar cost breakdown</a> for exact pricing by state.</p>
 <h3>Solar Cost After Incentives by State</h3>
 <p>Solar savings vary dramatically by location. Homeowners in <a href="/solar-rebates-incentives-texas/">Texas</a> and <a href="/solar-rebates-incentives-florida/">Florida</a> benefit from high sun exposure, while those in <a href="/solar-rebates-incentives-new-york/">New York</a> and <a href="/solar-rebates-incentives-massachusetts/">Massachusetts</a> benefit from generous state incentives and high electricity rates. <a href="#state-map">Select your state above</a> to see your specific incentive package.</p>
 <h3>Solar Energy Savings Over Time</h3>
@@ -328,7 +342,7 @@ ${cityLinksHtml}
 <h2 class="section-title text-center">Solar Financing: Cash vs. Loan vs. Lease vs. PPA</h2>
 <p class="text-center mb-4">Compare solar financing options to find the right fit for your budget. Many homeowners go solar with <strong>$0 down</strong>.</p>
 <div class="financing-overview-grid">
-<div class="stat-card"><span class="stat-value">Cash</span><span class="stat-label">Best total savings. Own your system and claim the full 30% tax credit from day one.</span></div>
+<div class="stat-card"><span class="stat-value">Cash</span><span class="stat-label">Best total savings. Own your system, no interest, and keep any state incentives.</span></div>
 <div class="stat-card"><span class="stat-value">Solar Loan</span><span class="stat-label">Own system, get tax credits, and spread payments over 10-25 years at rates from 3.99% APR.</span></div>
 <div class="stat-card"><span class="stat-value">Lease</span><span class="stat-label">$0 down with no maintenance. Lower total savings but immediate bill reduction.</span></div>
 <div class="stat-card"><span class="stat-value">PPA</span><span class="stat-label">Pay per kWh at rates 10-30% below your utility. No upfront cost or maintenance.</span></div>
@@ -346,13 +360,13 @@ ${comparisonAffiliateTable('Compare Top Solar Providers', [
 ])}
 
 ${faqSection([
-  { question: 'What is the federal solar tax credit for ' + SITE.year + '?', answer: 'The federal solar Investment Tax Credit (ITC) allows homeowners to deduct <strong>30%</strong> of their total solar installation cost from federal income taxes. For a $15,000 system, that is $4,500 back. This credit applies to equipment, labor, permitting, and sales tax. It was extended at 30% through 2032 under the Inflation Reduction Act, then drops to 26% in 2033 and 22% in 2034. <a href="/article/federal-solar-tax-credit-2026-complete-guide/">Read our complete ITC guide</a>.' },
-  { question: 'How much do solar panels cost in ' + SITE.year + '?', answer: 'The average residential solar system costs between <strong>$13,500 and $18,000</strong> before incentives, depending on system size and location. After the 30% federal tax credit and state incentives, net costs typically range from $8,000 to $14,000. Costs have dropped over 70% in the past decade. <a href="/guide/solar-panel-cost-guide/">See our detailed cost guide</a>.' },
+  { question: 'What is the federal solar tax credit for ' + SITE.year + '?', answer: 'There is no federal homeowner solar tax credit for systems bought in ' + SITE.year + '. The 30% Residential Clean Energy Credit (Section 25D) ended for expenditures made after December 31, 2025, under the One Big Beautiful Bill Act. Systems paid for and installed in 2025 can still be claimed on Form 5695 with your 2025 return. <a href="/article/federal-solar-tax-credit-2026-complete-guide/">Read our complete ITC guide</a>.' },
+  { question: 'How much do solar panels cost in ' + SITE.year + '?', answer: 'The average residential solar system costs between <strong>$13,500 and $18,000</strong> before incentives, depending on system size and location. With the federal homeowner credit gone in 2026, net cost depends on state and utility incentives. Costs have dropped over 70% in the past decade. <a href="/guide/solar-panel-cost-guide/">See our detailed cost guide</a>.' },
   { question: 'How much can I save with solar panels?', answer: 'Most homeowners save between <strong>$20,000 and $60,000</strong> over 20 years depending on location, electricity rates, system size, and incentives. States with high electricity rates like <a href="/solar-rebates-incentives-california/">California</a>, <a href="/solar-rebates-incentives-new-york/">New York</a>, and <a href="/solar-rebates-incentives-massachusetts/">Massachusetts</a> see the highest savings. Use our calculator above for a personalized estimate.' },
   { question: 'Do I need to buy solar panels outright?', answer: 'No. You can finance solar through <strong>loans, leases, or power purchase agreements (PPAs)</strong>. Many options require $0 down. Solar loans let you own the system and claim tax credits. Leases and PPAs require no upfront investment but offer lower total savings. <a href="/solar-financing/">Compare all financing options</a>.' },
   { question: 'How long does it take for solar to pay for itself?', answer: 'Most residential solar systems reach break-even in <strong>6-10 years</strong>, depending on your state incentives, electricity rates, and system cost. After payback, your electricity is essentially free for the remaining 15-20+ year lifespan. States with strong incentives and high utility rates see faster payback periods.' },
   { question: 'What solar rebates are available in my state?', answer: 'Solar incentives vary widely by state. Common programs include state tax credits, direct rebates, SRECs (Solar Renewable Energy Certificates), property tax exemptions, sales tax exemptions, and net metering credits. <a href="#state-map">Select your state above</a> to see every available incentive.' },
-  { question: 'Is solar worth it in ' + SITE.year + '?', answer: 'For most homeowners, yes. With the 30% federal tax credit, falling panel prices, and rising electricity rates (averaging 2-3% annually), solar provides strong returns. The average homeowner breaks even in 6-10 years and saves $20,000-$60,000 over the system lifetime. Solar also increases home value by an average of 4.1% according to Zillow research.' },
+  { question: 'Is solar worth it in ' + SITE.year + '?', answer: 'For most homeowners, yes. Even without the federal credit, falling panel prices and rising electricity rates (averaging 2-3% annually), solar can still pay off, especially with full net metering and state incentives. Payback is now longer than before 2026, so compare several quotes. Solar also increases home value by an average of 4.1% according to Zillow research.' },
   { question: 'How does net metering work?', answer: 'Net metering credits you for excess solar electricity sent back to the grid. When your panels produce more than you use (typically midday), the surplus flows to the grid and your meter effectively spins backward. You use those credits when your panels are not producing (nighttime, cloudy days). Policies vary by state and utility — <a href="/solar-glossary/#term-net-metering">learn more in our glossary</a>.' },
   { question: 'Do solar panels increase home value?', answer: 'Yes. According to research from Zillow, homes with solar panels sell for approximately <strong>4.1% more</strong> than comparable homes without. A study by Lawrence Berkeley National Laboratory found that buyers are willing to pay an average premium of $15,000 for a home with an owned solar system. Many states also offer <a href="#state-map">property tax exemptions</a> so the added value does not increase your property taxes.' },
   { question: 'What happens to solar panels during a power outage?', answer: 'Standard grid-tied solar systems shut off during power outages for safety (to protect utility workers). To keep your power on during outages, you need a <strong>solar battery storage system</strong> like the Tesla Powerwall or Enphase IQ Battery. Battery costs range from $10,000-$15,000 installed, and some states offer battery incentives. <a href="/guide/solar-battery-buying-guide/">Read our battery buying guide</a>.' }
@@ -386,7 +400,7 @@ ${hubLinksSection('Getting Started Hub', [
 ])}
 
 ${hubLinksSection('Latest Articles', [
-  { title: 'Federal Solar Tax Credit 2026: Complete Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/', meta: 'How to claim the 30% ITC' },
+  { title: 'Federal Solar Tax Credit 2026: What Changed', url: '/article/federal-solar-tax-credit-2026-complete-guide/', meta: 'What changed after 2025' },
   { title: 'Solar Panel ROI: Real Numbers Analyzed', url: '/article/solar-panel-roi-real-numbers-analysis/', meta: 'Data from 10,000+ installations' },
   { title: 'Solar Panels vs. Grid Power: 20-Year Comparison', url: '/article/solar-panels-vs-grid-power-20-year-cost-comparison/', meta: 'Complete cost analysis' },
   { title: 'Solar Financing: Cash vs. Loan vs. Lease vs. PPA', url: '/article/solar-financing-cash-loan-lease-ppa-compared/', meta: 'Side-by-side comparison' },
@@ -398,13 +412,13 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above
 `;
 
   var faqs = [
-    { question: 'What is the federal solar tax credit for ' + SITE.year + '?', answer: 'The federal solar Investment Tax Credit (ITC) allows homeowners to deduct 30% of their total solar installation cost from federal income taxes. This credit applies to equipment, labor, permitting, and sales tax. It was extended at 30% through 2032 under the Inflation Reduction Act.' },
-    { question: 'How much do solar panels cost in ' + SITE.year + '?', answer: 'The average residential solar system costs between $13,500 and $18,000 before incentives. After the 30% federal tax credit and state incentives, net costs typically range from $8,000 to $14,000.' },
+    { question: 'What is the federal solar tax credit for ' + SITE.year + '?', answer: 'There is no federal homeowner solar tax credit for systems bought in ' + SITE.year + '. The 30% Residential Clean Energy Credit (Section 25D) ended for expenditures made after December 31, 2025, under the One Big Beautiful Bill Act.' },
+    { question: 'How much do solar panels cost in ' + SITE.year + '?', answer: 'The average residential solar system costs between $13,500 and $18,000 before incentives. With the federal homeowner credit gone in 2026, net cost depends on state and utility incentives.' },
     { question: 'How much can I save with solar panels?', answer: 'Savings depend on your location, electricity rates, system size, and available incentives. On average, homeowners save between $20,000 and $60,000 over 20 years.' },
     { question: 'Do I need to buy solar panels outright?', answer: 'No. You can finance solar through loans, leases, or power purchase agreements. Many options require $0 down.' },
     { question: 'How long does it take for solar to pay for itself?', answer: 'Most residential solar systems reach break-even in 6-10 years.' },
     { question: 'What solar rebates are available in my state?', answer: 'Solar incentives vary widely by state. Common programs include state tax credits, direct rebates, SRECs, property tax exemptions, sales tax exemptions, and net metering credits.' },
-    { question: 'Is solar worth it in ' + SITE.year + '?', answer: 'For most homeowners, yes. With the 30% federal tax credit, falling panel prices, and rising electricity rates, solar provides strong returns. The average homeowner breaks even in 6-10 years and saves $20,000-$60,000 over the system lifetime.' },
+    { question: 'Is solar worth it in ' + SITE.year + '?', answer: 'For most homeowners, yes. Even without the federal credit, falling panel prices and rising electricity rates, solar can still pay off, especially with full net metering and state incentives. Payback is now longer than before 2026, so compare several quotes.' },
     { question: 'How does net metering work?', answer: 'Net metering credits you for excess solar electricity sent back to the grid. When your panels produce more than you use, the surplus flows to the grid. You use those credits when your panels are not producing.' },
     { question: 'Do solar panels increase home value?', answer: 'Yes. According to Zillow research, homes with solar panels sell for approximately 4.1% more than comparable homes without solar.' },
     { question: 'What happens to solar panels during a power outage?', answer: 'Standard grid-tied solar systems shut off during power outages for safety. To keep power on during outages, you need a solar battery storage system.' }
@@ -412,7 +426,7 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above
 
   return baseTemplate(
     'Solar Panel Cost Calculator (' + SITE.year + '): See Your Exact Savings, Tax Credits & Rebates',
-    'How much do solar panels cost in ' + SITE.year + '? Free calculator shows your exact savings with the 30% federal tax credit, state rebates & utility incentives. Average homeowner saves $20,000-$60,000. Calculate your ROI in 30 seconds.',
+    'How much do solar panels cost in ' + SITE.year + '? Free calculator estimates savings with state rebates, utility incentives & net metering. Average homeowner saves $20,000-$60,000. Calculate your ROI in 30 seconds.',
     '/',
     body,
     {
@@ -424,7 +438,7 @@ ${ctaBlock('primary', 'Get Your Free Solar Estimate', 'Enter your ZIP code above
         description: 'Use our free calculator to estimate how much you can save by going solar. Follow these 3 simple steps.',
         step: [
           { '@type': 'HowToStep', position: 1, name: 'Enter Your ZIP Code & Electric Bill', text: 'Provide your ZIP code, homeownership status, and average monthly electric bill to match with state-specific solar incentives.' },
-          { '@type': 'HowToStep', position: 2, name: 'See All Available Solar Incentives', text: 'We identify the 30% federal solar tax credit, state rebates, SREC income, utility programs, net metering policies, and property tax exemptions.' },
+          { '@type': 'HowToStep', position: 2, name: 'See All Available Solar Incentives', text: 'We identify state rebates, SREC income, utility programs, net metering policies, and property tax exemptions.' },
           { '@type': 'HowToStep', position: 3, name: 'Get Your 20-Year Savings Estimate', text: 'Receive a detailed ROI projection including break-even timeline, annual savings, and total incentive value.' }
         ]
       })),
@@ -473,7 +487,7 @@ function generateStatesHubPage(data) {
 <p class="lead">Compare solar tax credits, rebates, net metering rules, estimated installation costs, and 20-year savings across all 50 states.</p>
 ${statsGrid([
   { value: '50', label: 'States Covered' },
-  { value: '30%', label: 'Federal Solar Tax Credit' },
+  { value: '$0', label: 'Federal Homeowner Credit in 2026' },
   { value: fmt(cities.length) + '+', label: 'City Solar ROI Reports' },
   { value: '$20K+', label: 'Typical 20-Year Savings' }
 ])}
@@ -646,11 +660,12 @@ function generateStatePage(state, stateData) {
 
   var roi = calculateROI(
     state.avg_install_cost, state.avg_system_size, state.sunlight_hours,
-    state.avg_kwh_rate, 30, state.state_tax_credit_percent, state.state_rebate_amount
+    state.avg_kwh_rate, FEDERAL_RESIDENTIAL_CREDIT_PERCENT, state.state_tax_credit_percent, state.state_rebate_amount,
+    state.net_metering_status, state.srec_available ? state.srec_value : 0
   );
 
   var incentiveRows = [];
-  incentiveRows.push(['Federal ITC (30%)', dollar(roi.fedSavings), 'Tax credit on federal return']);
+  incentiveRows.push(['Federal homeowner credit (25D)', '$0', 'Ended for purchases after Dec 31, 2025']);
   if (state.state_tax_credit_percent > 0) {
     incentiveRows.push(['State Tax Credit (' + state.state_tax_credit_percent + '%)', dollar(state.avg_install_cost * state.state_tax_credit_percent / 100), 'State income tax credit']);
   }
@@ -683,14 +698,14 @@ function generateStatePage(state, stateData) {
   var nearbyStates = states.filter(function (s) { return s.region === state.region && s.slug !== state.slug; }).slice(0, 6);
 
   var faqs = [
-    { question: 'What solar incentives are available in ' + state.state_name + ' in ' + SITE.year + '?', answer: 'Homeowners in ' + state.state_name + ' can claim the 30% federal ITC' + (state.state_tax_credit_percent > 0 ? ', a ' + state.state_tax_credit_percent + '% state tax credit' : '') + (state.state_rebate_amount > 0 ? ', a ' + dollar(state.state_rebate_amount) + ' state rebate' : '') + (state.srec_available ? ', and SRECs worth $' + state.srec_value + '/MWh' : '') + '. Net metering status: ' + state.net_metering_status + '.' + (state.property_tax_exemption ? ' Solar installations are exempt from property tax increases.' : '') + (state.sales_tax_exemption ? ' No sales tax on solar equipment.' : '') },
-    { question: 'How much do solar panels cost in ' + state.state_name + '?', answer: 'The average solar installation in ' + state.state_name + ' costs approximately ' + dollar(state.avg_install_cost) + ' for a ' + state.avg_system_size + ' kW system before incentives. After the 30% federal tax credit and state incentives, the net cost is approximately ' + dollar(roi.netCost) + '. Prices vary by installer, equipment choice, and roof complexity.' },
+    { question: 'What solar incentives are available in ' + state.state_name + ' in ' + SITE.year + '?', answer: 'The 30% federal homeowner credit ended after 2025, so ' + state.state_name + ' incentives come from state, utility and local programs.' + (state.state_tax_credit_percent > 0 ? ' State tax credit: ' + state.state_tax_credit_percent + '%.' : '') + (state.state_rebate_amount > 0 ? ' State rebate: ' + dollar(state.state_rebate_amount) + '.' : '') + (state.srec_available ? ' SRECs: about $' + state.srec_value + '/MWh.' : '') + ' Net metering status: ' + state.net_metering_status + '.' + (state.property_tax_exemption ? ' Solar installations are exempt from property tax increases.' : '') + (state.sales_tax_exemption ? ' No sales tax on solar equipment.' : '') },
+    { question: 'How much do solar panels cost in ' + state.state_name + '?', answer: 'The average solar installation in ' + state.state_name + ' costs approximately ' + dollar(state.avg_install_cost) + ' for a ' + state.avg_system_size + ' kW system before incentives. After state incentives (the federal homeowner credit ended after 2025), the net cost is approximately ' + dollar(roi.netCost) + '. Prices vary by installer, equipment choice, and roof complexity.' },
     { question: 'How long does solar take to pay for itself in ' + state.state_name + '?', answer: 'Based on average electricity rates of $' + state.avg_kwh_rate + '/kWh and ' + state.sunlight_hours + ' peak sun hours per day, a solar system in ' + state.state_name + ' typically pays for itself in approximately ' + roi.breakEvenYears + ' years. After break-even, electricity savings are essentially pure profit for the remaining 15-20 year system lifespan.' },
     { question: 'Is net metering available in ' + state.state_name + '?', answer: 'Net metering in ' + state.state_name + ' is currently classified as "' + state.net_metering_status + '". This affects how much credit you receive for excess solar energy exported to the grid. Check with your specific utility for current rates and policies.' },
     { question: 'What is the 20-year savings estimate for solar in ' + state.state_name + '?', answer: 'Based on our calculations, a typical ' + state.avg_system_size + ' kW solar system in ' + state.state_name + ' can save approximately ' + dollar(roi.twentyYearSavings) + ' over 20 years, factoring in all available incentives and annual electricity bill savings of ' + dollar(roi.annualSavings) + '.' },
-    { question: 'How do I claim the solar tax credit in ' + state.state_name + '?', answer: 'To claim the 30% federal solar tax credit, file IRS Form 5695 with your tax return after your system is installed and operational. You need documentation of total installation costs. The credit reduces your federal tax liability dollar-for-dollar. If the credit exceeds your tax liability, the remainder can be carried forward to future tax years.' + (state.state_tax_credit_percent > 0 ? ' ' + state.state_name + '\'s ' + state.state_tax_credit_percent + '% state credit is claimed on your state tax return.' : '') },
+    { question: 'How do I claim the solar tax credit in ' + state.state_name + '?', answer: 'The 30% federal solar credit (Form 5695) applies only to systems paid for and installed by December 31, 2025, claimed on your 2025 return. Unused credit from earlier years can still carry forward. Systems bought in ' + SITE.year + ' do not qualify.' + (state.state_tax_credit_percent > 0 ? ' ' + state.state_name + '\'s ' + state.state_tax_credit_percent + '% state credit is claimed on your state tax return.' : '') },
     { question: 'Can I go solar with no money down in ' + state.state_name + '?', answer: 'Yes. Multiple financing options allow you to go solar in ' + state.state_name + ' with $0 down: solar loans (own the system and claim tax credits), solar leases, and power purchase agreements (PPAs). Compare options on our financing page to find the best fit for your budget and goals.' },
-    { question: 'What is the best time to install solar in ' + state.state_name + '?', answer: 'The best time to install solar in ' + state.state_name + ' is now, while the 30% federal tax credit is available through 2032 (it drops to 26% in 2033). Solar panels produce energy year-round in ' + state.state_name + ' with an average of ' + state.sunlight_hours + ' peak sun hours per day. Installation typically takes 1-3 months from signing to activation.' }
+    { question: 'What is the best time to install solar in ' + state.state_name + '?', answer: 'The best time to install solar in ' + state.state_name + ' depends on your net-metering rules and state incentives; the 30% federal homeowner credit ended after 2025, so get fresh quotes priced without it. Solar panels produce energy year-round in ' + state.state_name + ' with an average of ' + state.sunlight_hours + ' peak sun hours per day. Installation typically takes 1-3 months from signing to activation.' }
   ];
 
   var crumbs = [
@@ -703,12 +718,12 @@ function generateStatePage(state, stateData) {
 <section class="content-section">
 <div class="container">
 <h1>Solar Panel Cost in ${state.state_name} (${SITE.year}): See Your Exact Savings</h1>
-<p class="lead"><strong>Quick decision:</strong> A typical ${state.state_name} homeowner can save about <strong>${dollar(roi.annualSavings)}/year</strong> and <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong>. You qualify for the <strong>30% federal tax credit</strong> if you own the home and owe federal tax${state.state_tax_credit_percent > 0 ? ', plus a ' + state.state_tax_credit_percent + '% ' + state.state_name + ' credit may apply' : ''}${state.state_rebate_amount > 0 ? ', and a ' + dollar(state.state_rebate_amount) + ' state rebate may apply' : ''}. Fastest next step: enter your ZIP and monthly bill below, then compare at least 3 local installer quotes before signing.</p>
+<p class="lead"><strong>Quick decision:</strong> A typical ${state.state_name} homeowner can save about <strong>${dollar(roi.annualSavings)}/year</strong> and <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong>. The 30% federal homeowner credit ended after 2025${state.state_tax_credit_percent > 0 ? ', plus a ' + state.state_tax_credit_percent + '% ' + state.state_name + ' credit may apply' : ''}${state.state_rebate_amount > 0 ? ', and a ' + dollar(state.state_rebate_amount) + ' state rebate may apply' : ''}. Fastest next step: enter your ZIP and monthly bill below, then compare at least 3 local installer quotes before signing.</p>
 
 <div class="info-box" style="background:#e8f5e9;border-left:4px solid #2e7d32;padding:1rem 1.25rem;margin:1.5rem 0;">
 <strong>Quick Answer: Solar Cost in ${state.state_name} (${SITE.year})</strong><br>
 Average system cost: ${dollar(state.avg_install_cost)} (before incentives)<br>
-Your net cost after tax credits: <strong>${dollar(roi.netCost)}</strong><br>
+Your net cost after state incentives: <strong>${dollar(roi.netCost)}</strong><br>
 Annual electricity savings: <strong>${dollar(roi.annualSavings)}/year</strong><br>
 20-year total savings: <strong>${dollar(roi.twentyYearSavings)}</strong><br>
 Break-even timeline: <strong>~${roi.breakEvenYears} years</strong>
@@ -735,10 +750,10 @@ ${affiliateCtaBlock(state.state_name, 'state-top')}
 <section class="content-section bg-light">
 <div class="container">
 <h2>${state.state_name} Solar Incentives &amp; Tax Credits Breakdown</h2>
-<p>Here is a breakdown of every solar incentive available to ${state.state_name} homeowners in ${SITE.year}, from the federal solar tax credit to state-specific programs. Combine these incentives to reduce your installation cost by up to ${pct(Math.min(70, Math.round((roi.fedSavings + roi.stateSavings) / state.avg_install_cost * 100)))}.</p>
+<p>Here is a breakdown of every solar incentive available to ${state.state_name} homeowners in ${SITE.year}, with a note on federal changes. The 30% federal homeowner credit ended after 2025. ${roi.stateSavings > 0 ? 'Combined, state incentives can reduce your installation cost by about ' + pct(Math.min(70, Math.round(roi.stateSavings / state.avg_install_cost * 100))) + '.' : 'There is no statewide rebate or tax credit in our data, so check utility and local programs below.'}</p>
 ${comparisonTable(['Incentive', 'Value', 'Details'], incentiveRows)}
 ${state.additional_incentives ? '<div class="info-box"><strong>Additional Programs:</strong> ' + state.additional_incentives + '</div>' : ''}
-<p class="mt-3">Want to understand how these incentives stack? Read our <a href="/article/federal-solar-tax-credit-2026-complete-guide/">complete federal solar tax credit guide</a> or explore <a href="/solar-financing/">financing options</a> that let you claim all credits with $0 down. Compare <a href="/guide/best-solar-panels-2026/">top-rated solar panels</a> and find <a href="/guide/how-to-choose-solar-installer/">the right installer</a> for your project.</p>
+<p class="mt-3">Want to understand how these incentives stack? Read <a href="/article/federal-solar-tax-credit-2026-complete-guide/">what happened to the federal solar tax credit</a> or explore <a href="/solar-financing/">financing options</a>. Compare <a href="/guide/best-solar-panels-2026/">top-rated solar panels</a> and find <a href="/guide/how-to-choose-solar-installer/">the right installer</a> for your project.</p>
 </div>
 </section>
 
@@ -750,7 +765,6 @@ ${midContentFinancingCta(state.state_name, dollar(roi.annualSavings))}
 <p>Based on a ${state.avg_system_size} kW system at ${dollar(state.avg_install_cost)} with ${state.sunlight_hours} peak sun hours per day and electricity at $${state.avg_kwh_rate}/kWh. <a href="/guide/solar-panel-cost-guide/">See our complete solar cost guide</a> for details on what affects pricing.</p>
 ${barChartComponent([
   { label: 'System Cost', value: state.avg_install_cost, max: state.avg_install_cost },
-  { label: 'Federal ITC Savings', value: roi.fedSavings, max: state.avg_install_cost },
   { label: 'State Incentives', value: roi.stateSavings, max: state.avg_install_cost },
   { label: 'Year 1 Electric Savings', value: roi.annualSavings, max: state.avg_install_cost },
   { label: '20-Year Net Savings', value: Math.max(0, roi.twentyYearSavings), max: Math.max(roi.twentyYearSavings, state.avg_install_cost) }
@@ -768,7 +782,7 @@ ${calculatorResultMonetization(state.state_name)}
 </div>
 </section>
 
-${urgencyBlock('The 30% federal solar tax credit is available through 2032. It drops to 26% in 2033. Lock in maximum savings in ' + state.state_name + ' now.')}
+${urgencyBlock('The 30% federal homeowner solar credit ended for purchases after December 31, 2025. State and utility incentives in ' + state.state_name + ' can change or run out of funding, so confirm current terms before you sign.')}
 
 <section class="content-section bg-light">
 <div class="container">
@@ -777,7 +791,7 @@ ${urgencyBlock('The 30% federal solar tax credit is available through 2032. It d
 <p>The average <strong>solar panel cost in ${state.state_name}</strong> is <strong>${dollar(state.avg_install_cost)}</strong> for a ${state.avg_system_size} kW system before any incentives. Here is exactly how the math works:</p>
 <ul>
 <li><strong>Gross system cost:</strong> ${dollar(state.avg_install_cost)}</li>
-<li><strong>30% federal tax credit:</strong> -${dollar(roi.fedSavings)}</li>
+<li><strong>Federal homeowner credit (25D):</strong> $0 (ended after 2025)</li>
 ${state.state_tax_credit_percent > 0 ? '<li><strong>' + state.state_tax_credit_percent + '% state tax credit:</strong> -' + dollar(state.avg_install_cost * state.state_tax_credit_percent / 100) + '</li>' : ''}
 ${state.state_rebate_amount > 0 ? '<li><strong>State rebate:</strong> -' + dollar(state.state_rebate_amount) + '</li>' : ''}
 <li><strong>Your net cost:</strong> <strong>${dollar(roi.netCost)}</strong></li>
@@ -811,10 +825,10 @@ ${comparisonTable(['', 'Without Solar', 'With Solar'], [
 <ol>
 <li><strong>Assess your solar potential:</strong> Check your roof orientation, shading, and electricity usage. ${state.sunlight_hours} peak sun hours per day means ${state.state_name} has ${state.sunlight_hours >= 5 ? 'excellent' : state.sunlight_hours >= 4 ? 'good' : 'moderate'} solar potential.</li>
 <li><strong>Compare quotes:</strong> Get at least 3 quotes from <a href="/guide/how-to-choose-solar-installer/">qualified installers</a>. Compare equipment, pricing, warranties, and financing terms.</li>
-<li><strong>Choose financing:</strong> Decide between <a href="/solar-financing/">cash, loan, lease, or PPA</a>. Cash and loans let you claim the <a href="/article/federal-solar-tax-credit-2026-complete-guide/">30% federal tax credit</a>.</li>
+<li><strong>Choose financing:</strong> Decide between <a href="/solar-financing/">cash, loan, lease, or PPA</a>. Cash and loans let you own the system and keep any state incentives; see <a href="/article/federal-solar-tax-credit-2026-complete-guide/">why the federal credit no longer applies</a>.</li>
 <li><strong>Installation &amp; permitting:</strong> Your installer handles permitting. Installation typically takes 1–3 days on the roof. Read our <a href="/guide/solar-installation-guide/">complete installation guide</a>.</li>
 <li><strong>Interconnection:</strong> Your utility connects your system to the grid and activates net metering.</li>
-<li><strong>Claim incentives:</strong> File IRS Form 5695 for the federal credit${state.state_tax_credit_percent > 0 ? ' and claim your ' + state.state_tax_credit_percent + '% state credit on your state return' : ''}.</li>
+<li><strong>Claim incentives:</strong> ${state.state_tax_credit_percent > 0 ? 'Claim your ' + state.state_tax_credit_percent + '% state credit on your state return and apply' : 'Apply'} for any utility or local rebates before installation (the federal Form 5695 credit ended after 2025).</li>
 </ol>
 </div>
 </div>
@@ -862,7 +876,7 @@ ${contextualLinksBlock('Related Solar Savings Guides', [
 
   return baseTemplate(
     'Solar Panel Cost in ' + state.state_name + ' (' + SITE.year + '): Calculator, Savings & Tax Credits',
-    'How much do solar panels cost in ' + state.state_name + ' in ' + SITE.year + '? Use our free calculator: ' + dollar(roi.netCost) + ' net cost after 30% tax credit. Save ' + dollar(roi.twentyYearSavings) + ' over 20 years. See ' + state.state_name + ' rebates, incentives & break-even in ~' + roi.breakEvenYears + ' yrs.',
+    'How much do solar panels cost in ' + state.state_name + ' in ' + SITE.year + '? Use our free calculator: ' + dollar(roi.netCost) + ' net cost after state incentives. Save ' + dollar(roi.twentyYearSavings) + ' over 20 years. See ' + state.state_name + ' rebates, incentives & break-even in ~' + roi.breakEvenYears + ' yrs.',
     '/solar-rebates-incentives-' + state.slug + '/',
     body,
     {
@@ -910,7 +924,7 @@ function generateUtilityPage(utility, utilityData) {
 <section class="content-section">
 <div class="container">
 <h1>${utility.utility_name} Solar Savings: Net Metering, Rates &amp; Rebates (${SITE.year})</h1>
-<p class="lead">How much can <strong>${utility.utility_name}</strong> customers save with solar in ${SITE.year}? With <strong>${utility.net_metering_rate}</strong> net metering and <strong>$${utility.export_compensation}/kWh</strong> export compensation, solar is a strong investment. Plus the 30% federal tax credit cuts your upfront cost significantly. See the full breakdown below.</p>
+<p class="lead">How much can <strong>${utility.utility_name}</strong> customers save with solar in ${SITE.year}? With <strong>${utility.net_metering_rate}</strong> net metering and <strong>$${utility.export_compensation}/kWh</strong> export compensation, solar is a strong investment. Note: the 30% federal homeowner credit ended after 2025, so net metering and state programs drive the savings. See the full breakdown below.</p>
 ${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${statsGrid([
@@ -964,7 +978,7 @@ ${utility.battery_incentive ? '<h3>Battery Storage Benefits</h3><p>' + utility.u
 </div>
 </section>
 
-${parentState ? '<section class="content-section bg-light"><div class="container"><h2>State Incentives in ' + utility.state + '</h2><p>In addition to ' + utility.utility_name + '\'s policies, ' + utility.state + ' homeowners can access:</p><ul class="benefit-list"><li><strong>Federal ITC:</strong> 30% tax credit on solar installation</li>' + (parentState.state_tax_credit_percent > 0 ? '<li><strong>State Tax Credit:</strong> ' + parentState.state_tax_credit_percent + '% additional state credit</li>' : '') + (parentState.state_rebate_amount > 0 ? '<li><strong>State Rebate:</strong> ' + dollar(parentState.state_rebate_amount) + ' direct rebate</li>' : '') + (parentState.srec_available ? '<li><strong>SRECs:</strong> $' + parentState.srec_value + '/MWh tradeable credits</li>' : '') + (parentState.property_tax_exemption ? '<li><strong>Property Tax Exemption:</strong> Solar increases home value without raising property taxes</li>' : '') + (parentState.sales_tax_exemption ? '<li><strong>Sales Tax Exemption:</strong> No sales tax on solar equipment</li>' : '') + '</ul><a href="/solar-rebates-incentives-' + parentState.slug + '/" class="btn btn-primary mt-3">See All ' + utility.state + ' Incentives</a></div></section>' : ''}
+${parentState ? '<section class="content-section bg-light"><div class="container"><h2>State Incentives in ' + utility.state + '</h2><p>In addition to ' + utility.utility_name + '\'s policies, ' + utility.state + ' homeowners can access:</p><ul class="benefit-list"><li><strong>Federal credit:</strong> the 30% homeowner credit (25D) ended after 2025</li>' + (parentState.state_tax_credit_percent > 0 ? '<li><strong>State Tax Credit:</strong> ' + parentState.state_tax_credit_percent + '% additional state credit</li>' : '') + (parentState.state_rebate_amount > 0 ? '<li><strong>State Rebate:</strong> ' + dollar(parentState.state_rebate_amount) + ' direct rebate</li>' : '') + (parentState.srec_available ? '<li><strong>SRECs:</strong> $' + parentState.srec_value + '/MWh tradeable credits</li>' : '') + (parentState.property_tax_exemption ? '<li><strong>Property Tax Exemption:</strong> Solar increases home value without raising property taxes</li>' : '') + (parentState.sales_tax_exemption ? '<li><strong>Sales Tax Exemption:</strong> No sales tax on solar equipment</li>' : '') + '</ul><a href="/solar-rebates-incentives-' + parentState.slug + '/" class="btn btn-primary mt-3">See All ' + utility.state + ' Incentives</a></div></section>' : ''}
 
 ${emailCaptureBlock(utility.state)}
 
@@ -1025,7 +1039,8 @@ function generateCityPage(city, cityData) {
 
   var roi = calculateROI(
     parentState.avg_install_cost, parentState.avg_system_size, city.avg_sun_hours,
-    city.avg_electricity_rate, 30, parentState.state_tax_credit_percent, parentState.state_rebate_amount
+    city.avg_electricity_rate, FEDERAL_RESIDENTIAL_CREDIT_PERCENT, parentState.state_tax_credit_percent, parentState.state_rebate_amount,
+    parentState.net_metering_status, parentState.srec_available ? parentState.srec_value : 0
   );
 
   var nearbyCities = cities.filter(function (c) { return c.state_abbrev === city.state_abbrev && c.slug !== city.slug; }).slice(0, 6);
@@ -1065,11 +1080,11 @@ function generateCityPage(city, cityData) {
   } else if (rateTier === 'moderate' && sunTier === 'strong') {
     worthItReason = city.city_name + ' offers a balanced solar proposition: ' + sunTier + ' sun exposure (' + city.avg_sun_hours + ' hrs/day) at ' + rateTier + ' electricity rates ($' + city.avg_electricity_rate + '/kWh). At roughly $' + monthlySavings + ' in monthly savings, the system pays for itself in ' + roi.breakEvenYears + ' years and delivers ' + dollar(roi.twentyYearSavings) + ' in total savings over 20 years.';
   } else if (parentState.srec_available && parentState.srec_value > 100) {
-    worthItReason = city.state_name + '\'s SREC program (valued at $' + parentState.srec_value + '/MWh) significantly boosts the economics of solar in ' + city.city_name + '. Combined with the 30% federal tax credit, the net cost of ' + dollar(roi.netCost) + ' generates ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings.';
+    worthItReason = city.state_name + '\'s SREC program (valued at $' + parentState.srec_value + '/MWh) significantly boosts the economics of solar in ' + city.city_name + '. With a net cost of ' + dollar(roi.netCost) + ' generates ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings.';
   } else if (breakEvenTier === 'longer' && rateTier === 'low') {
-    worthItReason = 'While ' + city.city_name + '\'s lower electricity rates ($' + city.avg_electricity_rate + '/kWh) mean a longer ' + roi.breakEvenYears + '-year payback, solar still delivers a meaningful return: ' + dollar(roi.twentyYearSavings) + ' in savings over 20 years, representing a ' + returnMultiple + 'x return on the ' + dollar(roi.netCost) + ' net investment. The 30% federal tax credit is key to making the numbers work.';
+    worthItReason = 'While ' + city.city_name + '\'s lower electricity rates ($' + city.avg_electricity_rate + '/kWh) mean a longer ' + roi.breakEvenYears + '-year payback, solar still delivers a meaningful return: ' + dollar(roi.twentyYearSavings) + ' in savings over 20 years, representing a ' + returnMultiple + 'x return on the ' + dollar(roi.netCost) + ' net investment. Net metering terms and state incentives are key to making the numbers work.';
   } else {
-    worthItReason = 'At $' + city.avg_electricity_rate + '/kWh with ' + city.avg_sun_hours + ' peak sun hours daily, solar in ' + city.city_name + ' delivers ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings — a ' + Math.round((roi.twentyYearSavings / roi.netCost) * 100) + '% return on investment. The ' + roi.breakEvenYears + '-year payback means ' + (25 - roi.breakEvenYears) + '+ years of essentially free electricity.';
+    worthItReason = 'At $' + city.avg_electricity_rate + '/kWh with ' + city.avg_sun_hours + ' peak sun hours daily, solar in ' + city.city_name + ' delivers ' + dollar(roi.twentyYearSavings) + ' in projected 20-year savings — a ' + Math.round((roi.twentyYearSavings / roi.netCost) * 100) + '% return on investment. The ' + roi.breakEvenYears + '-year payback means ' + Math.max(5, 25 - roi.breakEvenYears) + '+ years of essentially free electricity.';
   }
 
   var panelContext = '';
@@ -1100,11 +1115,11 @@ function generateCityPage(city, cityData) {
 
   var faqs = [
     { question: 'Is solar worth it in ' + city.city_name + ', ' + city.state_abbrev + ' in ' + SITE.year + '?', answer: 'Yes — solar is a ' + (roi.twentyYearSavings >= 40000 ? 'particularly strong' : roi.twentyYearSavings >= 25000 ? 'strong' : 'solid') + ' investment in ' + city.city_name + '. ' + worthItReason + ' The break-even period is approximately ' + roi.breakEvenYears + ' years, after which your electricity savings are essentially free income for the remaining system lifespan.' },
-    { question: 'How much do solar panels cost in ' + city.city_name + '?', answer: 'A typical solar installation in ' + city.city_name + ' costs approximately ' + dollar(parentState.avg_install_cost) + ' for a ' + parentState.avg_system_size + ' kW system (about $' + (parentState.avg_install_cost / (parentState.avg_system_size * 1000)).toFixed(2) + '/watt) before incentives. After the 30% federal tax credit' + (parentState.state_tax_credit_percent > 0 ? ' and ' + city.state_name + '\'s ' + parentState.state_tax_credit_percent + '% state credit' : '') + (parentState.state_rebate_amount > 0 ? ' plus the ' + dollar(parentState.state_rebate_amount) + ' state rebate' : '') + ', the net cost drops to approximately ' + dollar(roi.netCost) + '. That is ' + costCompare(parentState.avg_install_cost) + '. See all <a href="/solar-rebates-incentives-' + parentState.slug + '/">' + city.state_name + ' incentives</a>.' },
-    { question: 'What solar incentives are available in ' + city.city_name + '?', answer: 'The 30% federal Investment Tax Credit (ITC) saves ' + city.city_name + ' homeowners ' + dollar(roi.fedSavings) + ' on a typical installation.' + (parentState.state_tax_credit_percent > 0 ? ' ' + city.state_name + ' adds a ' + parentState.state_tax_credit_percent + '% state tax credit worth up to ' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '.' : '') + (parentState.state_rebate_amount > 0 ? ' A ' + dollar(parentState.state_rebate_amount) + ' state rebate is also available.' : '') + (parentState.property_tax_exemption ? ' Solar is exempt from property tax increases in ' + city.state_name + '.' : '') + (parentState.sales_tax_exemption ? ' No sales tax on solar equipment.' : '') + (parentState.srec_available ? ' SRECs worth $' + parentState.srec_value + '/MWh provide ongoing income.' : '') + ' Net metering status: ' + parentState.net_metering_status + '. Combined, these incentives reduce your cost by ' + Math.round(((roi.fedSavings + roi.stateSavings) / parentState.avg_install_cost) * 100) + '%. <a href="/solar-rebates-incentives-' + parentState.slug + '/">See all ' + city.state_name + ' incentives</a>.' },
+    { question: 'How much do solar panels cost in ' + city.city_name + '?', answer: 'A typical solar installation in ' + city.city_name + ' costs approximately ' + dollar(parentState.avg_install_cost) + ' for a ' + parentState.avg_system_size + ' kW system (about $' + (parentState.avg_install_cost / (parentState.avg_system_size * 1000)).toFixed(2) + '/watt) before incentives. After state incentives' + (parentState.state_tax_credit_percent > 0 ? ' such as ' + city.state_name + '\'s ' + parentState.state_tax_credit_percent + '% state credit' : '') + (parentState.state_rebate_amount > 0 ? ' and the ' + dollar(parentState.state_rebate_amount) + ' state rebate' : '') + ' (the federal homeowner credit ended after 2025), the net cost is approximately ' + dollar(roi.netCost) + '. That is ' + costCompare(parentState.avg_install_cost) + '. See all <a href="/solar-rebates-incentives-' + parentState.slug + '/">' + city.state_name + ' incentives</a>.' },
+    { question: 'What solar incentives are available in ' + city.city_name + '?', answer: 'The 30% federal homeowner solar credit (25D) ended for purchases after December 31, 2025, so ' + city.city_name + ' incentives now come from the state, utilities and local programs.' + (parentState.state_tax_credit_percent > 0 ? ' ' + city.state_name + ' adds a ' + parentState.state_tax_credit_percent + '% state tax credit worth up to ' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '.' : '') + (parentState.state_rebate_amount > 0 ? ' A ' + dollar(parentState.state_rebate_amount) + ' state rebate is also available.' : '') + (parentState.property_tax_exemption ? ' Solar is exempt from property tax increases in ' + city.state_name + '.' : '') + (parentState.sales_tax_exemption ? ' No sales tax on solar equipment.' : '') + (parentState.srec_available ? ' SRECs worth $' + parentState.srec_value + '/MWh provide ongoing income.' : '') + ' Net metering status: ' + parentState.net_metering_status + '. Combined, these incentives reduce your cost by ' + Math.round(((roi.fedSavings + roi.stateSavings) / parentState.avg_install_cost) * 100) + '%. <a href="/solar-rebates-incentives-' + parentState.slug + '/">See all ' + city.state_name + ' incentives</a>.' },
     { question: 'How many solar panels do I need for my home in ' + city.city_name + '?', answer: 'A typical home in ' + city.city_name + ' uses a ' + parentState.avg_system_size + ' kW system (approximately ' + Math.round(parentState.avg_system_size / 0.4) + ' panels at 400W each). This produces roughly ' + fmt(roi.annualKwh) + ' kWh per year based on ' + city.city_name + '\'s ' + city.avg_sun_hours + ' peak sun hours per day.' + panelContext + ' Your actual system size depends on your electricity usage, roof space, and shading.' },
     { question: 'Are electricity rates going up in ' + city.city_name + '?', answer: rateContext },
-    { question: 'Can I install solar panels in ' + city.city_name + ' with $0 down?', answer: 'Yes. Multiple <a href="/solar-financing/">financing options</a> let ' + city.city_name + ' homeowners go solar with no upfront cost. A solar loan is typically the best value — you own the system, claim the ' + dollar(roi.fedSavings) + ' federal tax credit, and build equity. Solar leases and PPAs require $0 down but you do not own the system. At ' + city.city_name + '\'s rate of $' + city.avg_electricity_rate + '/kWh, a loan typically saves ' + (rateTier === 'high' ? 'significantly more' : '20-40% more') + ' over 20 years versus a lease. <a href="/compare/solar-loan-vs-solar-lease/">Compare loan vs. lease</a>.' },
+    { question: 'Can I install solar panels in ' + city.city_name + ' with $0 down?', answer: 'Yes. Multiple <a href="/solar-financing/">financing options</a> let ' + city.city_name + ' homeowners go solar with no upfront cost. A solar loan is typically the best value — you own the system, keep any state incentives, and build equity. Solar leases and PPAs require $0 down but you do not own the system. At ' + city.city_name + '\'s rate of $' + city.avg_electricity_rate + '/kWh, a loan typically saves ' + (rateTier === 'high' ? 'significantly more' : '20-40% more') + ' over 20 years versus a lease. <a href="/compare/solar-loan-vs-solar-lease/">Compare loan vs. lease</a>.' },
     { question: 'How long does solar installation take in ' + city.city_name + '?', answer: 'From signing a contract to system activation, solar installation in ' + city.city_name + ' typically takes 1-3 months. This includes site assessment, permitting (varies by ' + city.city_name + ' municipality), installation (1-3 days on the roof), inspection, and utility interconnection.' + (city.population >= 500000 ? ' Larger metros like ' + city.city_name + ' may have longer permitting queues — working with an experienced local installer helps navigate the process faster.' : city.population >= 100000 ? ' ' + city.city_name + '\'s permitting timeline is typical for mid-size cities. Choose an installer familiar with local requirements.' : ' Smaller communities like ' + city.city_name + ' often have shorter permitting wait times than major metros.') },
     { question: 'What is the best solar company in ' + city.city_name + ', ' + city.state_abbrev + '?', answer: 'The best solar company in ' + city.city_name + ' depends on your priorities — lowest price, best equipment, financing options, or customer service. We recommend comparing at least 3 quotes.' + (city.population >= 200000 ? ' Larger markets like ' + city.city_name + ' typically have both national companies (SunPower, Sunrun) and competitive local installers.' : ' In ' + city.city_name + ', check both national companies and local ' + city.state_name + ' installers for the best pricing.') + ' Use EnergySage to compare ' + city.city_name + ' installer quotes side by side. Also check our <a href="/reviews/">solar brand reviews</a> and <a href="/guide/how-to-choose-solar-installer/">how to choose a solar installer guide</a>.' }
   ];
@@ -1123,12 +1138,12 @@ function generateCityPage(city, cityData) {
 <h1>Solar Panel Cost in ${city.city_name}, ${city.state_abbrev} (${SITE.year}): Savings Calculator &amp; Tax Credits</h1>
 <div class="info-box" style="background:#e8f5e9;border-left:4px solid #2e7d32;padding:1rem 1.25rem;margin:0 0 1.5rem;">
 <strong>How Much Does Solar Cost in ${city.city_name}? (${SITE.year})</strong><br>
-Net cost after 30% tax credit: <strong>${dollar(roi.netCost)}</strong><br>
+Net cost after state incentives: <strong>${dollar(roi.netCost)}</strong><br>
 Annual electricity savings: <strong>${dollar(roi.annualSavings)}/year</strong><br>
 20-year total savings: <strong>${dollar(roi.twentyYearSavings)}</strong><br>
 Break-even: <strong>~${roi.breakEvenYears} years</strong> | Sun hours: <strong>${city.avg_sun_hours} hrs/day</strong>
 </div>
-<p class="lead"><strong>Quick decision:</strong> ${city.city_name} homeowners can save about <strong>${dollar(Math.round(roi.annualSavings / 12))}/month</strong>, <strong>${dollar(roi.annualSavings)}/year</strong>, and <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong>. You likely qualify if you own the home, have an unshaded roof, and can use the 30% federal tax credit; <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} incentives</a> can lower the net cost to roughly <strong>${dollar(roi.netCost)}</strong>. Fastest next step: enter ZIP + electric bill, then compare 3 installer quotes before choosing cash, loan, lease, or PPA.</p>
+<p class="lead"><strong>Quick decision:</strong> ${city.city_name} homeowners can save about <strong>${dollar(Math.round(roi.annualSavings / 12))}/month</strong>, <strong>${dollar(roi.annualSavings)}/year</strong>, and <strong>${dollar(roi.twentyYearSavings)} over 20 years</strong>. You likely qualify if you own the home, have an unshaded roof, and plan for no federal homeowner credit in 2026; <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} incentives</a> can lower the net cost to roughly <strong>${dollar(roi.netCost)}</strong>. Fastest next step: enter ZIP + electric bill, then compare 3 installer quotes before choosing cash, loan, lease, or PPA.</p>
 ${lastUpdatedBlock('Sarah Chen', 'sarah-chen')}
 
 ${aboveFoldQuoteCta(city.city_name + ', ' + city.state_abbrev)}
@@ -1166,7 +1181,7 @@ ${midContentFinancingCta(city.city_name, dollar(roi.annualSavings))}
 <p>Here is the exact savings math for a typical ${city.city_name} solar installation:</p>
 <ul>
 <li><strong>System cost:</strong> ${dollar(parentState.avg_install_cost)} for ${parentState.avg_system_size} kW</li>
-<li><strong>Federal tax credit (30%):</strong> -${dollar(roi.fedSavings)}</li>
+<li><strong>Federal homeowner credit (25D):</strong> $0 (ended after 2025)</li>
 ${parentState.state_tax_credit_percent > 0 ? '<li><strong>State tax credit (' + parentState.state_tax_credit_percent + '%):</strong> -' + dollar(parentState.avg_install_cost * parentState.state_tax_credit_percent / 100) + '</li>' : ''}
 ${parentState.state_rebate_amount > 0 ? '<li><strong>State rebate:</strong> -' + dollar(parentState.state_rebate_amount) + '</li>' : ''}
 <li><strong>Your net cost:</strong> ${dollar(roi.netCost)}</li>
@@ -1200,7 +1215,6 @@ ${comparisonTable(['Timeframe', 'Electric Bill Only', 'With Solar Panels', 'You 
 <h2>Solar Investment Breakdown for ${city.city_name}</h2>
 ${barChartComponent([
   { label: 'Gross System Cost', value: parentState.avg_install_cost, max: parentState.avg_install_cost },
-  { label: 'Federal Tax Credit (30%)', value: roi.fedSavings, max: parentState.avg_install_cost },
   { label: 'State Incentives', value: roi.stateSavings, max: parentState.avg_install_cost },
   { label: 'Net Cost', value: roi.netCost, max: parentState.avg_install_cost },
   { label: 'Annual Savings', value: roi.annualSavings, max: parentState.avg_install_cost }
@@ -1232,7 +1246,7 @@ ${cityIntroContent(city, parentState, roi)}
 <h3>Key Steps for ${city.city_name} Homeowners Considering Solar</h3>
 <ul>
 <li><strong>Check your roof:</strong> South-facing roofs with minimal shading produce the most energy. Read our <a href="/guide/complete-guide-home-solar/">complete guide to home solar</a> for details.</li>
-<li><strong>Understand incentives:</strong> Beyond the 30% federal credit, <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} offers additional incentives</a> that significantly reduce your net cost.</li>
+<li><strong>Understand incentives:</strong> With the federal homeowner credit gone, <a href="/solar-rebates-incentives-${parentState.slug}/">${city.state_name} offers additional incentives</a> that significantly reduce your net cost.</li>
 <li><strong>Compare equipment:</strong> Not all <a href="/guide/best-solar-panels-2026/">solar panels</a> are created equal. Higher efficiency panels may cost more upfront but produce more energy per square foot.</li>
 <li><strong>Consider battery storage:</strong> A <a href="/guide/solar-battery-buying-guide/">home battery system</a> can store excess solar energy for use during outages or peak rate periods.</li>
 </ul>
@@ -1278,7 +1292,7 @@ ${contextualLinksBlock('Estimate Your Solar Savings', [
   { title: 'Solar Panel Cost Guide (' + SITE.year + ')', url: '/guide/solar-panel-cost-guide/' },
   { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/' },
   { title: 'Best Solar Panels ' + SITE.year, url: '/guide/best-solar-panels-2026/' },
-  { title: 'Best Solar Companies in ' + city.state_name, url: '/best-solar-companies/' + parentState.slug + '/' },
+  BEST_COMPANY_SLUGS.has(parentState.slug) ? { title: 'Best Solar Companies in ' + city.state_name, url: '/best-solar-companies/' + parentState.slug + '/' } : { title: 'Best Solar Companies', url: '/best/best-solar-companies/' },
   { title: 'Solar Financing: $0 Down Options', url: '/solar-financing/' },
   { title: 'How to Choose a Solar Installer', url: '/guide/how-to-choose-solar-installer/' },
   { title: 'Solar Brand Reviews', url: '/reviews/' }
@@ -1356,7 +1370,7 @@ function generateFinancingPage(data) {
 <section class="content-section">
 <div class="container">
 <h1>Solar Financing Options ${SITE.year}: Loans, Leases, PPA &amp; $0-Down Plans Compared</h1>
-<p class="lead">Compare solar loans, leases, PPAs, PACE financing, and cash purchases from ${providers.length} providers. Find the right solar financing option for your budget, credit score, and savings goals. Many options require $0 down and let you claim the <a href="/article/federal-solar-tax-credit-2026-complete-guide/">30% federal solar tax credit</a>.</p>
+<p class="lead">Compare solar loans, leases, PPAs, PACE financing, and cash purchases from ${providers.length} providers. Find the right solar financing option for your budget, credit score, and savings goals. Many options require $0 down. Note: the <a href="/article/federal-solar-tax-credit-2026-complete-guide/">30% federal homeowner credit ended after 2025</a>.</p>
 ${eligibilityWidget('financing')}
 </div>
 </section>
@@ -1392,7 +1406,7 @@ ${detailCards}
 <h2>Which Financing Option Is Right for You?</h2>
 <div class="content-prose">
 <h3>Best for Maximum Savings: Cash Purchase</h3>
-<p>If you can pay upfront, cash provides the highest total savings. You own the system immediately, claim the full 30% federal tax credit, and start saving from day one with no interest payments.</p>
+<p>If you can pay upfront, cash provides the highest total savings. You own the system immediately, keep any state incentives, and start saving from day one with no interest payments.</p>
 <h3>Best for Homeowners Who Want to Own: Solar Loan</h3>
 <p>Solar loans let you own your system and claim tax credits while spreading payments over 10-25 years. Many lenders offer $0 down with competitive rates starting around 3.99% APR.</p>
 <h3>Best for $0 Down with No Hassle: Lease or PPA</h3>
@@ -1422,7 +1436,7 @@ ${ctaBlock('primary', 'Find Your Solar Financing Match', 'Enter your ZIP code to
 
   return baseTemplate(
     'Solar Financing Options ' + SITE.year + ': $0-Down Loans, Leases & PPA Compared',
-    'Compare ' + providers.length + ' solar financing options for ' + SITE.year + ': loans from 3.99% APR, $0-down leases, PPAs, PACE & cash purchase. Find the best match for your budget and credit score. Own your system and claim the 30% solar tax credit.',
+    'Compare ' + providers.length + ' solar financing options for ' + SITE.year + ': loans from 3.99% APR, $0-down leases, PPAs, PACE & cash purchase. Find the best match for your budget and credit score. Own your system and keep state incentives.',
     '/solar-financing/',
     body,
     {
@@ -1512,7 +1526,7 @@ ${Object.keys(categories).sort().map(function (cat) {
 ${ctaBlock('secondary', 'Ready to Go Solar?', 'Now that you understand the terms, get a personalized solar savings estimate for your home.', '#widget-hero')}
 
 ${hubLinksSection('Related Solar Resources', [
-  { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/', meta: 'Claim the 30% ITC' },
+  { title: 'Federal Solar Tax Credit Guide', url: '/article/federal-solar-tax-credit-2026-complete-guide/', meta: 'What changed after 2025' },
   { title: 'Complete Guide to Home Solar', url: '/guide/complete-guide-home-solar/', meta: 'Everything you need to know' },
   { title: 'Solar Financing Compared', url: '/solar-financing/', meta: 'Loans, leases & PPAs' },
   { title: 'Best Solar Panels ' + SITE.year, url: '/guide/best-solar-panels-2026/', meta: 'Expert rankings' },
@@ -1570,7 +1584,7 @@ ${authorBioBlock()}
 <h2>Data Sources</h2>
 <p>Our data comes from publicly available government and industry sources:</p>
 <ul>
-<li><strong>Federal Incentives:</strong> U.S. Department of Energy (<a href="https://www.energy.gov/eere/solar/homeowners-guide-federal-tax-credit-solar-photovoltaics" rel="nofollow">energy.gov</a>), IRS guidance on the Investment Tax Credit (ITC) under the Inflation Reduction Act (<a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow">IRS.gov</a>).</li>
+<li><strong>Federal Incentives:</strong> U.S. Department of Energy (<a href="https://www.energy.gov/eere/solar/homeowners-guide-federal-tax-credit-solar-photovoltaics" rel="nofollow">energy.gov</a>), IRS guidance on the end of the Residential Clean Energy Credit under the One Big Beautiful Bill Act (<a href="https://www.irs.gov/newsroom/faqs-for-modification-of-sections-25c-25d-25e-30c-30d-45l-45w-and-179d-under-public-law-119-21-139-stat-72-july-4-2025-commonly-known-as-the-one-big-beautiful-bill-obbb" rel="nofollow">IRS.gov</a>).</li>
 <li><strong>State Incentives:</strong> Database of State Incentives for Renewables &amp; Efficiency (<a href="https://www.dsireusa.org/" rel="nofollow">DSIRE</a>), state energy office publications.</li>
 <li><strong>Utility Policies:</strong> Individual utility company tariff filings, public rate schedules, and interconnection guidelines.</li>
 <li><strong>Solar Irradiance:</strong> National Renewable Energy Laboratory (<a href="https://www.nrel.gov/gis/solar-resource-maps.html" rel="nofollow">NREL</a>) solar resource data and PVWatts calculator methodology.</li>
@@ -1586,7 +1600,7 @@ ${authorBioBlock()}
 <p>Annual electric bill savings are calculated as: <code>Annual Savings = Annual kWh &times; Local Electricity Rate</code>. We use current average residential rates from the <a href="https://www.eia.gov/electricity/data/state/" rel="nofollow">EIA State Electricity Profiles</a>.</p>
 
 <h3>Incentive Stacking</h3>
-<p>We calculate total incentives by combining: the 30% federal ITC (per <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow">IRS guidelines</a>), applicable state tax credits, state rebates, SREC income, and property/sales tax exemptions. Each incentive is applied to the appropriate cost basis per DOE guidance.</p>
+<p>We calculate total incentives by combining applicable state tax credits, state rebates, SREC income, and property/sales tax exemptions. The 30% federal homeowner credit is set to $0 because it ended for expenditures after December 31, 2025 (<a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow">IRS</a>). Annual savings are adjusted for net metering: production is valued at 100% of the retail rate where full net metering applies, 85% under partial net metering and 70% where there is none, plus SREC income where available.</p>
 
 <h3>Net Cost &amp; Break-Even</h3>
 <p>Net cost equals gross system cost minus all incentives. Break-even year is when cumulative electricity savings exceed the net system cost.</p>
@@ -2056,7 +2070,7 @@ function generatePrivacyPolicyPage() {
 <section class="content-section">
 <div class="container">
 <h1>Privacy Policy</h1>
-<p class="lead">Last updated: March 1, ${SITE.year}. This Privacy Policy describes how ${SITE.name} collects, uses, and protects your personal information.</p>
+<p class="lead">Last updated: October 22, ${SITE.year}. This Privacy Policy describes how ${SITE.name} collects, uses, and protects your personal information.</p>
 </div>
 </section>
 
@@ -2095,7 +2109,8 @@ function generatePrivacyPolicyPage() {
 <h2>Information Sharing</h2>
 <p>We may share your information in these limited circumstances:</p>
 <ul>
-<li><strong>Solar Provider Partners:</strong> When you click an affiliate link or request a quote, your information may be shared with the solar provider you selected. This is necessary to fulfill your request. Our partners include EnergySage, Sunrun, SunPower, Palmetto, Sunnova, Mosaic, GoodLeap, and others.</li>
+<li><strong>Solar Provider Partners:</strong> When you click an affiliate link or request a quote, your information may be shared with the solar provider you selected. This is necessary to fulfill your request. We only share it with the company or marketplace you chose to contact.</li>
+<li><strong>AI Chat Provider:</strong> Messages you type into the AI assistant are sent to our AI model provider to generate a reply. Do not enter sensitive personal information.</li>
 <li><strong>Service Providers:</strong> We use Netlify for hosting, which may process data as part of standard web hosting operations.</li>
 <li><strong>Legal Requirements:</strong> We may disclose information if required by law, regulation, or legal process.</li>
 </ul>
@@ -2116,7 +2131,13 @@ function generatePrivacyPolicyPage() {
 <p>Residents of Virginia (VCDPA), Colorado (CPA), Connecticut (CTDPA), and other states with comprehensive privacy laws have similar rights. Contact us to exercise your rights under applicable state law.</p>
 
 <h2>Cookies and Tracking</h2>
-<p>We use session storage (not persistent cookies) to improve your experience by remembering your calculator inputs during a browsing session. We use basic analytics to understand site usage patterns. We do not use third-party tracking cookies for advertising purposes.</p>
+<p>We use session storage to remember your calculator inputs during a browsing session, and basic analytics to understand site usage.</p>
+<h3>Advertising</h3>
+<p>We may display ads from third-party vendors, including Google. These vendors use cookies to serve ads based on your prior visits to this and other websites. Google’s use of advertising cookies enables it and its partners to serve ads based on your visits to this site and/or other sites on the internet. You can opt out of personalized advertising at <a href="https://adssettings.google.com/" rel="nofollow">Google Ads Settings</a> or <a href="https://www.aboutads.info/choices/" rel="nofollow">aboutads.info</a>. Learn more in <a href="https://policies.google.com/technologies/ads" rel="nofollow">Google’s advertising policies</a>.</p>
+<h3>Affiliate Links</h3>
+<p>Some links may be affiliate links. When you click one, the partner may set a cookie to credit us for the referral. See our <a href="/affiliate-disclosure/">Affiliate Disclosure</a>.</p>
+<h3>AI Chat Assistant</h3>
+<p>The AI assistant sends your messages to our AI model provider to generate replies. We do not use chat messages to build advertising profiles. Basic request logs may be kept briefly for security and rate limiting.</p>
 
 <h2>Data Security</h2>
 <p>We implement industry-standard security measures including HTTPS encryption, security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy), and input validation to protect your information. However, no method of transmission over the internet is 100% secure.</p>
@@ -2778,7 +2799,87 @@ function generateNotFoundPage() {
 // ---------------------------------------------------------------------------
 // Module Exports
 // ---------------------------------------------------------------------------
+
+function generateTermsPage() {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Terms of Use' }];
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Terms of Use</h1>
+<p class="lead">Last updated: October 22, 2026.</p>
+</div>
+</section>
+<section class="content-section bg-light">
+<div class="container">
+<div class="content-prose">
+<p>These Terms of Use govern your use of ${SITE.name} (solarsavingsai.com). By using the site you agree to them. If you do not agree, please do not use the site.</p>
+<h2>Informational Use Only</h2><p>Content, calculators and the AI assistant provide general educational information and estimates. They are not financial, tax, legal or engineering advice. Read our <a href="/disclaimer/">Disclaimer</a> for details.</p>
+<h2>Estimates and Third-Party Data</h2><p>Savings estimates rely on public data (utility rates, solar resource, state programs) and assumptions described in our <a href="/methodology/">Methodology</a>. Incentives change often. Always confirm current terms with the program administrator, your utility and a licensed installer before you sign a contract.</p>
+<h2>AI Assistant</h2><p>The AI chat assistant can make mistakes. Do not enter sensitive personal information such as Social Security numbers, account numbers or passwords. Use answers as a starting point and verify important details.</p>
+<h2>Third-Party Links and Offers</h2><p>The site links to third-party websites, marketplaces and installers. We do not control them and are not responsible for their content, pricing, products or privacy practices. Some links may be affiliate links; see our <a href="/affiliate-disclosure/">Affiliate Disclosure</a>.</p>
+<h2>Acceptable Use</h2><p>Do not misuse the site, including scraping at a rate that harms performance, attempting to access non-public systems, abusing the AI assistant or submitting false information through forms.</p>
+<h2>Intellectual Property</h2><p>Site content, design and data compilations belong to ${SITE.name} unless otherwise noted. You may share links and short quotes with attribution.</p>
+<h2>Limitation of Liability</h2><p>The site is provided "as is" without warranties of any kind. To the fullest extent permitted by law, ${SITE.name} is not liable for any losses arising from your use of the site or reliance on its content.</p>
+<h2>Changes</h2><p>We may update these terms. The date above shows the latest revision. Questions? Visit our <a href="/contact/">contact page</a>.</p>
+</div>
+</div>
+</section>
+`;
+  return baseTemplate('Terms of Use', 'Terms of use for SolarSavingsAI: informational use, estimates, AI assistant, third-party links and liability.', '/terms/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) });
+}
+
+function generateDisclaimerPage() {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Disclaimer' }];
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Disclaimer</h1>
+<p class="lead">Last updated: October 22, 2026.</p>
+</div>
+</section>
+<section class="content-section bg-light">
+<div class="container">
+<div class="content-prose">
+<h2>Not Professional Advice</h2><p>${SITE.name} publishes general information about solar energy, incentives and financing. Nothing on this site is financial, tax, legal or engineering advice. Consult a licensed tax professional, financial advisor or installer for decisions about your home.</p>
+<h2>Estimates Are Not Guarantees</h2><p>Calculator results, city and state pages, and AI assistant answers are estimates. Actual costs and savings depend on your roof, shading, energy use, equipment, installer pricing, utility tariff and program rules. We do not guarantee savings, eligibility or approval for any program.</p>
+<h2>Federal Tax Credit Status</h2><p>The 30% federal Residential Clean Energy Credit (Section 25D) ended for expenditures made after December 31, 2025, under the One Big Beautiful Bill Act. Our estimates set it to $0 for new purchases. Source: <a href="https://www.irs.gov/credits-deductions/residential-clean-energy-credit" rel="nofollow">IRS</a>.</p>
+<h2>Incentives Change</h2><p>State, utility and local programs can change, pause or run out of funding without notice. We review data regularly but cannot guarantee it is complete or current. Verify with the program administrator or <a href="https://www.dsireusa.org/" rel="nofollow">DSIRE</a>.</p>
+<h2>Third-Party Companies</h2><p>Mentions of installers, lenders or marketplaces are not endorsements. Compare several licensed providers and read contracts carefully. See our <a href="/affiliate-disclosure/">Affiliate Disclosure</a> and <a href="/editorial-standards/">Editorial Standards</a>.</p>
+</div>
+</div>
+</section>
+`;
+  return baseTemplate('Disclaimer', 'SolarSavingsAI disclaimer: estimates are not guarantees, not tax or financial advice, and incentives change.', '/disclaimer/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) });
+}
+
+function generateAffiliateDisclosurePage() {
+  var crumbs = [{ label: 'Home', url: '/' }, { label: 'Affiliate Disclosure' }];
+  var body = `
+<section class="content-section">
+<div class="container">
+<h1>Affiliate Disclosure</h1>
+<p class="lead">Last updated: October 22, 2026.</p>
+</div>
+</section>
+<section class="content-section bg-light">
+<div class="container">
+<div class="content-prose">
+<p>${SITE.name} is free to use. To support the site, we may earn money in two ways: advertising, and commissions or referral fees when you click certain links or request quotes from partners. This is permitted under U.S. Federal Trade Commission guidance as long as we disclose it clearly, which is the purpose of this page.</p>
+<h2>How Affiliate Links Work</h2><p>Some links to solar marketplaces, installers, lenders or products may be affiliate links. If you click one and request a quote or make a purchase, we may receive a commission at no extra cost to you. Links marked “Affiliate link” or “Sponsored” may fall into this category; others are plain links to useful resources.</p>
+<h2>Our Editorial Independence</h2><p>Commissions never change our calculations, incentive data or rankings. We include resources because they help homeowners compare options, and we recommend getting at least three quotes. See our <a href="/editorial-standards/">Editorial Standards</a> and <a href="/methodology/">Methodology</a>.</p>
+<h2>Advertising</h2><p>We may display ads served by third-party networks such as Google. Ads are labeled and are separate from our editorial content. See our <a href="/privacy-policy/">Privacy Policy</a> for how ad cookies work and how to opt out.</p>
+<h2>Questions</h2><p>If you have questions about a specific link, please <a href="/contact/">contact us</a>.</p>
+</div>
+</div>
+</section>
+`;
+  return baseTemplate('Affiliate Disclosure', 'How SolarSavingsAI earns money through affiliate links and advertising, and how we keep our analysis independent.', '/affiliate-disclosure/', body, { breadcrumbs: crumbs, schema: breadcrumbSchema(crumbs) });
+}
+
 module.exports = {
+  generateTermsPage,
+  generateDisclaimerPage,
+  generateAffiliateDisclosurePage,
   generateHomepage,
   generateStatesHubPage,
   generateSolarRebatesHubPage,

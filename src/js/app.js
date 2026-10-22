@@ -869,7 +869,8 @@ function runCalculator(el) {
   var systemSize = parseFloat(el.getAttribute('data-system-size')) || 0;
   var stateCreditPercent = parseFloat(el.getAttribute('data-state-credit')) || 0;
   var stateRebate = parseFloat(el.getAttribute('data-state-rebate')) || 0;
-  var federalCreditPercent = parseFloat(el.getAttribute('data-federal-credit-percent')) || 30;
+  // Federal homeowner credit (25D) ended after 2025; only use a value if a page explicitly sets one.
+  var federalCreditPercent = parseFloat(el.getAttribute('data-federal-credit-percent')) || 0;
 
   // Calculations
   var annualProduction = systemSize * sunHours * 365 * 0.80; // 80% efficiency
@@ -893,10 +894,10 @@ function runCalculator(el) {
       '<span class="result-label">System Cost</span>' +
       '<span class="result-value">' + formatCurrency(installCost) + '</span>' +
     '</div>' +
-    '<div class="calculator-result">' +
+    (federalCreditPercent > 0 ? '<div class="calculator-result">' +
       '<span class="result-label">Federal Tax Credit (' + federalCreditPercent + '%)</span>' +
       '<span class="result-value text-green">' + formatCurrency(federalCredit) + '</span>' +
-    '</div>' +
+    '</div>' : '') +
     '<div class="calculator-result">' +
       '<span class="result-label">State Tax Credit</span>' +
       '<span class="result-value text-green">' + formatCurrency(stateCredit) + '</span>' +

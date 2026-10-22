@@ -202,6 +202,9 @@ ${stateLinks}
 <li><a href="/methodology/">Methodology</a></li>
 <li><a href="/editorial-standards/">Editorial Standards</a></li>
 <li><a href="/privacy-policy/">Privacy Policy</a></li>
+<li><a href="/terms/">Terms of Use</a></li>
+<li><a href="/disclaimer/">Disclaimer</a></li>
+<li><a href="/affiliate-disclosure/">Affiliate Disclosure</a></li>
 </ul>
 </div>
 <div class="footer-col">
@@ -313,7 +316,7 @@ function exitIntentModal() {
 <button class="modal-close" aria-label="Close modal">&times;</button>
 <h2 class="modal-title">Wait &mdash; Don&#39;t Miss Your Solar Savings</h2>
 <div class="modal-body">
-<p>The federal solar tax credit covers <strong>30%</strong> of your installation cost &mdash; but incentives change every year. Enter your details to see what you qualify for before rates adjust.</p>
+<p>The 30% federal homeowner solar credit ended after 2025 &mdash; so state, utility and net-metering incentives now decide your savings. Enter your details to see what you qualify for before rates adjust.</p>
 ${eligibilityWidget('modal')}
 </div>
 </div>
@@ -496,7 +499,7 @@ function affiliateCtaBlock(location, placement) {
 <span class="btn btn-outline btn-sm">Find Installers</span>
 </a>
 </div>
-<p class="affiliate-disclosure">Affiliate disclosure: We may earn a commission when you request quotes through our partners. This does not affect our analysis or your cost. <a href="/editorial-standards/">Learn more</a>.</p>
+<p class="affiliate-disclosure">Affiliate disclosure: We may earn a commission when you request quotes through our partners. This does not affect our analysis or your cost. <a href="/affiliate-disclosure/">Learn more</a>.</p>
 </div>`;
 }
 
@@ -563,7 +566,7 @@ function aboveFoldQuoteCta(location) {
 <a href="#widget-hero" class="btn btn-outline btn-lg">Calculate Savings</a>
 </div>
 </div>
-<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Affiliate link. We may earn a commission at no cost to you. <a href="/editorial-standards/">Learn more</a>.</p>
+<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Affiliate link. We may earn a commission at no cost to you. <a href="/affiliate-disclosure/">Learn more</a>.</p>
 </div>`;
 }
 
@@ -577,12 +580,12 @@ function midContentFinancingCta(location, annualSavings) {
   return `<div class="mid-content-cta">
 <div class="mid-content-cta-inner">
 <h3>Explore Solar Financing for ${loc}</h3>
-<p>$0 down options available. Own your system and claim the 30% federal tax credit.${savingsText}</p>
+<p>$0 down options available. Own your system and keep any state incentives.${savingsText}</p>
 <div class="mid-content-cta-actions">
 <a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-primary" rel="sponsored noopener noreferrer" target="_blank" data-affiliate="mid-sunrun">$0 Down Plans</a>
 <a href="/solar-financing/" class="btn btn-outline">Compare All Options</a>
 </div>
-<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Affiliate link. <a href="/editorial-standards/">Disclosure</a>.</p>
+<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Affiliate link. <a href="/affiliate-disclosure/">Disclosure</a>.</p>
 </div>
 </div>`;
 }
@@ -617,7 +620,7 @@ function sidebarAffiliateWidget(location) {
 <span class="sidebar-widget-action">Compare &rarr;</span>
 </a>
 </div>
-<p class="affiliate-disclosure" style="font-size:0.7rem;margin-top:0.5rem;opacity:0.7;">Sponsored. <a href="/editorial-standards/">Disclosure</a>.</p>
+<p class="affiliate-disclosure" style="font-size:0.7rem;margin-top:0.5rem;opacity:0.7;">Sponsored. <a href="/affiliate-disclosure/">Disclosure</a>.</p>
 </div>`;
 }
 
@@ -653,7 +656,7 @@ function calculatorResultMonetization(location) {
 <span class="btn btn-outline btn-sm">Get Matched</span>
 </a>
 </div>
-<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;text-align:center;opacity:0.8;">We may earn a commission. This does not affect your cost. <a href="/editorial-standards/">Disclosure</a>.</p>
+<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;text-align:center;opacity:0.8;">We may earn a commission. This does not affect your cost. <a href="/affiliate-disclosure/">Disclosure</a>.</p>
 </div>`;
 }
 
@@ -701,7 +704,7 @@ ${rows}
 </tbody>
 </table>
 </div>
-<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Some links are affiliate links. <a href="/editorial-standards/">Disclosure</a>.</p>
+<p class="affiliate-disclosure" style="font-size:0.75rem;margin-top:0.5rem;opacity:0.8;">Some links are affiliate links. <a href="/affiliate-disclosure/">Disclosure</a>.</p>
 </div>`;
 }
 

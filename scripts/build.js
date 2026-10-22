@@ -296,6 +296,12 @@ writePage(
 );
 pageCount++;
 
+// Legal pages
+[['terms', 'generateTermsPage'], ['disclaimer', 'generateDisclaimerPage'], ['affiliate-disclosure', 'generateAffiliateDisclosurePage']].forEach(function (pg) {
+  writePage(path.join(DIST_DIR, pg[0], 'index.html'), templates[pg[1]]());
+  pageCount++;
+});
+
 // ---------------------------------------------------------------------------
 // NEW: Authors pages
 // ---------------------------------------------------------------------------
@@ -441,6 +447,9 @@ coreEntries.push(buildUrlEntry('solar-glossary/', 0.5));
 coreEntries.push(buildUrlEntry('about/', 0.4));
 coreEntries.push(buildUrlEntry('contact/', 0.4));
 coreEntries.push(buildUrlEntry('privacy-policy/', 0.3));
+coreEntries.push(buildUrlEntry('terms/', 0.3));
+coreEntries.push(buildUrlEntry('disclaimer/', 0.3));
+coreEntries.push(buildUrlEntry('affiliate-disclosure/', 0.3));
 coreEntries.push(buildUrlEntry('methodology/', 0.4));
 coreEntries.push(buildUrlEntry('editorial-standards/', 0.4));
 if (brandReviews.length > 0) coreEntries.push(buildUrlEntry('reviews/', 0.7));
