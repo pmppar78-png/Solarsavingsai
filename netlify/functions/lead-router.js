@@ -3,7 +3,7 @@ const affiliatePartners = {
   energysage: {
     name: 'EnergySage',
     baseUrl: 'https://www.energysage.com/solar/',
-    params: 'rc=solarsavingsai',
+    params: '',
     priority: 1,
     category: 'marketplace',
     avg_cpa: 85,
@@ -13,7 +13,7 @@ const affiliatePartners = {
   sunrun: {
     name: 'Sunrun',
     baseUrl: 'https://www.sunrun.com/solar-plans',
-    params: 'partner=solarsavingsai',
+    params: '',
     priority: 2,
     category: 'installer',
     avg_cpa: 75,
@@ -22,8 +22,8 @@ const affiliatePartners = {
   },
   sunpower: {
     name: 'SunPower',
-    baseUrl: 'https://us.sunpower.com/get-quote',
-    params: 'ref=solarsavingsai',
+    baseUrl: 'https://us.sunpower.com/',
+    params: '',
     priority: 3,
     category: 'installer',
     avg_cpa: 80,
@@ -34,28 +34,18 @@ const affiliatePartners = {
   palmetto: {
     name: 'Palmetto Solar',
     baseUrl: 'https://palmetto.com/solar',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 4,
     category: 'installer',
     avg_cpa: 65,
     states: 'all',
     strengths: ['digital-first', 'monitoring']
   },
-  sunnova: {
-    name: 'Sunnova',
-    baseUrl: 'https://www.sunnova.com/',
-    params: 'partner=solarsavingsai',
-    priority: 5,
-    category: 'installer',
-    avg_cpa: 60,
-    states: 'all',
-    strengths: ['lease', 'battery-bundle']
-  },
   // Financing-focused partners
   mosaic: {
     name: 'Mosaic',
     baseUrl: 'https://www.joinmosaic.com/solar-loans',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 6,
     category: 'financing',
     avg_cpa: 50,
@@ -65,7 +55,7 @@ const affiliatePartners = {
   goodleap: {
     name: 'GoodLeap',
     baseUrl: 'https://www.goodleap.com/',
-    params: 'partner=solarsavingsai',
+    params: '',
     priority: 7,
     category: 'financing',
     avg_cpa: 45,
@@ -76,7 +66,7 @@ const affiliatePartners = {
   tesla_energy: {
     name: 'Tesla Energy',
     baseUrl: 'https://www.tesla.com/powerwall',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 8,
     category: 'storage',
     avg_cpa: 55,
@@ -86,7 +76,7 @@ const affiliatePartners = {
   generac: {
     name: 'Generac PWRcell',
     baseUrl: 'https://www.generac.com/solar',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 9,
     category: 'storage',
     avg_cpa: 50,
@@ -97,7 +87,7 @@ const affiliatePartners = {
   sealed: {
     name: 'Sealed',
     baseUrl: 'https://sealed.com/',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 10,
     category: 'energy-audit',
     avg_cpa: 35,
@@ -108,7 +98,7 @@ const affiliatePartners = {
   freedom_solar: {
     name: 'Freedom Solar Power',
     baseUrl: 'https://freedomsolarpower.com/',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 11,
     category: 'installer',
     avg_cpa: 60,
@@ -118,7 +108,7 @@ const affiliatePartners = {
   blue_raven: {
     name: 'Blue Raven Solar',
     baseUrl: 'https://blueravensolar.com/',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 12,
     category: 'installer',
     avg_cpa: 55,
@@ -129,7 +119,7 @@ const affiliatePartners = {
   modernize: {
     name: 'Modernize',
     baseUrl: 'https://modernize.com/solar',
-    params: 'aff=solarsavingsai',
+    params: '',
     priority: 13,
     category: 'lead-aggregator',
     avg_cpa: 150,
@@ -139,7 +129,7 @@ const affiliatePartners = {
   energybillcruncher: {
     name: 'EnergyBillCruncher',
     baseUrl: 'https://www.energybillcruncher.com/solar',
-    params: 'aff=solarsavingsai',
+    params: '',
     priority: 14,
     category: 'lead-aggregator',
     avg_cpa: 140,
@@ -149,7 +139,7 @@ const affiliatePartners = {
   solar_reviews: {
     name: 'SolarReviews',
     baseUrl: 'https://www.solarreviews.com/installers',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 15,
     category: 'lead-aggregator',
     avg_cpa: 120,
@@ -159,7 +149,7 @@ const affiliatePartners = {
   clean_energy: {
     name: 'CleanEnergy.org',
     baseUrl: 'https://www.cleanenergy.org/solar-quote',
-    params: 'partner=solarsavingsai',
+    params: '',
     priority: 16,
     category: 'lead-aggregator',
     avg_cpa: 130,
@@ -169,7 +159,7 @@ const affiliatePartners = {
   solar_estimate: {
     name: 'SolarEstimate',
     baseUrl: 'https://www.solar-estimate.org/',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 17,
     category: 'lead-aggregator',
     avg_cpa: 110,
@@ -179,27 +169,17 @@ const affiliatePartners = {
   momentum_solar: {
     name: 'Momentum Solar',
     baseUrl: 'https://momentumsolar.com/',
-    params: 'partner=solarsavingsai',
+    params: '',
     priority: 18,
     category: 'installer',
     avg_cpa: 70,
     states: 'NJ,NY,FL,TX,CA,PA,CT',
     strengths: ['regional-installer', 'fast-install', 'financing']
   },
-  adt_solar: {
-    name: 'ADT Solar',
-    baseUrl: 'https://www.adtsolar.com/',
-    params: 'ref=solarsavingsai',
-    priority: 19,
-    category: 'installer',
-    avg_cpa: 75,
-    states: 'all',
-    strengths: ['nationwide', 'brand-trust', 'monitoring']
-  },
   project_solar: {
     name: 'Project Solar',
     baseUrl: 'https://www.projectsolar.io/',
-    params: 'ref=solarsavingsai',
+    params: '',
     priority: 20,
     category: 'installer',
     avg_cpa: 65,
@@ -358,9 +338,9 @@ function routeLead(tier, intent, state) {
     if (rotation === 0) return affiliatePartners.modernize;           // $150
     if (rotation === 1) return affiliatePartners.energybillcruncher;  // $140
     if (rotation === 2) return affiliatePartners.solar_estimate;      // $110
-    if (rotation === 3) return affiliatePartners.sunpower;            // $80
+    if (rotation === 3) return affiliatePartners.solar_reviews;
     if (rotation === 4) return affiliatePartners.energysage;          // $85
-    return affiliatePartners.adt_solar;                                // $75
+    return affiliatePartners.energysage;
   }
 
   // Tier 3 (45-64): Financing-focused with aggregator mix
@@ -380,7 +360,7 @@ function routeLead(tier, intent, state) {
     const rotation = Date.now() % 4;
     if (rotation === 0) return affiliatePartners.energybillcruncher; // $140
     if (rotation === 1) return affiliatePartners.palmetto;           // $65
-    if (rotation === 2) return affiliatePartners.sunnova;            // $60
+    if (rotation === 2) return affiliatePartners.energysage;
     return affiliatePartners.project_solar;                           // $65
   }
 
@@ -389,7 +369,7 @@ function routeLead(tier, intent, state) {
   const rotation = Date.now() % 5;
   if (rotation === 0) return affiliatePartners.solar_estimate;   // $110
   if (rotation === 1) return affiliatePartners.blue_raven;       // $55
-  if (rotation === 2) return affiliatePartners.sunnova;          // $60
+  if (rotation === 2) return affiliatePartners.energysage;
   if (rotation === 3) return affiliatePartners.project_solar;    // $65
   return affiliatePartners.sealed;                                // $35
 }
@@ -460,11 +440,8 @@ exports.handler = async function(event) {
     const savings = calculateSavings(bill, state);
 
     // Build redirect URL
-    const redirectUrl = partner.baseUrl +
-      (partner.baseUrl.includes('?') ? '&' : '?') +
-      partner.params +
-      '&zip=' + encodeURIComponent(zip) +
-      (state ? '&state=' + encodeURIComponent(state) : '');
+    // Plain link: no tracking parameters until an affiliate agreement exists, and no user data in the URL.
+    const redirectUrl = partner.baseUrl;
 
     // Log detailed lead data
     console.log(JSON.stringify({

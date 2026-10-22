@@ -352,11 +352,11 @@ ${cityLinksHtml}
 </section>
 
 ${comparisonAffiliateTable('Compare Top Solar Providers', [
-  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare 3-7 quotes free', rating: '4.8/5', slug: 'energysage-hp', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
-  { name: 'Modernize', type: 'Lead Matching', highlight: 'Top local installer matching', rating: '4.7/5', slug: 'modernize-hp', affiliate_url: 'https://modernize.com/solar?aff=solarsavingsai', cta_text: 'Get Matched' },
-  { name: 'Sunrun', type: 'Installer', highlight: '$0 down lease & loan', rating: '4.5/5', slug: 'sunrun-hp', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
-  { name: 'SunPower', type: 'Installer', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-hp', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' },
-  { name: 'SolarReviews', type: 'Marketplace', highlight: 'Read reviews & get quotes', rating: '4.6/5', slug: 'solarreviews-hp', affiliate_url: 'https://www.solarreviews.com/installers?ref=solarsavingsai', cta_text: 'Find Installers' }
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare 3-7 quotes free', rating: '4.8/5', slug: 'energysage-hp', affiliate_url: 'https://www.energysage.com/solar/', cta_text: 'Get Quotes' },
+  { name: 'Modernize', type: 'Lead Matching', highlight: 'Top local installer matching', rating: '4.7/5', slug: 'modernize-hp', affiliate_url: 'https://modernize.com/solar', cta_text: 'Get Matched' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down lease & loan', rating: '4.5/5', slug: 'sunrun-hp', affiliate_url: 'https://www.sunrun.com/solar-plans', cta_text: 'View Plans' },
+  { name: 'DSIRE', type: 'Incentives', highlight: 'Official state & utility incentive database', rating: 'Free', slug: 'dsire-hp', affiliate_url: 'https://www.dsireusa.org/', cta_text: 'Search Incentives' },
+  { name: 'SolarReviews', type: 'Marketplace', highlight: 'Read reviews & get quotes', rating: '4.6/5', slug: 'solarreviews-hp', affiliate_url: 'https://www.solarreviews.com/installers', cta_text: 'Find Installers' }
 ])}
 
 ${faqSection([
@@ -626,9 +626,9 @@ ${eligibilityWidget('comparisons-hub')}
 </section>
 
 ${comparisonAffiliateTable('Compare Top Solar Providers', [
-  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare 3-7 quotes free', rating: '4.8/5', slug: 'energysage-comparisons', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
-  { name: 'Sunrun', type: 'Installer', highlight: '$0 down lease and loan options', rating: '4.5/5', slug: 'sunrun-comparisons', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
-  { name: 'SunPower', type: 'Premium', highlight: 'High-efficiency panel systems', rating: '4.6/5', slug: 'sunpower-comparisons', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare 3-7 quotes free', rating: '4.8/5', slug: 'energysage-comparisons', affiliate_url: 'https://www.energysage.com/solar/', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down lease and loan options', rating: '4.5/5', slug: 'sunrun-comparisons', affiliate_url: 'https://www.sunrun.com/solar-plans', cta_text: 'View Plans' },
+  { name: 'DSIRE', type: 'Incentives', highlight: 'Official state & utility incentive database', rating: 'Free', slug: 'dsire-comparisons', affiliate_url: 'https://www.dsireusa.org/', cta_text: 'Search Incentives' }
 ])}
 `;
 
@@ -843,9 +843,9 @@ ${stateCities.length > 0 ? '<section class="content-section"><div class="contain
 ${stateBestCompaniesEntries.length > 0 ? '<section class="content-section bg-light"><div class="container"><h2>Top-Rated Solar Companies in ' + state.state_name + '</h2><p>Find vetted solar installers serving ' + state.state_name + ' with pricing, reviews, and service details.</p><div class="related-grid">' + stateBestCompaniesEntries.map(function(e) { return '<a href="/best-solar-companies/' + e.slug + '/" class="related-card"><span class="related-title">' + (e.title || ('Best Solar Companies in ' + (e.city || state.state_name))) + '</span><span class="related-meta">Vetted installer guide</span></a>'; }).join('') + '</div></div></section>' : ''}
 
 ${comparisonAffiliateTable('Best Solar Options in ' + state.state_name, [
-  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare local ' + state.state_name + ' installers', rating: '4.8/5', slug: 'energysage-' + state.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
-  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar in ' + state.state_name, rating: '4.5/5', slug: 'sunrun-' + state.slug, affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
-  { name: 'SunPower', type: 'Premium', highlight: 'Top efficiency panels', rating: '4.6/5', slug: 'sunpower-' + state.slug, affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare local ' + state.state_name + ' installers', rating: '4.8/5', slug: 'energysage-' + state.slug, affiliate_url: 'https://www.energysage.com/solar/', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar in ' + state.state_name, rating: '4.5/5', slug: 'sunrun-' + state.slug, affiliate_url: 'https://www.sunrun.com/solar-plans', cta_text: 'View Plans' },
+  { name: 'DSIRE', type: 'Incentives', highlight: 'Official state & utility incentive database', rating: 'Free', slug: 'dsire-' + state.slug, affiliate_url: 'https://www.dsireusa.org/', cta_text: 'Search Incentives' }
 ])}
 
 ${emailCaptureBlock(state.state_name)}
@@ -1268,9 +1268,9 @@ ${cityIntroContent(city, parentState, roi)}
 </section>
 
 ${comparisonAffiliateTable('Best Solar Providers in ' + city.city_name, [
-  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare ' + city.city_name + ' installers', rating: '4.8/5', slug: 'energysage-' + city.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
-  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar in ' + city.state_abbrev, rating: '4.5/5', slug: 'sunrun-' + city.slug, affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
-  { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-' + city.slug, affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare ' + city.city_name + ' installers', rating: '4.8/5', slug: 'energysage-' + city.slug, affiliate_url: 'https://www.energysage.com/solar/', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar in ' + city.state_abbrev, rating: '4.5/5', slug: 'sunrun-' + city.slug, affiliate_url: 'https://www.sunrun.com/solar-plans', cta_text: 'View Plans' },
+  { name: 'DSIRE', type: 'Incentives', highlight: 'Official state & utility incentive database', rating: 'Free', slug: 'dsire-' + city.slug, affiliate_url: 'https://www.dsireusa.org/', cta_text: 'Search Incentives' }
 ])}
 
 ${emailCaptureBlock(city.city_name + ', ' + city.state_abbrev)}
@@ -1422,9 +1422,9 @@ ${detailCards}
 <h2>Compare Trusted Solar Financing Partners</h2>
 <p>Use these tools to compare financing structures, loan options, and incentives before you choose a provider.</p>
 <div class="cta-group" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
-<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary" target="_blank" rel="sponsored noopener noreferrer" data-affiliate="energysage-financing">Compare Solar Financing</a>
-<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener noreferrer" data-affiliate="sunrun-financing">Get Solar Loan Quotes</a>
-<a href="https://www.solarreviews.com/installers?ref=solarsavingsai" class="btn btn-outline" target="_blank" rel="sponsored noopener noreferrer" data-affiliate="solarreviews-financing">Check Solar Incentives</a>
+<a href="https://www.energysage.com/solar/" class="btn btn-primary" target="_blank" rel="noopener noreferrer" data-affiliate="energysage-financing">Compare Solar Financing</a>
+<a href="https://www.sunrun.com/solar-plans" class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-affiliate="sunrun-financing">Get Solar Loan Quotes</a>
+<a href="https://www.solarreviews.com/installers" class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-affiliate="solarreviews-financing">Check Solar Incentives</a>
 </div>
 </div>
 </section>
@@ -1786,9 +1786,9 @@ ${calculatorResultMonetization('Your Area')}
 ${faqSection(faqs)}
 
 ${comparisonAffiliateTable('Get Started with Solar', [
-  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare installer quotes free', rating: '4.8/5', slug: 'energysage-comp', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
-  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar lease/loan', rating: '4.5/5', slug: 'sunrun-comp', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
-  { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-comp', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare installer quotes free', rating: '4.8/5', slug: 'energysage-comp', affiliate_url: 'https://www.energysage.com/solar/', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar lease/loan', rating: '4.5/5', slug: 'sunrun-comp', affiliate_url: 'https://www.sunrun.com/solar-plans', cta_text: 'View Plans' },
+  { name: 'DSIRE', type: 'Incentives', highlight: 'Official state & utility incentive database', rating: 'Free', slug: 'dsire-comp', affiliate_url: 'https://www.dsireusa.org/', cta_text: 'Search Incentives' }
 ])}
 
 ${authorBioBlock()}
@@ -1882,9 +1882,9 @@ ${eligibilityWidget('pillar')}
 ${calculatorResultMonetization('Your Area')}
 
 ${comparisonAffiliateTable('Top Solar Providers', [
-  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare installer quotes free', rating: '4.8/5', slug: 'energysage-pillar', affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Get Quotes' },
-  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar lease/loan', rating: '4.5/5', slug: 'sunrun-pillar', affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
-  { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-pillar', affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare installer quotes free', rating: '4.8/5', slug: 'energysage-pillar', affiliate_url: 'https://www.energysage.com/solar/', cta_text: 'Get Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar lease/loan', rating: '4.5/5', slug: 'sunrun-pillar', affiliate_url: 'https://www.sunrun.com/solar-plans', cta_text: 'View Plans' },
+  { name: 'DSIRE', type: 'Incentives', highlight: 'Official state & utility incentive database', rating: 'Free', slug: 'dsire-pillar', affiliate_url: 'https://www.dsireusa.org/', cta_text: 'Search Incentives' }
 ])}
 
 ${faqSection(faqs)}
@@ -2340,9 +2340,9 @@ ${sectionsHtml}
 ${faqSection(faqs)}
 
 ${comparisonAffiliateTable('Compare ' + brandName + ' with Alternatives', [
-  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare ' + brandName + ' quotes', rating: '4.8/5', slug: 'energysage-' + brand.slug, affiliate_url: 'https://www.energysage.com/solar/?rc=solarsavingsai', cta_text: 'Compare Quotes' },
-  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar options', rating: '4.5/5', slug: 'sunrun-' + brand.slug, affiliate_url: 'https://www.sunrun.com/solar-plans?partner=solarsavingsai', cta_text: 'View Plans' },
-  { name: 'SunPower', type: 'Premium', highlight: 'Highest efficiency panels', rating: '4.6/5', slug: 'sunpower-' + brand.slug, affiliate_url: 'https://us.sunpower.com/get-quote?ref=solarsavingsai', cta_text: 'Get Quote' }
+  { name: 'EnergySage', type: 'Marketplace', highlight: 'Compare ' + brandName + ' quotes', rating: '4.8/5', slug: 'energysage-' + brand.slug, affiliate_url: 'https://www.energysage.com/solar/', cta_text: 'Compare Quotes' },
+  { name: 'Sunrun', type: 'Installer', highlight: '$0 down solar options', rating: '4.5/5', slug: 'sunrun-' + brand.slug, affiliate_url: 'https://www.sunrun.com/solar-plans', cta_text: 'View Plans' },
+  { name: 'DSIRE', type: 'Incentives', highlight: 'Official state & utility incentive database', rating: 'Free', slug: 'dsire-' + brand.slug, affiliate_url: 'https://www.dsireusa.org/', cta_text: 'Search Incentives' }
 ])}
 
 ${authorBioBlock()}
@@ -2656,7 +2656,7 @@ function generateArticlePage(article, allArticles, options) {
 
   var processedContent = (article.content_html || '').replace(
     /<a href="(https:\/\/(?:www\.energysage\.com|www\.sunrun\.com|us\.sunpower\.com|modernize\.com|www\.solarreviews\.com|www\.tesla\.com)[^"]*)" rel="sponsored">/g,
-    '<a href="$1" rel="sponsored noopener noreferrer" target="_blank">'
+    '<a href="$1" rel="noopener noreferrer" target="_blank">'
   );
 
   var body = `

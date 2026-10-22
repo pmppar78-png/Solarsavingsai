@@ -340,10 +340,10 @@ function handleWidgetSubmit(form) {
         formatCurrency(twentyYearSavings) + ' over 20 years.' +
       '</p>' +
       '<div class="widget-results-cta">' +
-        '<a href="https://www.energysage.com/solar/?rc=solarsavingsai" class="btn btn-primary btn-lg btn-block" rel="sponsored noopener" target="_blank" data-affiliate="quote-cta-result">Get Your Free Custom Quote</a>' +
+        '<a href="https://www.energysage.com/solar/" class="btn btn-primary btn-lg btn-block" rel="noopener" target="_blank" data-affiliate="quote-cta-result">Get Your Free Custom Quote</a>' +
         '<div class="widget-results-providers">' +
-          '<a href="https://www.sunrun.com/solar-plans?partner=solarsavingsai" class="btn btn-outline btn-sm" rel="sponsored noopener" target="_blank" data-affiliate="sunrun-result">Sunrun Plans</a>' +
-          '<a href="https://us.sunpower.com/get-quote?ref=solarsavingsai" class="btn btn-outline btn-sm" rel="sponsored noopener" target="_blank" data-affiliate="sunpower-result">SunPower Quote</a>' +
+          '<a href="https://www.sunrun.com/solar-plans" class="btn btn-outline btn-sm" rel="noopener" target="_blank" data-affiliate="sunrun-result">Sunrun Plans</a>' +
+          '<a href="https://www.dsireusa.org/" class="btn btn-outline btn-sm" rel="noopener" target="_blank" data-affiliate="dsire-result">Search Incentives (DSIRE)</a>' +
         '</div>' +
       '</div>' +
       '<p class="widget-results-disclaimer text-muted" style="font-size:0.8rem;margin-top:0.75rem;text-align:center;">' +
@@ -374,11 +374,11 @@ function handleWidgetSubmit(form) {
   // Route lead to affiliate partner via lead router
   var stateAbbrev = state || '';
   var fallbackUrls = [
-    'https://modernize.com/solar?aff=solarsavingsai',
-    'https://www.energysage.com/solar/?rc=solarsavingsai',
-    'https://www.energybillcruncher.com/solar?aff=solarsavingsai',
-    'https://www.solarreviews.com/installers?ref=solarsavingsai',
-    'https://www.cleanenergy.org/solar-quote?partner=solarsavingsai'
+    'https://modernize.com/solar',
+    'https://www.energysage.com/solar/',
+    'https://www.energybillcruncher.com/solar',
+    'https://www.solarreviews.com/installers',
+    'https://www.cleanenergy.org/solar-quote'
   ];
 
   function doFallbackRedirect() {
