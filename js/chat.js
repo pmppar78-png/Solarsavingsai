@@ -8,14 +8,8 @@
     return;
   }
 
-  var systemPrompt = [
-    'You are SolarSavingsAI, a concise and friendly assistant for residential solar and clean-energy decisions.',
-    'Help with rebates, incentives, quote comparisons, financing basics, batteries, and utility-bill reduction.',
-    'Do not provide legal, tax, or financial advice; recommend speaking with licensed professionals for final decisions.',
-    'Avoid guaranteed outcomes and clearly state uncertainty when details vary by state or utility.'
-  ].join(' ');
-
-  var conversation = [{ role: 'system', content: systemPrompt }];
+  // The system prompt is applied server-side in netlify/functions/ai-chat.js.
+  var conversation = [];
 
   appendMessage(
     'assistant',
