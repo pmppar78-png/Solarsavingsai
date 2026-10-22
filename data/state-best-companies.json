@@ -131,17 +131,6 @@
         ]
       },
       {
-        "name": "Sunnova",
-        "rating": 4.2,
-        "type": "national",
-        "summary": "Houston-headquartered solar company with strong Texas presence.",
-        "strengths": [
-          "TX headquarters",
-          "25-year warranty",
-          "Battery options"
-        ]
-      },
-      {
         "name": "Longhorn Solar",
         "rating": 4.3,
         "type": "local",
@@ -203,17 +192,6 @@
           "18-month no payments",
           "SunPower equipment",
           "Fast timelines"
-        ]
-      },
-      {
-        "name": "ADT Solar",
-        "rating": 4.0,
-        "type": "national",
-        "summary": "Solar paired with home security from a trusted brand.",
-        "strengths": [
-          "ADT brand trust",
-          "Security integration",
-          "Nationwide warranty"
         ]
       },
       {
@@ -311,17 +289,6 @@
           "Lowest prices",
           "Powerwall peak shaving",
           "Online ordering"
-        ]
-      },
-      {
-        "name": "Sunnova",
-        "rating": 4.2,
-        "type": "national",
-        "summary": "Strong Arizona coverage with 25-year comprehensive warranty.",
-        "strengths": [
-          "25-year warranty",
-          "Multiple financing",
-          "Battery options"
         ]
       }
     ],
@@ -1050,7 +1017,7 @@
     "meta_description": "Top solar companies in South Carolina. Compare pricing, the 25% state tax credit, and reviews for SC homeowners.",
     "location_type": "state",
     "state_abbrev": "SC",
-    "intro": "South Carolina offers one of the most generous state solar tax credits in the nation at 25% with no cap. The 30% federal homeowner credit ended after 2025, so get quotes priced without it.",
+    "intro": "South Carolina offers one of the most generous state solar tax credits in the nation at 25% (up to $3,500 per year). The 30% federal homeowner credit ended after 2025, so get quotes priced without it.",
     "companies": [
       {
         "name": "Sunrun",
@@ -1098,7 +1065,7 @@
       }
     ],
     "buying_tips": [
-      "SC's 25% state tax credit has no cap - one of the best in the US",
+      "SC's 25% state tax credit (up to $3,500 per year, 10-year carryforward) - one of the best in the US",
       "The 30% federal homeowner credit ended after 2025, so get quotes priced without it.",
       "Duke Energy and Dominion offer net metering in SC",
       "The SC credit can be carried forward for up to 10 years"
@@ -1110,7 +1077,7 @@
       },
       {
         "question": "What is South Carolina's solar tax credit?",
-        "answer": "SC offers a 25% state tax credit with no cap on solar installations. The 30% federal homeowner solar credit ended after 2025. Unused credit carries forward for 10 years."
+        "answer": "SC offers a 25% state tax credit (up to $3,500 per year, 10-year carryforward) on solar installations. The 30% federal homeowner solar credit ended after 2025. Unused credit carries forward for 10 years."
       }
     ],
     "related_slugs": [
@@ -1374,17 +1341,6 @@
     "state_abbrev": "TX",
     "intro": "Houston's growing solar market benefits from excellent sun exposure and rising electricity costs. As the energy capital of the world, Houston homeowners are increasingly turning to solar to take control of their power bills.",
     "companies": [
-      {
-        "name": "Sunnova",
-        "rating": 4.2,
-        "type": "national",
-        "summary": "Houston-headquartered company with deep local expertise.",
-        "strengths": [
-          "Houston HQ",
-          "Local expertise",
-          "25-year warranty"
-        ]
-      },
       {
         "name": "Freedom Solar",
         "rating": 4.4,
@@ -1655,17 +1611,6 @@
         ]
       },
       {
-        "name": "ADT Solar",
-        "rating": 4.0,
-        "type": "national",
-        "summary": "Solar plus security package from a trusted Florida brand.",
-        "strengths": [
-          "Security integration",
-          "ADT trust",
-          "FL coverage"
-        ]
-      },
-      {
         "name": "Solar Energy World FL",
         "rating": 4.3,
         "type": "local",
@@ -1805,17 +1750,6 @@
         ]
       },
       {
-        "name": "Sunnova",
-        "rating": 4.2,
-        "type": "national",
-        "summary": "Houston-based installer with strong SA coverage and financing.",
-        "strengths": [
-          "TX-based",
-          "25-year warranty",
-          "Flexible financing"
-        ]
-      },
-      {
         "name": "Sunrun",
         "rating": 4.0,
         "type": "national",
@@ -1922,17 +1856,6 @@
           "Powerwall option",
           "Tech-forward"
         ]
-      },
-      {
-        "name": "Sunnova",
-        "rating": 4.1,
-        "type": "national",
-        "summary": "Texas-headquartered with strong Austin area presence.",
-        "strengths": [
-          "TX-based",
-          "25-year warranty",
-          "Local support"
-        ]
       }
     ],
     "buying_tips": [
@@ -2007,17 +1930,6 @@
           "Tampa focused",
           "TECO experts",
           "Fast permitting"
-        ]
-      },
-      {
-        "name": "ADT Solar",
-        "rating": 4.0,
-        "type": "national",
-        "summary": "Solar with integrated security from a trusted FL brand.",
-        "strengths": [
-          "Security integration",
-          "ADT trust",
-          "FL coverage"
         ]
       }
     ],
