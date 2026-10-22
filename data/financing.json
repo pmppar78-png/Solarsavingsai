@@ -196,30 +196,6 @@
       ]
     },
     {
-      "name": "Sunnova",
-      "slug": "sunnova",
-      "type": "lease",
-      "apr_low": 0,
-      "apr_high": 0,
-      "term_years": [
-        25
-      ],
-      "min_credit_score": 600,
-      "zero_down": true,
-      "battery_financing": true,
-      "states_available": "Most states",
-      "pros": [
-        "Low credit requirement",
-        "No upfront cost",
-        "Includes monitoring"
-      ],
-      "cons": [
-        "Lease only",
-        "Long term commitment",
-        "Escalator clauses"
-      ]
-    },
-    {
       "name": "PACE (Property Assessed Clean Energy)",
       "slug": "pace",
       "type": "PACE",
