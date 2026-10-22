@@ -105,7 +105,7 @@
   function linkify(text) {
     var urlPattern = /(https?:\/\/[^\s<]+)/g;
     return text.replace(urlPattern, function (url) {
-      var rel = isAffiliateDomain(url) ? 'sponsored noopener noreferrer' : 'noopener noreferrer';
+      var rel = 'noopener noreferrer';
       return '<a href="' + url + '" target="_blank" rel="' + rel + '">' + url + '</a>';
     });
   }
