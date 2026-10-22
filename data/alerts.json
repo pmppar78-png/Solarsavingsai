@@ -1,10 +1,9 @@
 {
   "federal_credit": {
-    "current_percent": 30,
-    "step_down_year": 2033,
-    "step_down_percent": 26,
-    "expiration_note": "The 30% federal solar tax credit (ITC) is available through 2032. It drops to 26% in 2033 and 22% in 2034.",
-    "message": "The 30% Federal Solar Tax Credit is available NOW through 2032. Lock in maximum savings before the step-down begins."
+    "current_percent": 0,
+    "ended": "2025-12-31",
+    "expiration_note": "The 30% federal Residential Clean Energy Credit (Section 25D) ended for expenditures made after December 31, 2025, under the One Big Beautiful Bill Act.",
+    "message": "Update: the 30% federal homeowner solar tax credit (25D) ended for systems paid for after December 31, 2025. Our estimates now use state and utility incentives and net metering only."
   },
   "state_alerts": [
     {
@@ -66,7 +65,7 @@
       "state_abbrev": "SC",
       "type": "incentive_available",
       "severity": "low",
-      "message": "South Carolina 25% state solar tax credit has no cap, making it one of the most generous state credits in the nation. Combined with the 30% federal ITC, homeowners can offset 55% of system costs.",
+      "message": "South Carolina 25% state solar tax credit has no cap, making it one of the most generous state credits in the nation. The federal homeowner credit ended after 2025, so this state credit is now the main tax incentive.",
       "date": "2025-01-01",
       "active": true
     },
