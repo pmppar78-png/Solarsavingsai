@@ -1,6 +1,40 @@
+// Only our own site (solarsavingsai.com) and its own Netlify deploys/previews may call this endpoint.
+var ALLOWED_ORIGIN = /^https:\/\/((www\.)?solarsavingsai\.com|([a-z0-9-]+--)?solarsavingsai\.netlify\.app)$/;
+function requestOrigin(headers) {
+  var h = headers || {};
+  var o = h.origin || h.Origin || '';
+  if (o) return o;
+  var ref = h.referer || h.Referer || '';
+  try { return ref ? new URL(ref).origin : ''; } catch (e) { return ''; }
+}
+
+// Simple in-memory rate limit: 10 requests per minute per IP (per function instance).
+var rateLimitMap = new Map();
+function isRateLimited(ip) {
+  var now = Date.now();
+  var entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + 60000 });
+    return false;
+  }
+  if (entry.count >= 10) return true;
+  entry.count++;
+  return false;
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return jsonResponse(405, { error: 'Method not allowed' });
+  }
+
+  if (!ALLOWED_ORIGIN.test(requestOrigin(event.headers))) {
+    return jsonResponse(403, { error: 'Forbidden' });
+  }
+
+  var h = event.headers || {};
+  var clientIp = h['x-nf-client-connection-ip'] || (h['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  if (isRateLimited(clientIp)) {
+    return jsonResponse(429, { reply: 'You are sending messages very quickly. Please wait a minute and try again.' });
   }
 
   var apiKey = process.env.OPENAI_API_KEY;
